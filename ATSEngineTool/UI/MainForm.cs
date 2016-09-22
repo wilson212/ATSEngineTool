@@ -350,9 +350,16 @@ namespace ATSEngineTool
             {
                 ListViewItem selected = engineListView2.SelectedItems[0];
                 Engine engine = selected.Tag as Engine;
-                using (EngineForm form = new EngineForm(engine))
+                using (EngineForm frm = new EngineForm(engine))
                 {
-                    form.ShowDialog();
+                    var result = frm.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        using (AppDatabase db = new AppDatabase())
+                        {
+                            FillEngines(db);
+                        }
+                    }
                 }
             }
         }
@@ -458,9 +465,16 @@ namespace ATSEngineTool
 
             ListViewItem selected = engineListView2.SelectedItems[0];
             Engine engine = selected.Tag as Engine;
-            using (EngineForm form = new EngineForm(engine))
+            using (EngineForm frm = new EngineForm(engine))
             {
-                form.ShowDialog();
+                var result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    using (AppDatabase db = new AppDatabase())
+                    {
+                        FillEngines(db);
+                    }
+                }
             }
         }
 

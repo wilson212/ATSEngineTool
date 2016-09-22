@@ -107,6 +107,7 @@ namespace ATSEngineTool
                 rpmRangeBox6.Value = engine.HighRpmRange_PowerBoost;
                 fileDefaultsTextBox.Lines = Engine.Defaults;
                 fileCommentTextBox.Lines = Engine.Comment;
+                filenameTextBox.Text = Engine.FileName;
             }
             else
             {
