@@ -274,7 +274,7 @@ sound_data: .horn
 
 sound_data: .ahorn
 {
-	name: "/sound/truck/W900_PACCAR/ext/air_horn.ogg"
+	name: "/sound/truck/common/int/air_horn.ogg"
 	looped: true
 }
 

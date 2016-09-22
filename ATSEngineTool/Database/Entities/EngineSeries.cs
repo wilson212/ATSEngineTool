@@ -69,6 +69,10 @@ namespace ATSEngineTool.Database
         /// Gets a list of <see cref="Engine"/> entities that reference this 
         /// <see cref="EngineSeries"/>
         /// </summary>
+        /// <remarks>
+        /// A lazy loaded enumeration that fetches all Engines
+        /// that are bound by the foreign key and this EngineSeries.Id.
+        /// </remarks>
         public virtual IEnumerable<Engine> Engines { get; set; }
 
         #region Virtual Foreign Keys

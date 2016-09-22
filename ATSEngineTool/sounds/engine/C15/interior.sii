@@ -1,6 +1,6 @@
 SiiNunit
 {
-accessory_sound_data : c15.{{NAME}}}.isound
+accessory_sound_data : c15.{{{NAME}}}.isound
 {
 	exterior_sound: false
 

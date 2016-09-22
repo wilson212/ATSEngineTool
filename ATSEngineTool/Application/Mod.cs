@@ -57,10 +57,9 @@ namespace ATSEngineTool
         {
             // Clear old def files?
             string path = Path.Combine(ModPath, "def");
-            if (cleanEngines)
+            if (cleanEngines && Directory.Exists(path))
             {
-                Directory.Delete(path);
-                Directory.CreateDirectory(path);
+                Directory.Delete(path, true);
             }
 
             // Sync the def files
@@ -102,12 +101,12 @@ namespace ATSEngineTool
 
                     // Interior Sounds
                     string localPath = Path.Combine(Program.RootPath, "sounds", "engine", sound.FolderName, "int");
-                    if (cleanSounds || !Directory.Exists(intPath))
+                    if (Directory.Exists(localPath) && (cleanSounds || !Directory.Exists(intPath)))
                         DirectoryExt.Copy(localPath, intPath, true, true);
 
                     // Exterior Sounds
                     localPath = Path.Combine(Program.RootPath, "sounds", "engine", sound.FolderName, "ext");
-                    if (cleanSounds || !Directory.Exists(extPath))
+                    if (Directory.Exists(localPath) && (cleanSounds || !Directory.Exists(extPath)))
                         DirectoryExt.Copy(localPath, extPath, true, true);
                 }
             }

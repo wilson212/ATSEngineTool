@@ -43,6 +43,10 @@ namespace ATSEngineTool.Database
         /// Gets a list of <see cref="EngineSeries"/> that reference this 
         /// <see cref="SoundPackage"/>
         /// </summary>
+        /// <remarks>
+        /// A lazy loaded enumeration that fetches all EngineSeries
+        /// that are bound by the foreign key and this SoundPackage.Id.
+        /// </remarks>
         public virtual IEnumerable<EngineSeries> Series { get; set; }
 
         public override string ToString() => Name;

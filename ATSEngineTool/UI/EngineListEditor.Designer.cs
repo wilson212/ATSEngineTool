@@ -116,15 +116,15 @@
             this.columnHeader6});
             this.engineListView2.FullRowSelect = true;
             this.engineListView2.Location = new System.Drawing.Point(426, 97);
-            this.engineListView2.MultiSelect = false;
             this.engineListView2.Name = "engineListView2";
             this.engineListView2.Size = new System.Drawing.Size(340, 310);
             this.engineListView2.TabIndex = 10;
+            this.engineListView2.Tag = "2";
             this.engineListView2.UseCompatibleStateImageBehavior = false;
             this.engineListView2.View = System.Windows.Forms.View.Details;
+            this.engineListView2.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.engineListView2_ItemDrag);
             this.engineListView2.DragDrop += new System.Windows.Forms.DragEventHandler(this.engineListView2_DragDrop);
             this.engineListView2.DragEnter += new System.Windows.Forms.DragEventHandler(this.ListView_DragEnter);
-            this.engineListView2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.engineListView2_MouseDown);
             // 
             // columnHeader1
             // 
@@ -152,15 +152,15 @@
             this.columnHeader4});
             this.engineListView1.FullRowSelect = true;
             this.engineListView1.Location = new System.Drawing.Point(18, 97);
-            this.engineListView1.MultiSelect = false;
             this.engineListView1.Name = "engineListView1";
             this.engineListView1.Size = new System.Drawing.Size(340, 310);
             this.engineListView1.TabIndex = 9;
+            this.engineListView1.Tag = "1";
             this.engineListView1.UseCompatibleStateImageBehavior = false;
             this.engineListView1.View = System.Windows.Forms.View.Details;
+            this.engineListView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.engineListView1_ItemDrag);
             this.engineListView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.engineListView1_DragDrop);
             this.engineListView1.DragEnter += new System.Windows.Forms.DragEventHandler(this.ListView_DragEnter);
-            this.engineListView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.engineListView1_MouseDown);
             // 
             // columnHeader2
             // 

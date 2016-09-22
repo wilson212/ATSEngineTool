@@ -645,18 +645,22 @@ namespace ATSEngineTool
             this.Enabled = false;
             try
             {
-                // Clean out old compiled files
-                if (cleanCompCheckBox.Checked)
-                    Mod.CleanCompileDirectory();
+                // Run this in a task to prevent GUI lockup
+                await Task.Run(() => 
+                { 
+                    // Clean out old compiled files
+                    if (cleanCompCheckBox.Checked)
+                        Mod.CleanCompileDirectory();
 
-                // Compile Mod
-                await Task.Run(() => Mod.Compile(trucks));
+                    // Compile Mod
+                    Mod.Compile(trucks);
 
-                // Are we sync'ing the Compiled and Mod folders?
-                if (syncCheckBox.Checked)
-                {
-                    Mod.Sync(cleanModCheckBox.Checked, cleanSoundsCheckBox.Checked);
-                }
+                    // Are we sync'ing the Compiled and Mod folders?
+                    if (syncCheckBox.Checked)
+                    {
+                        Mod.Sync(cleanModCheckBox.Checked, cleanSoundsCheckBox.Checked);
+                    }
+                });
             }
             catch (Exception ex)
             {

@@ -205,7 +205,7 @@ namespace ATSEngineTool.Database
         public virtual EngineSeries Series { get; protected set; }
 
         #endregion
-  
+
 
         #region Child Database Sets
 
@@ -213,12 +213,20 @@ namespace ATSEngineTool.Database
         /// Gets a list of <see cref="TorqueRatio"/> entities that reference this 
         /// <see cref="Engine"/>
         /// </summary>
+        /// <remarks>
+        /// A lazy loaded enumeration that fetches all Torque Ratios
+        /// that are bound by the foreign key and this Engine.Id.
+        /// </remarks>
         public virtual IEnumerable<TorqueRatio> TorqueRatios { get; set; }
 
         /// <summary>
         /// Gets a list of <see cref="TruckEngine"/> entities that reference this 
         /// <see cref="Engine"/>
         /// </summary>
+        /// <remarks>
+        /// A lazy loaded enumeration that fetches all TruckEngine objects
+        /// that are bound by the foreign key and this Engine.Id.
+        /// </remarks>
         public virtual IEnumerable<TruckEngine> ItemOf { get; set; }
 
         #endregion

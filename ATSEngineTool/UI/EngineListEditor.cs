@@ -83,50 +83,58 @@ namespace ATSEngineTool
             }
         }
 
-        private void engineListView1_MouseDown(object sender, MouseEventArgs e)
-        {
-            // If we have no selected trucks, skimp out here
-            if (engineListView1.SelectedItems.Count == 0) return;
-
-            engineListView1.DoDragDrop(engineListView1.SelectedItems[0], DragDropEffects.Move);
-        }
-
-        private void engineListView2_MouseDown(object sender, MouseEventArgs e)
+        private void engineListView2_ItemDrag(object sender, ItemDragEventArgs e)
         {
             // If we have no selected trucks, skimp out here
             if (engineListView2.SelectedItems.Count == 0) return;
 
-            engineListView2.DoDragDrop(engineListView2.SelectedItems[0], DragDropEffects.Move);
+            engineListView2.DoDragDrop(engineListView2.SelectedItems, DragDropEffects.Move);
+        }
+
+        private void engineListView1_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            // If we have no selected trucks, skimp out here
+            if (engineListView1.SelectedItems.Count == 0) return;
+
+            engineListView1.DoDragDrop(engineListView1.SelectedItems, DragDropEffects.Move);
         }
 
         private void engineListView2_DragDrop(object sender, DragEventArgs e)
         {
-            // Grab the engine
-            var item = (ListViewItem)e.Data.GetData(typeof(ListViewItem));
-            int groupId = (int)item.Group.Tag;
+            Type accpetedType = typeof(ListView.SelectedListViewItemCollection);
+            var items = (ListView.SelectedListViewItemCollection)e.Data.GetData(accpetedType);
+            foreach (var listItem in items)
+            {
+                var item = (ListViewItem)listItem;
+                int groupId = (int)item.Group.Tag;
 
-            // Remove the engine from that list view
-            engineListView1.Groups[groupId].Items.Remove(item);
-            engineListView1.Items.Remove(item);
+                // Remove the engine from that list view
+                engineListView1.Groups[groupId].Items.Remove(item);
+                engineListView1.Items.Remove(item);
 
-            // Add the engine to this listview
-            engineListView2.Groups[groupId].Items.Add(item);
-            engineListView2.Items.Add(item);
+                // Add the engine to this listview
+                engineListView2.Groups[groupId].Items.Add(item);
+                engineListView2.Items.Add(item);
+            }
         }
 
         private void engineListView1_DragDrop(object sender, DragEventArgs e)
         {
-            // Grab the engine
-            var item = (ListViewItem)e.Data.GetData(typeof(ListViewItem));
-            int groupId = (int)item.Group.Tag;
+            Type accpetedType = typeof(ListView.SelectedListViewItemCollection);
+            var items = (ListView.SelectedListViewItemCollection)e.Data.GetData(accpetedType);
+            foreach (var listItem in items)
+            {
+                var item = (ListViewItem)listItem;
+                int groupId = (int)item.Group.Tag;
 
-            // Remove the engine from that list view
-            engineListView2.Groups[groupId].Items.Remove(item);
-            engineListView2.Items.Remove(item);
+                // Remove the engine from that list view
+                engineListView2.Groups[groupId].Items.Remove(item);
+                engineListView2.Items.Remove(item);
 
-            // Add the engine to this listview
-            engineListView1.Groups[groupId].Items.Add(item);
-            engineListView1.Items.Add(item);
+                // Add the engine to this listview
+                engineListView1.Groups[groupId].Items.Add(item);
+                engineListView1.Items.Add(item);
+            }
         }
 
         /// <summary>
@@ -140,18 +148,30 @@ namespace ATSEngineTool
         {
             // Grab out ListView object sending the file
             ListView view = (ListView)sender;
+            DragDropEffects effect = DragDropEffects.Move;
+            Type accpetedType = typeof(ListView.SelectedListViewItemCollection);
 
-            // Ensure that this is a list view item
-            if (e.Data.GetDataPresent(typeof(ListViewItem)))
+            // If this is an ListViewItemCollection
+            if (e.Data.GetDataPresent(accpetedType))
             {
-                var item = (ListViewItem)e.Data.GetData(typeof(ListViewItem));
-                if (item.Tag is Engine && !view.Items.Contains(item))
-                    e.Effect = DragDropEffects.Move;
-                else
-                    e.Effect = DragDropEffects.None;
+                var items = (ListView.SelectedListViewItemCollection)e.Data.GetData(accpetedType);
+                foreach (var item in items)
+                {
+                    // Ensure that each item is a ListViewItem, and has
+                    // an engine for its tag
+                    if (!(item is ListViewItem))
+                    {
+                        var listItem = (ListViewItem)item;
+                        if (!(listItem.Tag is Engine) || !view.Items.Contains(listItem))
+                        {
+                            effect = DragDropEffects.None;
+                            break;
+                        }
+                    }
+                }
             }
-            else
-                e.Effect = DragDropEffects.None;
+
+            e.Effect = effect;
         }
 
         private void confirmButton_Click(object sender, System.EventArgs e)
