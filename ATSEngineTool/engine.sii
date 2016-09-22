@@ -1,0 +1,39 @@
+﻿SiiNunit
+{
+	/**
+	 * {{{COMMENT}}}
+	 */
+	accessory_engine_data : {{{ENG_NAME}}}.{{{NAME}}}.engine
+	{
+		name: "{{{ENG_TEXT}}}"
+		price: {{{PRICE}}}	# Engine price	
+		unlock: {{{UNLOCK}}}		# Unlocks @ Level
+		
+		# Engine display info
+		info[]: "{{{HP_INFO}}}"
+		info[]: "{{{TRQ_INFO}}}"
+		info[]: "{{{RPM_INFO}}}"
+		icon: "{{{ICON}}}"
+		
+		# Engine Specs
+		torque: {{{TRQ}}}		# Engine power in Newton-metres
+		volume: {{{VOLUME}}}		# Engine size in liters. Used for Realistic Fuel Consumption settings
+
+		{{{TORQUE_CURVES}}}
+
+		# RPM Data
+		rpm_idle: {{{RPM_IDLE}}}		# RPM at idle
+		rpm_limit: {{{RPM}}}		# Governed RPM limit
+		rpm_limit_neutral: {{{RPM_NEUTRAL}}}	# RPM limit in neutral gear
+		rpm_range_low_gear: ({{{RPM_RANGE_LOW_LOW}}}, {{{RPM_RANGE_LOW_HIGH}}})
+		rpm_range_high_gear: ({{{RPM_RANGE_HIGH_LOW}}}, {{{RPM_RANGE_HIGH_HIGH}}})
+		rpm_range_power_boost: ({{{RPM_RANGE_POWER_LOW}}}, {{{RPM_RANGE_POWER_HIGH}}})
+		
+		# Engine Brake data
+		engine_brake: {{{EBRK_STR}}}			# Engine Brake Strength
+		engine_brake_downshift: {{{EBRK_DWN}}}	# Enable automatic downshift for Engine Brake
+		engine_brake_positions: {{{EBRK_POS}}}	# The number of engine brake intensities
+		
+		{{{DEFAULTS}}}
+	}
+}

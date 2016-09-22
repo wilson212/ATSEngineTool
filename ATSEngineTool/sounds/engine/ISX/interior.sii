@@ -1,0 +1,324 @@
+SiiNunit
+{
+accessory_sound_data : isx.{{{NAME}}}.isound
+{
+	exterior_sound: false
+
+	start: .start
+	stop: .stop
+	start_no_fuel: .startbad
+
+	engine[]: .e0
+	engine[]: .e1
+	engine[]: .e2
+	engine[]: .e3
+	engine[]: .e4
+
+	engine_load[]: .el0
+	engine_load[]: .el1
+	engine_load[]: .el2
+	engine_load[]: .el3
+
+	engine_nofuel[]: .enf0
+	engine_nofuel[]: .enf1
+	engine_nofuel[]: .enf2
+     	
+	turbo: .t
+
+	air_gear[0]: .airgear0
+	air_gear[1]: .airgear1
+	air_gear[2]: .airgear2
+		
+	air_brake[0]: .airbrake0
+	air_brake[1]: .airbrake1
+	air_brake[2]: .airbrake2
+
+	engine_brake[]: .eb
+	horn: .horn
+	air_horn: .ahorn
+	reverse: .reverse
+
+	blinker_on: .blinker_on
+	blinker_off: .blinker_off
+	wipers_up: .wipers_up
+	wipers_down: .wipers_down
+
+@include "/def/vehicle/truck/common_sound_int.sui"
+
+	{{{SUITABLE}}}
+}
+
+sound_data: .start
+{
+	name: "/sound/truck/engine/ISX/int/start-int-mono.ogg"
+	looped: false
+}
+
+sound_data: .startbad
+{
+	name: "/sound/truck/engine/ISX/int/engine_on_bad.ogg"
+	looped: false
+}
+
+sound_data: .stop
+{
+	name: "/sound/truck/engine/ISX/int/stop-int-mono.ogg"
+	looped: false
+}
+
+sound_engine_data: .e0
+{
+	name: "/sound/truck/engine/ISX/int/500rpm-int-mono.ogg"
+
+	looped: true
+
+	pitch_reference: 600
+
+	min_rpm: 300.0
+	max_rpm: 870.0
+	volume: 0.4
+}
+
+sound_engine_data: .e1
+{
+	name: "/sound/truck/engine/ISX/int/1000rpm-int-mono.ogg"
+
+	looped: true
+
+	pitch_reference: 940
+
+	min_rpm: 710.0
+	max_rpm: 1300.0
+	volume: 0.8
+}
+
+sound_engine_data: .e2
+{
+	name: "/sound/truck/engine/ISX/int/1500rpm.ogg"
+
+	looped: true
+
+	pitch_reference: 1390
+
+	min_rpm: 620.0
+	max_rpm: 2200.0
+	volume: 0.09
+}
+
+sound_engine_data: .e3
+{
+	name: "/sound/truck/engine/ISX/int/1500rpm-int-mono.ogg"
+
+	looped: true
+
+	min_rpm: 830.0
+	max_rpm: 2900.0
+	pitch_reference:  1430
+	volume: 0.8
+}
+
+sound_engine_data: .e4
+{
+	name: "/sound/truck/engine/ISX/int/turbo_idle.ogg"
+
+	looped: true
+
+	pitch_reference: 1420
+
+	min_rpm: 620.0
+	max_rpm: 2800.0
+	volume: 0.06
+}
+
+sound_engine_data: .el0
+{
+	name: "/sound/truck/engine/ISX/int/exhaust_idle.ogg"
+
+	looped: true
+
+	pitch_reference: 700
+
+	min_rpm: 400.0
+	max_rpm: 1010.0
+	volume: 1.77
+}
+
+sound_engine_data: .el1
+{
+	name: "/sound/truck/engine/ISX/int/1200rpm-int-exhaust.ogg"
+
+	looped: true
+
+	pitch_reference: 1220
+
+	min_rpm: 750.0
+	max_rpm: 1360.0
+	volume: 1.0
+}
+
+sound_engine_data: .el2
+{
+	name: "/sound/truck/engine/ISX/int/1500rpm-int-exhaust.ogg"
+
+	looped: true
+
+	pitch_reference: 1430
+
+	min_rpm: 1180.0
+	max_rpm: 1920.0
+	volume: 1.85
+}
+
+sound_engine_data: .el3
+{
+	name: "/sound/truck/engine/ISX/int/2000rpm-int-exhaust.ogg"
+
+	looped: true
+
+	pitch_reference: 1810
+
+	min_rpm: 1580.0
+	max_rpm: 2900.0
+	volume: 1.7
+}
+
+sound_engine_data: .enf0
+{
+	name: "/sound/truck/engine/ISX/int/1000rpm-int-mono.ogg"
+
+	looped: true
+
+	pitch_reference: 940
+
+	min_rpm: 300.0
+	max_rpm: 1240.0
+	volume: 0.75
+}
+
+sound_engine_data: .enf1
+{
+	name: "/sound/truck/engine/ISX/int/lever_le_pied.ogg"
+
+	looped: true
+
+	min_rpm: 830.0
+	max_rpm: 2900.0
+	pitch_reference:  1530
+	volume: 1.0
+}
+
+sound_engine_data: .enf2
+{
+	name: "/sound/truck/engine/ISX/int/turbo_idle.ogg"
+
+	looped: true
+
+	pitch_reference: 1420
+
+	min_rpm: 300.0
+	max_rpm: 2800.0
+	volume: 0.06
+}
+
+sound_data: .t
+{
+	name: "/sound/truck/engine/ISX/int/turbo_int.ogg"
+	looped: true
+	volume: 0.19
+}
+
+sound_data: .airgear0
+{
+	name: "/sound/truck/common/int/int_gear_air_1.ogg"
+	volume: 0.25
+}
+sound_data: .airgear1
+{
+	name: "/sound/truck/common/int/int_gear_air_2.ogg"
+	volume: 0.25
+}
+sound_data: .airgear2
+{
+	name: "/sound/truck/common/int/int_gear_air_3.ogg"
+	volume: 0.25
+}
+
+sound_data: .airbrake0
+{
+	name: "/sound/truck/common/int/air_brake1.ogg"
+	looped: false
+}
+sound_data: .airbrake1
+{
+	name: "/sound/truck/common/int/air_brake2.ogg"
+	looped: false
+}
+
+sound_data: .airbrake2
+{
+	name: "/sound/truck/common/int/air_brake3.ogg"
+	looped: false
+}
+
+sound_engine_data: .eb
+{
+	name: "/sound/truck/engine/ISX/int/engine_brake_int.ogg"
+	looped: true
+	is_2d: true
+	pitch_reference: 1555
+	min_rpm: 750.0
+	max_rpm: 3000.0
+}
+
+sound_data: .horn
+{
+	name: "/sound/truck/common/int/horn.ogg"
+	looped: true
+}
+
+sound_data: .ahorn
+{
+	name: "/sound/truck/common/int/air_horn.ogg"
+	looped: true
+}
+
+sound_data: .reverse
+{
+	name: "/sound/truck/common/int/reverse.ogg"
+	looped: true
+}
+
+sound_data: .blinker_on
+{
+	name: "/sound/truck/common/int/blinker_on.ogg"
+	is_2d: true
+	volume: 0.19
+}
+
+sound_data: .blinker_off
+{
+	name: "/sound/truck/common/int/blinker_off.ogg"
+	is_2d: true
+	volume: 0.19
+}
+
+sound_data: .wipers_up
+{
+	name: "/sound/truck/common/int/wiper_up.ogg"
+	is_2d: true
+	volume: 0.3
+}
+
+sound_data: .wipers_down
+{
+	name: "/sound/truck/common/int/wiper_down.ogg"
+	is_2d: true
+	volume: 0.3
+}
+
+@include "/def/vehicle/truck/common_sound_int_data.sui"
+
+}
+
+
+

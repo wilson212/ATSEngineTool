@@ -1,0 +1,529 @@
+SiiNunit
+{
+accessory_sound_data : std.{{{NAME}}}.esound
+{
+	exterior_sound: true
+
+	start: .start
+	stop: .stop
+	start_no_fuel: .startbad
+
+	engine[]: .e0
+	engine[]: .e1
+	engine[]: .e2
+	engine[]: .e3
+	engine[]: .e4
+	engine[]: .e5
+	engine[]: .e6
+	engine[]: .e7
+	
+	engine_load[]: .el0
+	engine_load[]: .el1
+	engine_load[]: .el2
+	engine_load[]: .el3
+	engine_load[]: .el4
+	engine_load[]: .el5
+
+	
+	engine_nofuel[]: .enf0
+	engine_nofuel[]: .enf1
+	engine_nofuel[]: .enf2
+	engine_nofuel[]: .enf3
+	engine_nofuel[]: .enf4
+	
+	engine_exhaust[]: .ee0
+	engine_exhaust[]: .ee1
+	engine_exhaust[]: .ee2
+	engine_exhaust[]: .ee3
+	engine_exhaust[]: .ee4
+	engine_exhaust[]: .ee5
+
+ 	engine_brake[]: .eb0
+	engine_brake[]: .eb1
+	engine_brake[]: .eb2
+	engine_brake[]: .eb3
+	engine_brake[]: .eb4
+	
+	turbo: .t
+
+	air_gear[0]: .airgear0
+	air_gear[1]: .airgear1
+	air_gear[2]: .airgear2
+
+	air_brake[0]: .airbrake0
+	air_brake[1]: .airbrake1
+
+	horn: .horn
+	air_horn: .ahorn
+	reverse: .reverse
+
+@include "/def/vehicle/truck/common_sound_ext.sui"
+
+	{{{SUITABLE}}}
+}
+
+sound_data: .start
+{
+	name: "/sound/truck/default/ext/start_2.ogg"
+	looped: false
+}
+
+sound_data: .startbad
+{
+	name: "/sound/truck/default/ext/start_bad.ogg"
+	looped: false
+}
+
+
+sound_data: .stop
+{
+	name: "/sound/truck/default/ext/stop_1.ogg"
+	looped: false
+}
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ unloaded sounds
+
+sound_engine_data: .e0
+{
+	name: "/sound/truck/default/ext/unloaded_1.ogg"
+	looped: true
+
+	pitch_reference: 530
+
+	min_rpm: 200.0
+	max_rpm: 750.0
+	volume: 0.45
+}
+
+sound_engine_data: .e1
+{
+	name: "/sound/truck/default/ext/unloaded_2.ogg"
+	looped: true
+
+	pitch_reference: 830
+
+	min_rpm: 600.0
+	max_rpm: 1050.0
+	volume: 0.5
+}
+
+sound_engine_data: .e2
+{
+	name: "/sound/truck/default/ext/unloaded_3.ogg"
+
+	looped: true
+
+	pitch_reference: 1095
+
+	min_rpm: 900.0
+	max_rpm: 1320.0
+	volume: 0.52
+}
+
+sound_engine_data: .e3
+{
+	name: "/sound/truck/default/ext/unloaded_4.ogg"
+
+	looped: true
+
+	pitch_reference: 1360
+
+	min_rpm: 1150.0
+	max_rpm: 1590.0
+	volume: 0.55
+}
+
+sound_engine_data: .e4
+{
+	name: "/sound/truck/default/ext/unloaded_5.ogg"
+
+	looped: true
+
+	pitch_reference: 1650
+
+	min_rpm: 1430.0
+	max_rpm: 1860.0
+	volume: 0.57
+}
+
+sound_engine_data: .e5
+{
+	name: "/sound/truck/default/ext/unloaded_6.ogg"
+
+	looped: true
+
+	pitch_reference: 1960
+
+	min_rpm: 1730.0
+	max_rpm: 2185.0
+	volume: 0.61
+}
+
+sound_engine_data: .e6
+{
+	name: "/sound/truck/default/ext/unloaded_7.ogg"
+
+	looped: true
+
+	pitch_reference: 2234
+
+	min_rpm: 1980.0
+	max_rpm: 2470.0
+	volume: 0.64
+}
+
+sound_engine_data: .e7
+{
+	name: "/sound/truck/default/ext/unloaded_8.ogg"
+
+	looped: true
+
+	pitch_reference: 2550
+
+	min_rpm: 2300.0
+	max_rpm: 2800.0
+	volume: 0.7
+}
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ loaded sounds
+
+sound_engine_data: .el0
+{
+	name: "/sound/truck/default/ext/loaded_1.ogg"
+
+	looped: true
+
+	pitch_reference: 550
+
+	min_rpm: 200.0
+	max_rpm: 800.0
+	volume: 0.6
+}
+
+sound_engine_data: .el1
+{
+	name: "/sound/truck/default/ext/loaded_2.ogg"
+
+	looped: true
+
+	pitch_reference: 880
+
+	min_rpm: 610.0
+	max_rpm: 1150.0
+	volume: 0.65
+}
+
+sound_engine_data: .el2
+{
+	name: "/sound/truck/default/ext/loaded_3.ogg"
+
+	looped: true
+
+	pitch_reference: 1285
+
+	min_rpm: 950.0
+	max_rpm: 1630.0
+	volume: 0.7
+}
+
+sound_engine_data: .el3
+{
+	name: "/sound/truck/default/ext/loaded_4.ogg"
+
+	looped: true
+
+	pitch_reference: 1680
+
+	min_rpm: 1425.0
+	max_rpm: 1937.0
+	volume: 0.8
+}
+
+sound_engine_data: .el4
+{
+	name: "/sound/truck/default/ext/loaded_5.ogg"
+
+	looped: true
+
+	pitch_reference: 2085
+
+	min_rpm: 1790.0
+	max_rpm: 2400.0
+	volume: 0.86
+}
+
+sound_engine_data: .el5
+{
+	name: "/sound/truck/default/ext/loaded_6.ogg"
+
+	looped: true
+
+	pitch_reference: 2480
+
+	min_rpm: 2121.0
+	max_rpm: 2800.0
+	volume: 0.95
+}
+
+#  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ exhaust sounds
+
+sound_engine_data: .ee0
+{
+	name: "/sound/truck/default/ext/exhaust_1.ogg"
+
+	looped: true
+
+	pitch_reference: 560
+
+	min_rpm: 200.0
+	max_rpm: 800.0
+	volume: 0.75
+}
+
+sound_engine_data: .ee1
+{
+	name: "/sound/truck/default/ext/exhaust_2.ogg"
+
+	looped: true
+
+	pitch_reference: 890
+
+	min_rpm: 640.0
+	max_rpm: 1130.0
+	volume: 0.8
+}
+
+sound_engine_data: .ee2
+{
+	name: "/sound/truck/default/ext/exhaust_3.ogg"
+
+	looped: true
+
+	pitch_reference: 1270
+
+	min_rpm: 970.0
+	max_rpm: 1550.0
+	volume: 0.85
+}
+
+sound_engine_data: .ee3
+{
+	name: "/sound/truck/default/ext/exhaust_4.ogg"
+
+	looped: true
+
+	pitch_reference: 1660
+
+	min_rpm: 1350.0
+	max_rpm: 1960.0
+	volume: 0.9
+}
+
+sound_engine_data: .ee4
+{
+	name: "/sound/truck/default/ext/exhaust_5.ogg"
+
+	looped: true
+
+	pitch_reference: 2056
+
+	min_rpm: 1750.0
+	max_rpm: 2370.0
+	volume: 0.95
+}
+
+sound_engine_data: .ee5
+{
+	name: "/sound/truck/default/ext/exhaust_6.ogg"
+
+	looped: true
+
+	pitch_reference: 2490
+
+	min_rpm: 2160.0
+	max_rpm: 2800.0
+	volume: 1.0
+}
+
+
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ nofuel sounds
+
+
+sound_engine_data: .enf0
+{
+	name: "/sound/truck/default/ext/nofuel_1.ogg"
+
+	looped: true
+	pitch_reference: 540
+	min_rpm: 200.0
+	max_rpm: 800.0
+	volume: 0.5
+}
+
+sound_engine_data: .enf1
+{
+	name: "/sound/truck/default/ext/nofuel_2.ogg"
+
+	looped: true
+	pitch_reference: 950
+	min_rpm: 600.0
+	max_rpm: 1270.0
+	volume: 0.55
+}
+
+sound_engine_data: .enf2
+{
+	name: "/sound/truck/default/ext/nofuel_3.ogg"
+
+	looped: true
+	pitch_reference: 1440
+	min_rpm: 1100.0
+	max_rpm: 1800.0
+	volume: 0.6
+}
+
+sound_engine_data: .enf3
+{
+	name: "/sound/truck/default/ext/nofuel_4.ogg"
+
+	looped: true
+	pitch_reference: 1900
+	min_rpm: 1590.0
+	max_rpm: 2300.0
+	volume: 0.65
+}
+
+
+sound_engine_data: .enf4
+{
+	name: "/sound/truck/default/ext/nofuel_5.ogg"
+
+	looped: true
+	pitch_reference: 2450
+	min_rpm: 2100.0
+	max_rpm: 2800.0
+	volume: 0.75
+}
+
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ engine brake sounds
+
+sound_engine_data: .eb0
+{
+	name: "/sound/truck/default/ext/engine_brake_1.ogg"
+	looped: true	
+	is_2d: true
+	pitch_reference: 730
+	min_rpm: 300.0
+	max_rpm: 1160.0
+	volume: 0.7
+}
+
+sound_engine_data: .eb1
+{
+	name: "/sound/truck/default/ext/engine_brake_2.ogg"
+	looped: true	
+	is_2d: true
+	pitch_reference: 1200
+	min_rpm: 950.0
+	max_rpm: 1490.0
+	volume: 0.75
+}
+sound_engine_data: .eb2
+{
+	name: "/sound/truck/default/ext/engine_brake_3.ogg"
+	looped: true	
+	is_2d: true
+	pitch_reference: 1550
+	min_rpm: 1370.0
+	max_rpm: 1850.0
+	volume: 0.8
+}
+
+sound_engine_data: .eb3
+{
+	name: "/sound/truck/default/ext/engine_brake_4.ogg"
+	looped: true	
+	is_2d: true
+	pitch_reference: 1900
+	min_rpm: 1690.0
+	max_rpm: 2140.0
+	volume: 0.9
+}
+
+sound_engine_data: .eb4
+{
+	name: "/sound/truck/default/ext/engine_brake_5.ogg"
+	looped: true	
+	is_2d: true
+	pitch_reference: 2400
+	min_rpm: 2000.0
+	max_rpm: 2800.0
+	volume: 0.95
+}
+
+
+# turbo a dalsi zvuky +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+sound_data: .t
+{
+	name: "/sound/truck/default/ext/turbo_ext.ogg"
+	looped: true
+
+	volume: 0.4
+}
+
+sound_data: .airgear0
+{
+	name: "/sound/truck/default/ext/gear_air_1.ogg"
+	volume: 0.6
+}
+
+sound_data: .airgear1
+{
+	name: "/sound/truck/default/ext/gear_air_2.ogg"
+	volume: 0.6
+}
+
+sound_data: .airgear2
+{
+	name: "/sound/truck/default/ext/gear_air_3.ogg"
+	volume: 0.6
+}
+
+sound_data: .airbrake0
+{
+	name: "/sound/truck/default/ext/air_brake1.ogg"
+	looped: false
+}
+
+sound_data: .airbrake1
+{
+	name: "/sound/truck/default/ext/air_brake2.ogg"
+	looped: false
+}
+
+sound_data: .horn
+{
+	name: "/sound/truck/default/ext/el_horn_01.ogg"
+	looped: true
+}
+
+sound_data: .ahorn
+{
+	name: "/sound/truck/default/ext/air_horn_6.ogg"
+	looped: true
+}
+
+sound_data: .reverse
+{
+	name: "/sound/truck/default/ext/reverse.ogg"
+	looped: true
+}
+
+
+@include "/def/vehicle/truck/common_sound_ext_data.sui"
+
+}

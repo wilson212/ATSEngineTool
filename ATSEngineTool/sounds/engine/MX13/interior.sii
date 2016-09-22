@@ -1,0 +1,321 @@
+SiiNunit
+{
+accessory_sound_data : mx13.{{{NAME}}}.isound
+{
+	exterior_sound: false
+
+	start: .start
+	stop: .stop
+	start_no_fuel: .startbad
+
+	engine[]: .e0
+	engine[]: .e1
+	engine[]: .e2
+	engine[]: .e3
+
+	engine_load[]: .el0
+	engine_load[]: .el1
+	engine_load[]: .el2
+	engine_load[]: .el3
+	engine_load[]: .el4
+
+	engine_nofuel[]: .enf0
+	engine_nofuel[]: .enf1
+	engine_nofuel[]: .enf2
+
+	turbo: .t
+
+	air_gear[0]: .airgear0
+	air_gear[1]: .airgear1
+	air_gear[2]: .airgear2
+
+	air_brake[0]: .airbrake0
+	air_brake[1]: .airbrake1
+	air_brake[2]: .airbrake2
+	air_brake[3]: .airbrake3
+
+	engine_brake[]: .eb
+	horn: .horn
+	air_horn: .ahorn
+	reverse: .reverse
+
+	blinker_on: .blinker_on
+	blinker_off: .blinker_off
+	wipers_up: .wipers_up
+	wipers_down: .wipers_down
+
+@include "/def/vehicle/truck/common_sound_int.sui"
+
+	{{{SUITABLE}}}
+}
+
+sound_data: .start
+{
+	name: "/sound/truck/engine/MX13/int/start_pet.ogg"
+	looped: false
+}
+
+sound_data: .startbad
+{
+	name: "/sound/truck/engine/MX13/int/start_bad.ogg"
+	looped: false
+}
+
+sound_data: .stop
+{
+	name: "/sound/truck/engine/MX13/int/stop.ogg"
+	looped: false
+}
+
+sound_engine_data: .e0
+{
+	name: "/sound/truck/engine/MX13/int/engine_1.ogg"
+
+	looped: true
+	pitch_reference: 600
+	min_rpm: 300.0
+	max_rpm: 680.0
+	volume: 0.6
+}
+
+sound_engine_data: .e1
+{
+	name: "/sound/truck/engine/MX13/int/engine_2.ogg"
+
+	looped: true
+	pitch_reference: 800
+	min_rpm: 620.0
+	max_rpm: 1000.0
+	volume: 0.6
+}
+
+sound_engine_data: .e2
+{
+	name: "/sound/truck/engine/MX13/int/lever_le_pied.ogg"
+	looped: true
+
+	pitch_reference: 1540
+
+	min_rpm: 580.0
+	max_rpm: 3000.0
+	volume: 0.65
+}
+
+sound_engine_data: .e3
+{
+	name: "/sound/truck/engine/MX13/int/ventilo.ogg"
+	looped: true
+
+	pitch_reference: 1400
+
+	min_rpm: 580.0
+	max_rpm: 3000.0
+	volume: 0.22
+}
+
+sound_engine_data: .el0
+{
+	name: "/sound/truck/engine/MX13/int/exhaust_1.ogg"
+
+	looped: true
+	pitch_reference: 660
+	min_rpm: 300.0
+	max_rpm: 980.0
+	volume: 0.9
+}
+
+sound_engine_data: .el1
+{
+	name: "/sound/truck/engine/MX13/int/exhaust_2.ogg"
+
+	looped: true
+	pitch_reference: 855
+	min_rpm: 720.0
+	max_rpm: 1320.0
+	volume: 1.0
+}
+
+sound_engine_data: .el2
+{
+	name: "/sound/truck/engine/MX13/int/exhaust_4.ogg"
+
+	looped: true
+	pitch_reference: 1500
+	min_rpm: 990.0
+	max_rpm: 1750.0
+	volume: 1.26
+}
+
+sound_engine_data: .el3
+{
+	name: "/sound/truck/engine/MX13/int/exhaust_5.ogg"
+
+	looped: true
+	pitch_reference: 2100
+	min_rpm: 1450.0
+	max_rpm: 3000.0
+	volume: 1.2
+}
+
+sound_engine_data: .el4
+{
+	name: "/sound/truck/engine/MX13/int/ventilo.ogg"
+	looped: true
+
+	pitch_reference: 1400
+
+	min_rpm: 580.0
+	max_rpm: 3000.0
+	volume: 0.15
+}
+
+sound_engine_data: .enf0
+{
+	name: "/sound/truck/engine/MX13/int/engine_2.ogg"
+
+	looped: true
+	pitch_reference: 850
+	min_rpm: 620.0
+	max_rpm: 1470.0
+	volume: 0.65
+}
+
+
+sound_engine_data: .enf1
+{
+	name: "/sound/truck/engine/MX13/int/lever_le_pied.ogg"
+	looped: true
+
+	pitch_reference: 1540
+
+	min_rpm: 1150.0
+	max_rpm: 3000.0
+	volume: 0.75
+}
+
+sound_engine_data: .enf2
+{
+	name: "/sound/truck/engine/MX13/int/ventilo.ogg"
+	looped: true
+
+	pitch_reference: 1400
+
+	min_rpm: 580.0
+	max_rpm: 3000.0
+	volume: 0.22
+}
+
+sound_data: .t
+{
+	name: "/sound/truck/engine/MX13/int/turbo_int.ogg"
+	looped: true
+
+	volume: 0.38
+}
+
+sound_data: .airgear0
+{
+	name: "/sound/truck/common/int/int_gear_air_1.ogg"
+	volume: 0.3	
+}
+
+sound_data: .airgear1
+{
+	name: "/sound/truck/common/int/int_gear_air_1.ogg"
+	volume: 0.3
+}
+
+sound_data: .airgear2
+{
+	name: "/sound/truck/common/int/int_gear_air_1.ogg"
+	volume: 0.3
+}
+
+sound_data: .airbrake0
+{
+	name: "/sound/truck/common/int/air_brake1.ogg"
+	looped: false
+}
+
+sound_data: .airbrake1
+{
+	name: "/sound/truck/common/int/air_brake2.ogg"
+	looped: false
+}
+
+sound_data: .airbrake2
+{
+	name: "/sound/truck/common/int/air_brake3.ogg"
+	looped: false
+}
+
+sound_data: .airbrake3
+{
+	name: "/sound/truck/common/int/air_brake4.ogg"
+	looped: false
+}
+
+sound_engine_data: .eb
+{
+	name: "/sound/truck/engine/MX13/int/engine_brake.ogg"
+	looped: true	
+	is_2d: true
+	pitch_reference: 1510
+	min_rpm: 750.0
+	max_rpm: 3000.0
+	volume: 0.72
+}
+
+sound_data: .horn
+{
+	name: "/sound/truck/common/int/horn.ogg"
+	looped: true
+}
+
+sound_data: .ahorn
+{
+	name: "/sound/truck/W900_PACCAR/ext/air_horn.ogg"
+	looped: true
+}
+
+sound_data: .reverse
+{
+	name: "/sound/truck/common/int/reverse.ogg"
+	looped: true
+}
+
+
+sound_data: .blinker_on
+{
+	name: "/sound/truck/common/int/blinker_on.ogg"
+	is_2d: true
+	volume: 0.2
+}
+
+sound_data: .blinker_off
+{
+	name: "/sound/truck/common/int/blinker_off.ogg"
+	is_2d: true
+	volume: 0.2
+}
+
+sound_data: .wipers_up
+{
+	name: "/sound/truck/common/int/wiper_up.ogg"
+	is_2d: true
+	volume: 0.36
+}
+
+sound_data: .wipers_down
+{
+	name: "/sound/truck/common/int/wiper_down.ogg"
+	is_2d: true
+	volume: 0.36
+}
+
+@include "/def/vehicle/truck/common_sound_int_data.sui"
+
+}
+
+
+

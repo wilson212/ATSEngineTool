@@ -1,0 +1,391 @@
+SiiNunit
+{
+accessory_sound_data : n14.{{{NAME}}}.isound
+{
+	exterior_sound: false
+
+	start: .start
+	stop: .stop
+	start_no_fuel: .startbad
+
+	engine[]: .e0
+	engine[]: .e1
+	engine[]: .e2
+	engine[]: .e3
+	engine[]: .e4
+	engine[]: .e5
+
+	engine_load[]: .el0
+	engine_load[]: .el1
+	engine_load[]: .el2
+	engine_load[]: .el3
+	engine_load[]: .el4
+
+	engine_nofuel[]: .enf0
+	engine_nofuel[]: .enf1
+	engine_nofuel[]: .enf2
+	engine_nofuel[]: .enf3
+	engine_nofuel[]: .enf4
+     	
+	turbo: .t
+
+	air_gear[0]: .airgear0
+	air_gear[1]: .airgear1
+	air_gear[2]: .airgear2
+		
+	air_brake[0]: .airbrake0
+	air_brake[1]: .airbrake1
+	air_brake[2]: .airbrake2
+	air_brake[3]: .airbrake3
+
+	engine_brake[]: .eb
+
+	horn: .horn
+	air_horn: .ahorn
+	reverse: .reverse
+
+	blinker_on: .blinker_on
+	blinker_off: .blinker_off
+	wipers_up: .wipers_up
+	wipers_down: .wipers_down
+
+@include "/def/vehicle/truck/common_sound_int.sui"
+
+	{{{SUITABLE}}}
+}
+
+sound_data: .start
+{
+	name: "/sound/truck/engine/N14/int/start-int-mono.ogg"
+	looped: false
+}
+
+sound_data: .startbad
+{
+	name: "/sound/truck/engine/N14/int/engine_on_bad.ogg"
+	looped: false
+}
+
+sound_data: .stop
+{
+	name: "/sound/truck/engine/N14/int/stop-int-mono.ogg"
+	looped: false
+}
+
+sound_engine_data: .e0
+{
+	name: "/sound/truck/engine/N14/int/500rpm-int-mono.ogg"
+
+	looped: true
+
+	pitch_reference: 600
+
+	min_rpm: 300.0
+	max_rpm: 900.0
+	volume: 0.44
+}
+
+sound_engine_data: .e1
+{
+	name: "/sound/truck/engine/N14/int/1000rpm-int-mono.ogg"
+
+	looped: true
+
+	pitch_reference: 1100
+
+	min_rpm: 720.0
+	max_rpm: 1400.0
+	volume: 0.44
+}
+
+sound_engine_data: .e2
+{
+	name: "/sound/truck/engine/N14/int/1500rpm.ogg"
+
+	looped: true
+
+	pitch_reference: 1450
+
+	min_rpm: 620.0
+	max_rpm: 2200.0
+	volume: 0.35
+}
+
+sound_engine_data: .e3
+{
+	name: "/sound/truck/engine/N14/int/2000rpm-int-mono.ogg"
+
+	looped: true
+
+	pitch_reference: 1610
+
+	min_rpm: 1100.0
+	max_rpm: 3000.0
+	volume: 0.48
+}
+
+sound_engine_data: .e4
+{
+	name: "/sound/truck/engine/N14/int/turbo_idle.ogg"
+
+	looped: true
+
+	pitch_reference: 1000
+
+	min_rpm: 400.0
+	max_rpm: 1302.0
+	volume: 0.14
+}
+
+sound_engine_data: .e5
+{
+	name: "/sound/truck/engine/N14/int/turbo_idle2.ogg"
+
+	looped: true
+
+	pitch_reference: 1500
+
+	min_rpm: 900.0
+	max_rpm: 3000.0
+	volume: 0.15
+}
+
+sound_engine_data: .el0
+{
+	name: "/sound/truck/engine/N14/int/exhaust_idle.ogg"
+
+	looped: true
+
+	pitch_reference: 800
+
+	min_rpm: 300.0
+	max_rpm: 995.0
+	volume: 1.15
+}
+
+sound_engine_data: .el1
+{
+	name: "/sound/truck/engine/N14/int/1000rpm-int-exhaust.ogg"
+
+	looped: true
+
+	pitch_reference: 1160
+	is_2d: true
+	min_rpm: 790.0
+	max_rpm: 1330.0
+	volume: 0.95
+}
+
+sound_engine_data: .el2
+{
+	name: "/sound/truck/engine/N14/int/1500rpm-int-exhaust.ogg"
+
+	looped: true
+
+	pitch_reference: 1300
+	is_2d: true
+	min_rpm: 1060.0
+	max_rpm: 1600.0
+	volume: 0.66
+}
+
+sound_engine_data: .el3
+{
+	name: "/sound/truck/engine/N14/int/2000rpm-int-exhaust.ogg"
+
+	looped: true
+
+	pitch_reference: 1460
+	is_2d: true
+	min_rpm: 1360.0
+	max_rpm: 2100.0
+	volume: 0.85
+}
+
+sound_engine_data: .el4
+{
+	name: "/sound/truck/engine/N14/int/2200rpm-int-exhaust.ogg"
+
+	looped: true
+
+	pitch_reference: 1965
+	is_2d: true
+	min_rpm: 1770.0
+	max_rpm: 3000.0
+	volume: 0.9
+}
+
+sound_engine_data: .enf0
+{
+	name: "/sound/truck/engine/N14/int/1000rpm-int-mono.ogg"
+
+	looped: true
+	is_2d: true
+	min_rpm: 500.0
+	max_rpm: 1300.0
+	pitch_reference:  1100
+	volume: 0.41
+}
+
+sound_engine_data: .enf1
+{
+	name: "/sound/truck/engine/N14/int/lever_le_pied.ogg"
+
+	looped: true
+	is_2d: true
+	min_rpm: 1000.0
+	max_rpm: 3000.0
+	pitch_reference:  1610
+	volume: 0.5
+}
+
+sound_engine_data: .enf2
+{
+	name: "/sound/truck/engine/N14/int/turbo_idle.ogg"
+
+	looped: true
+
+	pitch_reference: 1000
+
+	min_rpm: 400.0
+	max_rpm: 1302.0
+	volume: 0.14
+}
+
+sound_engine_data: .enf3
+{
+	name: "/sound/truck/engine/N14/int/turbo_idle2.ogg"
+
+	looped: true
+
+	pitch_reference: 1500
+
+	min_rpm: 900.0
+	max_rpm: 3000.0
+	volume: 0.15
+}
+
+sound_engine_data: .enf4
+{
+	name: "/sound/truck/engine/N14/int/1500rpm.ogg"
+
+	looped: true
+
+	pitch_reference: 1450
+
+	min_rpm: 580.0
+	max_rpm: 2200.0
+	volume: 0.2
+}
+
+sound_data: .t
+{
+	name: "/sound/truck/engine/N14/int/turbo_int.ogg"
+	looped: true
+	volume: 0.32
+}
+
+sound_data: .airgear0
+{
+	name: "/sound/truck/common/int/int_gear_air_1.ogg"
+	volume: 0.27
+}
+
+sound_data: .airgear1
+{
+	name: "/sound/truck/common/int/int_gear_air_2.ogg"
+	volume: 0.27
+}
+
+sound_data: .airgear2
+{
+	name: "/sound/truck/common/int/int_gear_air_3.ogg"
+	volume: 0.27
+}
+
+sound_data: .airbrake0
+{
+	name: "/sound/truck/common/int/air_brake1.ogg"
+	looped: false
+}
+sound_data: .airbrake1
+{
+	name: "/sound/truck/common/int/air_brake2.ogg"
+	looped: false
+}
+
+sound_data: .airbrake2
+{
+	name: "/sound/truck/common/int/air_brake3.ogg"
+	looped: false
+}
+
+sound_data: .airbrake3
+{
+	name: "/sound/truck/common/int/air_brake4.ogg"
+	looped: false
+}
+
+sound_engine_data: .eb
+{
+	name: "/sound/truck/engine/N14/int/engine_brake_int.ogg"
+	looped: true
+	is_2d: true
+	pitch_reference: 1520
+	min_rpm: 750.0
+	max_rpm: 3000.0
+	volume: 1.1
+}
+
+sound_data: .horn
+{
+	name: "/sound/truck/common/int/horn.ogg"
+	looped: true
+}
+
+sound_data: .ahorn
+{
+	name: "/sound/truck/W900_N14/ext/air_horn.ogg"
+	looped: true
+}
+
+sound_data: .reverse
+{
+	name: "/sound/truck/common/int/reverse.ogg"
+	looped: true
+}
+
+sound_data: .blinker_on
+{
+	name: "/sound/truck/common/int/blinker_on.ogg"
+	is_2d: true
+	volume: 0.2
+}
+
+sound_data: .blinker_off
+{
+	name: "/sound/truck/common/int/blinker_off.ogg"
+	is_2d: true
+	volume: 0.2
+}
+
+sound_data: .wipers_up
+{
+	name: "/sound/truck/common/int/wiper_up.ogg"
+	is_2d: true
+	volume: 0.36
+}
+
+sound_data: .wipers_down
+{
+	name: "/sound/truck/common/int/wiper_down.ogg"
+	is_2d: true
+	volume: 0.36
+}
+
+@include "/def/vehicle/truck/common_sound_int_data.sui"
+
+}
+
+
+
