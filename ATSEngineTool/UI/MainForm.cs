@@ -553,7 +553,7 @@ namespace ATSEngineTool
 
         private void appLink_Click(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/wilson212/ATSEngineTool/releases/latest");
+            Process.Start("https://github.com/wilson212/ATSEngineTool");
         }
 
         private void appFolder_Click(object sender, EventArgs e)

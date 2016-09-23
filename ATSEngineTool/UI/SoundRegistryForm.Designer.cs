@@ -28,33 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("Installed Packages", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("Uninstalled Packages", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Installed Packages", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Uninstalled Packages", System.Windows.Forms.HorizontalAlignment.Left);
             this.shadowLabel1 = new System.Windows.Forms.ShadowLabel();
             this.footerPanel = new System.Windows.Forms.Panel();
             this.confirmButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.removeButton = new System.Windows.Forms.Button();
+            this.updateButton = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.extFilenameBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.intFilenameBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.packageNameBox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.soundListView = new System.Windows.Forms.ListView();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.headerPanel = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
-            this.packageNameBox = new System.Windows.Forms.TextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.updateButton = new System.Windows.Forms.Button();
-            this.removeButton = new System.Windows.Forms.Button();
-            this.intFilenameBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.extFilenameBox = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.footerPanel.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.headerPanel.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.headerPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // shadowLabel1
@@ -86,6 +86,7 @@
             // 
             // confirmButton
             // 
+            this.confirmButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.confirmButton.Location = new System.Drawing.Point(411, 13);
             this.confirmButton.Name = "confirmButton";
             this.confirmButton.Size = new System.Drawing.Size(100, 25);
@@ -115,6 +116,100 @@
             this.panel1.Size = new System.Drawing.Size(784, 482);
             this.panel1.TabIndex = 33;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.removeButton);
+            this.groupBox2.Controls.Add(this.updateButton);
+            this.groupBox2.Location = new System.Drawing.Point(413, 351);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(360, 56);
+            this.groupBox2.TabIndex = 31;
+            this.groupBox2.TabStop = false;
+            // 
+            // removeButton
+            // 
+            this.removeButton.Enabled = false;
+            this.removeButton.Location = new System.Drawing.Point(35, 19);
+            this.removeButton.Name = "removeButton";
+            this.removeButton.Size = new System.Drawing.Size(100, 25);
+            this.removeButton.TabIndex = 26;
+            this.removeButton.Text = "Uninstall";
+            this.removeButton.UseVisualStyleBackColor = true;
+            this.removeButton.Click += new System.EventHandler(this.removeButton_Click);
+            // 
+            // updateButton
+            // 
+            this.updateButton.Location = new System.Drawing.Point(225, 19);
+            this.updateButton.Name = "updateButton";
+            this.updateButton.Size = new System.Drawing.Size(100, 25);
+            this.updateButton.TabIndex = 25;
+            this.updateButton.Text = "Update";
+            this.updateButton.UseVisualStyleBackColor = true;
+            this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.extFilenameBox);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.intFilenameBox);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.packageNameBox);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Location = new System.Drawing.Point(410, 71);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(360, 279);
+            this.groupBox1.TabIndex = 30;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Package Info";
+            // 
+            // extFilenameBox
+            // 
+            this.extFilenameBox.Location = new System.Drawing.Point(122, 161);
+            this.extFilenameBox.Name = "extFilenameBox";
+            this.extFilenameBox.Size = new System.Drawing.Size(203, 20);
+            this.extFilenameBox.TabIndex = 32;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(26, 164);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(90, 13);
+            this.label2.TabIndex = 33;
+            this.label2.Text = "Exterior Filename:";
+            // 
+            // intFilenameBox
+            // 
+            this.intFilenameBox.Location = new System.Drawing.Point(122, 113);
+            this.intFilenameBox.Name = "intFilenameBox";
+            this.intFilenameBox.Size = new System.Drawing.Size(203, 20);
+            this.intFilenameBox.TabIndex = 30;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(29, 116);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(87, 13);
+            this.label1.TabIndex = 31;
+            this.label1.Text = "Interior Filename:";
+            // 
+            // packageNameBox
+            // 
+            this.packageNameBox.Location = new System.Drawing.Point(122, 61);
+            this.packageNameBox.Name = "packageNameBox";
+            this.packageNameBox.Size = new System.Drawing.Size(203, 20);
+            this.packageNameBox.TabIndex = 28;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(32, 64);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(84, 13);
+            this.label7.TabIndex = 29;
+            this.label7.Text = "Package Name:";
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -133,13 +228,13 @@
             this.columnHeader3,
             this.columnHeader4});
             this.soundListView.FullRowSelect = true;
-            listViewGroup5.Header = "Installed Packages";
-            listViewGroup5.Name = "installedGroup";
-            listViewGroup6.Header = "Uninstalled Packages";
-            listViewGroup6.Name = "removedGroup";
+            listViewGroup1.Header = "Installed Packages";
+            listViewGroup1.Name = "installedGroup";
+            listViewGroup2.Header = "Uninstalled Packages";
+            listViewGroup2.Name = "removedGroup";
             this.soundListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup5,
-            listViewGroup6});
+            listViewGroup1,
+            listViewGroup2});
             this.soundListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.soundListView.HideSelection = false;
             this.soundListView.Location = new System.Drawing.Point(15, 71);
@@ -173,100 +268,6 @@
             this.headerPanel.TabIndex = 34;
             this.headerPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.headerPanel_Paint);
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(32, 64);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(84, 13);
-            this.label7.TabIndex = 29;
-            this.label7.Text = "Package Name:";
-            // 
-            // packageNameBox
-            // 
-            this.packageNameBox.Location = new System.Drawing.Point(122, 61);
-            this.packageNameBox.Name = "packageNameBox";
-            this.packageNameBox.Size = new System.Drawing.Size(203, 20);
-            this.packageNameBox.TabIndex = 28;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.extFilenameBox);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.intFilenameBox);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.packageNameBox);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Location = new System.Drawing.Point(410, 71);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(360, 279);
-            this.groupBox1.TabIndex = 30;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Package Info";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.removeButton);
-            this.groupBox2.Controls.Add(this.updateButton);
-            this.groupBox2.Location = new System.Drawing.Point(413, 351);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(360, 56);
-            this.groupBox2.TabIndex = 31;
-            this.groupBox2.TabStop = false;
-            // 
-            // updateButton
-            // 
-            this.updateButton.Location = new System.Drawing.Point(225, 19);
-            this.updateButton.Name = "updateButton";
-            this.updateButton.Size = new System.Drawing.Size(100, 25);
-            this.updateButton.TabIndex = 25;
-            this.updateButton.Text = "Update";
-            this.updateButton.UseVisualStyleBackColor = true;
-            this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
-            // 
-            // removeButton
-            // 
-            this.removeButton.Enabled = false;
-            this.removeButton.Location = new System.Drawing.Point(35, 19);
-            this.removeButton.Name = "removeButton";
-            this.removeButton.Size = new System.Drawing.Size(100, 25);
-            this.removeButton.TabIndex = 26;
-            this.removeButton.Text = "Uninstall";
-            this.removeButton.UseVisualStyleBackColor = true;
-            this.removeButton.Click += new System.EventHandler(this.removeButton_Click);
-            // 
-            // intFilenameBox
-            // 
-            this.intFilenameBox.Location = new System.Drawing.Point(122, 113);
-            this.intFilenameBox.Name = "intFilenameBox";
-            this.intFilenameBox.Size = new System.Drawing.Size(203, 20);
-            this.intFilenameBox.TabIndex = 30;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(29, 116);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(87, 13);
-            this.label1.TabIndex = 31;
-            this.label1.Text = "Interior Filename:";
-            // 
-            // extFilenameBox
-            // 
-            this.extFilenameBox.Location = new System.Drawing.Point(122, 161);
-            this.extFilenameBox.Name = "extFilenameBox";
-            this.extFilenameBox.Size = new System.Drawing.Size(203, 20);
-            this.extFilenameBox.TabIndex = 32;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 164);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(90, 13);
-            this.label2.TabIndex = 33;
-            this.label2.Text = "Exterior Filename:";
-            // 
             // SoundRegistryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -282,10 +283,10 @@
             this.footerPanel.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.headerPanel.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
+            this.headerPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

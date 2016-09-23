@@ -40,7 +40,7 @@ namespace ATSEngineTool
         {
             if (Directory.Exists(CompilePath))
             {
-                Directory.Delete(CompilePath, true);
+                DirectoryExt.Delete(CompilePath);
                 Directory.CreateDirectory(DefCompilePath);
             }
         }
@@ -59,7 +59,7 @@ namespace ATSEngineTool
             string path = Path.Combine(ModPath, "def");
             if (cleanEngines && Directory.Exists(path))
             {
-                Directory.Delete(path, true);
+                DirectoryExt.Delete(path);
             }
 
             // Sync the def files
@@ -72,7 +72,7 @@ namespace ATSEngineTool
             // Sync common sound files
             path = Path.Combine(ModPath, "sound", "truck", "common");
             if (cleanSounds && Directory.Exists(path))
-                Directory.Delete(path, true);
+                DirectoryExt.Delete(path);
 
             if (cleanSounds || !Directory.Exists(path))
                 DirectoryExt.Copy(Path.Combine(Program.RootPath, "sounds", "common"), path, true, true);
@@ -80,7 +80,7 @@ namespace ATSEngineTool
             // Sync common noise files
             path = Path.Combine(ModPath, "sound", "truck", "noises");
             if (cleanSounds && Directory.Exists(path))
-                Directory.Delete(path, true);
+                DirectoryExt.Delete(path);
 
             if (cleanSounds || !Directory.Exists(path))
                 DirectoryExt.Copy(Path.Combine(Program.RootPath, "sounds", "noises"), path, true, true);
@@ -93,7 +93,7 @@ namespace ATSEngineTool
                     // Mod folder path to the sounds
                     path = Path.Combine(ModPath, "sound", "truck", "engine", sound.FolderName);
                     if (cleanSounds && Directory.Exists(path))
-                        Directory.Delete(path, true);
+                        DirectoryExt.Delete(path);
 
                     // Paths
                     string intPath = Path.Combine(path, "int");
