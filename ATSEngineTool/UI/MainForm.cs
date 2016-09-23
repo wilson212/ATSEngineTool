@@ -193,46 +193,50 @@ namespace ATSEngineTool
             }
         }
 
-        private void truckListView2_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        private async void truckListView2_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
+            // If we have no selected trucks, skimp out here
+            if (truckListView2.SelectedItems.Count == 0) return;
+
             // Clear out existing data
             engineListView.Items.Clear();
             engineListView.Groups.Clear();
-
-            // If we have no selected trucks, skimp out here
-            if (truckListView2.SelectedItems.Count == 0) return;
 
             // Setup local variables
             ListViewItem selected = truckListView2.SelectedItems[0];
             Truck truck = selected.Tag as Truck;
             ListViewGroup group = new ListViewGroup() { Tag = -1 };
 
-            // Load engines from the database
-            using (AppDatabase db = new AppDatabase())
+            // DO this in a new thread, because its slow
+            IEnumerable<Engine> engines = await Task.Run<IEnumerable<Engine>>(() =>
             {
-                // Grab the trucks engines, ordered by Brand
-                var engines = from x in truck.TruckEngines
-                              orderby x.Engine.Series.ToString() ascending, 
-                                      x.Engine.Horsepower descending
-                              select x.Engine;
-
-                // Fill in trucks
-                foreach (Engine eng in engines)
+                // Load engines from the database
+                using (AppDatabase db = new AppDatabase())
                 {
-                    // Setup group?
-                    if (((int)group.Tag) != eng.SeriesId)
-                    {
-                        group = new ListViewGroup(eng.Series.ToString());
-                        group.Tag = eng.SeriesId;
-                        engineListView.Groups.Add(group);
-                    }
-
-                    ListViewItem item = new ListViewItem();
-                    item.Tag = eng;
-                    item.Text = eng.Name;
-                    group.Items.Add(item);
-                    engineListView.Items.Add(item);
+                    // Grab the trucks engines, ordered by Brand, then by Horsepower
+                    return from x in truck.TruckEngines
+                           let engine = x.Engine // Fetch once from DB (lazy loaded)
+                           orderby engine.Series.ToString() ascending, engine.Horsepower descending
+                           select engine;
                 }
+            });
+
+            // Fill in trucks
+            foreach (Engine eng in engines)
+            {
+                // Setup group?
+                if (((int)group.Tag) != eng.SeriesId)
+                {
+                    group = new ListViewGroup(eng.Series.ToString());
+                    group.Tag = eng.SeriesId;
+                    engineListView.Groups.Add(group);
+                }
+
+                ListViewItem item = new ListViewItem();
+                item.Tag = eng;
+                item.Text = eng.Name;
+                group.Items.Add(item);
+                engineListView.Items.Add(item);
             }
         }
 

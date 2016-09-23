@@ -364,6 +364,58 @@ namespace ATSEngineTool
             torqueBox_ValueChanged(this, EventArgs.Empty);
         }
 
+        private void ratioListView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (ratioListView.SelectedItems.Count == 0) return;
+
+            ListViewItem item = ratioListView.SelectedItems[0];
+            int index = (int)item.Tag;
+            if (e.KeyCode == Keys.Delete)
+            {
+                // Remove torque ratio
+                Ratios.RemoveAt(index);
+
+                // Force Points Redraw
+                PopulateTorqueRatios();
+
+                // Force a chart redraw
+                torqueBox_ValueChanged(this, EventArgs.Empty);
+
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Enter)
+            {
+                using (TorqueCurveForm frm = new TorqueCurveForm())
+                {
+                    // Set form values
+                    TorqueRatio ratio = Ratios[index];
+                    frm.rpmLevelBox.Value = ratio.RpmLevel;
+                    frm.torqueLevelBox.Value = Math.Round(ratio.Ratio * 100, 0);
+
+                    // Show form
+                    var result = frm.ShowDialog();
+                    if (result == DialogResult.Yes)
+                    {
+                        // Prevent too large of a number
+                        decimal r = (int)frm.torqueLevelBox.Value;
+                        if (r > 100m) r = 100m;
+
+                        // Create the new Ratio
+                        ratio.RpmLevel = (int)frm.rpmLevelBox.Value;
+                        ratio.Ratio = Math.Round(r / 100, 2);
+
+                        // Force Points Redraw
+                        PopulateTorqueRatios();
+
+                        // Force a chart redraw
+                        torqueBox_ValueChanged(this, EventArgs.Empty);
+                    }
+                }
+
+                e.Handled = true;
+            }
+        }
+
         private void addPointButton_Click(object sender, EventArgs e)
         {
             using (TorqueCurveForm frm = new TorqueCurveForm())

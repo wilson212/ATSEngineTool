@@ -36,6 +36,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.unitNameBox = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.filenameTextBox = new System.Windows.Forms.TextBox();
             this.engineIcon = new System.Windows.Forms.PictureBox();
             this.engineModelBox = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
@@ -117,8 +119,6 @@
             this.confirmButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.headerPanel = new System.Windows.Forms.Panel();
-            this.label30 = new System.Windows.Forms.Label();
-            this.filenameTextBox = new System.Windows.Forms.TextBox();
             this.shadowLabel1 = new System.Windows.Forms.ShadowLabel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.engineIcon)).BeginInit();
@@ -198,6 +198,23 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Info";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(17, 156);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(57, 13);
+            this.label30.TabIndex = 35;
+            this.label30.Text = "File Name:";
+            // 
+            // filenameTextBox
+            // 
+            this.filenameTextBox.Enabled = false;
+            this.filenameTextBox.Location = new System.Drawing.Point(106, 153);
+            this.filenameTextBox.Name = "filenameTextBox";
+            this.filenameTextBox.Size = new System.Drawing.Size(203, 20);
+            this.filenameTextBox.TabIndex = 3;
             // 
             // engineIcon
             // 
@@ -1066,6 +1083,7 @@
             this.ratioListView.UseCompatibleStateImageBehavior = false;
             this.ratioListView.View = System.Windows.Forms.View.Details;
             this.ratioListView.SelectedIndexChanged += new System.EventHandler(this.ratioListView_SelectedIndexChanged);
+            this.ratioListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ratioListView_KeyDown);
             this.ratioListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ratioListView_MouseDoubleClick);
             // 
             // columnHeader1
@@ -1318,23 +1336,6 @@
             this.headerPanel.Size = new System.Drawing.Size(884, 80);
             this.headerPanel.TabIndex = 28;
             this.headerPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.headerPanel_Paint);
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(17, 156);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(57, 13);
-            this.label30.TabIndex = 35;
-            this.label30.Text = "File Name:";
-            // 
-            // filenameTextBox
-            // 
-            this.filenameTextBox.Enabled = false;
-            this.filenameTextBox.Location = new System.Drawing.Point(106, 153);
-            this.filenameTextBox.Name = "filenameTextBox";
-            this.filenameTextBox.Size = new System.Drawing.Size(203, 20);
-            this.filenameTextBox.TabIndex = 3;
             // 
             // shadowLabel1
             // 

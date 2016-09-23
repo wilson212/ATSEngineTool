@@ -47,8 +47,15 @@ namespace ATSEngineTool
         {
             if (Directory.Exists(CompilePath))
             {
-                DirectoryExt.Delete(CompilePath);
-                Directory.CreateDirectory(DefCompilePath);
+                try
+                {
+                    DirectoryExt.Delete(CompilePath);
+                    Directory.CreateDirectory(DefCompilePath);
+                }
+                catch (Exception e) when (e.Message.Contains("empty"))
+                {
+                    throw new Exception("Unable to delete Compile directory because it is open. Please close this directory and try again.", e);
+                }
             }
         }
 
