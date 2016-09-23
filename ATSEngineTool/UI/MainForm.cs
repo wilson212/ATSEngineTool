@@ -676,8 +676,8 @@ namespace ATSEngineTool
                     if (syncCheckBox.Checked)
                     {
                         Mod.Sync(
-                            cleanModCheckBox.Enabled && cleanModCheckBox.Checked,
-                            cleanSoundsCheckBox.Enabled && cleanSoundsCheckBox.Checked
+                            Program.Config.IntegrateWithMod && cleanModCheckBox.Checked,
+                            Program.Config.IntegrateWithMod && cleanSoundsCheckBox.Checked
                         );
                     }
                 });

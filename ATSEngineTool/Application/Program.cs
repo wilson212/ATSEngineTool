@@ -22,7 +22,7 @@ namespace ATSEngineTool
         /// <summary>
         /// Program Version
         /// </summary>
-        public static Version Version { get; private set; } = new Version(2, 1, 0);
+        public static Version Version { get; private set; } = new Version(2, 1, 1);
 
         /// <summary>
         /// The main entry point for the application.
