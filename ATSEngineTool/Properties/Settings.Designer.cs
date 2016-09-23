@@ -46,5 +46,17 @@ namespace ATSEngineTool.Properties {
                 this["SteamPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IntegrateWithMod {
+            get {
+                return ((bool)(this["IntegrateWithMod"]));
+            }
+            set {
+                this["IntegrateWithMod"] = value;
+            }
+        }
     }
 }

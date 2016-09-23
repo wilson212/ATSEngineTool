@@ -224,6 +224,7 @@
             this.syncCheckBox.Text = "Sync Compiled Engines with Mod";
             this.syncCheckBox.UseVisualStyleBackColor = true;
             this.syncCheckBox.CheckedChanged += new System.EventHandler(this.syncCheckBox_CheckedChanged);
+            this.syncCheckBox.EnabledChanged += new System.EventHandler(this.syncCheckBox_EnabledChanged);
             // 
             // cleanCompCheckBox
             // 

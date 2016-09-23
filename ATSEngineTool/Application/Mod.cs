@@ -16,10 +16,17 @@ namespace ATSEngineTool
         {
             get
             {
-                return Path.Combine(
-                    Program.Config.SteamPath, "SteamApps", "workshop",
-                    "content", "270880", "650050267", "latest"
-                );
+                if (Program.Config.IntegrateWithMod)
+                {
+                    return Path.Combine(
+                        Program.Config.SteamPath, "SteamApps", "workshop",
+                        "content", "270880", "650050267", "latest"
+                    );
+                }
+                else
+                {
+                    return CompilePath;
+                }
             }
         }
 
@@ -63,7 +70,8 @@ namespace ATSEngineTool
             }
 
             // Sync the def files
-            DirectoryExt.Copy(DefCompilePath, path, true, true);
+            if (Program.Config.IntegrateWithMod)
+                DirectoryExt.Copy(DefCompilePath, path, true, true);
 
             // Sync icons
             path = Path.Combine(ModPath, "material", "ui", "accessory");

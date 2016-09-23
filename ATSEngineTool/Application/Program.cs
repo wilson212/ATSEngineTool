@@ -22,12 +22,7 @@ namespace ATSEngineTool
         /// <summary>
         /// Program Version
         /// </summary>
-        public static Version Version { get; private set; } = new Version(2, 0, 0);
-
-        /// <summary>
-        /// The root path to the __Templates directory
-        /// </summary>
-        //public static readonly string TemplatesaPath = Path.Combine(Program.RootPath, "__Templates");
+        public static Version Version { get; private set; } = new Version(2, 1, 0);
 
         /// <summary>
         /// The main entry point for the application.
@@ -61,8 +56,40 @@ namespace ATSEngineTool
                 }
             }
 
+            // Initialize Database
+            InitializeDatabase();
+
             // Run the main GUI
             Application.Run(new MainForm());
+        }
+
+        /// <summary>
+        /// Ensures the "data" folder is created, and migrates the database from
+        /// 2.0.1 to the new directory
+        /// </summary>
+        private static void InitializeDatabase()
+        {
+            // Make sure the data directory exists
+            string path = Path.Combine(Program.RootPath, "data");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            // Check for app data
+            string oldPath = Path.Combine(Program.RootPath, "EngineData.db");
+            string newPath = Path.Combine(Program.RootPath, "data", "AppData.db");
+            if (File.Exists(oldPath))
+            {
+                File.Move(oldPath, newPath);
+            }
+
+            // Create a database from the default data if the database doesnt exist
+            string defaultData = Path.Combine(Program.RootPath, "data", "Default.db");
+            if (!File.Exists(newPath) && File.Exists(defaultData))
+            {
+                File.Copy(defaultData, newPath);
+            }
         }
 
         /// <summary>

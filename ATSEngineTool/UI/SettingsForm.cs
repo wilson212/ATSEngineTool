@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ATSEngineTool
@@ -19,6 +13,7 @@ namespace ATSEngineTool
             headerPanel.BackColor = Color.FromArgb(51, 53, 53);
 
             SteamInstallPath.Text = Program.Config.SteamPath;
+            linkCheckBox.Checked = Program.Config.IntegrateWithMod;
         }
 
         private void ChangeButton_Click(object sender, EventArgs e)
@@ -66,6 +61,7 @@ namespace ATSEngineTool
         private void ConfirmButton_Click(object sender, EventArgs e)
         {
             Program.Config.SteamPath = SteamInstallPath.Text;
+            Program.Config.IntegrateWithMod = linkCheckBox.Checked;
             Program.Config.Save();
             this.Close();
         }

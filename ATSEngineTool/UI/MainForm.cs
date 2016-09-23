@@ -27,68 +27,68 @@ namespace ATSEngineTool
             string atsPath = Path.Combine(steamPath ?? "temp", "SteamApps", "common",
                 "American Truck Simulator", "bin", "win_x64", "amtrucks.exe");
 
-            // Check for ATS installation
-            if (String.IsNullOrWhiteSpace(steamPath) || !File.Exists(atsPath))
+            // If we are integrating with Real Engines and Sounds, Check for ATS installation
+            if (Program.Config.IntegrateWithMod && (String.IsNullOrWhiteSpace(steamPath) || !File.Exists(atsPath)))
             {
                 DialogResult res = MessageBox.Show(
-                    "A path to your Steam Library Installation where American Truck Simulator is installed "
-                        + "is required. Sadly we were unable to auto-detect the installation path. "
-                        + "Would you like to locate this installation this now?",
+                    "To take advantage of mod integration with the Real Engines and Sounds Mod, a path to your Steam Library Installation "
+                        + "where American Truck Simulator is installed is required. Would you like to enable mod integration with "
+                        + "Real Engines and Sounds? This setting can be changed later if you change your mind. ",
                     "Steam Installation", MessageBoxButtons.YesNo, MessageBoxIcon.Question
                 );
 
                 // Quit here if the user does not want to show us where ATS is isntalled
-                if (res != DialogResult.Yes)
+                if (res == DialogResult.Yes)
                 {
-                    this.Load += (s, e) => this.Close();
-                    return;
-                }
-
-                // Our loop back, incase the user selects the wrong Library
-                LocateInstall:
-                {
-                    // Request the user supply the steam library path
-                    OpenFileDialog Dialog = new OpenFileDialog();
-                    Dialog.Title = "Steam Library Path where American Truck Simulator is Installed";
-                    Dialog.FileName = "Steam.dll";
-                    Dialog.Filter = "Steam Library|Steam.exe;Steam.dll";
-                    if (Dialog.ShowDialog() == DialogResult.OK)
+                    // Our loop back, incase the user selects the wrong Library
+                    LocateInstall:
                     {
-                        // Set paths
-                        steamPath = Path.GetDirectoryName(Dialog.FileName);
-                        atsPath = Path.Combine(steamPath, "SteamApps", "common",
-                            "American Truck Simulator", "bin", "win_x64", "amtrucks.exe");
-
-                        // If Ats is not installed here...
-                        if (!File.Exists(atsPath))
+                        // Request the user supply the steam library path
+                        OpenFileDialog Dialog = new OpenFileDialog();
+                        Dialog.Title = "Steam Library Path where American Truck Simulator is Installed";
+                        Dialog.FileName = "Steam.dll";
+                        Dialog.Filter = "Steam Library|Steam.exe;Steam.dll";
+                        if (Dialog.ShowDialog() == DialogResult.OK)
                         {
-                            // Alert the user that they are wrong...
-                            res = MessageBox.Show(
-                                "Sadly, American Truck Simulator is not installed in this Steam Library. "
-                                    + "Would you like to try another location?",
-                                "Steam Installation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning
-                            );
+                            // Set paths
+                            steamPath = Path.GetDirectoryName(Dialog.FileName);
+                            atsPath = Path.Combine(steamPath, "SteamApps", "common",
+                                "American Truck Simulator", "bin", "win_x64", "amtrucks.exe");
 
-                            // Quit here
-                            if (res != DialogResult.Yes)
+                            // If Ats is not installed here...
+                            if (!File.Exists(atsPath))
                             {
-                                this.Load += (s, e) => this.Close();
-                                return;
+                                // Alert the user that they are wrong...
+                                res = MessageBox.Show(
+                                    "Sadly, American Truck Simulator is not installed in this Steam Library. "
+                                        + "Would you like to try another location?",
+                                    "Steam Installation", MessageBoxButtons.YesNo, MessageBoxIcon.Question
+                                );
+
+                                // Start over ?
+                                if (res == DialogResult.Yes)
+                                {
+                                    goto LocateInstall;
+                                }
+                                else
+                                {
+                                    Program.Config.IntegrateWithMod = false;
+                                }
                             }
 
-                            // Start over...
-                            goto LocateInstall;
+                            // Save the location
+                            Program.Config.SteamPath = steamPath;
+                            Program.Config.Save();
                         }
-
-                        // Save the location
-                        Program.Config.SteamPath = steamPath;
-                        Program.Config.Save();
+                        else
+                        {
+                            Program.Config.IntegrateWithMod = false;
+                        }
                     }
-                    else
-                    {
-                        this.Load += (s, e) => this.Close();
-                        return;
-                    }
+                }
+                else
+                {
+                    Program.Config.IntegrateWithMod = false;
                 }
             }
 
@@ -103,6 +103,9 @@ namespace ATSEngineTool
                 // Set label text
                 dbVersionLabel.Text = AppDatabase.DatabaseVersion.ToString();
             }
+
+            // Set sync enabled
+            syncCheckBox.Enabled = Program.Config.IntegrateWithMod;
         }
 
         private void FillEnginesSeries(AppDatabase db)
@@ -672,7 +675,10 @@ namespace ATSEngineTool
                     // Are we sync'ing the Compiled and Mod folders?
                     if (syncCheckBox.Checked)
                     {
-                        Mod.Sync(cleanModCheckBox.Checked, cleanSoundsCheckBox.Checked);
+                        Mod.Sync(
+                            cleanModCheckBox.Enabled && cleanModCheckBox.Checked,
+                            cleanSoundsCheckBox.Enabled && cleanSoundsCheckBox.Checked
+                        );
                     }
                 });
             }
@@ -698,6 +704,7 @@ namespace ATSEngineTool
             using (SettingsForm frm = new SettingsForm())
             {
                 frm.ShowDialog();
+                syncCheckBox.Enabled = Program.Config.IntegrateWithMod;
             }
         }
 
@@ -720,6 +727,12 @@ namespace ATSEngineTool
             {
                 frm.ShowDialog();
             }
+        }
+
+        private void syncCheckBox_EnabledChanged(object sender, EventArgs e)
+        {
+            cleanModCheckBox.Enabled = syncCheckBox.Enabled;
+            cleanSoundsCheckBox.Enabled = syncCheckBox.Enabled;
         }
     }
 }

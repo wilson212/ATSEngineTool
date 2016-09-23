@@ -117,7 +117,6 @@
     <Compile Include="UI\TruckEditForm.Designer.cs">
       <DependentUpon>TruckEditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Application\PageOffsetList.cs" />
     <Compile Include="Application\Program.cs" />
     <Compile Include="Application\Range.cs" />
     <Compile Include="Application\StringExtensions.cs" />
@@ -199,6 +198,9 @@
     <EmbeddedResource Include="engine.sii">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <None Include="data\Default.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="graphics\cat__3406.dds">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

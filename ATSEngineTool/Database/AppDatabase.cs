@@ -52,7 +52,7 @@ namespace ATSEngineTool.Database
         /// </summary>
         static AppDatabase()
         {
-            string database = Path.Combine(Program.RootPath, "EngineData.db");
+            string database = Path.Combine(Program.RootPath, "data", "AppData.db");
             Builder = new SQLiteConnectionStringBuilder();
             Builder.DataSource = database;
             Builder.ForeignKeys = true;
@@ -71,48 +71,18 @@ namespace ATSEngineTool.Database
             // Grab the current tables version
             if (DatabaseVersion == null)
             {
-                GetVersion:
+                try
                 {
-                    try
-                    {
-                        // Grab version. Plain SQL query here for performance
-                        string query = "SELECT * FROM DbVersion ORDER BY UpdateId DESC LIMIT 1";
-                        DbVersion row = Query<DbVersion>(query).FirstOrDefault();
+                    GetVersion();
+                }
+                catch (SQLiteException e) when (e.Message.Contains("no such table"))
+                {
+                    // Rebuild database tables
+                    createdTables = true;
+                    RebuildTables();
 
-                        // If row is null, then the table exists, but was truncated
-                        if (row == null)
-                        {
-                            if (createdTables)
-                                throw new Exception("Unable to create database tables");
-
-                            // Rebuild database tables
-                            createdTables = true;
-                            RebuildTables();
-
-                            // Try the query again
-                            goto GetVersion;
-                        }
-
-                        // Set instance database version
-                        DatabaseVersion = row.Version;
-                    }
-                    catch (SQLiteException e) when (e.Message.Contains("no such table"))
-                    {
-                        // If this is the first query on the database, We need to create
-                        // new Database tables
-                        if (!createdTables)
-                        {
-                            createdTables = true;
-                            RebuildTables();
-
-                            // Try the query again
-                            goto GetVersion;
-                        }
-                        else
-                        {
-                            throw;
-                        }
-                    }
+                    // Try 1 last time to get the Version
+                    GetVersion();
                 }
             }
 
@@ -136,6 +106,20 @@ namespace ATSEngineTool.Database
             {
                 wizard.MigrateTables();
             }
+        }
+
+        protected void GetVersion()
+        {
+            // Grab version. Plain SQL query here for performance
+            string query = "SELECT * FROM DbVersion ORDER BY UpdateId DESC LIMIT 1";
+            DbVersion row = Query<DbVersion>(query).FirstOrDefault();
+
+            // If row is null, then the table exists, but was truncated
+            if (row == null)
+                throw new Exception("DbVersion table is empty");
+
+            // Set instance database version
+            DatabaseVersion = row.Version;
         }
 
         /// <summary>

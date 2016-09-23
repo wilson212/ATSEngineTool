@@ -34,14 +34,23 @@ namespace ATSEngineTool.Database
         /// Gets or Sets the exterior <see cref="ATSEngineTool.Database.Engine"/> 
         /// object bound to this engine
         /// </summary>
-        public Engine Engine
-        {
-            get
-            {
-                return FK_Engine?.Fetch();
-            }
-        }
+        public Engine Engine => FK_Engine?.Fetch();
 
         #endregion
+
+        public override bool Equals(object obj)
+        {
+            if (obj is TorqueRatio)
+            {
+                var ratio = (TorqueRatio)obj;
+                return ratio.RpmLevel == this.RpmLevel;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return RpmLevel.GetHashCode();
+        }
     }
 }

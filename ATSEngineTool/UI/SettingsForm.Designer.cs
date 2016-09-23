@@ -35,10 +35,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.ConfirmButton = new System.Windows.Forms.Button();
             this.headerPanel = new System.Windows.Forms.Panel();
+            this.shadowLabel1 = new System.Windows.Forms.ShadowLabel();
             this.footerPanel = new System.Windows.Forms.Panel();
             this.cancelButton = new System.Windows.Forms.Button();
             this.contentPanel = new System.Windows.Forms.Panel();
-            this.shadowLabel1 = new System.Windows.Forms.ShadowLabel();
+            this.linkCheckBox = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.headerPanel.SuspendLayout();
@@ -57,6 +58,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.linkCheckBox);
             this.tabPage1.Controls.Add(this.ChangeButton);
             this.tabPage1.Controls.Add(this.SteamInstallPath);
             this.tabPage1.Controls.Add(this.label1);
@@ -70,7 +72,7 @@
             // 
             // ChangeButton
             // 
-            this.ChangeButton.Location = new System.Drawing.Point(386, 86);
+            this.ChangeButton.Location = new System.Drawing.Point(386, 131);
             this.ChangeButton.Name = "ChangeButton";
             this.ChangeButton.Size = new System.Drawing.Size(66, 25);
             this.ChangeButton.TabIndex = 26;
@@ -80,7 +82,7 @@
             // 
             // SteamInstallPath
             // 
-            this.SteamInstallPath.Location = new System.Drawing.Point(28, 60);
+            this.SteamInstallPath.Location = new System.Drawing.Point(28, 105);
             this.SteamInstallPath.Name = "SteamInstallPath";
             this.SteamInstallPath.ReadOnly = true;
             this.SteamInstallPath.Size = new System.Drawing.Size(424, 20);
@@ -89,7 +91,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(27, 41);
+            this.label1.Location = new System.Drawing.Point(27, 86);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(118, 13);
             this.label1.TabIndex = 0;
@@ -116,6 +118,20 @@
             this.headerPanel.Size = new System.Drawing.Size(484, 65);
             this.headerPanel.TabIndex = 30;
             this.headerPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.headerPanel_Paint);
+            // 
+            // shadowLabel1
+            // 
+            this.shadowLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.shadowLabel1.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.shadowLabel1.ForeColor = System.Drawing.SystemColors.Control;
+            this.shadowLabel1.Location = new System.Drawing.Point(37, 14);
+            this.shadowLabel1.Name = "shadowLabel1";
+            this.shadowLabel1.ShadowDirection = 90;
+            this.shadowLabel1.ShadowOpacity = 225;
+            this.shadowLabel1.ShadowSoftness = 3F;
+            this.shadowLabel1.Size = new System.Drawing.Size(297, 39);
+            this.shadowLabel1.TabIndex = 0;
+            this.shadowLabel1.Text = "Program Settings";
             // 
             // footerPanel
             // 
@@ -149,19 +165,17 @@
             this.contentPanel.Size = new System.Drawing.Size(484, 222);
             this.contentPanel.TabIndex = 35;
             // 
-            // shadowLabel1
+            // linkCheckBox
             // 
-            this.shadowLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.shadowLabel1.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.shadowLabel1.ForeColor = System.Drawing.SystemColors.Control;
-            this.shadowLabel1.Location = new System.Drawing.Point(37, 14);
-            this.shadowLabel1.Name = "shadowLabel1";
-            this.shadowLabel1.ShadowDirection = 90;
-            this.shadowLabel1.ShadowOpacity = 225;
-            this.shadowLabel1.ShadowSoftness = 3F;
-            this.shadowLabel1.Size = new System.Drawing.Size(297, 39);
-            this.shadowLabel1.TabIndex = 0;
-            this.shadowLabel1.Text = "Program Settings";
+            this.linkCheckBox.AutoSize = true;
+            this.linkCheckBox.Checked = true;
+            this.linkCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.linkCheckBox.Location = new System.Drawing.Point(40, 36);
+            this.linkCheckBox.Name = "linkCheckBox";
+            this.linkCheckBox.Size = new System.Drawing.Size(240, 17);
+            this.linkCheckBox.TabIndex = 27;
+            this.linkCheckBox.Text = "Integrate with Real Engines and Sounds Mod";
+            this.linkCheckBox.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
@@ -201,5 +215,6 @@
         private System.Windows.Forms.Panel footerPanel;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Panel contentPanel;
+        private System.Windows.Forms.CheckBox linkCheckBox;
     }
 }

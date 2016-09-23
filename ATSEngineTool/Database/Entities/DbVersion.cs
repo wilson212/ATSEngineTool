@@ -24,14 +24,8 @@ namespace ATSEngineTool.Database
         /// </summary>
         public Version Version
         {
-            get
-            {
-                return Version.Parse(VersionString);
-            }
-            set
-            {
-                VersionString = value.ToString();
-            }
+            get { return Version.Parse(VersionString); }
+            set { VersionString = value.ToString(); }
         }
 
         /// <summary>
@@ -43,14 +37,8 @@ namespace ATSEngineTool.Database
 
         public DateTime AppliedOn
         {
-            get
-            {
-                return Epoch.FromUnix(AppliedOnEpoch);
-            }
-            set
-            {
-                AppliedOnEpoch = Epoch.ToUnix(value);
-            }
+            get { return Epoch.FromUnix(AppliedOnEpoch); }
+            set { AppliedOnEpoch = Epoch.ToUnix(value); }
         }
     }
 }
