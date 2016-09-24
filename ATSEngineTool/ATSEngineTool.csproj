@@ -67,6 +67,7 @@
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.101.0\lib\net46\System.Data.SQLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -79,6 +80,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SiiEntities\AccessoryEngineData.cs" />
+    <Compile Include="SiiEntities\AccessorySoundData.cs" />
+    <Compile Include="SiiEntities\SoundData.cs" />
+    <Compile Include="SiiEntities\SoundEngineData.cs" />
     <Compile Include="UI\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -961,6 +966,10 @@
     <ProjectReference Include="..\..\CrossLite\CrossLite\CrossLite.csproj">
       <Project>{19f0606e-4bdf-4e58-a722-4100c92f90c4}</Project>
       <Name>CrossLite</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SiiParser\Sii\Sii.csproj">
+      <Project>{db29e99b-4ebe-4ed9-8378-864ce601149f}</Project>
+      <Name>Sii</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

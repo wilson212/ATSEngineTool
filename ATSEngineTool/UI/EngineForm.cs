@@ -6,11 +6,13 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using ATSEngineTool.Database;
 using FreeImageAPI;
+using Sii;
 
 namespace ATSEngineTool
 {
@@ -518,6 +520,97 @@ namespace ATSEngineTool
             Point point1 = new Point(0, 0);
             Point point2 = new Point(footerPanel.Width, 0);
             e.Graphics.DrawLine(greyPen, point1, point2);
+        }
+
+        private void importButton_Click(object sender, EventArgs e)
+        {
+            // Request the user supply the steam library path
+            OpenFileDialog Dialog = new OpenFileDialog();
+            Dialog.Title = "Engine SII File Import";
+            Dialog.Filter = "SiiNunit|*.sii";
+            if (Dialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    var document = new SiiDocument(typeof(AccessoryEngineData));
+
+                    using (FileStream stream = File.OpenRead(Dialog.FileName))
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        // Read the file contents
+                        string contents = reader.ReadToEnd();
+                        document.Load(contents);
+
+                        // Grab the engine object
+                        List<string> objects = new List<string>(document.Definitions.Keys);
+                        AccessoryEngineData engine = document.GetDefinition<AccessoryEngineData>(objects[0]);
+
+                        // === Set form values
+                        int len = objects[0].IndexOf('.');
+                        unitNameBox.Text = objects[0].Substring(0, len);
+                        engineNameBox.Text = engine.Name;
+                        filenameTextBox.Text = Path.GetFileName(Dialog.FileName);
+                        unlockBox.Value = engine.UnlockLevel;
+                        priceBox.Value = engine.Price;
+                        neutralRpmBox.Value = engine.RpmLimitNeutral;
+                        rpmLimitBox.Value = engine.RpmLimit;
+                        idleRpmBox.Value = engine.IdleRpm;
+                        brakeStrengthBox.Value = (decimal)engine.BrakeStrength;
+                        brakePositionsBox.Value = engine.BrakePosition;
+                        automaticDSCheckBox.Checked = engine.BrakeDownshift == 1;
+
+                        // Tab 3
+                        rpmRangeBox1.Value = (int)engine.RpmRange_LowGear.X;
+                        rpmRangeBox2.Value = (int)engine.RpmRange_LowGear.Y;
+                        rpmRangeBox3.Value = (int)engine.RpmRange_HighGear.X;
+                        rpmRangeBox4.Value = (int)engine.RpmRange_HighGear.Y;
+                        rpmRangeBox5.Value = (int)engine.RpmRange_PowerBoost.X;
+                        rpmRangeBox6.Value = (int)engine.RpmRange_PowerBoost.Y;
+
+                        // Parse Horsepower
+                        Regex reg = new Regex("^(?<hp>[0-9]+)", RegexOptions.Multiline);
+                        if (reg.IsMatch(engine.Info[0]))
+                        {
+                            horsepowerBox.Value = Int32.Parse(reg.Match(engine.Info[0]).Groups["hp"].Value);
+                        }
+
+                        // Clear torque curves
+                        chart1.Series[0].Points.Clear();
+                        ratioListView.Items.Clear();
+                        Ratios.Clear();
+
+                        // Set new torque curves
+                        foreach (Vector2 vector in engine.TorqueCurve)
+                        {
+                            TorqueRatio ratio = new TorqueRatio();
+                            ratio.RpmLevel = (int)vector.X;
+                            ratio.Ratio = (decimal)vector.Y;
+                            Ratios.Add(ratio);
+                        }
+
+                        // Fill ratio view
+                        PopulateTorqueRatios();
+                        torqueBox.Value = Engine.NmToTorque(engine.Torque);
+
+                        // Defaults (skip sounds)
+                        fileDefaultsTextBox.Lines = (
+                                from x in engine.Defaults
+                                where !x.Contains("/sound/")
+                                select x
+                            ).ToArray();
+
+                        // Alert the user
+                        MessageBox.Show(
+                           $"Successfully imported the engine \"{engine.Name}\"! You must now select an engine series for this engine.",
+                           "Import Successful", MessageBoxButtons.OK, MessageBoxIcon.Information
+                        );
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "An Error Occured", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

@@ -256,6 +256,7 @@
             this.truckListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader4});
             this.truckListView1.FullRowSelect = true;
+            this.truckListView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.truckListView1.HideSelection = false;
             this.truckListView1.Location = new System.Drawing.Point(17, 25);
             this.truckListView1.MultiSelect = false;

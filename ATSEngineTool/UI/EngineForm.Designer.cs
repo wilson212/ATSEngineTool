@@ -120,6 +120,7 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.headerPanel = new System.Windows.Forms.Panel();
             this.shadowLabel1 = new System.Windows.Forms.ShadowLabel();
+            this.importButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.engineIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceBox)).BeginInit();
@@ -1221,7 +1222,7 @@
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage4.Size = new System.Drawing.Size(886, 426);
             this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "File Comments and Attachments";
+            this.tabPage4.Text = "Engine Accessories and Comments";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // groupBox9
@@ -1233,7 +1234,7 @@
             this.groupBox9.Size = new System.Drawing.Size(407, 364);
             this.groupBox9.TabIndex = 1;
             this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "File Attachments (default[])";
+            this.groupBox9.Text = "Engine Accessories (default[])";
             // 
             // label29
             // 
@@ -1296,6 +1297,7 @@
             // 
             this.footerPanel.BackColor = System.Drawing.Color.DimGray;
             this.footerPanel.BackgroundImage = global::ATSEngineTool.Properties.Resources.mainPattern;
+            this.footerPanel.Controls.Add(this.importButton);
             this.footerPanel.Controls.Add(this.confirmButton);
             this.footerPanel.Controls.Add(this.cancelButton);
             this.footerPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -1307,7 +1309,7 @@
             // 
             // confirmButton
             // 
-            this.confirmButton.Location = new System.Drawing.Point(468, 13);
+            this.confirmButton.Location = new System.Drawing.Point(750, 13);
             this.confirmButton.Name = "confirmButton";
             this.confirmButton.Size = new System.Drawing.Size(100, 25);
             this.confirmButton.TabIndex = 24;
@@ -1318,7 +1320,7 @@
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(331, 13);
+            this.cancelButton.Location = new System.Drawing.Point(635, 13);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(100, 25);
             this.cancelButton.TabIndex = 23;
@@ -1350,6 +1352,16 @@
             this.shadowLabel1.Size = new System.Drawing.Size(297, 39);
             this.shadowLabel1.TabIndex = 0;
             this.shadowLabel1.Text = "Engine Editor";
+            // 
+            // importButton
+            // 
+            this.importButton.Location = new System.Drawing.Point(35, 13);
+            this.importButton.Name = "importButton";
+            this.importButton.Size = new System.Drawing.Size(100, 25);
+            this.importButton.TabIndex = 25;
+            this.importButton.Text = "Import";
+            this.importButton.UseVisualStyleBackColor = true;
+            this.importButton.Click += new System.EventHandler(this.importButton_Click);
             // 
             // EngineForm
             // 
@@ -1503,5 +1515,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.TextBox filenameTextBox;
+        private System.Windows.Forms.Button importButton;
     }
 }
