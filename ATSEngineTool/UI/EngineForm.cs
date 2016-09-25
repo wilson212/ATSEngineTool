@@ -107,9 +107,14 @@ namespace ATSEngineTool
                 rpmRangeBox4.Value = engine.MaxRpmRange_HighGear;
                 rpmRangeBox5.Value = engine.LowRpmRange_PowerBoost;
                 rpmRangeBox6.Value = engine.HighRpmRange_PowerBoost;
-                fileDefaultsTextBox.Lines = Engine.Defaults;
-                fileCommentTextBox.Lines = Engine.Comment;
-                filenameTextBox.Text = Engine.FileName;
+                fileDefaultsTextBox.Lines = engine.Defaults;
+                fileCommentTextBox.Lines = engine.Comment;
+                filenameTextBox.Text = engine.FileName;
+                conflictsTextBox.Lines = engine.Conflicts;
+                engineBrakeLow.Value = engine.LowRpmRange_EngineBrake;
+                engineBrakeHigh.Value = engine.HighRpmRange_EngineBrake;
+                adBlueConsumption.Value = engine.AdblueConsumption;
+                adBlueNoPowerLimit.Value = engine.NoAdbluePowerLimit;
             }
             else
             {
@@ -145,10 +150,10 @@ namespace ATSEngineTool
         {
             // Check UnitName
             // Check for a valid identifier string
-            if (!Regex.Match(unitNameBox.Text, @"^[a-z0-9_]+$", RegexOptions.IgnoreCase).Success)
+            if (!Regex.Match(unitNameBox.Text, @"^[a-z0-9_]{1,12}$", RegexOptions.IgnoreCase).Success)
             {
                 // Tell the user this isnt allowed
-                MessageBox.Show("Invalid Engine Sii Unit Name. Please use alpha-numeric, or underscores only",
+                MessageBox.Show("Invalid Engine Sii Unit Name. Length must be 1 to 12 characters, alpha-numeric or underscores only",
                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning
                 );
 
@@ -188,8 +193,13 @@ namespace ATSEngineTool
             Engine.MaxRpmRange_HighGear = (int)rpmRangeBox4.Value;
             Engine.LowRpmRange_PowerBoost = (int)rpmRangeBox5.Value;
             Engine.HighRpmRange_PowerBoost = (int)rpmRangeBox6.Value;
+            Engine.NoAdbluePowerLimit = adBlueNoPowerLimit.Value;
+            Engine.AdblueConsumption = adBlueConsumption.Value;
+            Engine.LowRpmRange_EngineBrake = (int)engineBrakeLow.Value;
+            Engine.HighRpmRange_EngineBrake = (int)engineBrakeHigh.Value;
             Engine.Defaults = fileDefaultsTextBox.Lines;
             Engine.Comment = fileCommentTextBox.Lines;
+            Engine.Conflicts = conflictsTextBox.Lines;
 
             // Figure out the filename
             if (!String.IsNullOrWhiteSpace(filenameTextBox.Text))
@@ -282,6 +292,10 @@ namespace ATSEngineTool
                 rpmRangeBox6.Enabled = true;
                 neutralRpmBox.Enabled = true;
                 filenameTextBox.Enabled = true;
+                adBlueConsumption.Enabled = true;
+                adBlueNoPowerLimit.Enabled = true;
+                engineBrakeHigh.Enabled = true;
+                engineBrakeLow.Enabled = true;
             }
 
             EngineSeries series = (EngineSeries)engineModelBox.SelectedItem;
@@ -556,16 +570,35 @@ namespace ATSEngineTool
                         rpmLimitBox.Value = engine.RpmLimit;
                         idleRpmBox.Value = engine.IdleRpm;
                         brakeStrengthBox.Value = (decimal)engine.BrakeStrength;
-                        brakePositionsBox.Value = engine.BrakePosition;
+                        brakePositionsBox.Value = engine.BrakePositions;
                         automaticDSCheckBox.Checked = engine.BrakeDownshift == 1;
 
+                        // Misc
+                        if (engine.RpmRangeEngineBrake.X > 0f)
+                        {
+                            engineBrakeLow.Value = (int)engine.RpmRangeEngineBrake.X;
+                            engineBrakeHigh.Value = (int)engine.RpmRangeEngineBrake.Y;
+                        }
+                        adBlueConsumption.Value = (decimal)engine.AdblueConsumption;
+                        adBlueNoPowerLimit.Value = (decimal)engine.NoAdbluePowerLimit;
+                        conflictsTextBox.Lines = engine.Conflicts;
+
                         // Tab 3
-                        rpmRangeBox1.Value = (int)engine.RpmRange_LowGear.X;
-                        rpmRangeBox2.Value = (int)engine.RpmRange_LowGear.Y;
-                        rpmRangeBox3.Value = (int)engine.RpmRange_HighGear.X;
-                        rpmRangeBox4.Value = (int)engine.RpmRange_HighGear.Y;
-                        rpmRangeBox5.Value = (int)engine.RpmRange_PowerBoost.X;
-                        rpmRangeBox6.Value = (int)engine.RpmRange_PowerBoost.Y;
+                        if (engine.RpmRange_LowGear.X > 0f)
+                        {
+                            rpmRangeBox1.Value = (int)engine.RpmRange_LowGear.X;
+                            rpmRangeBox2.Value = (int)engine.RpmRange_LowGear.Y;
+                        }
+                        if (engine.RpmRange_HighGear.X > 0f)
+                        {
+                            rpmRangeBox3.Value = (int)engine.RpmRange_HighGear.X;
+                            rpmRangeBox4.Value = (int)engine.RpmRange_HighGear.Y;
+                        }
+                        if (engine.RpmRange_PowerBoost.X > 0f)
+                        {
+                            rpmRangeBox5.Value = (int)engine.RpmRange_PowerBoost.X;
+                            rpmRangeBox6.Value = (int)engine.RpmRange_PowerBoost.Y;
+                        }
 
                         // Parse Horsepower
                         Regex reg = new Regex("^(?<hp>[0-9]+)", RegexOptions.Multiline);
@@ -593,11 +626,14 @@ namespace ATSEngineTool
                         torqueBox.Value = Engine.NmToTorque(engine.Torque);
 
                         // Defaults (skip sounds)
-                        fileDefaultsTextBox.Lines = (
-                                from x in engine.Defaults
-                                where !x.Contains("/sound/")
-                                select x
-                            ).ToArray();
+                        if (engine.Defaults != null)
+                        {
+                            fileDefaultsTextBox.Lines = (
+                                    from x in engine.Defaults
+                                    where !x.Contains("/sound/")
+                                    select x
+                                ).ToArray();
+                        }
 
                         // Alert the user
                         MessageBox.Show(
@@ -605,6 +641,14 @@ namespace ATSEngineTool
                            "Import Successful", MessageBoxButtons.OK, MessageBoxIcon.Information
                         );
                     }
+                }
+                catch (SiiSyntaxException ex)
+                {
+
+                }
+                catch (SiiException ex)
+                {
+
                 }
                 catch (Exception ex)
                 {

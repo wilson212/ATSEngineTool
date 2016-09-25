@@ -31,22 +31,25 @@ namespace ATSEngineTool
         public float Volume { get; private set; }
 
         [SiiAttribute("engine_brake")]
-        public float BrakeStrength { get; private set; }
+        public float BrakeStrength { get; private set; } = 1.0f;
 
         [SiiAttribute("engine_brake_downshift")]
-        public int BrakeDownshift { get; private set; }
+        public int BrakeDownshift { get; private set; } = 0;
 
         [SiiAttribute("engine_brake_positions")]
-        public int BrakePosition { get; private set; }
+        public int BrakePositions { get; private set; } = 3;
 
         [SiiAttribute("rpm_idle")]
-        public int IdleRpm { get; private set; }
+        public int IdleRpm { get; private set; } = 650;
 
         [SiiAttribute("rpm_limit_neutral")]
-        public int RpmLimitNeutral { get; private set; }
+        public int RpmLimitNeutral { get; private set; } = 2200;
 
         [SiiAttribute("defaults")]
         public string[] Defaults { get; private set; }
+
+        [SiiAttribute("conflict_with")]
+        public string[] Conflicts { get; private set; }
 
         [SiiAttribute("torque_curve")]
         public Vector2[] TorqueCurve { get; private set; }
@@ -59,5 +62,14 @@ namespace ATSEngineTool
 
         [SiiAttribute("rpm_range_power_boost")]
         public Vector2 RpmRange_PowerBoost { get; set; }
+
+        [SiiAttribute("rpm_range_engine_brake")]
+        public Vector2 RpmRangeEngineBrake { get; set; } = new Vector2(0, 0);
+
+        [SiiAttribute("adblue_consumption")]
+        public float AdblueConsumption { get; set; } = 0f;
+
+        [SiiAttribute("no_adblue_power_limit")]
+        public float NoAdbluePowerLimit { get; set; } = 0f;
     }
 }

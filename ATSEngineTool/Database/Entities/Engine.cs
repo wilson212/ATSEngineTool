@@ -155,6 +155,24 @@ namespace ATSEngineTool.Database
         public int HighRpmRange_PowerBoost { get; set; } = 350;
 
         /// <summary>
+        /// Gets or Sets a value that does ??
+        /// </summary>
+        [Column, Required, Default(0)]
+        public int LowRpmRange_EngineBrake { get; set; } = 0;
+
+        /// <summary>
+        /// Gets or Sets a value that does ??
+        /// </summary>
+        [Column, Required, Default(0)]
+        public int HighRpmRange_EngineBrake { get; set; } = 0;
+
+        [Column, Required, Default(0)]
+        public decimal AdblueConsumption { get; set; } = 0.00m;
+
+        [Column, Required, Default(0)]
+        public decimal NoAdbluePowerLimit { get; set; } = 0.00m;
+
+        /// <summary>
         /// 
         /// </summary>
         [Column("Defaults"), Default("")]
@@ -162,6 +180,9 @@ namespace ATSEngineTool.Database
 
         [Column("Comment"), Default("")]
         protected string _comment { get; set; }
+
+        [Column("Conflicts"), Default("")]
+        protected string _conflicts { get; set; }
 
         /// <summary>
         /// The name of the SII file, without extension.
@@ -189,6 +210,69 @@ namespace ATSEngineTool.Database
                 {
                     fileName = value;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Contains an array of Defaults for the truck to load
+        /// </summary>
+        public string[] Defaults
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(_defaults))
+                    return null;
+
+                return _defaults.Split('|');
+            }
+            set
+            {
+                if (value == null || value.Length == 0)
+                    _defaults = "";
+                else
+                    _defaults = String.Join("|", value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or Sets the Engine objects comment in the SII file.
+        /// </summary>
+        public string[] Comment
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(_comment))
+                    return null;
+
+                return _comment.Split('|');
+            }
+            set
+            {
+                if (value == null || value.Length == 0)
+                    _comment = "";
+                else
+                    _comment = String.Join("|", value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or Sets the Engine objects comment in the SII file.
+        /// </summary>
+        public string[] Conflicts
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(_conflicts))
+                    return null;
+
+                return _conflicts.Split('|');
+            }
+            set
+            {
+                if (value == null || value.Length == 0)
+                    _conflicts = "";
+                else
+                    _conflicts = String.Join("|", value);
             }
         }
 
@@ -256,48 +340,6 @@ namespace ATSEngineTool.Database
             }
         }
 
-        /// <summary>
-        /// Contains an array of Defaults for the truck to load
-        /// </summary>
-        public string[] Defaults
-        {
-            get
-            {
-                if (String.IsNullOrEmpty(_defaults))
-                    return null;
-
-                return _defaults.Split('|');
-            }
-            set
-            {
-                if (value == null || value.Length == 0)
-                    _defaults = "";
-                else
-                    _defaults = String.Join("|", value);
-            }
-        }
-
-        /// <summary>
-        /// Gets or Sets the Engine objects comment in the SII file.
-        /// </summary>
-        public string[] Comment
-        {
-            get
-            {
-                if (String.IsNullOrEmpty(_comment))
-                    return null;
-
-                return _comment.Split('|');
-            }
-            set
-            {
-                if (value == null || value.Length == 0)
-                    _comment = "";
-                else
-                    _comment = String.Join("|", value);
-            }
-        }
-
         #endregion Properties
 
         public override string ToString() => Name;
@@ -308,102 +350,103 @@ namespace ATSEngineTool.Database
         /// <returns></returns>
         public string ToSiiFormat()
         {
-            // === Load engine.sii template
-            string file = Path.Combine(Program.RootPath, "engine.sii");
-            string contents = String.Empty;
-            if (File.Exists(file))
-            {
-                contents = File.ReadAllText(file);
-            }
-            else
-            {
-                contents = Program.GetResourceAsString("ATSEngineTool.engine.sii");
-                using (FileStream stream = File.Create(file))
-                using (StreamWriter writer = new StreamWriter(stream))
-                {
-                    writer.Write(contents);
-                }
-            }
-
             // Create local variables
             EngineSeries series = this.Series;
             StringBuilder builder = new StringBuilder();
+            string name = this.UnitName + ".{{{NAME}}}.engine";
+
+            // Write file intro
+            builder.AppendLine("SiiNunit");
+            builder.AppendLine("{");
 
             // Make sure we have a file comment
             if (Comment == null || Comment.Length == 0)
-            {
-                Comment = new string[]
-                {
-                    "Generated with the ATS Engine Generator Tool by Wilson212"
-                };
-            }
+                Comment = new string[] { "Generated with the ATS Engine Generator Tool by Wilson212" };
 
             // Write file comment
+            builder.AppendLine("\t/**");
             foreach (string line in Comment)
-            {
-                if (builder.Length != 0)
-                    builder.Append("\t * ");
-                builder.AppendLine(line);
-            }
-            contents = contents.Replace("{{{COMMENT}}}", builder.ToString().TrimEnd());
+                builder.AppendLine($"\t * {line}");
+            builder.AppendLine("\t */");
+
+            // Begin the engine accessory
+            builder.AppendLine($"\taccessory_engine_data : {name}");
+            builder.AppendLine("\t{");
 
             // Generic Info
-            contents = contents.Replace("{{{ENG_NAME}}}", this.UnitName);
-            contents = contents.Replace("{{{ENG_TEXT}}}", this.Name);
-            contents = contents.Replace("{{{PRICE}}}", this.Price.ToString());
-            contents = contents.Replace("{{{UNLOCK}}}", this.Unlock.ToString());
+            builder.AppendLine($"\t\tname: \"{this.Name}\"");
+            builder.AppendLine($"\t\tprice: {this.Price}    # Engine price");
+            builder.AppendLine($"\t\tunlock: {this.Unlock}  # Unlocks @ Level");
 
             // Horsepower line
-            contents = contents.Replace("{{{HP_INFO}}}",
-                $"{Digitize(this.Horsepower)} @@hp@@ ({Digitize(HorsepowerToKilowatts(this.Horsepower))}@@kw@@)");
+            builder.AppendLine("\t\t# Engine display info");
+            builder.Append("\t\tinfo[]: \"");
+            builder.AppendLine($"{Digitize(this.Horsepower)} @@hp@@ ({Digitize(HorsepowerToKilowatts(this.Horsepower))}@@kw@@)\"");
 
             // Torque line
-            contents = contents.Replace("{{{TRQ_INFO}}}",
-                $"{Digitize(this.Torque)} @@lb_ft@@ ({Digitize(TorqueToNm(this.Torque))} @@nm@@)");
+            builder.Append("\t\tinfo[]: \"");
+            builder.AppendLine($"{Digitize(this.Torque)} @@lb_ft@@ ({Digitize(TorqueToNm(this.Torque))} @@nm@@)\"");
 
             // Rpm line
-            contents = contents.Replace("{{{RPM_INFO}}}", $"{Digitize(this.PeakRpm)} @@rpm@@");
+            builder.AppendLine($"\t\tinfo[]: \"{Digitize(this.PeakRpm)} @@rpm@@\"");
 
             // Icon
-            contents = contents.Replace("{{{ICON}}}", series.EngineIcon);
+            builder.AppendLine($"\t\ticon: \"{series.EngineIcon}\"");
+            builder.AppendLine();
 
             // Performance
-            contents = contents.Replace("{{{TRQ}}}", TorqueToNm(this.Torque).ToString());
-            contents = contents.Replace("{{{RPM}}}", this.RpmLimit.ToString());
-            contents = contents.Replace("{{{RPM_IDLE}}}", this.IdleRpm.ToString());
-            contents = contents.Replace("{{{RPM_NEUTRAL}}}", this.RpmLimitNeutral.ToString());
-            contents = contents.Replace("{{{VOLUME}}}", series.Displacement.ToString());
-
-            // RPM Ranges
-            contents = contents.Replace("{{{RPM_RANGE_LOW_LOW}}}", this.MinRpmRange_LowGear.ToString());
-            contents = contents.Replace("{{{RPM_RANGE_HIGH_LOW}}}", this.MinRpmRange_HighGear.ToString());
-            contents = contents.Replace("{{{RPM_RANGE_LOW_HIGH}}}", this.MaxRpmRange_LowGear.ToString());
-            contents = contents.Replace("{{{RPM_RANGE_HIGH_HIGH}}}", this.MaxRpmRange_HighGear.ToString());
-
-            contents = contents.Replace("{{{RPM_RANGE_POWER_LOW}}}", this.LowRpmRange_PowerBoost.ToString());
-            contents = contents.Replace("{{{RPM_RANGE_POWER_HIGH}}}", this.HighRpmRange_PowerBoost.ToString());
-
-            // Ebrake
-            contents = contents.Replace("{{{EBRK_STR}}}", this.BrakeStrength.ToString());
-            contents = contents.Replace("{{{EBRK_POS}}}", this.BrakePositions.ToString());
-            contents = contents.Replace("{{{EBRK_DWN}}}", this.BrakeDownshift ? "1" : "0");
+            builder.AppendLine("\t\t# Engine Specs");
+            builder.AppendLine($"\t\ttorque: {TorqueToNm(this.Torque)}    # Engine power in Newton-metres");
+            builder.AppendLine($"\t\tvolume: {series.Displacement}    # Engine size in liters. Used for Realistic Fuel Consumption settings");
+            builder.AppendLine();
 
             // Torque Curves
-            builder.Clear();
-            builder.AppendLine("# Torque Curves");
+            builder.AppendLine("\t\t# Torque Curves");
             foreach (TorqueRatio ratio in TorqueRatios.OrderBy(x => x.RpmLevel))
-            {
                 builder.AppendLine($"\t\ttorque_curve[]: ({ratio.RpmLevel}, {ratio.Ratio})");
+
+            // RPM datas
+            builder.AppendLine("\t\t# RPM Data");
+            builder.AppendLine($"\t\trpm_ridle: {this.IdleRpm}  # RPM at idle");
+            builder.AppendLine($"\t\trpm_limit: {this.RpmLimit}  # Governed RPM limit");
+            builder.AppendLine($"\t\trpm_limit_neutral: {this.RpmLimitNeutral}  # RPM limit in neutral gear");
+            builder.AppendLine($"\t\trpm_range_low_gear: ({this.MinRpmRange_LowGear}, {this.MaxRpmRange_LowGear})");
+            builder.AppendLine($"\t\trpm_range_high_gear: ({this.MinRpmRange_HighGear}, {this.MaxRpmRange_HighGear})");
+            builder.AppendLine($"\t\trpm_range_power_boost: ({this.LowRpmRange_PowerBoost}, {this.HighRpmRange_PowerBoost})");
+
+            if (HighRpmRange_EngineBrake > 0)
+            {
+                builder.AppendLine($"\t\trpm_range_engine_brake: ({this.LowRpmRange_EngineBrake}, {this.HighRpmRange_EngineBrake})");
             }
-            contents = contents.Replace("{{{TORQUE_CURVES}}}", builder.ToString().TrimEnd());
 
-            // Sound data
-            builder.Clear();
+            // Engine Brake
+            string val = this.BrakeDownshift ? "1" : "0";
+            builder.AppendLine();
+            builder.AppendLine("\t\t# Engine Brake data");
+            builder.AppendLine($"\t\tengine_brake: {this.BrakeStrength}       # Engine Brake Strength");
+            builder.AppendLine($"\t\tengine_brake_downshift: {this.BrakePositions} # Enable automatic downshift for Engine Brake");
+            builder.AppendLine($"\t\tengine_brake_positions: {val} # The number of engine brake intensities");
+            builder.AppendLine();
 
+            // AdBlue
+            if (this.AdblueConsumption > 0.00m || this.NoAdbluePowerLimit > 0.00m)
+            {
+                builder.AppendLine("\t\t# Adblue Settings");
+                if (this.AdblueConsumption > 0.00m)
+                    builder.AppendLine($"\t\tadblue_consumption: {this.AdblueConsumption}");
+
+                if (this.NoAdbluePowerLimit > 0.00m)
+                    builder.AppendLine($"\t\tno_adblue_power_limit: {this.NoAdbluePowerLimit}");
+
+                builder.AppendLine();
+            }
+
+            // Sound Data
             SoundPackage sound = series.SoundPackage;
             string intpath = "/def/vehicle/truck/{{{NAME}}}/sound/" + sound.InteriorFileName;
             string extpath = "/def/vehicle/truck/{{{NAME}}}/sound/" + sound.ExteriorFileName;
-            builder.AppendLine("# Sound Data");
+
+            builder.AppendLine("\t\t# Sound Data");
             builder.AppendLine($"\t\tdefaults[]: \"{intpath}\"");
             builder.AppendLine($"\t\tdefaults[]: \"{extpath}\"");
 
@@ -411,16 +454,26 @@ namespace ATSEngineTool.Database
             if (Defaults != null && Defaults.Length > 0)
             {
                 builder.AppendLine();
-                builder.AppendLine("# Attachments");
+                builder.AppendLine("\t\t# Attachments");
                 foreach (string line in Defaults)
                     builder.AppendLine($"\t\tdefaults[]: \"{line}\"");
             }
 
-            // Final Replacement
-            contents = contents.Replace("{{{DEFAULTS}}}", builder.ToString().TrimEnd());
+            // Write the conflict_with[]...
+            if (Conflicts != null && Conflicts.Length > 0)
+            {
+                builder.AppendLine();
+                builder.AppendLine("\t\t# Conflicts");
+                foreach (string line in Conflicts)
+                    builder.AppendLine($"\t\tconflict_with[]: \"{line}\"");
+            }
+
+            // Close brackets
+            builder.AppendLine("\t}");
+            builder.AppendLine("}");
 
             // Define file paths
-            return contents;
+            return builder.ToString();
         }
 
         /// <summary>

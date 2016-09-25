@@ -100,6 +100,20 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.label32 = new System.Windows.Forms.Label();
+            this.adBlueNoPowerLimit = new System.Windows.Forms.NumericUpDown();
+            this.label34 = new System.Windows.Forms.Label();
+            this.adBlueConsumption = new System.Windows.Forms.NumericUpDown();
+            this.label35 = new System.Windows.Forms.Label();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.engineBrakeHigh = new System.Windows.Forms.NumericUpDown();
+            this.engineBrakeLow = new System.Windows.Forms.NumericUpDown();
+            this.label40 = new System.Windows.Forms.Label();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.label27 = new System.Windows.Forms.Label();
             this.rpmRangeBox6 = new System.Windows.Forms.NumericUpDown();
@@ -113,14 +127,18 @@
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
             this.fileCommentTextBox = new System.Windows.Forms.TextBox();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.label39 = new System.Windows.Forms.Label();
+            this.conflictsTextBox = new System.Windows.Forms.TextBox();
             this.contentPanel = new System.Windows.Forms.Panel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.footerPanel = new System.Windows.Forms.Panel();
+            this.importButton = new System.Windows.Forms.Button();
             this.confirmButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.headerPanel = new System.Windows.Forms.Panel();
             this.shadowLabel1 = new System.Windows.Forms.ShadowLabel();
-            this.importButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.engineIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceBox)).BeginInit();
@@ -148,12 +166,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.peakRPMBox)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.adBlueNoPowerLimit)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.adBlueConsumption)).BeginInit();
+            this.groupBox10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.engineBrakeHigh)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.engineBrakeLow)).BeginInit();
             this.groupBox8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rpmRangeBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rpmRangeBox5)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.groupBox7.SuspendLayout();
+            this.tabPage5.SuspendLayout();
+            this.groupBox12.SuspendLayout();
             this.contentPanel.SuspendLayout();
             this.footerPanel.SuspendLayout();
             this.headerPanel.SuspendLayout();
@@ -379,9 +405,9 @@
             this.groupBox6.Controls.Add(this.label19);
             this.groupBox6.Controls.Add(this.rpmRangeBox1);
             this.groupBox6.Controls.Add(this.label18);
-            this.groupBox6.Location = new System.Drawing.Point(19, 26);
+            this.groupBox6.Location = new System.Drawing.Point(13, 26);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(481, 168);
+            this.groupBox6.Size = new System.Drawing.Size(425, 168);
             this.groupBox6.TabIndex = 27;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Rpm Range For Automatic Transmission";
@@ -389,7 +415,7 @@
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(42, 38);
+            this.label28.Location = new System.Drawing.Point(16, 25);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(397, 26);
             this.label28.TabIndex = 32;
@@ -399,7 +425,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(393, 128);
+            this.label23.Location = new System.Drawing.Point(383, 128);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(10, 13);
             this.label23.TabIndex = 31;
@@ -408,7 +434,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(266, 128);
+            this.label24.Location = new System.Drawing.Point(256, 128);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(12, 13);
             this.label24.TabIndex = 30;
@@ -417,7 +443,7 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(141, 128);
+            this.label25.Location = new System.Drawing.Point(131, 128);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(10, 13);
             this.label25.TabIndex = 29;
@@ -431,7 +457,7 @@
             0,
             0,
             0});
-            this.rpmRangeBox4.Location = new System.Drawing.Point(284, 126);
+            this.rpmRangeBox4.Location = new System.Drawing.Point(274, 126);
             this.rpmRangeBox4.Maximum = new decimal(new int[] {
             5000,
             0,
@@ -459,7 +485,7 @@
             0,
             0,
             0});
-            this.rpmRangeBox3.Location = new System.Drawing.Point(157, 126);
+            this.rpmRangeBox3.Location = new System.Drawing.Point(147, 126);
             this.rpmRangeBox3.Maximum = new decimal(new int[] {
             5000,
             0,
@@ -482,7 +508,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(393, 86);
+            this.label22.Location = new System.Drawing.Point(383, 86);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(10, 13);
             this.label22.TabIndex = 26;
@@ -491,7 +517,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(266, 86);
+            this.label21.Location = new System.Drawing.Point(256, 86);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(12, 13);
             this.label21.TabIndex = 25;
@@ -500,7 +526,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(141, 86);
+            this.label20.Location = new System.Drawing.Point(131, 86);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(10, 13);
             this.label20.TabIndex = 24;
@@ -514,7 +540,7 @@
             0,
             0,
             0});
-            this.rpmRangeBox2.Location = new System.Drawing.Point(284, 84);
+            this.rpmRangeBox2.Location = new System.Drawing.Point(274, 84);
             this.rpmRangeBox2.Maximum = new decimal(new int[] {
             5000,
             0,
@@ -537,7 +563,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(42, 128);
+            this.label19.Location = new System.Drawing.Point(32, 128);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(58, 13);
             this.label19.TabIndex = 14;
@@ -551,7 +577,7 @@
             0,
             0,
             0});
-            this.rpmRangeBox1.Location = new System.Drawing.Point(157, 84);
+            this.rpmRangeBox1.Location = new System.Drawing.Point(147, 84);
             this.rpmRangeBox1.Maximum = new decimal(new int[] {
             5000,
             0,
@@ -574,7 +600,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(42, 86);
+            this.label18.Location = new System.Drawing.Point(32, 86);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(56, 13);
             this.label18.TabIndex = 12;
@@ -586,6 +612,7 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Location = new System.Drawing.Point(-1, 21);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -742,7 +769,7 @@
             65536});
             this.brakeStrengthBox.Location = new System.Drawing.Point(134, 33);
             this.brakeStrengthBox.Maximum = new decimal(new int[] {
-            30,
+            99,
             0,
             0,
             65536});
@@ -1104,6 +1131,8 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.groupBox11);
+            this.tabPage3.Controls.Add(this.groupBox10);
             this.tabPage3.Controls.Add(this.groupBox8);
             this.tabPage3.Controls.Add(this.groupBox6);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
@@ -1111,8 +1140,196 @@
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(886, 426);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Transmission Data";
+            this.tabPage3.Text = "Dynamic RPM Data";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.label32);
+            this.groupBox11.Controls.Add(this.adBlueNoPowerLimit);
+            this.groupBox11.Controls.Add(this.label34);
+            this.groupBox11.Controls.Add(this.adBlueConsumption);
+            this.groupBox11.Controls.Add(this.label35);
+            this.groupBox11.Location = new System.Drawing.Point(444, 209);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(425, 168);
+            this.groupBox11.TabIndex = 30;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "AdBlue";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(23, 25);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(332, 13);
+            this.label32.TabIndex = 16;
+            this.label32.Text = "Set values to zero to force the game to use default values (unknown)";
+            // 
+            // adBlueNoPowerLimit
+            // 
+            this.adBlueNoPowerLimit.DecimalPlaces = 2;
+            this.adBlueNoPowerLimit.Enabled = false;
+            this.adBlueNoPowerLimit.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.adBlueNoPowerLimit.Location = new System.Drawing.Point(204, 122);
+            this.adBlueNoPowerLimit.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            131072});
+            this.adBlueNoPowerLimit.Name = "adBlueNoPowerLimit";
+            this.adBlueNoPowerLimit.Size = new System.Drawing.Size(103, 20);
+            this.adBlueNoPowerLimit.TabIndex = 15;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(54, 124);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(121, 13);
+            this.label34.TabIndex = 14;
+            this.label34.Text = "No AdBlue Power Limit: ";
+            // 
+            // adBlueConsumption
+            // 
+            this.adBlueConsumption.DecimalPlaces = 2;
+            this.adBlueConsumption.Enabled = false;
+            this.adBlueConsumption.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.adBlueConsumption.Location = new System.Drawing.Point(204, 82);
+            this.adBlueConsumption.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            131072});
+            this.adBlueConsumption.Name = "adBlueConsumption";
+            this.adBlueConsumption.Size = new System.Drawing.Size(103, 20);
+            this.adBlueConsumption.TabIndex = 13;
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(54, 86);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(108, 13);
+            this.label35.TabIndex = 12;
+            this.label35.Text = "AdBlue Consumption:";
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.label31);
+            this.groupBox10.Controls.Add(this.label36);
+            this.groupBox10.Controls.Add(this.label37);
+            this.groupBox10.Controls.Add(this.label38);
+            this.groupBox10.Controls.Add(this.engineBrakeHigh);
+            this.groupBox10.Controls.Add(this.engineBrakeLow);
+            this.groupBox10.Controls.Add(this.label40);
+            this.groupBox10.Location = new System.Drawing.Point(13, 209);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(425, 168);
+            this.groupBox10.TabIndex = 29;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Optimal Rpm Range For Engine Brake";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(16, 34);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(394, 26);
+            this.label31.TabIndex = 33;
+            this.label31.Text = "Defines the optimal RPM range for the engine brake (effectivness). Set values to " +
+    "\r\nzero to exclude them from the sii file, and force the game to use the default " +
+    "values.";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(383, 84);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(10, 13);
+            this.label36.TabIndex = 26;
+            this.label36.Text = ")";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(256, 84);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(12, 13);
+            this.label37.TabIndex = 25;
+            this.label37.Text = "/";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(131, 84);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(10, 13);
+            this.label38.TabIndex = 24;
+            this.label38.Text = "(";
+            // 
+            // engineBrakeHigh
+            // 
+            this.engineBrakeHigh.Enabled = false;
+            this.engineBrakeHigh.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.engineBrakeHigh.Location = new System.Drawing.Point(274, 82);
+            this.engineBrakeHigh.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.engineBrakeHigh.Name = "engineBrakeHigh";
+            this.engineBrakeHigh.Size = new System.Drawing.Size(103, 20);
+            this.engineBrakeHigh.TabIndex = 16;
+            this.engineBrakeHigh.Value = new decimal(new int[] {
+            2500,
+            0,
+            0,
+            0});
+            // 
+            // engineBrakeLow
+            // 
+            this.engineBrakeLow.Enabled = false;
+            this.engineBrakeLow.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.engineBrakeLow.Location = new System.Drawing.Point(147, 82);
+            this.engineBrakeLow.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.engineBrakeLow.Name = "engineBrakeLow";
+            this.engineBrakeLow.Size = new System.Drawing.Size(103, 20);
+            this.engineBrakeLow.TabIndex = 13;
+            this.engineBrakeLow.Value = new decimal(new int[] {
+            1500,
+            0,
+            0,
+            0});
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(32, 84);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(69, 13);
+            this.label40.TabIndex = 12;
+            this.label40.Text = "RPM Range:";
             // 
             // groupBox8
             // 
@@ -1121,9 +1338,9 @@
             this.groupBox8.Controls.Add(this.label26);
             this.groupBox8.Controls.Add(this.rpmRangeBox5);
             this.groupBox8.Controls.Add(this.label33);
-            this.groupBox8.Location = new System.Drawing.Point(19, 200);
+            this.groupBox8.Location = new System.Drawing.Point(444, 26);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(481, 160);
+            this.groupBox8.Size = new System.Drawing.Size(425, 168);
             this.groupBox8.TabIndex = 28;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Rpm Boost Range For Automatic Transmission";
@@ -1131,13 +1348,13 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(42, 38);
+            this.label27.Location = new System.Drawing.Point(23, 25);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(409, 26);
+            this.label27.Size = new System.Drawing.Size(383, 39);
             this.label27.TabIndex = 16;
             this.label27.Text = "Transmission shifting range will get adjusted by these amounts based on throttle " +
-    "input.\r\nThe more throttle is given to the truck, the more the optimal shifting r" +
-    "ange is adjusted.";
+    "\r\ninput. The more throttle is given to the truck, the more the optimal shifting " +
+    "range \r\nis adjusted.";
             // 
             // rpmRangeBox6
             // 
@@ -1147,7 +1364,7 @@
             0,
             0,
             0});
-            this.rpmRangeBox6.Location = new System.Drawing.Point(157, 123);
+            this.rpmRangeBox6.Location = new System.Drawing.Point(204, 122);
             this.rpmRangeBox6.Maximum = new decimal(new int[] {
             5000,
             0,
@@ -1170,7 +1387,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(42, 125);
+            this.label26.Location = new System.Drawing.Point(54, 124);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(67, 13);
             this.label26.TabIndex = 14;
@@ -1184,7 +1401,7 @@
             0,
             0,
             0});
-            this.rpmRangeBox5.Location = new System.Drawing.Point(157, 85);
+            this.rpmRangeBox5.Location = new System.Drawing.Point(204, 84);
             this.rpmRangeBox5.Maximum = new decimal(new int[] {
             5000,
             0,
@@ -1207,7 +1424,7 @@
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(42, 87);
+            this.label33.Location = new System.Drawing.Point(54, 86);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(65, 13);
             this.label33.TabIndex = 12;
@@ -1229,7 +1446,7 @@
             // 
             this.groupBox9.Controls.Add(this.label29);
             this.groupBox9.Controls.Add(this.fileDefaultsTextBox);
-            this.groupBox9.Location = new System.Drawing.Point(461, 33);
+            this.groupBox9.Location = new System.Drawing.Point(461, 31);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(407, 364);
             this.groupBox9.TabIndex = 1;
@@ -1239,12 +1456,12 @@
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(21, 27);
+            this.label29.Location = new System.Drawing.Point(21, 22);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(324, 26);
             this.label29.TabIndex = 2;
             this.label29.Text = "Only put 1 item per line. The items listed here will be included in the \r\n\"defaul" +
-    "ts\" array.";
+    "ts\" array. Use \"{{{NAME}}}\" to subsitute the truck name.";
             // 
             // fileDefaultsTextBox
             // 
@@ -1259,7 +1476,7 @@
             // 
             this.groupBox7.Controls.Add(this.label10);
             this.groupBox7.Controls.Add(this.fileCommentTextBox);
-            this.groupBox7.Location = new System.Drawing.Point(19, 33);
+            this.groupBox7.Location = new System.Drawing.Point(19, 31);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(407, 364);
             this.groupBox7.TabIndex = 0;
@@ -1284,6 +1501,47 @@
             this.fileCommentTextBox.Size = new System.Drawing.Size(387, 293);
             this.fileCommentTextBox.TabIndex = 0;
             // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.groupBox12);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(886, 426);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Conflicts";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // groupBox12
+            // 
+            this.groupBox12.Controls.Add(this.label39);
+            this.groupBox12.Controls.Add(this.conflictsTextBox);
+            this.groupBox12.Location = new System.Drawing.Point(19, 31);
+            this.groupBox12.Name = "groupBox12";
+            this.groupBox12.Size = new System.Drawing.Size(407, 364);
+            this.groupBox12.TabIndex = 1;
+            this.groupBox12.TabStop = false;
+            this.groupBox12.Text = "Accessory Conflicts";
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(15, 22);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(329, 26);
+            this.label39.TabIndex = 3;
+            this.label39.Text = "Only put 1 item per line. The items listed here will be included in the \r\n\"confli" +
+    "ct_with\" array. Use \"{{{NAME}}}\" to subsitute the truck name.";
+            // 
+            // conflictsTextBox
+            // 
+            this.conflictsTextBox.Location = new System.Drawing.Point(10, 56);
+            this.conflictsTextBox.Multiline = true;
+            this.conflictsTextBox.Name = "conflictsTextBox";
+            this.conflictsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.conflictsTextBox.Size = new System.Drawing.Size(387, 293);
+            this.conflictsTextBox.TabIndex = 0;
+            // 
             // contentPanel
             // 
             this.contentPanel.Controls.Add(this.tabControl1);
@@ -1306,6 +1564,16 @@
             this.footerPanel.Size = new System.Drawing.Size(884, 50);
             this.footerPanel.TabIndex = 31;
             this.footerPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.footerPanel_Paint);
+            // 
+            // importButton
+            // 
+            this.importButton.Location = new System.Drawing.Point(35, 13);
+            this.importButton.Name = "importButton";
+            this.importButton.Size = new System.Drawing.Size(100, 25);
+            this.importButton.TabIndex = 25;
+            this.importButton.Text = "Import";
+            this.importButton.UseVisualStyleBackColor = true;
+            this.importButton.Click += new System.EventHandler(this.importButton_Click);
             // 
             // confirmButton
             // 
@@ -1352,16 +1620,6 @@
             this.shadowLabel1.Size = new System.Drawing.Size(297, 39);
             this.shadowLabel1.TabIndex = 0;
             this.shadowLabel1.Text = "Engine Editor";
-            // 
-            // importButton
-            // 
-            this.importButton.Location = new System.Drawing.Point(35, 13);
-            this.importButton.Name = "importButton";
-            this.importButton.Size = new System.Drawing.Size(100, 25);
-            this.importButton.TabIndex = 25;
-            this.importButton.Text = "Import";
-            this.importButton.UseVisualStyleBackColor = true;
-            this.importButton.Click += new System.EventHandler(this.importButton_Click);
             // 
             // EngineForm
             // 
@@ -1410,6 +1668,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.peakRPMBox)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox11.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.adBlueNoPowerLimit)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.adBlueConsumption)).EndInit();
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.engineBrakeHigh)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.engineBrakeLow)).EndInit();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rpmRangeBox6)).EndInit();
@@ -1419,6 +1685,9 @@
             this.groupBox9.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.groupBox12.ResumeLayout(false);
+            this.groupBox12.PerformLayout();
             this.contentPanel.ResumeLayout(false);
             this.footerPanel.ResumeLayout(false);
             this.headerPanel.ResumeLayout(false);
@@ -1516,5 +1785,23 @@
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.TextBox filenameTextBox;
         private System.Windows.Forms.Button importButton;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.NumericUpDown engineBrakeHigh;
+        private System.Windows.Forms.NumericUpDown engineBrakeLow;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.NumericUpDown adBlueNoPowerLimit;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.NumericUpDown adBlueConsumption;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.GroupBox groupBox12;
+        private System.Windows.Forms.TextBox conflictsTextBox;
+        private System.Windows.Forms.Label label39;
     }
 }

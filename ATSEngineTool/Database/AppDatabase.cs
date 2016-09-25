@@ -22,7 +22,7 @@ namespace ATSEngineTool.Database
         /// <summary>
         /// Gets the latest database version
         /// </summary>
-        public static Version CurrentVersion { get; protected set; } = new Version(1, 0);
+        public static Version CurrentVersion { get; protected set; } = new Version(1, 1);
 
         /// <summary>
         /// Gets the current database tables version
@@ -108,7 +108,7 @@ namespace ATSEngineTool.Database
             }
         }
 
-        protected void GetVersion()
+        internal void GetVersion()
         {
             // Grab version. Plain SQL query here for performance
             string query = "SELECT * FROM DbVersion ORDER BY UpdateId DESC LIMIT 1";

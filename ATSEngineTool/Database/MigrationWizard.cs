@@ -26,10 +26,39 @@ namespace ATSEngineTool.Database
             {
                 switch (AppDatabase.DatabaseVersion.ToString())
                 {
+                    case "1.0":
+                        MigrateTo_1_1();
+                        break;
                     default:
                         throw new Exception("Version out of range");
                 }
+
+                // Fetch version
+                Database.GetVersion();
             }
+        }
+
+        private void MigrateTo_1_1()
+        {
+            // Create queries
+            string[] queries = new[]
+            {
+                "ALTER TABLE `Engine` ADD COLUMN `LowRpmRange_EngineBrake` INTEGER NOT NULL DEFAULT 0;",
+                "ALTER TABLE `Engine` ADD COLUMN `HighRpmRange_EngineBrake` INTEGER NOT NULL DEFAULT 0;",
+                "ALTER TABLE `Engine` ADD COLUMN `AdblueConsumption` REAL NOT NULL DEFAULT 0.0;",
+                "ALTER TABLE `Engine` ADD COLUMN `NoAdbluePowerLimit` REAL NOT NULL DEFAULT 0.0;",
+                "ALTER TABLE `Engine` ADD COLUMN `Conflicts` TEXT DEFAULT \"\";",
+            };
+
+            // Run each query
+            foreach (string query in queries)
+            {
+                Database.Execute(query);
+            }
+
+            // Update database version
+            string sql = "INSERT INTO `DbVersion`(`Version`, `AppliedOn`) VALUES({0}, {1});";
+            Database.Execute(String.Format(sql, Version.Parse("1.1"), Epoch.Now));
         }
 
         /// <summary>
