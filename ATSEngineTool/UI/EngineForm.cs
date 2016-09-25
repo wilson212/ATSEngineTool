@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -552,7 +553,7 @@ namespace ATSEngineTool
                     using (StreamReader reader = new StreamReader(stream))
                     {
                         // Read the file contents
-                        string contents = reader.ReadToEnd();
+                        string contents = reader.ReadToEnd().Trim();
                         document.Load(contents);
 
                         // Grab the engine object
@@ -644,11 +645,21 @@ namespace ATSEngineTool
                 }
                 catch (SiiSyntaxException ex)
                 {
-
+                    StringBuilder builder = new StringBuilder("A Syntax error occured while parsing the sii file!");
+                    builder.AppendLine();
+                    builder.AppendLine();
+                    builder.AppendLine($"Message: {ex.Message.Replace("\0", "<zero_terminator>")}");
+                    builder.AppendLine();
+                    builder.AppendLine($"Line: {ex.Span.Start.Line}");
+                    builder.AppendLine($"Column: {ex.Span.Start.Column}");
+                    MessageBox.Show(builder.ToString(), "Sii Syntax Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (SiiException ex)
                 {
-
+                    StringBuilder builder = new StringBuilder("Failed to parse the sii file.");
+                    builder.AppendLine();
+                    builder.AppendLine($"Message: {ex.Message}");
+                    MessageBox.Show(builder.ToString(), "Sii Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
                 {

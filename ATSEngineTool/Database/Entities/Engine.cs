@@ -375,8 +375,9 @@ namespace ATSEngineTool.Database
 
             // Generic Info
             builder.AppendLine($"\t\tname: \"{this.Name}\"");
-            builder.AppendLine($"\t\tprice: {this.Price}    # Engine price");
-            builder.AppendLine($"\t\tunlock: {this.Unlock}  # Unlocks @ Level");
+            builder.AppendLine($"\t\tprice: {this.Price}\t# Engine price");
+            builder.AppendLine($"\t\tunlock: {this.Unlock}\t\t# Unlocks @ Level");
+            builder.AppendLine();
 
             // Horsepower line
             builder.AppendLine("\t\t# Engine display info");
@@ -396,20 +397,21 @@ namespace ATSEngineTool.Database
 
             // Performance
             builder.AppendLine("\t\t# Engine Specs");
-            builder.AppendLine($"\t\ttorque: {TorqueToNm(this.Torque)}    # Engine power in Newton-metres");
-            builder.AppendLine($"\t\tvolume: {series.Displacement}    # Engine size in liters. Used for Realistic Fuel Consumption settings");
+            builder.AppendLine($"\t\ttorque: {TorqueToNm(this.Torque)}\t# Engine power in Newton-metres");
+            builder.AppendLine($"\t\tvolume: {series.Displacement}\t# Engine size in liters. Used for Realistic Fuel Consumption settings");
             builder.AppendLine();
 
             // Torque Curves
             builder.AppendLine("\t\t# Torque Curves");
             foreach (TorqueRatio ratio in TorqueRatios.OrderBy(x => x.RpmLevel))
                 builder.AppendLine($"\t\ttorque_curve[]: ({ratio.RpmLevel}, {ratio.Ratio})");
+            builder.AppendLine();
 
             // RPM datas
             builder.AppendLine("\t\t# RPM Data");
-            builder.AppendLine($"\t\trpm_ridle: {this.IdleRpm}  # RPM at idle");
-            builder.AppendLine($"\t\trpm_limit: {this.RpmLimit}  # Governed RPM limit");
-            builder.AppendLine($"\t\trpm_limit_neutral: {this.RpmLimitNeutral}  # RPM limit in neutral gear");
+            builder.AppendLine($"\t\trpm_idle: {this.IdleRpm}\t\t\t# RPM at idle");
+            builder.AppendLine($"\t\trpm_limit: {this.RpmLimit}\t\t\t# Governed RPM limit");
+            builder.AppendLine($"\t\trpm_limit_neutral: {this.RpmLimitNeutral}\t# RPM limit in neutral gear");
             builder.AppendLine($"\t\trpm_range_low_gear: ({this.MinRpmRange_LowGear}, {this.MaxRpmRange_LowGear})");
             builder.AppendLine($"\t\trpm_range_high_gear: ({this.MinRpmRange_HighGear}, {this.MaxRpmRange_HighGear})");
             builder.AppendLine($"\t\trpm_range_power_boost: ({this.LowRpmRange_PowerBoost}, {this.HighRpmRange_PowerBoost})");
@@ -423,9 +425,9 @@ namespace ATSEngineTool.Database
             string val = this.BrakeDownshift ? "1" : "0";
             builder.AppendLine();
             builder.AppendLine("\t\t# Engine Brake data");
-            builder.AppendLine($"\t\tengine_brake: {this.BrakeStrength}       # Engine Brake Strength");
-            builder.AppendLine($"\t\tengine_brake_downshift: {this.BrakePositions} # Enable automatic downshift for Engine Brake");
-            builder.AppendLine($"\t\tengine_brake_positions: {val} # The number of engine brake intensities");
+            builder.AppendLine($"\t\tengine_brake: {this.BrakeStrength}\t\t\t\t# Engine Brake Strength");
+            builder.AppendLine($"\t\tengine_brake_downshift: {val}\t# Enable automatic downshift for Engine Brake");
+            builder.AppendLine($"\t\tengine_brake_positions: {this.BrakePositions}\t# The number of engine brake intensities");
             builder.AppendLine();
 
             // AdBlue
@@ -473,7 +475,7 @@ namespace ATSEngineTool.Database
             builder.AppendLine("}");
 
             // Define file paths
-            return builder.ToString();
+            return builder.ToString().TrimEnd();
         }
 
         /// <summary>
