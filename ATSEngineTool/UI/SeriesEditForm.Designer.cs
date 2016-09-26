@@ -78,7 +78,7 @@
             this.soundBox.Location = new System.Drawing.Point(194, 191);
             this.soundBox.Name = "soundBox";
             this.soundBox.Size = new System.Drawing.Size(203, 21);
-            this.soundBox.TabIndex = 38;
+            this.soundBox.TabIndex = 5;
             // 
             // label3
             // 
@@ -110,7 +110,7 @@
             65536});
             this.displacementBox.Name = "displacementBox";
             this.displacementBox.Size = new System.Drawing.Size(103, 20);
-            this.displacementBox.TabIndex = 36;
+            this.displacementBox.TabIndex = 4;
             this.displacementBox.Value = new decimal(new int[] {
             129,
             0,
@@ -140,7 +140,7 @@
             this.seriesNameBox.Location = new System.Drawing.Point(194, 113);
             this.seriesNameBox.Name = "seriesNameBox";
             this.seriesNameBox.Size = new System.Drawing.Size(203, 20);
-            this.seriesNameBox.TabIndex = 34;
+            this.seriesNameBox.TabIndex = 3;
             // 
             // iconBox
             // 
@@ -150,7 +150,7 @@
             this.iconBox.Location = new System.Drawing.Point(194, 34);
             this.iconBox.Name = "iconBox";
             this.iconBox.Size = new System.Drawing.Size(203, 21);
-            this.iconBox.TabIndex = 30;
+            this.iconBox.TabIndex = 1;
             this.iconBox.SelectedIndexChanged += new System.EventHandler(this.iconBox_SelectedIndexChanged);
             // 
             // label10
@@ -176,7 +176,7 @@
             this.manuNameBox.Location = new System.Drawing.Point(194, 74);
             this.manuNameBox.Name = "manuNameBox";
             this.manuNameBox.Size = new System.Drawing.Size(203, 20);
-            this.manuNameBox.TabIndex = 29;
+            this.manuNameBox.TabIndex = 2;
             // 
             // headerPanel
             // 
@@ -232,7 +232,7 @@
             this.confirmButton.Location = new System.Drawing.Point(236, 13);
             this.confirmButton.Name = "confirmButton";
             this.confirmButton.Size = new System.Drawing.Size(100, 25);
-            this.confirmButton.TabIndex = 26;
+            this.confirmButton.TabIndex = 6;
             this.confirmButton.Text = "Confirm";
             this.confirmButton.UseVisualStyleBackColor = true;
             this.confirmButton.Click += new System.EventHandler(this.confirmButton_Click);
@@ -243,7 +243,7 @@
             this.cancelButton.Location = new System.Drawing.Point(99, 13);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(100, 25);
-            this.cancelButton.TabIndex = 25;
+            this.cancelButton.TabIndex = 7;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 

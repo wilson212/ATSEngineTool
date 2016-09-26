@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using ATSEngineTool.Database;
+using ATSEngineTool.SiiEntities;
 using FreeImageAPI;
 using Sii;
 

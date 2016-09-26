@@ -23,7 +23,7 @@ namespace ATSEngineTool
         /// <summary>
         /// Program Version
         /// </summary>
-        public static Version Version { get; private set; } = new Version(2, 3, 0);
+        public static Version Version { get; private set; } = new Version(2, 3, 1);
 
         /// <summary>
         /// Returns whether this application is running in administrator mode.

@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using Sii;
 
-namespace ATSEngineTool
+namespace ATSEngineTool.SiiEntities
 {
     [SiiUnit("accessory_engine_data")]
     internal sealed class AccessoryEngineData

@@ -1,6 +1,6 @@
 ﻿using Sii;
 
-namespace ATSEngineTool
+namespace ATSEngineTool.SiiEntities
 {
     [SiiUnit("accessory_sound_data")]
     internal class AccessorySoundData

@@ -180,7 +180,7 @@ namespace ATSEngineTool
         {
             // Local variables
             string truckpath, soundPath, enginePath;
-            var SoundData = new Dictionary<SoundPackage, List<Engine>>();
+            var soundData = new Dictionary<SoundPackage, List<Engine>>();
             var suitableFor = new StringBuilder();
             ProgressUpdate(progress, "Generating engine def files");
 
@@ -190,7 +190,7 @@ namespace ATSEngineTool
                 foreach (Truck truck in trucks)
                 {
                     // Clear old junk
-                    SoundData.Clear();
+                    soundData.Clear();
 
                     // Define paths we will use
                     truckpath = Path.Combine(DefCompilePath, "vehicle", "truck", truck.UnitName);
@@ -215,10 +215,10 @@ namespace ATSEngineTool
                         SoundPackage sound = engine.Series.SoundPackage;
 
                         // === Add engine to sound list
-                        if (!SoundData.ContainsKey(sound))
-                            SoundData[sound] = new List<Engine>() { engine };
+                        if (!soundData.ContainsKey(sound))
+                            soundData[sound] = new List<Engine>() { engine };
                         else
-                            SoundData[sound].Add(engine);
+                            soundData[sound].Add(engine);
 
                         // Create/Open the engine.sii file, and write the new contents
                         string path = Path.Combine(enginePath, engine.FileName);
@@ -232,7 +232,7 @@ namespace ATSEngineTool
                     // ==============================
                     // Create sound files
                     ProgressUpdate(progress, "Generating sound def files");
-                    foreach (var soundPair in SoundData)
+                    foreach (var soundPair in soundData)
                     {
                         SoundPackage sound = soundPair.Key;
                         List<Engine> engines = soundPair.Value;

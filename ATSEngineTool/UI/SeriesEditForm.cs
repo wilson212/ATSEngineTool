@@ -62,6 +62,8 @@ namespace ATSEngineTool
             {
                 manuNameBox.Text = series.Manufacturer;
                 seriesNameBox.Text = series.Name;
+                displacementBox.Value = series.Displacement;
+                iconBox.Focus();
             }
         }
 

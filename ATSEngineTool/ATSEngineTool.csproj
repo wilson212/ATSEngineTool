@@ -85,6 +85,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\ExceptionHandler.cs" />
+    <Compile Include="SiiEntities\AccessoryTransmissionData.cs" />
+    <Compile Include="SiiEntities\TransmissionNames.cs" />
     <Compile Include="UI\ExceptionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -226,9 +228,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="engine.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Include="data\Default.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

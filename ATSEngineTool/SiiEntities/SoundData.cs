@@ -1,6 +1,6 @@
 ﻿using Sii;
 
-namespace ATSEngineTool
+namespace ATSEngineTool.SiiEntities
 {
     [SiiUnit("sound_data")]
     internal sealed class SoundData
