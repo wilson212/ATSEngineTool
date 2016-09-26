@@ -33,7 +33,6 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cleanSoundsCheckBox = new System.Windows.Forms.CheckBox();
             this.cleanModCheckBox = new System.Windows.Forms.CheckBox();
@@ -43,18 +42,11 @@
             this.truckListView1 = new System.Windows.Forms.ListView();
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.appFolder = new System.Windows.Forms.PictureBox();
-            this.appLink = new System.Windows.Forms.PictureBox();
             this.dbVersionLabel = new System.Windows.Forms.Label();
             this.appVersionLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.workshopModFolder = new System.Windows.Forms.PictureBox();
-            this.workshopLink = new System.Windows.Forms.PictureBox();
-            this.steamAppFolder = new System.Windows.Forms.PictureBox();
-            this.steamAppLink = new System.Windows.Forms.PictureBox();
             this.WorkshopIdLabel = new System.Windows.Forms.Label();
             this.SteamAppLabel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -62,11 +54,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label7 = new System.Windows.Forms.Label();
             this.toolStrip4 = new System.Windows.Forms.ToolStrip();
-            this.modifyButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
-            this.addTruckButton = new System.Windows.Forms.ToolStripButton();
-            this.removeTruckButton = new System.Windows.Forms.ToolStripButton();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.truckListView2 = new System.Windows.Forms.ListView();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.engineListView = new System.Windows.Forms.ListView();
@@ -75,13 +63,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.newEngineButton = new System.Windows.Forms.ToolStripButton();
-            this.deleteEngineButton = new System.Windows.Forms.ToolStripButton();
-            this.editEngineButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.addSeriesButton = new System.Windows.Forms.ToolStripButton();
-            this.deleteSeriesButton = new System.Windows.Forms.ToolStripButton();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.seriesListView = new System.Windows.Forms.ListView();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.engineListView2 = new System.Windows.Forms.ListView();
@@ -97,32 +79,53 @@
             this.soundMenuItem = new System.Windows.Forms.MenuItem();
             this.aboutMenuItem = new System.Windows.Forms.MenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.updatePicture = new System.Windows.Forms.PictureBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.appFolder = new System.Windows.Forms.PictureBox();
+            this.appLink = new System.Windows.Forms.PictureBox();
+            this.workshopModFolder = new System.Windows.Forms.PictureBox();
+            this.workshopLink = new System.Windows.Forms.PictureBox();
+            this.steamAppFolder = new System.Windows.Forms.PictureBox();
+            this.steamAppLink = new System.Windows.Forms.PictureBox();
+            this.modifyButton = new System.Windows.Forms.ToolStripButton();
+            this.addTruckButton = new System.Windows.Forms.ToolStripButton();
+            this.removeTruckButton = new System.Windows.Forms.ToolStripButton();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.newEngineButton = new System.Windows.Forms.ToolStripButton();
+            this.deleteEngineButton = new System.Windows.Forms.ToolStripButton();
+            this.editEngineButton = new System.Windows.Forms.ToolStripButton();
+            this.addSeriesButton = new System.Windows.Forms.ToolStripButton();
+            this.deleteSeriesButton = new System.Windows.Forms.ToolStripButton();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.headerPanel = new System.Windows.Forms.Panel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.toolStrip4.SuspendLayout();
+            this.toolStrip3.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.updatePicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.appFolder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.appLink)).BeginInit();
-            this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.workshopModFolder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.workshopLink)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.steamAppFolder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.steamAppLink)).BeginInit();
-            this.tabPage2.SuspendLayout();
-            this.toolStrip4.SuspendLayout();
-            this.toolStrip3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.tabPage3.SuspendLayout();
-            this.toolStrip2.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
-            this.panel1.SuspendLayout();
             this.headerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
@@ -165,17 +168,6 @@
             this.groupBox2.TabIndex = 11;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Synchronize Mod";
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = global::ATSEngineTool.Properties.Resources.arrow_right;
-            this.pictureBox3.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.InitialImage")));
-            this.pictureBox3.Location = new System.Drawing.Point(347, 82);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(100, 77);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox3.TabIndex = 7;
-            this.pictureBox3.TabStop = false;
             // 
             // groupBox3
             // 
@@ -273,6 +265,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.updatePicture);
             this.groupBox1.Controls.Add(this.pictureBox4);
             this.groupBox1.Controls.Add(this.appFolder);
             this.groupBox1.Controls.Add(this.appLink);
@@ -286,42 +279,6 @@
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Application Data";
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Image = global::ATSEngineTool.Properties.Resources.check;
-            this.pictureBox4.Location = new System.Drawing.Point(258, 52);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(20, 20);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox4.TabIndex = 11;
-            this.pictureBox4.TabStop = false;
-            // 
-            // appFolder
-            // 
-            this.appFolder.Image = global::ATSEngineTool.Properties.Resources.Open;
-            this.appFolder.Location = new System.Drawing.Point(284, 26);
-            this.appFolder.Name = "appFolder";
-            this.appFolder.Size = new System.Drawing.Size(20, 20);
-            this.appFolder.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.appFolder.TabIndex = 10;
-            this.appFolder.TabStop = false;
-            this.appFolder.Click += new System.EventHandler(this.appFolder_Click);
-            this.appFolder.MouseEnter += new System.EventHandler(this.appFolder_MouseEnter);
-            this.appFolder.MouseLeave += new System.EventHandler(this.appFolder_MouseLeave);
-            // 
-            // appLink
-            // 
-            this.appLink.Image = global::ATSEngineTool.Properties.Resources.world_link1;
-            this.appLink.Location = new System.Drawing.Point(258, 26);
-            this.appLink.Name = "appLink";
-            this.appLink.Size = new System.Drawing.Size(20, 20);
-            this.appLink.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.appLink.TabIndex = 9;
-            this.appLink.TabStop = false;
-            this.appLink.Click += new System.EventHandler(this.appLink_Click);
-            this.appLink.MouseEnter += new System.EventHandler(this.appLink_MouseEnter);
-            this.appLink.MouseLeave += new System.EventHandler(this.appLink_MouseLeave);
             // 
             // dbVersionLabel
             // 
@@ -375,58 +332,6 @@
             this.groupBox4.TabIndex = 9;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Steam Mod Data";
-            // 
-            // workshopModFolder
-            // 
-            this.workshopModFolder.Image = global::ATSEngineTool.Properties.Resources.Open;
-            this.workshopModFolder.Location = new System.Drawing.Point(282, 51);
-            this.workshopModFolder.Name = "workshopModFolder";
-            this.workshopModFolder.Size = new System.Drawing.Size(20, 20);
-            this.workshopModFolder.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.workshopModFolder.TabIndex = 12;
-            this.workshopModFolder.TabStop = false;
-            this.workshopModFolder.Click += new System.EventHandler(this.workshopModFolder_Click);
-            this.workshopModFolder.MouseEnter += new System.EventHandler(this.workshopModFolder_MouseEnter);
-            this.workshopModFolder.MouseLeave += new System.EventHandler(this.workshopModFolder_MouseLeave);
-            // 
-            // workshopLink
-            // 
-            this.workshopLink.Image = global::ATSEngineTool.Properties.Resources.world_link1;
-            this.workshopLink.Location = new System.Drawing.Point(256, 52);
-            this.workshopLink.Name = "workshopLink";
-            this.workshopLink.Size = new System.Drawing.Size(20, 20);
-            this.workshopLink.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.workshopLink.TabIndex = 11;
-            this.workshopLink.TabStop = false;
-            this.workshopLink.Click += new System.EventHandler(this.workshopLink_Click);
-            this.workshopLink.MouseEnter += new System.EventHandler(this.workshopLink_MouseEnter);
-            this.workshopLink.MouseLeave += new System.EventHandler(this.workshopLink_MouseLeave);
-            // 
-            // steamAppFolder
-            // 
-            this.steamAppFolder.Image = global::ATSEngineTool.Properties.Resources.Open;
-            this.steamAppFolder.Location = new System.Drawing.Point(282, 26);
-            this.steamAppFolder.Name = "steamAppFolder";
-            this.steamAppFolder.Size = new System.Drawing.Size(20, 20);
-            this.steamAppFolder.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.steamAppFolder.TabIndex = 10;
-            this.steamAppFolder.TabStop = false;
-            this.steamAppFolder.Click += new System.EventHandler(this.steamAppFolder_Click);
-            this.steamAppFolder.MouseEnter += new System.EventHandler(this.steamAppFolder_MouseEnter);
-            this.steamAppFolder.MouseLeave += new System.EventHandler(this.steamAppFolder_MouseLeave);
-            // 
-            // steamAppLink
-            // 
-            this.steamAppLink.Image = global::ATSEngineTool.Properties.Resources.world_link1;
-            this.steamAppLink.Location = new System.Drawing.Point(256, 26);
-            this.steamAppLink.Name = "steamAppLink";
-            this.steamAppLink.Size = new System.Drawing.Size(20, 20);
-            this.steamAppLink.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.steamAppLink.TabIndex = 9;
-            this.steamAppLink.TabStop = false;
-            this.steamAppLink.Click += new System.EventHandler(this.steamAppLink_Click);
-            this.steamAppLink.MouseEnter += new System.EventHandler(this.steamAppLink_MouseEnter);
-            this.steamAppLink.MouseLeave += new System.EventHandler(this.steamAppLink_MouseLeave);
             // 
             // WorkshopIdLabel
             // 
@@ -502,15 +407,6 @@
             this.toolStrip4.TabIndex = 16;
             this.toolStrip4.Text = "toolStrip4";
             // 
-            // modifyButton
-            // 
-            this.modifyButton.Image = global::ATSEngineTool.Properties.Resources.edit;
-            this.modifyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.modifyButton.Name = "modifyButton";
-            this.modifyButton.Size = new System.Drawing.Size(86, 22);
-            this.modifyButton.Text = "Modify List";
-            this.modifyButton.Click += new System.EventHandler(this.modifyButton_Click);
-            // 
             // toolStrip3
             // 
             this.toolStrip3.AutoSize = false;
@@ -523,35 +419,6 @@
             this.toolStrip3.Size = new System.Drawing.Size(320, 25);
             this.toolStrip3.TabIndex = 15;
             this.toolStrip3.Text = "toolStrip3";
-            // 
-            // addTruckButton
-            // 
-            this.addTruckButton.Image = global::ATSEngineTool.Properties.Resources.add;
-            this.addTruckButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.addTruckButton.Name = "addTruckButton";
-            this.addTruckButton.Size = new System.Drawing.Size(76, 22);
-            this.addTruckButton.Text = "Add New";
-            this.addTruckButton.Click += new System.EventHandler(this.addTruckButton_Click);
-            // 
-            // removeTruckButton
-            // 
-            this.removeTruckButton.Image = global::ATSEngineTool.Properties.Resources.DeleteRed;
-            this.removeTruckButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.removeTruckButton.Name = "removeTruckButton";
-            this.removeTruckButton.Size = new System.Drawing.Size(70, 22);
-            this.removeTruckButton.Text = "Remove";
-            this.removeTruckButton.Click += new System.EventHandler(this.removeTruckButton_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::ATSEngineTool.Properties.Resources.go_next;
-            this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
-            this.pictureBox1.Location = new System.Drawing.Point(357, 196);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox1.TabIndex = 6;
-            this.pictureBox1.TabStop = false;
             // 
             // truckListView2
             // 
@@ -646,35 +513,6 @@
             this.toolStrip2.TabIndex = 15;
             this.toolStrip2.Text = "toolStrip2";
             // 
-            // newEngineButton
-            // 
-            this.newEngineButton.Image = global::ATSEngineTool.Properties.Resources.add;
-            this.newEngineButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.newEngineButton.Name = "newEngineButton";
-            this.newEngineButton.Size = new System.Drawing.Size(76, 22);
-            this.newEngineButton.Text = "Add New";
-            this.newEngineButton.Click += new System.EventHandler(this.newEngineButton_Click);
-            // 
-            // deleteEngineButton
-            // 
-            this.deleteEngineButton.Enabled = false;
-            this.deleteEngineButton.Image = global::ATSEngineTool.Properties.Resources.DeleteRed;
-            this.deleteEngineButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.deleteEngineButton.Name = "deleteEngineButton";
-            this.deleteEngineButton.Size = new System.Drawing.Size(70, 22);
-            this.deleteEngineButton.Text = "Remove";
-            this.deleteEngineButton.Click += new System.EventHandler(this.deleteEngineButton_Click);
-            // 
-            // editEngineButton
-            // 
-            this.editEngineButton.Enabled = false;
-            this.editEngineButton.Image = global::ATSEngineTool.Properties.Resources.edit;
-            this.editEngineButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.editEngineButton.Name = "editEngineButton";
-            this.editEngineButton.Size = new System.Drawing.Size(86, 22);
-            this.editEngineButton.Text = "Edit Engine";
-            this.editEngineButton.Click += new System.EventHandler(this.editEngineButton_Click);
-            // 
             // toolStrip1
             // 
             this.toolStrip1.AutoSize = false;
@@ -687,35 +525,6 @@
             this.toolStrip1.Size = new System.Drawing.Size(246, 25);
             this.toolStrip1.TabIndex = 14;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // addSeriesButton
-            // 
-            this.addSeriesButton.Image = global::ATSEngineTool.Properties.Resources.add;
-            this.addSeriesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.addSeriesButton.Name = "addSeriesButton";
-            this.addSeriesButton.Size = new System.Drawing.Size(76, 22);
-            this.addSeriesButton.Text = "Add New";
-            this.addSeriesButton.Click += new System.EventHandler(this.addSeriesButton_Click);
-            // 
-            // deleteSeriesButton
-            // 
-            this.deleteSeriesButton.Image = global::ATSEngineTool.Properties.Resources.DeleteRed;
-            this.deleteSeriesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.deleteSeriesButton.Name = "deleteSeriesButton";
-            this.deleteSeriesButton.Size = new System.Drawing.Size(70, 22);
-            this.deleteSeriesButton.Text = "Remove";
-            this.deleteSeriesButton.Click += new System.EventHandler(this.deleteSeriesButton_Click);
-            // 
-            // pictureBox7
-            // 
-            this.pictureBox7.Image = global::ATSEngineTool.Properties.Resources.go_next;
-            this.pictureBox7.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox7.InitialImage")));
-            this.pictureBox7.Location = new System.Drawing.Point(285, 172);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(99, 50);
-            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox7.TabIndex = 11;
-            this.pictureBox7.TabStop = false;
             // 
             // seriesListView
             // 
@@ -831,8 +640,223 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 80);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(809, 432);
+            this.panel1.Size = new System.Drawing.Size(809, 411);
             this.panel1.TabIndex = 2;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = global::ATSEngineTool.Properties.Resources.arrow_right;
+            this.pictureBox3.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.InitialImage")));
+            this.pictureBox3.Location = new System.Drawing.Point(347, 82);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(100, 77);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox3.TabIndex = 7;
+            this.pictureBox3.TabStop = false;
+            // 
+            // updatePicture
+            // 
+            this.updatePicture.Image = global::ATSEngineTool.Properties.Resources.loading;
+            this.updatePicture.Location = new System.Drawing.Point(258, 26);
+            this.updatePicture.Name = "updatePicture";
+            this.updatePicture.Size = new System.Drawing.Size(20, 20);
+            this.updatePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.updatePicture.TabIndex = 12;
+            this.updatePicture.TabStop = false;
+            this.toolTip1.SetToolTip(this.updatePicture, "Checking for updates...");
+            this.updatePicture.MouseEnter += new System.EventHandler(this.updatePicture_MouseEnter);
+            this.updatePicture.MouseLeave += new System.EventHandler(this.updatePicture_MouseLeave);
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = global::ATSEngineTool.Properties.Resources.check;
+            this.pictureBox4.Location = new System.Drawing.Point(258, 52);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(20, 20);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox4.TabIndex = 11;
+            this.pictureBox4.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBox4, "Database up to date");
+            // 
+            // appFolder
+            // 
+            this.appFolder.Image = global::ATSEngineTool.Properties.Resources.Open;
+            this.appFolder.Location = new System.Drawing.Point(284, 52);
+            this.appFolder.Name = "appFolder";
+            this.appFolder.Size = new System.Drawing.Size(20, 20);
+            this.appFolder.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.appFolder.TabIndex = 10;
+            this.appFolder.TabStop = false;
+            this.toolTip1.SetToolTip(this.appFolder, "Open program folder");
+            this.appFolder.Click += new System.EventHandler(this.appFolder_Click);
+            this.appFolder.MouseEnter += new System.EventHandler(this.appFolder_MouseEnter);
+            this.appFolder.MouseLeave += new System.EventHandler(this.appFolder_MouseLeave);
+            // 
+            // appLink
+            // 
+            this.appLink.Image = global::ATSEngineTool.Properties.Resources.world_link1;
+            this.appLink.Location = new System.Drawing.Point(284, 26);
+            this.appLink.Name = "appLink";
+            this.appLink.Size = new System.Drawing.Size(20, 20);
+            this.appLink.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.appLink.TabIndex = 9;
+            this.appLink.TabStop = false;
+            this.toolTip1.SetToolTip(this.appLink, "Open project on GitHub");
+            this.appLink.Click += new System.EventHandler(this.appLink_Click);
+            this.appLink.MouseEnter += new System.EventHandler(this.appLink_MouseEnter);
+            this.appLink.MouseLeave += new System.EventHandler(this.appLink_MouseLeave);
+            // 
+            // workshopModFolder
+            // 
+            this.workshopModFolder.Image = global::ATSEngineTool.Properties.Resources.Open;
+            this.workshopModFolder.Location = new System.Drawing.Point(282, 51);
+            this.workshopModFolder.Name = "workshopModFolder";
+            this.workshopModFolder.Size = new System.Drawing.Size(20, 20);
+            this.workshopModFolder.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.workshopModFolder.TabIndex = 12;
+            this.workshopModFolder.TabStop = false;
+            this.toolTip1.SetToolTip(this.workshopModFolder, "Open mod installation folder");
+            this.workshopModFolder.Click += new System.EventHandler(this.workshopModFolder_Click);
+            this.workshopModFolder.MouseEnter += new System.EventHandler(this.workshopModFolder_MouseEnter);
+            this.workshopModFolder.MouseLeave += new System.EventHandler(this.workshopModFolder_MouseLeave);
+            // 
+            // workshopLink
+            // 
+            this.workshopLink.Image = global::ATSEngineTool.Properties.Resources.world_link1;
+            this.workshopLink.Location = new System.Drawing.Point(256, 52);
+            this.workshopLink.Name = "workshopLink";
+            this.workshopLink.Size = new System.Drawing.Size(20, 20);
+            this.workshopLink.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.workshopLink.TabIndex = 11;
+            this.workshopLink.TabStop = false;
+            this.toolTip1.SetToolTip(this.workshopLink, "Open mod Steam Workshop page");
+            this.workshopLink.Click += new System.EventHandler(this.workshopLink_Click);
+            this.workshopLink.MouseEnter += new System.EventHandler(this.workshopLink_MouseEnter);
+            this.workshopLink.MouseLeave += new System.EventHandler(this.workshopLink_MouseLeave);
+            // 
+            // steamAppFolder
+            // 
+            this.steamAppFolder.Image = global::ATSEngineTool.Properties.Resources.Open;
+            this.steamAppFolder.Location = new System.Drawing.Point(282, 26);
+            this.steamAppFolder.Name = "steamAppFolder";
+            this.steamAppFolder.Size = new System.Drawing.Size(20, 20);
+            this.steamAppFolder.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.steamAppFolder.TabIndex = 10;
+            this.steamAppFolder.TabStop = false;
+            this.toolTip1.SetToolTip(this.steamAppFolder, "Open ATS installation folder");
+            this.steamAppFolder.Click += new System.EventHandler(this.steamAppFolder_Click);
+            this.steamAppFolder.MouseEnter += new System.EventHandler(this.steamAppFolder_MouseEnter);
+            this.steamAppFolder.MouseLeave += new System.EventHandler(this.steamAppFolder_MouseLeave);
+            // 
+            // steamAppLink
+            // 
+            this.steamAppLink.Image = global::ATSEngineTool.Properties.Resources.world_link1;
+            this.steamAppLink.Location = new System.Drawing.Point(256, 26);
+            this.steamAppLink.Name = "steamAppLink";
+            this.steamAppLink.Size = new System.Drawing.Size(20, 20);
+            this.steamAppLink.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.steamAppLink.TabIndex = 9;
+            this.steamAppLink.TabStop = false;
+            this.toolTip1.SetToolTip(this.steamAppLink, "Open ATS Steam store page");
+            this.steamAppLink.Click += new System.EventHandler(this.steamAppLink_Click);
+            this.steamAppLink.MouseEnter += new System.EventHandler(this.steamAppLink_MouseEnter);
+            this.steamAppLink.MouseLeave += new System.EventHandler(this.steamAppLink_MouseLeave);
+            // 
+            // modifyButton
+            // 
+            this.modifyButton.Image = global::ATSEngineTool.Properties.Resources.edit;
+            this.modifyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.modifyButton.Name = "modifyButton";
+            this.modifyButton.Size = new System.Drawing.Size(86, 22);
+            this.modifyButton.Text = "Modify List";
+            this.modifyButton.Click += new System.EventHandler(this.modifyButton_Click);
+            // 
+            // addTruckButton
+            // 
+            this.addTruckButton.Image = global::ATSEngineTool.Properties.Resources.add;
+            this.addTruckButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.addTruckButton.Name = "addTruckButton";
+            this.addTruckButton.Size = new System.Drawing.Size(76, 22);
+            this.addTruckButton.Text = "Add New";
+            this.addTruckButton.Click += new System.EventHandler(this.addTruckButton_Click);
+            // 
+            // removeTruckButton
+            // 
+            this.removeTruckButton.Image = global::ATSEngineTool.Properties.Resources.DeleteRed;
+            this.removeTruckButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.removeTruckButton.Name = "removeTruckButton";
+            this.removeTruckButton.Size = new System.Drawing.Size(70, 22);
+            this.removeTruckButton.Text = "Remove";
+            this.removeTruckButton.Click += new System.EventHandler(this.removeTruckButton_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::ATSEngineTool.Properties.Resources.go_next;
+            this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
+            this.pictureBox1.Location = new System.Drawing.Point(357, 196);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox1.TabIndex = 6;
+            this.pictureBox1.TabStop = false;
+            // 
+            // newEngineButton
+            // 
+            this.newEngineButton.Image = global::ATSEngineTool.Properties.Resources.add;
+            this.newEngineButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.newEngineButton.Name = "newEngineButton";
+            this.newEngineButton.Size = new System.Drawing.Size(76, 22);
+            this.newEngineButton.Text = "Add New";
+            this.newEngineButton.Click += new System.EventHandler(this.newEngineButton_Click);
+            // 
+            // deleteEngineButton
+            // 
+            this.deleteEngineButton.Enabled = false;
+            this.deleteEngineButton.Image = global::ATSEngineTool.Properties.Resources.DeleteRed;
+            this.deleteEngineButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.deleteEngineButton.Name = "deleteEngineButton";
+            this.deleteEngineButton.Size = new System.Drawing.Size(70, 22);
+            this.deleteEngineButton.Text = "Remove";
+            this.deleteEngineButton.Click += new System.EventHandler(this.deleteEngineButton_Click);
+            // 
+            // editEngineButton
+            // 
+            this.editEngineButton.Enabled = false;
+            this.editEngineButton.Image = global::ATSEngineTool.Properties.Resources.edit;
+            this.editEngineButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.editEngineButton.Name = "editEngineButton";
+            this.editEngineButton.Size = new System.Drawing.Size(86, 22);
+            this.editEngineButton.Text = "Edit Engine";
+            this.editEngineButton.Click += new System.EventHandler(this.editEngineButton_Click);
+            // 
+            // addSeriesButton
+            // 
+            this.addSeriesButton.Image = global::ATSEngineTool.Properties.Resources.add;
+            this.addSeriesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.addSeriesButton.Name = "addSeriesButton";
+            this.addSeriesButton.Size = new System.Drawing.Size(76, 22);
+            this.addSeriesButton.Text = "Add New";
+            this.addSeriesButton.Click += new System.EventHandler(this.addSeriesButton_Click);
+            // 
+            // deleteSeriesButton
+            // 
+            this.deleteSeriesButton.Image = global::ATSEngineTool.Properties.Resources.DeleteRed;
+            this.deleteSeriesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.deleteSeriesButton.Name = "deleteSeriesButton";
+            this.deleteSeriesButton.Size = new System.Drawing.Size(70, 22);
+            this.deleteSeriesButton.Text = "Remove";
+            this.deleteSeriesButton.Click += new System.EventHandler(this.deleteSeriesButton_Click);
+            // 
+            // pictureBox7
+            // 
+            this.pictureBox7.Image = global::ATSEngineTool.Properties.Resources.go_next;
+            this.pictureBox7.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox7.InitialImage")));
+            this.pictureBox7.Location = new System.Drawing.Point(285, 172);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(99, 50);
+            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox7.TabIndex = 11;
+            this.pictureBox7.TabStop = false;
             // 
             // headerPanel
             // 
@@ -860,7 +884,7 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(809, 512);
+            this.ClientSize = new System.Drawing.Size(809, 491);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.headerPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -873,35 +897,36 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.appFolder)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.appLink)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.workshopModFolder)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.workshopLink)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.steamAppFolder)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.steamAppLink)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.toolStrip4.ResumeLayout(false);
             this.toolStrip4.PerformLayout();
             this.toolStrip3.ResumeLayout(false);
             this.toolStrip3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.updatePicture)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.appFolder)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.appLink)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.workshopModFolder)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.workshopLink)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.steamAppFolder)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.steamAppLink)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             this.headerPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
@@ -981,6 +1006,8 @@
         private System.Windows.Forms.MenuItem settingsMenuItem;
         private System.Windows.Forms.MenuItem aboutMenuItem;
         private System.Windows.Forms.MenuItem soundMenuItem;
+        private System.Windows.Forms.PictureBox updatePicture;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

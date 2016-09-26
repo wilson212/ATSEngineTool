@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Security.Principal;
 using System.Windows.Forms;
 using ATSEngineTool.Properties;
 using Microsoft.Win32;
@@ -22,7 +23,19 @@ namespace ATSEngineTool
         /// <summary>
         /// Program Version
         /// </summary>
-        public static Version Version { get; private set; } = new Version(2, 2, 3);
+        public static Version Version { get; private set; } = new Version(2, 3, 0);
+
+        /// <summary>
+        /// Returns whether this application is running in administrator mode.
+        /// </summary>
+        public static bool IsAdministrator
+        {
+            get
+            {
+                WindowsPrincipal wp = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+                return wp.IsInRole(WindowsBuiltInRole.Administrator);
+            }
+        }
 
         /// <summary>
         /// The main entry point for the application.
@@ -33,6 +46,10 @@ namespace ATSEngineTool
             // Setup visual styles
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // Set Exception Handler
+            Application.ThreadException += ExceptionHandler.OnThreadException;
+            AppDomain.CurrentDomain.UnhandledException += ExceptionHandler.OnUnhandledException;
 
             // Update program settings after a program update
             if (!Settings.Default.Updated)
@@ -70,7 +87,7 @@ namespace ATSEngineTool
         private static void InitializeDatabase()
         {
             // Make sure the data directory exists
-            string path = Path.Combine(Program.RootPath, "data");
+            string path = Path.Combine(Program.RootPath, "data", "backups");
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);

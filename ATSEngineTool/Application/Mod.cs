@@ -43,12 +43,16 @@ namespace ATSEngineTool
         /// <summary>
         /// Removes all temporary compiled files from the Compile directory
         /// </summary>
-        public static void CleanCompileDirectory()
+        public static void CleanCompileDirectory(IProgress<TaskProgressUpdate> progress)
         {
             if (Directory.Exists(CompilePath))
             {
                 try
                 {
+                    // Report
+                    ProgressUpdate(progress, "Cleaning compile directory...");
+
+                    // Delete Directory and create a new
                     DirectoryExt.Delete(CompilePath);
                     Directory.CreateDirectory(DefCompilePath);
                 }
@@ -67,38 +71,59 @@ namespace ATSEngineTool
         /// If true, all sound files will be deleted from the mod and the current sound 
         /// files will be copied over to the mod.
         /// </param>
-        public static void Sync(bool cleanEngines, bool cleanSounds)
+        public static void Sync(bool cleanEngines, bool cleanSounds, IProgress<TaskProgressUpdate> progress)
         {
+            // Get our folder type name
+            string fname = (Program.Config.IntegrateWithMod) ? "mod" : "compile";
+
             // Clear old def files?
             string path = Path.Combine(ModPath, "def");
             if (cleanEngines && Directory.Exists(path))
             {
+                // Show Update
+                ProgressUpdate(progress, $"Deleting existing {fname} def files");
                 DirectoryExt.Delete(path);
             }
 
             // Sync the def files
             if (Program.Config.IntegrateWithMod)
+            {
+                ProgressUpdate(progress, "Copying compiled def files to mod folder");
                 DirectoryExt.Copy(DefCompilePath, path, true, true);
+            }
 
             // Sync icons
+            ProgressUpdate(progress, $"Copying dds graphics to {fname} folder");
             path = Path.Combine(ModPath, "material", "ui", "accessory");
             DirectoryExt.Copy(Path.Combine(Program.RootPath, "graphics"), path, true, true);
 
             // Sync common sound files
             path = Path.Combine(ModPath, "sound", "truck", "common");
             if (cleanSounds && Directory.Exists(path))
+            {
+                ProgressUpdate(progress, $"Deleting old common sound files in {fname} folder");
                 DirectoryExt.Delete(path);
+            }
 
             if (cleanSounds || !Directory.Exists(path))
+            {
+                ProgressUpdate(progress, $"Copying common sound files to {fname} folder");
                 DirectoryExt.Copy(Path.Combine(Program.RootPath, "sounds", "common"), path, true, true);
+            }
 
             // Sync common noise files
             path = Path.Combine(ModPath, "sound", "truck", "noises");
             if (cleanSounds && Directory.Exists(path))
+            {
+                ProgressUpdate(progress, $"Deleting old noise sound files in {fname} folder");
                 DirectoryExt.Delete(path);
+            }
 
             if (cleanSounds || !Directory.Exists(path))
+            {
+                ProgressUpdate(progress, $"Copying noise sound files to {fname} folder");
                 DirectoryExt.Copy(Path.Combine(Program.RootPath, "sounds", "noises"), path, true, true);
+            }
 
             // Sync engine sounds
             using (AppDatabase db = new AppDatabase())
@@ -108,7 +133,10 @@ namespace ATSEngineTool
                     // Mod folder path to the sounds
                     path = Path.Combine(ModPath, "sound", "truck", "engine", sound.FolderName);
                     if (cleanSounds && Directory.Exists(path))
+                    {
+                        ProgressUpdate(progress, $"Deleting old {sound.FolderName} sound files in {fname} folder");
                         DirectoryExt.Delete(path);
+                    }
 
                     // Paths
                     string intPath = Path.Combine(path, "int");
@@ -117,13 +145,30 @@ namespace ATSEngineTool
                     // Interior Sounds
                     string localPath = Path.Combine(Program.RootPath, "sounds", "engine", sound.FolderName, "int");
                     if (Directory.Exists(localPath) && (cleanSounds || !Directory.Exists(intPath)))
+                    {
+                        ProgressUpdate(progress, $"Copying exterior sound files to {fname} folder");
                         DirectoryExt.Copy(localPath, intPath, true, true);
+                    }
 
                     // Exterior Sounds
                     localPath = Path.Combine(Program.RootPath, "sounds", "engine", sound.FolderName, "ext");
                     if (Directory.Exists(localPath) && (cleanSounds || !Directory.Exists(extPath)))
+                    {
+                        ProgressUpdate(progress, $"Copying exterior sound files to {fname} folder");
                         DirectoryExt.Copy(localPath, extPath, true, true);
+                    }
                 }
+            }
+        }
+
+        private static void ProgressUpdate(IProgress<TaskProgressUpdate> progress, string v)
+        {
+            // Show Update
+            if (progress != null)
+            {
+                var update = new TaskProgressUpdate();
+                update.MessageText = v;
+                TaskForm.Progress.Report(update);
             }
         }
 
@@ -131,12 +176,13 @@ namespace ATSEngineTool
         /// Takes the engine data from the database, and compiles the mod.
         /// </summary>
         /// <param name="trucks">A list of trucks we are compiling engines for</param>
-        public static void Compile(IEnumerable<Truck> trucks)
+        public static void Compile(IEnumerable<Truck> trucks, IProgress<TaskProgressUpdate> progress)
         {
             // Local variables
             string truckpath, soundPath, enginePath;
-            Dictionary<SoundPackage, List<Engine>> SoundData = new Dictionary<SoundPackage, List<Engine>>();
-            StringBuilder suitableFor = new StringBuilder();
+            var SoundData = new Dictionary<SoundPackage, List<Engine>>();
+            var suitableFor = new StringBuilder();
+            ProgressUpdate(progress, "Generating engine def files");
 
             // Connect to the database
             using (AppDatabase db = new AppDatabase())
@@ -151,14 +197,15 @@ namespace ATSEngineTool
                     soundPath = Path.Combine(truckpath, "sound");
                     enginePath = Path.Combine(truckpath, "engine");
 
-                    // Delete old files
-                    if (Directory.Exists(truckpath))
-                        Directory.Delete(truckpath, true);
-
                     // Create file directories
-                    Directory.CreateDirectory(truckpath);
-                    Directory.CreateDirectory(soundPath);
-                    Directory.CreateDirectory(enginePath);
+                    if (!Directory.Exists(truckpath))
+                        Directory.CreateDirectory(truckpath);
+
+                    if (!Directory.Exists(soundPath))
+                        Directory.CreateDirectory(soundPath);
+
+                    if (!Directory.Exists(enginePath))
+                        Directory.CreateDirectory(enginePath);
 
                     // ==============================
                     // Create engine files
@@ -184,6 +231,7 @@ namespace ATSEngineTool
 
                     // ==============================
                     // Create sound files
+                    ProgressUpdate(progress, "Generating sound def files");
                     foreach (var soundPair in SoundData)
                     {
                         SoundPackage sound = soundPair.Key;

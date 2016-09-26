@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ATSEngineTool.Database;
+using ATSEngineTool.Properties;
 
 namespace ATSEngineTool
 {
@@ -106,6 +107,13 @@ namespace ATSEngineTool
 
             // Set sync enabled
             syncCheckBox.Enabled = Program.Config.IntegrateWithMod;
+
+            // Check for updates?
+            if (Program.Config.UpdateCheck)
+            {
+                ProgramUpdater.CheckCompleted += Updater_CheckCompleted;
+                ProgramUpdater.CheckForUpdateAsync();
+            }
         }
 
         private void FillEnginesSeries(AppDatabase db)
@@ -171,6 +179,25 @@ namespace ATSEngineTool
                 item.SubItems.Add(engine.Torque.ToString());
                 item.Tag = engine;
                 engineListView2.Items.Add(item);
+            }
+        }
+
+        /// <summary>
+        /// Event fired once the program update check has finished
+        /// </summary>
+        private void Updater_CheckCompleted(object sender, EventArgs e)
+        {
+            if (ProgramUpdater.UpdateAvailable)
+            {
+                appVersionLabel.ForeColor = Color.OrangeRed;
+                updatePicture.Image = Resources.updateAvailable;
+                updatePicture.Click += updatePicture_Click;
+                toolTip1.SetToolTip(updatePicture, "Update Available! Click to open Download Page.");
+            }
+            else
+            {
+                updatePicture.Image = Resources.check;
+                toolTip1.SetToolTip(updatePicture, "Program is up to date.");
             }
         }
 
@@ -640,6 +667,29 @@ namespace ATSEngineTool
             workshopModFolder.Cursor = Cursors.Default;
         }
 
+        private void updatePicture_MouseEnter(object sender, EventArgs e)
+        {
+            if (ProgramUpdater.UpdateAvailable)
+            {
+                updatePicture.SizeMode = PictureBoxSizeMode.Zoom;
+                updatePicture.Cursor = Cursors.Hand;
+            }
+        }
+
+        private void updatePicture_MouseLeave(object sender, EventArgs e)
+        {
+            if (ProgramUpdater.UpdateAvailable)
+            {
+                updatePicture.SizeMode = PictureBoxSizeMode.CenterImage;
+                updatePicture.Cursor = Cursors.Default;
+            }
+        }
+
+        private void updatePicture_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/wilson212/ATSEngineTool/releases/latest");
+        }
+
         private async void syncButton_Click(object sender, EventArgs e)
         {
             // Grab Trucks
@@ -662,26 +712,35 @@ namespace ATSEngineTool
             }
 
             // Show loading form and lock this one
-            LoadingForm.ShowScreen(this, false);
+            TaskForm.Show(this, "Compiling Def Files", "Compiling Mod Files", false);
+            TaskProgressUpdate update;
             this.Enabled = false;
             try
             {
                 // Run this in a task to prevent GUI lockup
                 await Task.Run(() => 
-                { 
+                {
                     // Clean out old compiled files
                     if (cleanCompCheckBox.Checked)
-                        Mod.CleanCompileDirectory();
+                    {
+                        Mod.CleanCompileDirectory(TaskForm.Progress);
+                    }
+
+                    // Show Update
+                    update = new TaskProgressUpdate();
+                    update.MessageText = "Creating Def Files...";
+                    TaskForm.Progress.Report(update);
 
                     // Compile Mod
-                    Mod.Compile(trucks);
+                    Mod.Compile(trucks, TaskForm.Progress);
 
                     // Are we sync'ing the Compiled and Mod folders?
                     if (syncCheckBox.Checked)
                     {
                         Mod.Sync(
                             Program.Config.IntegrateWithMod && cleanModCheckBox.Checked,
-                            Program.Config.IntegrateWithMod && cleanSoundsCheckBox.Checked
+                            Program.Config.IntegrateWithMod && cleanSoundsCheckBox.Checked,
+                            TaskForm.Progress
                         );
                     }
                 });
@@ -693,7 +752,7 @@ namespace ATSEngineTool
             finally
             {
                 this.Enabled = true;
-                LoadingForm.CloseForm();
+                TaskForm.CloseForm();
             }
         }
 

@@ -30,6 +30,7 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.linkCheckBox = new System.Windows.Forms.CheckBox();
             this.ChangeButton = new System.Windows.Forms.Button();
             this.SteamInstallPath = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -39,17 +40,20 @@
             this.footerPanel = new System.Windows.Forms.Panel();
             this.cancelButton = new System.Windows.Forms.Button();
             this.contentPanel = new System.Windows.Forms.Panel();
-            this.linkCheckBox = new System.Windows.Forms.CheckBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.updateCheckBox = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.headerPanel.SuspendLayout();
             this.footerPanel.SuspendLayout();
             this.contentPanel.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(-1, 16);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -69,6 +73,18 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Steam";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // linkCheckBox
+            // 
+            this.linkCheckBox.AutoSize = true;
+            this.linkCheckBox.Checked = true;
+            this.linkCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.linkCheckBox.Location = new System.Drawing.Point(40, 36);
+            this.linkCheckBox.Name = "linkCheckBox";
+            this.linkCheckBox.Size = new System.Drawing.Size(240, 17);
+            this.linkCheckBox.TabIndex = 27;
+            this.linkCheckBox.Text = "Integrate with Real Engines and Sounds Mod";
+            this.linkCheckBox.UseVisualStyleBackColor = true;
             // 
             // ChangeButton
             // 
@@ -165,17 +181,28 @@
             this.contentPanel.Size = new System.Drawing.Size(484, 222);
             this.contentPanel.TabIndex = 35;
             // 
-            // linkCheckBox
+            // tabPage2
             // 
-            this.linkCheckBox.AutoSize = true;
-            this.linkCheckBox.Checked = true;
-            this.linkCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.linkCheckBox.Location = new System.Drawing.Point(40, 36);
-            this.linkCheckBox.Name = "linkCheckBox";
-            this.linkCheckBox.Size = new System.Drawing.Size(240, 17);
-            this.linkCheckBox.TabIndex = 27;
-            this.linkCheckBox.Text = "Integrate with Real Engines and Sounds Mod";
-            this.linkCheckBox.UseVisualStyleBackColor = true;
+            this.tabPage2.Controls.Add(this.updateCheckBox);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(480, 187);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Application";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // updateCheckBox
+            // 
+            this.updateCheckBox.AutoSize = true;
+            this.updateCheckBox.Checked = true;
+            this.updateCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.updateCheckBox.Location = new System.Drawing.Point(40, 36);
+            this.updateCheckBox.Name = "updateCheckBox";
+            this.updateCheckBox.Size = new System.Drawing.Size(169, 17);
+            this.updateCheckBox.TabIndex = 28;
+            this.updateCheckBox.Text = "Enable program update check";
+            this.updateCheckBox.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
@@ -198,6 +225,8 @@
             this.headerPanel.ResumeLayout(false);
             this.footerPanel.ResumeLayout(false);
             this.contentPanel.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -216,5 +245,7 @@
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Panel contentPanel;
         private System.Windows.Forms.CheckBox linkCheckBox;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.CheckBox updateCheckBox;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,25 +41,38 @@ namespace ATSEngineTool.Database
 
         private void MigrateTo_1_1()
         {
-            // Create queries
-            string[] queries = new[]
-            {
-                "ALTER TABLE `Engine` ADD COLUMN `LowRpmRange_EngineBrake` INTEGER NOT NULL DEFAULT 0;",
-                "ALTER TABLE `Engine` ADD COLUMN `HighRpmRange_EngineBrake` INTEGER NOT NULL DEFAULT 0;",
-                "ALTER TABLE `Engine` ADD COLUMN `AdblueConsumption` REAL NOT NULL DEFAULT 0.0;",
-                "ALTER TABLE `Engine` ADD COLUMN `NoAdbluePowerLimit` REAL NOT NULL DEFAULT 0.0;",
-                "ALTER TABLE `Engine` ADD COLUMN `Conflicts` TEXT DEFAULT \"\";",
-            };
+            // Create backup
+            File.Copy(
+                Path.Combine(Program.RootPath, "data", "AppData.db"),
+                Path.Combine(Program.RootPath, "data", "backups", $"AppData_v1.0_{Epoch.Now}.db")
+            );
 
-            // Run each query
-            foreach (string query in queries)
+            // Run the update in a transaction
+            using (var trans = Database.BeginTransaction())
             {
-                Database.Execute(query);
+                // Create queries
+                string[] queries = new[]
+                {
+                    "ALTER TABLE `Engine` ADD COLUMN `LowRpmRange_EngineBrake` INTEGER NOT NULL DEFAULT 0;",
+                    "ALTER TABLE `Engine` ADD COLUMN `HighRpmRange_EngineBrake` INTEGER NOT NULL DEFAULT 0;",
+                    "ALTER TABLE `Engine` ADD COLUMN `AdblueConsumption` REAL NOT NULL DEFAULT 0.0;",
+                    "ALTER TABLE `Engine` ADD COLUMN `NoAdbluePowerLimit` REAL NOT NULL DEFAULT 0.0;",
+                    "ALTER TABLE `Engine` ADD COLUMN `Conflicts` TEXT DEFAULT \"\";",
+                };
+
+                // Run each query
+                foreach (string query in queries)
+                {
+                    Database.Execute(query);
+                }
+
+                // Update database version
+                string sql = "INSERT INTO `DbVersion`(`Version`, `AppliedOn`) VALUES({0}, {1});";
+                Database.Execute(String.Format(sql, Version.Parse("1.1"), Epoch.Now));
+
+                // Commit
+                trans.Commit();
             }
-
-            // Update database version
-            string sql = "INSERT INTO `DbVersion`(`Version`, `AppliedOn`) VALUES({0}, {1});";
-            Database.Execute(String.Format(sql, Version.Parse("1.1"), Epoch.Now));
         }
 
         /// <summary>

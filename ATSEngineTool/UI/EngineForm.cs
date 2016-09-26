@@ -648,7 +648,7 @@ namespace ATSEngineTool
                     StringBuilder builder = new StringBuilder("A Syntax error occured while parsing the sii file!");
                     builder.AppendLine();
                     builder.AppendLine();
-                    builder.AppendLine($"Message: {ex.Message.Replace("\0", "<zero_terminator>")}");
+                    builder.AppendLine($"Message: {ex.Message.Replace("\0", "\\0")}");
                     builder.AppendLine();
                     builder.AppendLine($"Line: {ex.Span.Start.Line}");
                     builder.AppendLine($"Column: {ex.Span.Start.Column}");
