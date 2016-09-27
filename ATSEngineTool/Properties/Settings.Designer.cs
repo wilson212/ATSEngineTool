@@ -70,5 +70,17 @@ namespace ATSEngineTool.Properties {
                 this["UpdateCheck"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Imperial")]
+        public global::ATSEngineTool.UnitSystem UnitSystem {
+            get {
+                return ((global::ATSEngineTool.UnitSystem)(this["UnitSystem"]));
+            }
+            set {
+                this["UnitSystem"] = value;
+            }
+        }
     }
 }

@@ -15,6 +15,10 @@ namespace ATSEngineTool
             SteamInstallPath.Text = Program.Config.SteamPath;
             linkCheckBox.Checked = Program.Config.IntegrateWithMod;
             updateCheckBox.Checked = Program.Config.UpdateCheck;
+            if (Program.Config.UnitSystem == UnitSystem.Metric)
+            {
+                mUnitRadio.Checked = true;
+            }
         }
 
         private void ChangeButton_Click(object sender, EventArgs e)
@@ -64,6 +68,7 @@ namespace ATSEngineTool
             Program.Config.UpdateCheck = updateCheckBox.Checked;
             Program.Config.SteamPath = SteamInstallPath.Text;
             Program.Config.IntegrateWithMod = linkCheckBox.Checked;
+            Program.Config.UnitSystem = (iUnitRatio.Checked) ? UnitSystem.Imperial : UnitSystem.Metric;
             Program.Config.Save();
             this.Close();
         }

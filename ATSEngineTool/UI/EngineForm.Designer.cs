@@ -88,10 +88,10 @@
             this.KwLabel = new System.Windows.Forms.Label();
             this.horsepowerBox = new System.Windows.Forms.NumericUpDown();
             this.label14 = new System.Windows.Forms.Label();
-            this.NmLabel = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelNM = new System.Windows.Forms.Label();
+            this.labelTorque = new System.Windows.Forms.Label();
             this.peakRPMBox = new System.Windows.Forms.NumericUpDown();
-            this.label6 = new System.Windows.Forms.Label();
+            this.labelPeakTorque = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.removePointButton = new System.Windows.Forms.Button();
             this.addPointButton = new System.Windows.Forms.Button();
@@ -808,10 +808,10 @@
             this.groupBox2.Controls.Add(this.KwLabel);
             this.groupBox2.Controls.Add(this.horsepowerBox);
             this.groupBox2.Controls.Add(this.label14);
-            this.groupBox2.Controls.Add(this.NmLabel);
-            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.labelNM);
+            this.groupBox2.Controls.Add(this.labelTorque);
             this.groupBox2.Controls.Add(this.peakRPMBox);
-            this.groupBox2.Controls.Add(this.label6);
+            this.groupBox2.Controls.Add(this.labelPeakTorque);
             this.groupBox2.Location = new System.Drawing.Point(12, 209);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(582, 148);
@@ -1001,23 +1001,23 @@
             this.label14.TabIndex = 21;
             this.label14.Text = "Horsepower:";
             // 
-            // NmLabel
+            // labelNM
             // 
-            this.NmLabel.AutoSize = true;
-            this.NmLabel.Location = new System.Drawing.Point(234, 35);
-            this.NmLabel.Name = "NmLabel";
-            this.NmLabel.Size = new System.Drawing.Size(56, 13);
-            this.NmLabel.TabIndex = 4;
-            this.NmLabel.Text = "(2237 Nm)";
+            this.labelNM.AutoSize = true;
+            this.labelNM.Location = new System.Drawing.Point(234, 35);
+            this.labelNM.Name = "labelNM";
+            this.labelNM.Size = new System.Drawing.Size(59, 13);
+            this.labelNM.TabIndex = 4;
+            this.labelNM.Text = "(2237 N·m)";
             // 
-            // label2
+            // labelTorque
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 35);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Torque:";
+            this.labelTorque.AutoSize = true;
+            this.labelTorque.Location = new System.Drawing.Point(10, 35);
+            this.labelTorque.Name = "labelTorque";
+            this.labelTorque.Size = new System.Drawing.Size(44, 13);
+            this.labelTorque.TabIndex = 2;
+            this.labelTorque.Text = "Torque:";
             // 
             // peakRPMBox
             // 
@@ -1047,14 +1047,14 @@
             0,
             0});
             // 
-            // label6
+            // labelPeakTorque
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(10, 118);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(99, 13);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "Peak Torque RPM:";
+            this.labelPeakTorque.AutoSize = true;
+            this.labelPeakTorque.Location = new System.Drawing.Point(10, 118);
+            this.labelPeakTorque.Name = "labelPeakTorque";
+            this.labelPeakTorque.Size = new System.Drawing.Size(99, 13);
+            this.labelPeakTorque.TabIndex = 10;
+            this.labelPeakTorque.Text = "Peak Torque RPM:";
             // 
             // tabPage2
             // 
@@ -1729,10 +1729,10 @@
         private System.Windows.Forms.Label KwLabel;
         private System.Windows.Forms.NumericUpDown horsepowerBox;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label NmLabel;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelNM;
+        private System.Windows.Forms.Label labelTorque;
         private System.Windows.Forms.NumericUpDown peakRPMBox;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label labelPeakTorque;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.NumericUpDown brakePositionsBox;
         private System.Windows.Forms.CheckBox automaticDSCheckBox;

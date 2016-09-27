@@ -34,20 +34,24 @@
             this.ChangeButton = new System.Windows.Forms.Button();
             this.SteamInstallPath = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.iUnitRatio = new System.Windows.Forms.RadioButton();
+            this.mUnitRadio = new System.Windows.Forms.RadioButton();
+            this.updateCheckBox = new System.Windows.Forms.CheckBox();
             this.ConfirmButton = new System.Windows.Forms.Button();
             this.headerPanel = new System.Windows.Forms.Panel();
             this.shadowLabel1 = new System.Windows.Forms.ShadowLabel();
             this.footerPanel = new System.Windows.Forms.Panel();
             this.cancelButton = new System.Windows.Forms.Button();
             this.contentPanel = new System.Windows.Forms.Panel();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.updateCheckBox = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.headerPanel.SuspendLayout();
             this.footerPanel.SuspendLayout();
             this.contentPanel.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -112,6 +116,64 @@
             this.label1.Size = new System.Drawing.Size(118, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Steam Installation Path:";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.groupBox1);
+            this.tabPage2.Controls.Add(this.updateCheckBox);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(480, 187);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Application";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.iUnitRatio);
+            this.groupBox1.Controls.Add(this.mUnitRadio);
+            this.groupBox1.Location = new System.Drawing.Point(260, 15);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(200, 100);
+            this.groupBox1.TabIndex = 32;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Unit System";
+            // 
+            // iUnitRatio
+            // 
+            this.iUnitRatio.AutoSize = true;
+            this.iUnitRatio.Checked = true;
+            this.iUnitRatio.Location = new System.Drawing.Point(29, 34);
+            this.iUnitRatio.Name = "iUnitRatio";
+            this.iUnitRatio.Size = new System.Drawing.Size(88, 17);
+            this.iUnitRatio.TabIndex = 29;
+            this.iUnitRatio.TabStop = true;
+            this.iUnitRatio.Text = "Imperial Units";
+            this.iUnitRatio.UseVisualStyleBackColor = true;
+            // 
+            // mUnitRadio
+            // 
+            this.mUnitRadio.AutoSize = true;
+            this.mUnitRadio.Location = new System.Drawing.Point(29, 58);
+            this.mUnitRadio.Name = "mUnitRadio";
+            this.mUnitRadio.Size = new System.Drawing.Size(81, 17);
+            this.mUnitRadio.TabIndex = 30;
+            this.mUnitRadio.TabStop = true;
+            this.mUnitRadio.Text = "Metric Units";
+            this.mUnitRadio.UseVisualStyleBackColor = true;
+            // 
+            // updateCheckBox
+            // 
+            this.updateCheckBox.AutoSize = true;
+            this.updateCheckBox.Checked = true;
+            this.updateCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.updateCheckBox.Location = new System.Drawing.Point(28, 49);
+            this.updateCheckBox.Name = "updateCheckBox";
+            this.updateCheckBox.Size = new System.Drawing.Size(169, 17);
+            this.updateCheckBox.TabIndex = 28;
+            this.updateCheckBox.Text = "Enable program update check";
+            this.updateCheckBox.UseVisualStyleBackColor = true;
             // 
             // ConfirmButton
             // 
@@ -181,29 +243,6 @@
             this.contentPanel.Size = new System.Drawing.Size(484, 222);
             this.contentPanel.TabIndex = 35;
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.updateCheckBox);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(480, 187);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Application";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // updateCheckBox
-            // 
-            this.updateCheckBox.AutoSize = true;
-            this.updateCheckBox.Checked = true;
-            this.updateCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.updateCheckBox.Location = new System.Drawing.Point(40, 36);
-            this.updateCheckBox.Name = "updateCheckBox";
-            this.updateCheckBox.Size = new System.Drawing.Size(169, 17);
-            this.updateCheckBox.TabIndex = 28;
-            this.updateCheckBox.Text = "Enable program update check";
-            this.updateCheckBox.UseVisualStyleBackColor = true;
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -222,11 +261,13 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.headerPanel.ResumeLayout(false);
             this.footerPanel.ResumeLayout(false);
             this.contentPanel.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -247,5 +288,8 @@
         private System.Windows.Forms.CheckBox linkCheckBox;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.CheckBox updateCheckBox;
+        private System.Windows.Forms.RadioButton mUnitRadio;
+        private System.Windows.Forms.RadioButton iUnitRatio;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

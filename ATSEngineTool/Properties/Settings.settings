@@ -14,5 +14,8 @@
     <Setting Name="UpdateCheck" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="UnitSystem" Type="ATSEngineTool.UnitSystem" Scope="User">
+      <Value Profile="(Default)">Imperial</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

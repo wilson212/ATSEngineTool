@@ -29,8 +29,10 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.torqueLevelBox = new System.Windows.Forms.NumericUpDown();
-            this.label26 = new System.Windows.Forms.Label();
+            this.labelTorque = new System.Windows.Forms.Label();
             this.rpmLevelBox = new System.Windows.Forms.NumericUpDown();
             this.label33 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -44,15 +46,37 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.radioButton2);
+            this.panel1.Controls.Add(this.radioButton1);
             this.panel1.Controls.Add(this.torqueLevelBox);
-            this.panel1.Controls.Add(this.label26);
+            this.panel1.Controls.Add(this.labelTorque);
             this.panel1.Controls.Add(this.rpmLevelBox);
             this.panel1.Controls.Add(this.label33);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(284, 123);
+            this.panel1.Size = new System.Drawing.Size(284, 142);
             this.panel1.TabIndex = 0;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(159, 110);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(52, 17);
+            this.radioButton2.TabIndex = 21;
+            this.radioButton2.Text = "Value";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(73, 110);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(80, 17);
+            this.radioButton1.TabIndex = 20;
+            this.radioButton1.Text = "Percentage";
+            this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // torqueLevelBox
             // 
@@ -71,14 +95,14 @@
             0,
             0});
             // 
-            // label26
+            // labelTorque
             // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(33, 73);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(102, 13);
-            this.label26.TabIndex = 18;
-            this.label26.Text = "Torque Percentage:";
+            this.labelTorque.AutoSize = true;
+            this.labelTorque.Location = new System.Drawing.Point(33, 73);
+            this.labelTorque.Name = "labelTorque";
+            this.labelTorque.Size = new System.Drawing.Size(102, 13);
+            this.labelTorque.TabIndex = 18;
+            this.labelTorque.Text = "Torque Percentage:";
             // 
             // rpmLevelBox
             // 
@@ -122,14 +146,14 @@
             this.panel2.Controls.Add(this.confirmButton);
             this.panel2.Controls.Add(this.cancelButton);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 123);
+            this.panel2.Location = new System.Drawing.Point(0, 142);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(284, 53);
+            this.panel2.Size = new System.Drawing.Size(284, 50);
             this.panel2.TabIndex = 1;
             // 
             // confirmButton
             // 
-            this.confirmButton.Location = new System.Drawing.Point(161, 14);
+            this.confirmButton.Location = new System.Drawing.Point(161, 13);
             this.confirmButton.Name = "confirmButton";
             this.confirmButton.Size = new System.Drawing.Size(100, 25);
             this.confirmButton.TabIndex = 26;
@@ -139,7 +163,7 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(24, 14);
+            this.cancelButton.Location = new System.Drawing.Point(24, 13);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(100, 25);
             this.cancelButton.TabIndex = 25;
@@ -152,7 +176,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(284, 176);
+            this.ClientSize = new System.Drawing.Size(284, 192);
             this.ControlBox = false;
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -178,9 +202,11 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button confirmButton;
         private System.Windows.Forms.Button cancelButton;
-        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label labelTorque;
         private System.Windows.Forms.Label label33;
-        public System.Windows.Forms.NumericUpDown torqueLevelBox;
-        public System.Windows.Forms.NumericUpDown rpmLevelBox;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.NumericUpDown torqueLevelBox;
+        private System.Windows.Forms.NumericUpDown rpmLevelBox;
     }
 }

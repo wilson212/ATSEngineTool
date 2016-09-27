@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\ExceptionHandler.cs" />
+    <Compile Include="Application\UnitSystem.cs" />
     <Compile Include="SiiEntities\AccessoryTransmissionData.cs" />
     <Compile Include="SiiEntities\TransmissionNames.cs" />
     <Compile Include="UI\ExceptionForm.cs">

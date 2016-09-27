@@ -107,6 +107,8 @@ namespace ATSEngineTool
 
             // Set sync enabled
             syncCheckBox.Enabled = Program.Config.IntegrateWithMod;
+            var imp = (Program.Config.UnitSystem == UnitSystem.Imperial);
+            engineListView2.Columns[3].Text = (imp) ? "Torque" : "N·m";
 
             // Check for updates?
             if (Program.Config.UpdateCheck)
@@ -176,7 +178,10 @@ namespace ATSEngineTool
                 ListViewItem item = new ListViewItem(engine.Name);
                 item.SubItems.Add(engine.Price.ToString());
                 item.SubItems.Add(engine.Horsepower.ToString());
-                item.SubItems.Add(engine.Torque.ToString());
+                if (Program.Config.UnitSystem == UnitSystem.Imperial)
+                    item.SubItems.Add(engine.Torque.ToString());
+                else
+                    item.SubItems.Add(engine.NewtonMetres.ToString());
                 item.Tag = engine;
                 engineListView2.Items.Add(item);
             }
@@ -768,6 +773,9 @@ namespace ATSEngineTool
             {
                 frm.ShowDialog();
                 syncCheckBox.Enabled = Program.Config.IntegrateWithMod;
+
+                var imp = (Program.Config.UnitSystem == UnitSystem.Imperial);
+                engineListView2.Columns[3].Text = (imp) ? "Torque" : "N·m";
             }
         }
 

@@ -354,6 +354,7 @@ namespace ATSEngineTool.Database
             EngineSeries series = this.Series;
             StringBuilder builder = new StringBuilder();
             string name = this.UnitName + ".{{{NAME}}}.engine";
+            string decvalue;
 
             // Write file intro
             builder.AppendLine("SiiNunit");
@@ -386,7 +387,7 @@ namespace ATSEngineTool.Database
 
             // Torque line
             builder.Append("\t\tinfo[]: \"");
-            builder.AppendLine($"{Digitize(this.Torque)} @@lb_ft@@ ({Digitize(TorqueToNm(this.Torque))} @@nm@@)\"");
+            builder.AppendLine($"{Digitize(this.Torque)} @@lb_ft@@ ({Digitize(this.NewtonMetres)} @@nm@@)\"");
 
             // Rpm line
             builder.AppendLine($"\t\tinfo[]: \"{Digitize(this.PeakRpm)} @@rpm@@\"");
@@ -396,15 +397,19 @@ namespace ATSEngineTool.Database
             builder.AppendLine();
 
             // Performance
+            decvalue = series.Displacement.ToString(Culture);
             builder.AppendLine("\t\t# Engine Specs");
-            builder.AppendLine($"\t\ttorque: {TorqueToNm(this.Torque)}\t# Engine power in Newton-metres");
-            builder.AppendLine($"\t\tvolume: {series.Displacement}\t# Engine size in liters. Used for Realistic Fuel Consumption settings");
+            builder.AppendLine($"\t\ttorque: {this.NewtonMetres}\t# Engine power in Newton-metres");
+            builder.AppendLine($"\t\tvolume: {decvalue}\t# Engine size in liters. Used for Realistic Fuel Consumption settings");
             builder.AppendLine();
 
             // Torque Curves
             builder.AppendLine("\t\t# Torque Curves");
             foreach (TorqueRatio ratio in TorqueRatios.OrderBy(x => x.RpmLevel))
-                builder.AppendLine($"\t\ttorque_curve[]: ({ratio.RpmLevel}, {ratio.Ratio})");
+            {
+                decvalue = ratio.Ratio.ToString(Culture);
+                builder.AppendLine($"\t\ttorque_curve[]: ({ratio.RpmLevel}, {decvalue})");
+            }
             builder.AppendLine();
 
             // RPM datas
@@ -423,9 +428,10 @@ namespace ATSEngineTool.Database
 
             // Engine Brake
             string val = this.BrakeDownshift ? "1" : "0";
+            decvalue = this.BrakeStrength.ToString(Culture);
             builder.AppendLine();
             builder.AppendLine("\t\t# Engine Brake data");
-            builder.AppendLine($"\t\tengine_brake: {this.BrakeStrength}\t\t\t\t# Engine Brake Strength");
+            builder.AppendLine($"\t\tengine_brake: {decvalue}\t\t\t\t# Engine Brake Strength");
             builder.AppendLine($"\t\tengine_brake_downshift: {val}\t# Enable automatic downshift for Engine Brake");
             builder.AppendLine($"\t\tengine_brake_positions: {this.BrakePositions}\t# The number of engine brake intensities");
             builder.AppendLine();
@@ -435,10 +441,10 @@ namespace ATSEngineTool.Database
             {
                 builder.AppendLine("\t\t# Adblue Settings");
                 if (this.AdblueConsumption > 0.00m)
-                    builder.AppendLine($"\t\tadblue_consumption: {this.AdblueConsumption}");
+                    builder.AppendLine($"\t\tadblue_consumption: {this.AdblueConsumption.ToString(Culture)}");
 
                 if (this.NoAdbluePowerLimit > 0.00m)
-                    builder.AppendLine($"\t\tno_adblue_power_limit: {this.NoAdbluePowerLimit}");
+                    builder.AppendLine($"\t\tno_adblue_power_limit: {this.NoAdbluePowerLimit.ToString(Culture)}");
 
                 builder.AppendLine();
             }

@@ -26,6 +26,11 @@ namespace ATSEngineTool
             engineListView1.Columns[2].Width -= SystemInformation.VerticalScrollBarWidth;
             engineListView2.Columns[2].Width -= SystemInformation.VerticalScrollBarWidth;
 
+            // Set power headers
+            var imp = (Program.Config.UnitSystem == UnitSystem.Imperial);
+            engineListView1.Columns[2].Text = (imp) ? "Torque" : "N·m";
+            engineListView2.Columns[2].Text = (imp) ? "Torque" : "N·m";
+
             Truck = truck;
             ListViewGroup group1 = new ListViewGroup();
             ListViewGroup group2 = new ListViewGroup();
@@ -67,8 +72,14 @@ namespace ATSEngineTool
                     item.Tag = eng;
                     item.Text = eng.Name;
                     item.SubItems.Add(eng.Horsepower.ToString());
-                    item.SubItems.Add(eng.Torque.ToString());
 
+                    // Add torque / Nm
+                    if (Program.Config.UnitSystem == UnitSystem.Imperial)
+                        item.SubItems.Add(eng.Torque.ToString());
+                    else
+                        item.SubItems.Add(eng.NewtonMetres.ToString());
+
+                    // Switch list depending on if the engine is installed
                     if (listItems.Contains(eng.Id))
                     {
                         engineListView2.Items.Add(item);

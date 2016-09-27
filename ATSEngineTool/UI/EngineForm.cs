@@ -52,9 +52,13 @@ namespace ATSEngineTool
             NewEngine = engine == null;
             Engine = engine ?? new Engine();
 
-            // Setup sounds
-            //soundBox.Items.Add("Please Select A Sound Package");
-            //soundBox.SelectedIndex = 0;
+            // Setup metrics
+            if (Program.Config.UnitSystem == UnitSystem.Metric)
+            {
+                labelTorque.Text = "Newton Metres:";
+                labelPeakTorque.Text = "Peak N·m RPM:";
+                chart1.ChartAreas[0].AxisY.Title = "Newton Metres";
+            }
 
             // Add each sound to the lists
             using (AppDatabase db = new AppDatabase())
@@ -95,7 +99,9 @@ namespace ATSEngineTool
                 unlockBox.Value = engine.Unlock;
                 priceBox.Value = engine.Price;
                 horsepowerBox.Value = engine.Horsepower;
-                torqueBox.Value = engine.Torque;
+                torqueBox.Value = (Program.Config.UnitSystem == UnitSystem.Imperial) 
+                    ? engine.Torque
+                    : engine.NewtonMetres;
                 peakRPMBox.Value = engine.PeakRpm;
                 idleRpmBox.Value = engine.IdleRpm;
                 rpmLimitBox.Value = engine.RpmLimit;
@@ -121,7 +127,7 @@ namespace ATSEngineTool
             else
             {
                 // Force change to update graph
-                torqueBox.Value = 1650;
+                torqueBox.Value = (Program.Config.UnitSystem == UnitSystem.Imperial) ? 1650 : Engine.TorqueToNm(1650);
             }
 
             // Fill torque ratios
@@ -185,7 +191,6 @@ namespace ATSEngineTool
             Engine.IdleRpm = (int)idleRpmBox.Value;
             Engine.RpmLimit = (int)rpmLimitBox.Value;
             Engine.RpmLimitNeutral = (int)neutralRpmBox.Value;
-            Engine.Torque = (int)torqueBox.Value;
             Engine.BrakeStrength = brakeStrengthBox.Value;
             Engine.BrakePositions = (int)brakePositionsBox.Value;
             Engine.BrakeDownshift = automaticDSCheckBox.Checked;
@@ -202,6 +207,12 @@ namespace ATSEngineTool
             Engine.Defaults = fileDefaultsTextBox.Lines;
             Engine.Comment = fileCommentTextBox.Lines;
             Engine.Conflicts = conflictsTextBox.Lines;
+
+            // Torque metrics
+            if (Program.Config.UnitSystem == UnitSystem.Imperial)
+                Engine.Torque = (int)torqueBox.Value;
+            else
+                Engine.NewtonMetres = (int)torqueBox.Value;
 
             // Figure out the filename
             if (!String.IsNullOrWhiteSpace(filenameTextBox.Text))
@@ -330,7 +341,9 @@ namespace ATSEngineTool
         private void torqueBox_ValueChanged(object sender, EventArgs e)
         {
             // Update label
-            NmLabel.Text = String.Concat(Engine.TorqueToNm(torqueBox.Value), " (Nm)");
+            labelNM.Text = (Program.Config.UnitSystem == UnitSystem.Imperial)
+                ? String.Concat(Engine.TorqueToNm(torqueBox.Value), " (Nm)")
+                : String.Concat(Engine.NmToTorque(torqueBox.Value), " (Trq)");
 
             // Clear old chart points
             chart1.Series[0].Points.Clear();
@@ -341,7 +354,11 @@ namespace ATSEngineTool
                 double torque = (double)Math.Round(torqueBox.Value * ratio.Ratio, 0);
                 int index = chart1.Series[0].Points.AddXY(ratio.RpmLevel, torque);
                 DataPoint point = chart1.Series[0].Points[index];
-                point.ToolTip = $"{torque} lb-ft @ {ratio.RpmLevel} RPM";
+
+                if (Program.Config.UnitSystem == UnitSystem.Imperial)
+                    point.ToolTip = $"{torque} lb-ft @ {ratio.RpmLevel} RPM";
+                else
+                    point.ToolTip = $"{torque} Nm @ {ratio.RpmLevel} RPM";
             }
         }
 
@@ -403,24 +420,19 @@ namespace ATSEngineTool
             }
             else if (e.KeyCode == Keys.Enter)
             {
-                using (TorqueCurveForm frm = new TorqueCurveForm())
+                TorqueRatio ratio = Ratios[index];
+                using (TorqueCurveForm frm = new TorqueCurveForm((int)torqueBox.Value, ratio))
                 {
-                    // Set form values
-                    TorqueRatio ratio = Ratios[index];
-                    frm.rpmLevelBox.Value = ratio.RpmLevel;
-                    frm.torqueLevelBox.Value = Math.Round(ratio.Ratio * 100, 0);
-
                     // Show form
                     var result = frm.ShowDialog();
                     if (result == DialogResult.Yes)
                     {
-                        // Prevent too large of a number
-                        decimal r = (int)frm.torqueLevelBox.Value;
-                        if (r > 100m) r = 100m;
+                        // Grab Ratio
+                        TorqueRatio values = frm.GetRatio();
 
                         // Create the new Ratio
-                        ratio.RpmLevel = (int)frm.rpmLevelBox.Value;
-                        ratio.Ratio = Math.Round(r / 100, 2);
+                        ratio.RpmLevel = values.RpmLevel;
+                        ratio.Ratio = values.Ratio;
 
                         // Force Points Redraw
                         PopulateTorqueRatios();
@@ -436,19 +448,13 @@ namespace ATSEngineTool
 
         private void addPointButton_Click(object sender, EventArgs e)
         {
-            using (TorqueCurveForm frm = new TorqueCurveForm())
+            using (TorqueCurveForm frm = new TorqueCurveForm((int)torqueBox.Value))
             {
                 var result = frm.ShowDialog();
                 if (result == DialogResult.Yes)
                 {
-                    // Prevent too large of a number
-                    decimal r = (int)frm.torqueLevelBox.Value;
-                    if (r > 100m) r = 100m;
-
                     // Create the new Ratio
-                    TorqueRatio ratio = new TorqueRatio();
-                    ratio.RpmLevel = (int)frm.rpmLevelBox.Value;
-                    ratio.Ratio = Math.Round(r / 100, 2);
+                    TorqueRatio ratio = frm.GetRatio();
                     Ratios.Add(ratio);
 
                     // Force Points Redraw
@@ -468,23 +474,13 @@ namespace ATSEngineTool
                 int index = (int)item.Tag;
                 TorqueRatio ratio = Ratios[index];
 
-                using (TorqueCurveForm frm = new TorqueCurveForm())
+                using (TorqueCurveForm frm = new TorqueCurveForm((int)torqueBox.Value, ratio))
                 {
-                    // Set form values
-                    frm.rpmLevelBox.Value = ratio.RpmLevel;
-                    frm.torqueLevelBox.Value = Math.Round(ratio.Ratio * 100, 0);
-
                     // Show form
                     var result = frm.ShowDialog();
                     if (result == DialogResult.Yes)
                     {
-                        // Prevent too large of a number
-                        decimal r = (int)frm.torqueLevelBox.Value;
-                        if (r > 100m) r = 100m;
-
-                        // Create the new Ratio
-                        ratio.RpmLevel = (int)frm.rpmLevelBox.Value;
-                        ratio.Ratio = Math.Round(r / 100, 2);
+                        Ratios[index] = frm.GetRatio();
 
                         // Force Points Redraw
                         PopulateTorqueRatios();
