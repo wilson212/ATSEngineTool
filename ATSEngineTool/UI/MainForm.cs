@@ -101,6 +101,9 @@ namespace ATSEngineTool
                 // Fill Engines
                 FillEnginesSeries(db);
 
+                // Fill Transmissions
+                FillTransmissionSeries(db);
+
                 // Set label text
                 dbVersionLabel.Text = AppDatabase.DatabaseVersion.ToString();
             }
@@ -108,7 +111,7 @@ namespace ATSEngineTool
             // Set sync enabled
             syncCheckBox.Enabled = Program.Config.IntegrateWithMod;
             var imp = (Program.Config.UnitSystem == UnitSystem.Imperial);
-            engineListView2.Columns[3].Text = (imp) ? "Torque" : "N·m";
+            engineListView.Columns[3].Text = (imp) ? "Torque" : "N·m";
 
             // Check for updates?
             if (Program.Config.UpdateCheck)
@@ -118,10 +121,31 @@ namespace ATSEngineTool
             }
         }
 
+        #region Functions
+
+        private void FillTransmissionSeries(AppDatabase db)
+        {
+            transSeriesListView.Items.Clear();
+            transmissionListView.Items.Clear();
+
+            // Fill in trucks
+            foreach (var series in db.TransmissionSeries)
+            {
+                ListViewItem item = new ListViewItem();
+                item.Tag = series;
+                item.Text = series.ToString();
+                transSeriesListView.Items.Add(item);
+            }
+
+            // Disable engine buttons
+            removeTransButton.Enabled = false;
+            editTransButton.Enabled = false;
+        }
+
         private void FillEnginesSeries(AppDatabase db)
         {
             seriesListView.Items.Clear();
-            engineListView2.Items.Clear();
+            engineListView.Items.Clear();
 
             // Fill in trucks
             foreach (EngineSeries series in db.EngineSeries)
@@ -171,7 +195,7 @@ namespace ATSEngineTool
             EngineSeries series = selected.Tag as EngineSeries;
 
             // Clear engines
-            engineListView2.Items.Clear();
+            engineListView.Items.Clear();
 
             foreach (Engine engine in series.Engines.OrderByDescending(x => x.Horsepower))
             {
@@ -183,9 +207,37 @@ namespace ATSEngineTool
                 else
                     item.SubItems.Add(engine.NewtonMetres.ToString());
                 item.Tag = engine;
-                engineListView2.Items.Add(item);
+                engineListView.Items.Add(item);
             }
         }
+
+        private void FillTransmissions(AppDatabase db)
+        {
+            // If we have no selected trucks, skimp out here
+            if (transSeriesListView.SelectedItems.Count == 0) return;
+
+            ListViewItem selected = transSeriesListView.SelectedItems[0];
+            var series = selected.Tag as TransmissionSeries;
+
+            // Clear transmissions
+            transmissionListView.Items.Clear();
+
+            foreach (var trans in series.Transmissions.OrderByDescending(x => x.Price))
+            {
+                var gears = trans.Gears.ToList();
+                var forward = gears.Where(x => !x.IsReverse).Count();
+                var reverse = gears.Where(x => x.IsReverse).Count();
+
+                ListViewItem item = new ListViewItem(trans.Name);
+                item.SubItems.Add(forward.ToString());
+                item.SubItems.Add(reverse.ToString());
+                item.SubItems.Add(trans.DifferentialRatio.ToString());
+                item.Tag = trans;
+                transmissionListView.Items.Add(item);
+            }
+        }
+
+        #endregion Functions
 
         /// <summary>
         /// Event fired once the program update check has finished
@@ -205,6 +257,8 @@ namespace ATSEngineTool
                 toolTip1.SetToolTip(updatePicture, "Program is up to date.");
             }
         }
+
+        #region Truck Management Tab
 
         private void truckListView2_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -231,47 +285,107 @@ namespace ATSEngineTool
             if (truckListView2.SelectedItems.Count == 0) return;
 
             // Clear out existing data
-            engineListView.Items.Clear();
-            engineListView.Groups.Clear();
+            truckItemListView.Items.Clear();
+            truckItemListView.Groups.Clear();
 
             // Setup local variables
             ListViewItem selected = truckListView2.SelectedItems[0];
             Truck truck = selected.Tag as Truck;
             ListViewGroup group = new ListViewGroup() { Tag = -1 };
 
-            // DO this in a new thread, because its slow
-            IEnumerable<Engine> engines = await Task.Run<IEnumerable<Engine>>(() =>
+            if (enginesToolStripMenuItem.Checked)
             {
-                // Load engines from the database
-                using (AppDatabase db = new AppDatabase())
+                // DO this in a new thread, because its slow
+                IEnumerable<Engine> engines = await Task.Run(() =>
                 {
-                    // Grab the trucks engines, ordered by Brand, then by Horsepower
-                    return from x in truck.TruckEngines
-                           let engine = x.Engine // Fetch once from DB (lazy loaded)
-                           orderby engine.Series.ToString() ascending, engine.Horsepower descending
-                           select engine;
-                }
-            });
+                    // Load engines from the database
+                    using (AppDatabase db = new AppDatabase())
+                    {
+                        // Grab the trucks engines, ordered by Brand, then by Horsepower
+                        return from x in truck.TruckEngines
+                               let engine = x.Engine // Fetch once from DB (lazy loaded)
+                               orderby engine.Series.ToString() ascending, engine.Horsepower descending
+                               select engine;
+                    }
+                });
 
-            // Fill in trucks
-            foreach (Engine eng in engines)
-            {
-                // Setup group?
-                if (((int)group.Tag) != eng.SeriesId)
+                // Fill in trucks
+                foreach (Engine eng in engines)
                 {
-                    group = new ListViewGroup(eng.Series.ToString());
-                    group.Tag = eng.SeriesId;
-                    engineListView.Groups.Add(group);
-                }
+                    // Setup group?
+                    if (((int)group.Tag) != eng.SeriesId)
+                    {
+                        group = new ListViewGroup(eng.Series.ToString());
+                        group.Tag = eng.SeriesId;
+                        truckItemListView.Groups.Add(group);
+                    }
 
-                ListViewItem item = new ListViewItem();
-                item.Tag = eng;
-                item.Text = eng.Name;
-                group.Items.Add(item);
-                engineListView.Items.Add(item);
+                    ListViewItem item = new ListViewItem();
+                    item.Tag = eng;
+                    item.Text = eng.Name;
+                    group.Items.Add(item);
+                    truckItemListView.Items.Add(item);
+                }
             }
+            else
+            {
+                // DO this in a new thread, because its slow
+                var transmissions = await Task.Run(() =>
+                {
+                    // Load engines from the database
+                    using (AppDatabase db = new AppDatabase())
+                    {
+                        // Grab the trucks engines, ordered by Brand, then by Horsepower
+                        return from x in truck.TruckTransmissions
+                               let trans = x.Transmission // Fetch once from DB (lazy loaded)
+                               orderby trans.Series.ToString() ascending, trans.Price descending
+                               select trans;
+                    }
+                });
+
+                // Fill in trucks
+                foreach (var trans in transmissions)
+                {
+                    // Setup group?
+                    if (((int)group.Tag) != trans.SeriesId)
+                    {
+                        group = new ListViewGroup(trans.Series.ToString());
+                        group.Tag = trans.SeriesId;
+                        truckItemListView.Groups.Add(group);
+                    }
+
+                    ListViewItem item = new ListViewItem();
+                    item.Tag = trans;
+                    item.Text = trans.Name;
+                    group.Items.Add(item);
+                    truckItemListView.Items.Add(item);
+                }
+            }
+
+            truckListView2.Focus();
         }
 
+        private void enginesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (enginesToolStripMenuItem.Checked)
+                return;
+
+            enginesToolStripMenuItem.Checked = true;
+            transmissionsToolStripMenuItem.Checked = false;
+            truckItemListView.Columns[0].Text = "Selected Truck's Engines";
+            truckListView2_ItemSelectionChanged(sender, null);
+        }
+
+        private void transmissionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (transmissionsToolStripMenuItem.Checked)
+                return;
+
+            enginesToolStripMenuItem.Checked = false;
+            transmissionsToolStripMenuItem.Checked = true;
+            truckItemListView.Columns[0].Text = "Selected Truck's Transmissions";
+            truckListView2_ItemSelectionChanged(sender, null);
+        }
 
         private void addTruckButton_Click(object sender, EventArgs e)
         {
@@ -315,8 +429,8 @@ namespace ATSEngineTool
             }
 
             // Clear out existing data
-            engineListView.Items.Clear();
-            engineListView.Groups.Clear();
+            truckItemListView.Items.Clear();
+            truckItemListView.Groups.Clear();
         }
 
         private void modifyButton_Click(object sender, EventArgs e)
@@ -327,15 +441,33 @@ namespace ATSEngineTool
             ListViewItem selected = truckListView2.SelectedItems[0];
             Truck truck = selected.Tag as Truck;
 
-            using (EngineListEditor frm = new EngineListEditor(truck))
+            if (enginesToolStripMenuItem.Checked)
             {
-                var result = frm.ShowDialog();
-                if (result == DialogResult.OK)
+                using (var frm = new EngineListEditor(truck))
                 {
-                    truckListView2_ItemSelectionChanged(this, null);
+                    var result = frm.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        truckListView2_ItemSelectionChanged(this, null);
+                    }
+                }
+            }
+            else
+            {
+                using (var frm = new TransmissionListEditor(truck))
+                {
+                    var result = frm.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        truckListView2_ItemSelectionChanged(this, null);
+                    }
                 }
             }
         }
+
+        #endregion Truck Management Tab
+
+        #region Engine Management
 
         private void seriesListView_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -345,7 +477,7 @@ namespace ATSEngineTool
                 // Disable engine buttons
                 deleteEngineButton.Enabled = false;
                 editEngineButton.Enabled = false;
-                engineListView2.Items.Clear();
+                engineListView.Items.Clear();
             }
             else
             {
@@ -382,12 +514,12 @@ namespace ATSEngineTool
             }
         }
 
-        private void engineListView2_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void engineListView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            ListViewItem item = engineListView2.HitTest(e.Location).Item;
+            ListViewItem item = engineListView.HitTest(e.Location).Item;
             if (item != null)
             {
-                ListViewItem selected = engineListView2.SelectedItems[0];
+                ListViewItem selected = engineListView.SelectedItems[0];
                 Engine engine = selected.Tag as Engine;
                 using (EngineForm frm = new EngineForm(engine))
                 {
@@ -463,10 +595,10 @@ namespace ATSEngineTool
 
         private void deleteEngineButton_Click(object sender, EventArgs e)
         {
-            if (engineListView2.SelectedItems.Count == 0) return;
+            if (engineListView.SelectedItems.Count == 0) return;
 
             // Always verify that this isnt a mistake
-            var engine = (Engine)engineListView2.SelectedItems[0].Tag;
+            var engine = (Engine)engineListView.SelectedItems[0].Tag;
             var result = MessageBox.Show(
                 $"Are you sure you want to delete engine \"{engine.Name}\"? This action cannot be undone!",
                 "Verification",
@@ -500,9 +632,9 @@ namespace ATSEngineTool
 
         private void editEngineButton_Click(object sender, EventArgs e)
         {
-            if (engineListView2.SelectedItems.Count == 0) return;
+            if (engineListView.SelectedItems.Count == 0) return;
 
-            ListViewItem selected = engineListView2.SelectedItems[0];
+            ListViewItem selected = engineListView.SelectedItems[0];
             Engine engine = selected.Tag as Engine;
             using (EngineForm frm = new EngineForm(engine))
             {
@@ -516,6 +648,10 @@ namespace ATSEngineTool
                 }
             }
         }
+
+        #endregion Engine Management
+
+        #region Misc Events
 
         /// <summary>
         /// Adds the darker border line color between the header panel and the contents
@@ -542,6 +678,10 @@ namespace ATSEngineTool
             point2 = new Point(headerPanel.Width, headerPanel.Height - 1);
             e.Graphics.DrawLine(greyPen, point1, point2);
         }
+
+        #endregion Misc Events
+
+        #region Main Page Events
 
         private void steamAppLink_Click(object sender, EventArgs e)
         {
@@ -761,11 +901,21 @@ namespace ATSEngineTool
             }
         }
 
+        private void syncCheckBox_EnabledChanged(object sender, EventArgs e)
+        {
+            cleanModCheckBox.Enabled = syncCheckBox.Enabled;
+            cleanSoundsCheckBox.Enabled = syncCheckBox.Enabled;
+        }
+
         private void syncCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             cleanSoundsCheckBox.Enabled = syncCheckBox.Checked;
             cleanModCheckBox.Enabled = syncCheckBox.Checked;
         }
+
+        #endregion Main Page Events
+
+        #region Menu Events
 
         private void settingsMenuItem_Click(object sender, EventArgs e)
         {
@@ -775,7 +925,7 @@ namespace ATSEngineTool
                 syncCheckBox.Enabled = Program.Config.IntegrateWithMod;
 
                 var imp = (Program.Config.UnitSystem == UnitSystem.Imperial);
-                engineListView2.Columns[3].Text = (imp) ? "Torque" : "N·m";
+                engineListView.Columns[3].Text = (imp) ? "Torque" : "N·m";
             }
         }
 
@@ -800,10 +950,190 @@ namespace ATSEngineTool
             }
         }
 
-        private void syncCheckBox_EnabledChanged(object sender, EventArgs e)
+        #endregion Menu Events
+
+        #region Transmission Management
+
+        private void transSeriesListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cleanModCheckBox.Enabled = syncCheckBox.Enabled;
-            cleanSoundsCheckBox.Enabled = syncCheckBox.Enabled;
+            // If we have no selected series, skimp out here
+            if (transSeriesListView.SelectedItems.Count == 0)
+            {
+                // Disable transmission buttons
+                removeTransButton.Enabled = false;
+                editTransButton.Enabled = false;
+                transmissionListView.Items.Clear();
+            }
+            else
+            {
+                // Re-fill the transmission list
+                using (AppDatabase db = new AppDatabase())
+                {
+                    FillTransmissions(db);
+                }
+
+                // Enable transmission buttons
+                removeTransButton.Enabled = true;
+                editTransButton.Enabled = true;
+            }
         }
+
+        private void transSeriesListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ListViewItem item = transSeriesListView.HitTest(e.Location).Item;
+            if (item != null)
+            {
+                ListViewItem selected = transSeriesListView.SelectedItems[0];
+                var transmission = selected.Tag as TransmissionSeries;
+                using (var frm = new TransSeriesEditForm(transmission))
+                {
+                    var result = frm.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        using (AppDatabase db = new AppDatabase())
+                        {
+                            FillTransmissionSeries(db);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void addTransSeriesButton_Click(object sender, EventArgs e)
+        {
+            using (var frm = new TransSeriesEditForm())
+            {
+                var result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    using (AppDatabase db = new AppDatabase())
+                        FillTransmissionSeries(db);
+                }
+            }
+        }
+
+        private void removeTransSeriesButton_Click(object sender, EventArgs e)
+        {
+            // If we have no selected trucks, skimp out here
+            if (transSeriesListView.SelectedItems.Count == 0) return;
+
+            ListViewItem selected = transSeriesListView.SelectedItems[0];
+            var series = selected.Tag as TransmissionSeries;
+
+            var result = MessageBox.Show(
+                $"Are you sure you want to the transmission series \"{series.ToString()}\"? "
+                    + "Any and all transmissions that use this series will also be deleted in the process. "
+                    + "This action cannot be undone!",
+                "Verification",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            // If the user changed his mind, return
+            if (result != DialogResult.Yes)
+                return;
+
+            // ReLoad engine series from the database
+            using (AppDatabase db = new AppDatabase())
+            {
+                db.TransmissionSeries.Remove(series);
+
+                FillTransmissionSeries(db);
+            }
+        }
+
+        private void newTransButton_Click(object sender, EventArgs e)
+        {
+            using (var frm = new TransmissionForm())
+            {
+                var result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    using (AppDatabase db = new AppDatabase())
+                    {
+                        FillTransmissions(db);
+                    }
+                }
+            }
+        }
+
+        private void removeTransButton_Click(object sender, EventArgs e)
+        {
+            if (transmissionListView.SelectedItems.Count == 0) return;
+
+            // Always verify that this isnt a mistake
+            var trans = (Transmission)transmissionListView.SelectedItems[0].Tag;
+            var result = MessageBox.Show(
+                $"Are you sure you want to delete transmission \"{trans.Name}\"? This action cannot be undone!",
+                "Verification",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            // If the user changed his mind, return
+            if (result != DialogResult.Yes)
+                return;
+
+            // Proceed to remove the engine from the database
+            using (AppDatabase db = new AppDatabase())
+            {
+                // Alert the user only if there is an error
+                if (!db.Transmissions.Remove(trans))
+                {
+                    MessageBox.Show(
+                        $"Failed to delete transmission \"{trans.Name}\" from the database!",
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+                else
+                {
+                    FillTransmissions(db);
+                }
+            }
+        }
+
+        private void editTransButton_Click(object sender, EventArgs e)
+        {
+            if (transmissionListView.SelectedItems.Count == 0) return;
+
+            ListViewItem selected = transmissionListView.SelectedItems[0];
+            var transmission = selected.Tag as Transmission;
+            using (var frm = new TransmissionForm(transmission))
+            {
+                var result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    using (AppDatabase db = new AppDatabase())
+                    {
+                        FillTransmissions(db);
+                    }
+                }
+            }
+        }
+
+        private void transmissionListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ListViewItem item = transmissionListView.HitTest(e.Location).Item;
+            if (item != null)
+            {
+                ListViewItem selected = transmissionListView.SelectedItems[0];
+                var transmission = selected.Tag as Transmission;
+                using (var frm = new TransmissionForm(transmission))
+                {
+                    var result = frm.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        using (AppDatabase db = new AppDatabase())
+                        {
+                            FillTransmissions(db);
+                        }
+                    }
+                }
+            }
+        }
+
+        #endregion Transmission Management
     }
 }

@@ -86,6 +86,34 @@
   <ItemGroup>
     <Compile Include="Application\ExceptionHandler.cs" />
     <Compile Include="Application\UnitSystem.cs" />
+    <Compile Include="Database\Entities\TransmissionGear.cs" />
+    <Compile Include="Database\Entities\TransmissionSeries.cs" />
+    <Compile Include="Database\Entities\Transmission.cs" />
+    <Compile Include="Database\Entities\TruckTransmission.cs" />
+    <Compile Include="UI\Transmission\TransmissionListEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Transmission\TransmissionListEditor.Designer.cs">
+      <DependentUpon>TransmissionListEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Transmission\TransSeriesEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Transmission\TransSeriesEditForm.Designer.cs">
+      <DependentUpon>TransSeriesEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Transmission\EditGearForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Transmission\EditGearForm.Designer.cs">
+      <DependentUpon>EditGearForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Transmission\TransmissionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Transmission\TransmissionForm.Designer.cs">
+      <DependentUpon>TransmissionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SiiEntities\AccessoryTransmissionData.cs" />
     <Compile Include="SiiEntities\TransmissionNames.cs" />
     <Compile Include="UI\ExceptionForm.cs">
@@ -121,22 +149,16 @@
     <Compile Include="UI\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\LoadingForm.cs">
+    <Compile Include="UI\Engine\SeriesEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\LoadingForm.Designer.cs">
-      <DependentUpon>LoadingForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\SeriesEditForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\SeriesEditForm.Designer.cs">
+    <Compile Include="UI\Engine\SeriesEditForm.Designer.cs">
       <DependentUpon>SeriesEditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\SoundRegistryForm.cs">
+    <Compile Include="UI\Sound\SoundRegistryForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\SoundRegistryForm.Designer.cs">
+    <Compile Include="UI\Sound\SoundRegistryForm.Designer.cs">
       <DependentUpon>SoundRegistryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\TruckEditForm.cs">
@@ -161,22 +183,22 @@
     <Compile Include="Database\Entities\TorqueRatio.cs" />
     <Compile Include="Database\Entities\Truck.cs" />
     <Compile Include="Database\MigrationWizard.cs" />
-    <Compile Include="UI\EngineListEditor.cs">
+    <Compile Include="UI\Engine\EngineListEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\EngineListEditor.Designer.cs">
+    <Compile Include="UI\Engine\EngineListEditor.Designer.cs">
       <DependentUpon>EngineListEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\TorqueCurveForm.cs">
+    <Compile Include="UI\Engine\TorqueCurveForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\TorqueCurveForm.Designer.cs">
+    <Compile Include="UI\Engine\TorqueCurveForm.Designer.cs">
       <DependentUpon>TorqueCurveForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\EngineForm.cs">
+    <Compile Include="UI\Engine\EngineForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\EngineForm.Designer.cs">
+    <Compile Include="UI\Engine\EngineForm.Designer.cs">
       <DependentUpon>EngineForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\MainForm.cs">
@@ -196,19 +218,31 @@
     <EmbeddedResource Include="UI\ExceptionForm.resx">
       <DependentUpon>ExceptionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\SeriesEditForm.resx">
+    <EmbeddedResource Include="UI\Engine\SeriesEditForm.resx">
       <DependentUpon>SeriesEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\SoundRegistryForm.resx">
+    <EmbeddedResource Include="UI\Sound\SoundRegistryForm.resx">
       <DependentUpon>SoundRegistryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Transmission\EditGearForm.resx">
+      <DependentUpon>EditGearForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Transmission\TransmissionForm.resx">
+      <DependentUpon>TransmissionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Transmission\TransmissionListEditor.resx">
+      <DependentUpon>TransmissionListEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Transmission\TransSeriesEditForm.resx">
+      <DependentUpon>TransSeriesEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\TruckEditForm.resx">
       <DependentUpon>TruckEditForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\EngineListEditor.resx">
+    <EmbeddedResource Include="UI\Engine\EngineListEditor.resx">
       <DependentUpon>EngineListEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -221,10 +255,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="UI\TorqueCurveForm.resx">
+    <EmbeddedResource Include="UI\Engine\TorqueCurveForm.resx">
       <DependentUpon>TorqueCurveForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\EngineForm.resx">
+    <EmbeddedResource Include="UI\Engine\EngineForm.resx">
       <DependentUpon>EngineForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\MainForm.resx">
@@ -294,6 +328,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="graphics\engn14_01.tobj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="graphics\transmission_generic.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="graphics\transmission_generic.mat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="graphics\transmission_generic.tobj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

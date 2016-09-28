@@ -22,7 +22,7 @@ namespace ATSEngineTool.Database
         /// <summary>
         /// Gets the latest database version
         /// </summary>
-        public static Version CurrentVersion { get; protected set; } = new Version(1, 1);
+        public static Version CurrentVersion { get; protected set; } = new Version(1, 2);
 
         /// <summary>
         /// Gets the current database tables version
@@ -42,6 +42,14 @@ namespace ATSEngineTool.Database
         public DbSet<TruckEngine> TruckEngines { get; protected set; }
 
         public DbSet<TorqueRatio> TorqueRatios { get; protected set; }
+
+        public DbSet<TransmissionSeries> TransmissionSeries { get; protected set; }
+
+        public DbSet<Transmission> Transmissions { get; protected set; }
+
+        public DbSet<TransmissionGear> TransmissionGears { get; protected set; }
+
+        public DbSet<TruckTransmission> TruckTransmissions { get; protected set; }
 
         public DbSet<Truck> Trucks { get; protected set; }
 
@@ -66,7 +74,6 @@ namespace ATSEngineTool.Database
         {
             // Open connection first
             base.Connect();
-            bool createdTables = false;
 
             // Grab the current tables version
             if (DatabaseVersion == null)
@@ -78,7 +85,6 @@ namespace ATSEngineTool.Database
                 catch (SQLiteException e) when (e.Message.Contains("no such table"))
                 {
                     // Rebuild database tables
-                    createdTables = true;
                     RebuildTables();
 
                     // Try 1 last time to get the Version
@@ -93,19 +99,15 @@ namespace ATSEngineTool.Database
             EngineSounds = new DbSet<SoundPackage>(this);
             TruckEngines = new DbSet<TruckEngine>(this);
             TorqueRatios = new DbSet<TorqueRatio>(this);
+            TransmissionSeries = new DbSet<TransmissionSeries>(this);
+            Transmissions = new DbSet<Transmission>(this);
+            TransmissionGears = new DbSet<TransmissionGear>(this);
+            TruckTransmissions = new DbSet<TruckTransmission>(this);
             Trucks = new DbSet<Truck>(this);
 
             // Migrations
             MigrationWizard wizard = new MigrationWizard(this);
-            if (createdTables)
-            {
-                // Initialize data
-                wizard.InitializeData();
-            }
-            else if(DatabaseVersion != CurrentVersion)
-            {
-                wizard.MigrateTables();
-            }
+            wizard.MigrateTables();
         }
 
         internal void GetVersion()

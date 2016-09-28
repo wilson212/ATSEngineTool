@@ -39,13 +39,23 @@ namespace ATSEngineTool.Database
 
         /// <summary>
         /// Gets a list of <see cref="Engine"/> entities that reference this 
-        /// <see cref="EngineSeries"/>
+        /// <see cref="Truck"/>
         /// </summary>
         /// <remarks>
         /// A lazy loaded enumeration that fetches all TruckEngine objects
         /// that are bound by the foreign key and this Truck.Id.
         /// </remarks>
         public virtual IEnumerable<TruckEngine> TruckEngines { get; set; }
+
+        /// <summary>
+        /// Gets a list of <see cref="Transmission"/> entities that reference this 
+        /// <see cref="Trauck"/>
+        /// </summary>
+        /// <remarks>
+        /// A lazy loaded enumeration that fetches all TruckTransmission objects
+        /// that are bound by the foreign key and this Truck.Id.
+        /// </remarks>
+        public virtual IEnumerable<TruckTransmission> TruckTransmissions { get; set; }
 
         #endregion
 

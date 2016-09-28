@@ -14,21 +14,24 @@ using FreeImageAPI;
 
 namespace ATSEngineTool
 {
-    public partial class SeriesEditForm : Form
+    public partial class TransSeriesEditForm : Form
     {
-        protected EngineSeries Series { get; set; }
+        protected TransmissionSeries Series { get; set; }
+
+        protected bool NewSeries { get; set; }
 
         /// <summary>
         /// Icon file path
         /// </summary>
         protected static string MatPath = Path.Combine(Program.RootPath, "graphics");
 
-        public SeriesEditForm(EngineSeries series = null)
+        public TransSeriesEditForm(TransmissionSeries series = null)
         {
             InitializeComponent();
             headerPanel.BackColor = Color.FromArgb(51, 53, 53);
-            shadowLabel1.Text = (series == null) ? "New Engine Series" : "Modify Engine Series";
+            shadowLabel1.Text = (series == null) ? "New Transmission Series" : "Edit Transmission Series";
             Series = series;
+            NewSeries = series == null;
 
             // Add engine icons
             var images = Directory.GetFiles(MatPath, "*.dds");
@@ -36,50 +39,23 @@ namespace ATSEngineTool
             {
                 string fn = Path.GetFileNameWithoutExtension(image);
                 iconBox.Items.Add(fn);
-                if (series != null && fn.Equals(series.EngineIcon, StringComparison.OrdinalIgnoreCase))
+                if (series != null && fn.Equals(series.Icon, StringComparison.OrdinalIgnoreCase))
                     iconBox.SelectedIndex = iconBox.Items.Count - 1;
-            }
-
-            // Add each sound to the lists
-            using (AppDatabase db = new AppDatabase())
-            {
-                foreach (SoundPackage sound in db.EngineSounds)
-                {
-                    soundBox.Items.Add(sound);
-                    if (Series != null && sound.Id == series.SoundId)
-                        soundBox.SelectedIndex = soundBox.Items.Count - 1;
-                }
             }
 
             if (iconBox.SelectedIndex == -1)
                 iconBox.SelectedIndex = 0;
 
-            if (soundBox.SelectedIndex == -1)
-                soundBox.SelectedIndex = 0;
-
             // Set texts
             if (series != null)
             {
-                manuNameBox.Text = series.Manufacturer;
                 seriesNameBox.Text = series.Name;
-                displacementBox.Value = series.Displacement;
                 iconBox.Focus();
             }
         }
 
         private void confirmButton_Click(object sender, EventArgs e)
         {
-            // Check for a valid identifier string
-            if (!Regex.Match(manuNameBox.Text, @"^[a-z0-9_.,\-\s\t()]+$", RegexOptions.IgnoreCase).Success)
-            {
-                // Tell the user this isnt allowed
-                MessageBox.Show("Invalid Manufacturer Name. Please use alpha-numeric, period, comma, underscores, dashes or spaces only",
-                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning
-                );
-
-                return;
-            }
-
             // Check engine name
             if (!Regex.Match(seriesNameBox.Text, @"^[a-z0-9_.,\-\s\t()]+$", RegexOptions.IgnoreCase).Success)
             {
@@ -97,26 +73,20 @@ namespace ATSEngineTool
                 // Add or update the truck in the database
                 using (AppDatabase db = new AppDatabase())
                 {
-                    if (Series == null)
+                    if (NewSeries)
                     {
-                        Series = new EngineSeries()
+                        Series = new TransmissionSeries()
                         {
                             Name = seriesNameBox.Text.Trim(),
-                            Manufacturer = manuNameBox.Text.Trim(),
-                            Displacement = displacementBox.Value,
-                            EngineIcon = iconBox.SelectedItem.ToString(),
-                            SoundPackage = ((SoundPackage)soundBox.SelectedItem)
+                            Icon = iconBox.SelectedItem.ToString()
                         };
-                        db.EngineSeries.Add(Series);
+                        db.TransmissionSeries.Add(Series);
                     }
                     else
                     {
                         Series.Name = seriesNameBox.Text.Trim();
-                        Series.Manufacturer = manuNameBox.Text.Trim();
-                        Series.Displacement = displacementBox.Value;
-                        Series.EngineIcon = iconBox.SelectedItem.ToString();
-                        Series.SoundPackage = ((SoundPackage)soundBox.SelectedItem);
-                        db.EngineSeries.Update(Series);
+                        Series.Icon = iconBox.SelectedItem.ToString();
+                        db.TransmissionSeries.Update(Series);
                     }
                 }
             }
@@ -151,7 +121,7 @@ namespace ATSEngineTool
             Bitmap MapImage = FreeImage.LoadBitmap(path, FREE_IMAGE_LOAD_FLAGS.DEFAULT, ref Format);
             if (MapImage != null)
             {
-                engineIcon.Image = new Bitmap(MapImage, 64, 64);
+                engineIcon.Image = new Bitmap(MapImage, 256, 64);
             }
         }
 
@@ -196,6 +166,5 @@ namespace ATSEngineTool
             Point point2 = new Point(footerPanel.Width, 0);
             e.Graphics.DrawLine(greyPen, point1, point2);
         }
-
     }
 }

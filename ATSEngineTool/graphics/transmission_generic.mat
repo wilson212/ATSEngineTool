@@ -1,0 +1,5 @@
+material : "ui"
+{
+	texture : "transmission_generic.tobj"
+	texture_name : "texture"
+}

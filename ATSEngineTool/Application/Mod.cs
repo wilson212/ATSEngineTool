@@ -298,6 +298,29 @@ namespace ATSEngineTool
                             }
                         }
                     } // End foreach sound
+
+                    // == Transmissions?
+                    var list = truck.TruckTransmissions.ToList();
+                    if (list.Count > 0)
+                    {
+                        var transPath = Path.Combine(truckpath, "transmission");
+                        if (!Directory.Exists(transPath))
+                            Directory.CreateDirectory(transPath);
+
+                        foreach (var transmission in list.Select(x => x.Transmission))
+                        {
+                            string contents = transmission.ToSiiFormat().Replace("{{{NAME}}}", truck.UnitName);
+
+                            // Create/Open the engine.sii file, and write the new contents
+                            string path = Path.Combine(transPath, transmission.FileName);
+                            using (FileStream str = File.Open(path, FileMode.Create))
+                            using (StreamWriter writer = new StreamWriter(str))
+                            {
+                                writer.Write(contents);
+                            }
+                        }
+                    }
+
                 } // End foreach truck
 
                 // thoughts??

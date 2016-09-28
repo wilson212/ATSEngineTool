@@ -64,13 +64,17 @@
             this.label7 = new System.Windows.Forms.Label();
             this.toolStrip4 = new System.Windows.Forms.ToolStrip();
             this.modifyButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
+            this.enginesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.transmissionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.addTruckButton = new System.Windows.Forms.ToolStripButton();
             this.removeTruckButton = new System.Windows.Forms.ToolStripButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.truckListView2 = new System.Windows.Forms.ListView();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.engineListView = new System.Windows.Forms.ListView();
+            this.truckItemListView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
@@ -85,11 +89,29 @@
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.seriesListView = new System.Windows.Forms.ListView();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.engineListView2 = new System.Windows.Forms.ListView();
+            this.engineListView = new System.Windows.Forms.ListView();
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.toolStrip5 = new System.Windows.Forms.ToolStrip();
+            this.newTransButton = new System.Windows.Forms.ToolStripButton();
+            this.removeTransButton = new System.Windows.Forms.ToolStripButton();
+            this.editTransButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip6 = new System.Windows.Forms.ToolStrip();
+            this.addTransSeriesButton = new System.Windows.Forms.ToolStripButton();
+            this.removeTransSeriesButton = new System.Windows.Forms.ToolStripButton();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.transSeriesListView = new System.Windows.Forms.ListView();
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.transmissionListView = new System.Windows.Forms.ListView();
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
             this.menuItem1 = new System.Windows.Forms.MenuItem();
             this.closeMenuItem = new System.Windows.Forms.MenuItem();
@@ -125,6 +147,10 @@
             this.toolStrip2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
+            this.tabPage4.SuspendLayout();
+            this.toolStrip5.SuspendLayout();
+            this.toolStrip6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.panel1.SuspendLayout();
             this.headerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -136,6 +162,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Location = new System.Drawing.Point(-1, 7);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
@@ -495,7 +522,7 @@
             this.tabPage2.Controls.Add(this.toolStrip3);
             this.tabPage2.Controls.Add(this.pictureBox1);
             this.tabPage2.Controls.Add(this.truckListView2);
-            this.tabPage2.Controls.Add(this.engineListView);
+            this.tabPage2.Controls.Add(this.truckItemListView);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -519,7 +546,9 @@
             this.toolStrip4.AutoSize = false;
             this.toolStrip4.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.modifyButton});
+            this.modifyButton,
+            this.toolStripSeparator1,
+            this.toolStripSplitButton1});
             this.toolStrip4.Location = new System.Drawing.Point(462, 24);
             this.toolStrip4.Name = "toolStrip4";
             this.toolStrip4.Size = new System.Drawing.Size(320, 25);
@@ -534,6 +563,40 @@
             this.modifyButton.Size = new System.Drawing.Size(86, 22);
             this.modifyButton.Text = "Modify List";
             this.modifyButton.Click += new System.EventHandler(this.modifyButton_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSplitButton1
+            // 
+            this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripSplitButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.enginesToolStripMenuItem,
+            this.transmissionsToolStripMenuItem});
+            this.toolStripSplitButton1.Image = global::ATSEngineTool.Properties.Resources._object;
+            this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButton1.Name = "toolStripSplitButton1";
+            this.toolStripSplitButton1.Size = new System.Drawing.Size(32, 22);
+            this.toolStripSplitButton1.Text = "toolStripSplitButton1";
+            this.toolStripSplitButton1.ToolTipText = "Change Item List";
+            // 
+            // enginesToolStripMenuItem
+            // 
+            this.enginesToolStripMenuItem.Checked = true;
+            this.enginesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.enginesToolStripMenuItem.Name = "enginesToolStripMenuItem";
+            this.enginesToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.enginesToolStripMenuItem.Text = "Engines";
+            this.enginesToolStripMenuItem.Click += new System.EventHandler(this.enginesToolStripMenuItem_Click);
+            // 
+            // transmissionsToolStripMenuItem
+            // 
+            this.transmissionsToolStripMenuItem.Name = "transmissionsToolStripMenuItem";
+            this.transmissionsToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.transmissionsToolStripMenuItem.Text = "Transmissions";
+            this.transmissionsToolStripMenuItem.Click += new System.EventHandler(this.transmissionsToolStripMenuItem_Click);
             // 
             // toolStrip3
             // 
@@ -601,19 +664,19 @@
             this.columnHeader2.Text = "Select A Truck";
             this.columnHeader2.Width = 295;
             // 
-            // engineListView
+            // truckItemListView
             // 
-            this.engineListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
-            this.engineListView.AutoArrange = false;
-            this.engineListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.truckItemListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.truckItemListView.AutoArrange = false;
+            this.truckItemListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
-            this.engineListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.engineListView.Location = new System.Drawing.Point(462, 50);
-            this.engineListView.Name = "engineListView";
-            this.engineListView.Size = new System.Drawing.Size(320, 310);
-            this.engineListView.TabIndex = 1;
-            this.engineListView.UseCompatibleStateImageBehavior = false;
-            this.engineListView.View = System.Windows.Forms.View.Details;
+            this.truckItemListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.truckItemListView.Location = new System.Drawing.Point(462, 50);
+            this.truckItemListView.Name = "truckItemListView";
+            this.truckItemListView.Size = new System.Drawing.Size(320, 310);
+            this.truckItemListView.TabIndex = 1;
+            this.truckItemListView.UseCompatibleStateImageBehavior = false;
+            this.truckItemListView.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader1
             // 
@@ -628,7 +691,7 @@
             this.tabPage3.Controls.Add(this.toolStrip1);
             this.tabPage3.Controls.Add(this.pictureBox7);
             this.tabPage3.Controls.Add(this.seriesListView);
-            this.tabPage3.Controls.Add(this.engineListView2);
+            this.tabPage3.Controls.Add(this.engineListView);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(808, 425);
@@ -765,24 +828,24 @@
             this.columnHeader3.Text = "Engine Series";
             this.columnHeader3.Width = 229;
             // 
-            // engineListView2
+            // engineListView
             // 
-            this.engineListView2.Alignment = System.Windows.Forms.ListViewAlignment.Left;
-            this.engineListView2.AutoArrange = false;
-            this.engineListView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.engineListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.engineListView.AutoArrange = false;
+            this.engineListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader5,
             this.columnHeader6,
             this.columnHeader7,
             this.columnHeader8});
-            this.engineListView2.FullRowSelect = true;
-            this.engineListView2.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.engineListView2.Location = new System.Drawing.Point(390, 49);
-            this.engineListView2.Name = "engineListView2";
-            this.engineListView2.Size = new System.Drawing.Size(388, 310);
-            this.engineListView2.TabIndex = 7;
-            this.engineListView2.UseCompatibleStateImageBehavior = false;
-            this.engineListView2.View = System.Windows.Forms.View.Details;
-            this.engineListView2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.engineListView2_MouseDoubleClick);
+            this.engineListView.FullRowSelect = true;
+            this.engineListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.engineListView.Location = new System.Drawing.Point(390, 49);
+            this.engineListView.Name = "engineListView";
+            this.engineListView.Size = new System.Drawing.Size(388, 310);
+            this.engineListView.TabIndex = 7;
+            this.engineListView.UseCompatibleStateImageBehavior = false;
+            this.engineListView.View = System.Windows.Forms.View.Details;
+            this.engineListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.engineListView_MouseDoubleClick);
             // 
             // columnHeader5
             // 
@@ -802,6 +865,189 @@
             // 
             this.columnHeader8.Text = "Torque";
             this.columnHeader8.Width = 70;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.label8);
+            this.tabPage4.Controls.Add(this.label9);
+            this.tabPage4.Controls.Add(this.toolStrip5);
+            this.tabPage4.Controls.Add(this.toolStrip6);
+            this.tabPage4.Controls.Add(this.pictureBox5);
+            this.tabPage4.Controls.Add(this.transSeriesListView);
+            this.tabPage4.Controls.Add(this.transmissionListView);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(808, 425);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Transmission Management";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(29, 362);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(107, 13);
+            this.label8.TabIndex = 24;
+            this.label8.Text = "* Double Click to Edit";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(388, 362);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(107, 13);
+            this.label9.TabIndex = 23;
+            this.label9.Text = "* Double Click to Edit";
+            // 
+            // toolStrip5
+            // 
+            this.toolStrip5.AutoSize = false;
+            this.toolStrip5.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newTransButton,
+            this.removeTransButton,
+            this.editTransButton});
+            this.toolStrip5.Location = new System.Drawing.Point(391, 23);
+            this.toolStrip5.Name = "toolStrip5";
+            this.toolStrip5.Size = new System.Drawing.Size(388, 25);
+            this.toolStrip5.TabIndex = 22;
+            this.toolStrip5.Text = "toolStrip5";
+            // 
+            // newTransButton
+            // 
+            this.newTransButton.Image = global::ATSEngineTool.Properties.Resources.add;
+            this.newTransButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.newTransButton.Name = "newTransButton";
+            this.newTransButton.Size = new System.Drawing.Size(76, 22);
+            this.newTransButton.Text = "Add New";
+            this.newTransButton.Click += new System.EventHandler(this.newTransButton_Click);
+            // 
+            // removeTransButton
+            // 
+            this.removeTransButton.Enabled = false;
+            this.removeTransButton.Image = global::ATSEngineTool.Properties.Resources.DeleteRed;
+            this.removeTransButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.removeTransButton.Name = "removeTransButton";
+            this.removeTransButton.Size = new System.Drawing.Size(70, 22);
+            this.removeTransButton.Text = "Remove";
+            this.removeTransButton.Click += new System.EventHandler(this.removeTransButton_Click);
+            // 
+            // editTransButton
+            // 
+            this.editTransButton.Enabled = false;
+            this.editTransButton.Image = global::ATSEngineTool.Properties.Resources.edit;
+            this.editTransButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.editTransButton.Name = "editTransButton";
+            this.editTransButton.Size = new System.Drawing.Size(120, 22);
+            this.editTransButton.Text = "Edit Transmission";
+            this.editTransButton.Click += new System.EventHandler(this.editTransButton_Click);
+            // 
+            // toolStrip6
+            // 
+            this.toolStrip6.AutoSize = false;
+            this.toolStrip6.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip6.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addTransSeriesButton,
+            this.removeTransSeriesButton});
+            this.toolStrip6.Location = new System.Drawing.Point(32, 23);
+            this.toolStrip6.Name = "toolStrip6";
+            this.toolStrip6.Size = new System.Drawing.Size(246, 25);
+            this.toolStrip6.TabIndex = 21;
+            this.toolStrip6.Text = "toolStrip6";
+            // 
+            // addTransSeriesButton
+            // 
+            this.addTransSeriesButton.Image = global::ATSEngineTool.Properties.Resources.add;
+            this.addTransSeriesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.addTransSeriesButton.Name = "addTransSeriesButton";
+            this.addTransSeriesButton.Size = new System.Drawing.Size(76, 22);
+            this.addTransSeriesButton.Text = "Add New";
+            this.addTransSeriesButton.Click += new System.EventHandler(this.addTransSeriesButton_Click);
+            // 
+            // removeTransSeriesButton
+            // 
+            this.removeTransSeriesButton.Image = global::ATSEngineTool.Properties.Resources.DeleteRed;
+            this.removeTransSeriesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.removeTransSeriesButton.Name = "removeTransSeriesButton";
+            this.removeTransSeriesButton.Size = new System.Drawing.Size(70, 22);
+            this.removeTransSeriesButton.Text = "Remove";
+            this.removeTransSeriesButton.Click += new System.EventHandler(this.removeTransSeriesButton_Click);
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Image = global::ATSEngineTool.Properties.Resources.go_next;
+            this.pictureBox5.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox5.InitialImage")));
+            this.pictureBox5.Location = new System.Drawing.Point(286, 172);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(99, 50);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox5.TabIndex = 20;
+            this.pictureBox5.TabStop = false;
+            // 
+            // transSeriesListView
+            // 
+            this.transSeriesListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.transSeriesListView.AutoArrange = false;
+            this.transSeriesListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader9});
+            this.transSeriesListView.FullRowSelect = true;
+            this.transSeriesListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.transSeriesListView.HideSelection = false;
+            this.transSeriesListView.Location = new System.Drawing.Point(32, 49);
+            this.transSeriesListView.MultiSelect = false;
+            this.transSeriesListView.Name = "transSeriesListView";
+            this.transSeriesListView.Size = new System.Drawing.Size(246, 310);
+            this.transSeriesListView.TabIndex = 19;
+            this.transSeriesListView.UseCompatibleStateImageBehavior = false;
+            this.transSeriesListView.View = System.Windows.Forms.View.Details;
+            this.transSeriesListView.SelectedIndexChanged += new System.EventHandler(this.transSeriesListView_SelectedIndexChanged);
+            this.transSeriesListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.transSeriesListView_MouseDoubleClick);
+            // 
+            // columnHeader9
+            // 
+            this.columnHeader9.Text = "Transmission Series";
+            this.columnHeader9.Width = 229;
+            // 
+            // transmissionListView
+            // 
+            this.transmissionListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.transmissionListView.AutoArrange = false;
+            this.transmissionListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader10,
+            this.columnHeader11,
+            this.columnHeader12,
+            this.columnHeader13});
+            this.transmissionListView.FullRowSelect = true;
+            this.transmissionListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.transmissionListView.Location = new System.Drawing.Point(391, 49);
+            this.transmissionListView.Name = "transmissionListView";
+            this.transmissionListView.Size = new System.Drawing.Size(388, 310);
+            this.transmissionListView.TabIndex = 18;
+            this.transmissionListView.UseCompatibleStateImageBehavior = false;
+            this.transmissionListView.View = System.Windows.Forms.View.Details;
+            this.transmissionListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.transmissionListView_MouseDoubleClick);
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Text = "Name";
+            this.columnHeader10.Width = 190;
+            // 
+            // columnHeader11
+            // 
+            this.columnHeader11.Text = "Forward";
+            // 
+            // columnHeader12
+            // 
+            this.columnHeader12.Text = "Reverse";
+            // 
+            // columnHeader13
+            // 
+            this.columnHeader13.Text = "Diff. Ratio";
+            this.columnHeader13.Width = 70;
             // 
             // mainMenu1
             // 
@@ -926,6 +1172,13 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
+            this.toolStrip5.ResumeLayout(false);
+            this.toolStrip5.PerformLayout();
+            this.toolStrip6.ResumeLayout(false);
+            this.toolStrip6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.panel1.ResumeLayout(false);
             this.headerPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -944,7 +1197,7 @@
         private System.Windows.Forms.MenuItem menuItem1;
         private System.Windows.Forms.MenuItem closeMenuItem;
         private System.Windows.Forms.MenuItem menuItem3;
-        private System.Windows.Forms.ListView engineListView;
+        private System.Windows.Forms.ListView truckItemListView;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ListView truckListView2;
         private System.Windows.Forms.ColumnHeader columnHeader2;
@@ -980,7 +1233,7 @@
         private System.Windows.Forms.PictureBox pictureBox7;
         private System.Windows.Forms.ListView seriesListView;
         private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ListView engineListView2;
+        private System.Windows.Forms.ListView engineListView;
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.ColumnHeader columnHeader7;
@@ -1008,6 +1261,28 @@
         private System.Windows.Forms.MenuItem soundMenuItem;
         private System.Windows.Forms.PictureBox updatePicture;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ToolStrip toolStrip5;
+        private System.Windows.Forms.ToolStripButton newTransButton;
+        private System.Windows.Forms.ToolStripButton removeTransButton;
+        private System.Windows.Forms.ToolStripButton editTransButton;
+        private System.Windows.Forms.ToolStrip toolStrip6;
+        private System.Windows.Forms.ToolStripButton addTransSeriesButton;
+        private System.Windows.Forms.ToolStripButton removeTransSeriesButton;
+        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.ListView transSeriesListView;
+        private System.Windows.Forms.ColumnHeader columnHeader9;
+        private System.Windows.Forms.ListView transmissionListView;
+        private System.Windows.Forms.ColumnHeader columnHeader10;
+        private System.Windows.Forms.ColumnHeader columnHeader11;
+        private System.Windows.Forms.ColumnHeader columnHeader12;
+        private System.Windows.Forms.ColumnHeader columnHeader13;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
+        private System.Windows.Forms.ToolStripMenuItem enginesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem transmissionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

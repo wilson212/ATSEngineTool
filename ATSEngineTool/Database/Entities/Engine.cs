@@ -320,7 +320,7 @@ namespace ATSEngineTool.Database
         /// <summary>
         /// English culture for numbers
         /// </summary>
-        protected CultureInfo Culture = CultureInfo.CreateSpecificCulture("en-US");
+        protected static readonly CultureInfo Culture = CultureInfo.CreateSpecificCulture("en-US");
 
         /// <summary>
         /// Gets or Sets the NewtonMetre value for this engine. Changing this value
