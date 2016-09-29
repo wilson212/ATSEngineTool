@@ -111,7 +111,7 @@
             this.shadowLabel1.BackColor = System.Drawing.Color.Transparent;
             this.shadowLabel1.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.shadowLabel1.ForeColor = System.Drawing.SystemColors.Control;
-            this.shadowLabel1.Location = new System.Drawing.Point(129, 18);
+            this.shadowLabel1.Location = new System.Drawing.Point(126, 18);
             this.shadowLabel1.Name = "shadowLabel1";
             this.shadowLabel1.ShadowDirection = 90;
             this.shadowLabel1.ShadowOpacity = 225;
@@ -123,7 +123,7 @@
             // engineIcon
             // 
             this.engineIcon.BackColor = System.Drawing.Color.Transparent;
-            this.engineIcon.Location = new System.Drawing.Point(23, 5);
+            this.engineIcon.Location = new System.Drawing.Point(20, 5);
             this.engineIcon.Name = "engineIcon";
             this.engineIcon.Size = new System.Drawing.Size(96, 64);
             this.engineIcon.TabIndex = 32;

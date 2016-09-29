@@ -555,7 +555,16 @@ namespace ATSEngineTool
 
                         // Grab the engine object
                         List<string> objects = new List<string>(document.Definitions.Keys);
-                        AccessoryEngineData engine = document.GetDefinition<AccessoryEngineData>(objects[0]);
+                        if (objects.Count == 0)
+                        {
+                            MessageBox.Show("Unable to find any engine date in this sii document!", 
+                                "Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning
+                            );
+                            return;
+                        }
+
+                        // Grab the engine
+                        var engine = document.GetDefinition<AccessoryEngineData>(objects[0]);
 
                         // === Set form values
                         int len = objects[0].IndexOf('.');

@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TransmissionForm));
-            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Reverse", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Forward", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("Reverse", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("Forward", System.Windows.Forms.HorizontalAlignment.Left);
             this.label1 = new System.Windows.Forms.Label();
             this.unitNameBox = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -82,6 +82,9 @@
             this.label10 = new System.Windows.Forms.Label();
             this.fileCommentTextBox = new System.Windows.Forms.TextBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.suitablesTextBox = new System.Windows.Forms.TextBox();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.label39 = new System.Windows.Forms.Label();
             this.conflictsTextBox = new System.Windows.Forms.TextBox();
@@ -112,6 +115,7 @@
             this.groupBox9.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.groupBox12.SuspendLayout();
             this.contentPanel.SuspendLayout();
             this.footerPanel.SuspendLayout();
@@ -298,37 +302,41 @@
             // 
             // chart1
             // 
-            chartArea1.AxisX.IsMarginVisible = false;
-            chartArea1.AxisX.Title = "Speed (Mph)";
-            chartArea1.AxisY.Title = "Engine RPM";
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Enabled = false;
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(8, 19);
+            chartArea3.AxisX.IsMarginVisible = false;
+            chartArea3.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
+            chartArea3.AxisX.Title = "Speed (Mph)";
+            chartArea3.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
+            chartArea3.AxisY.Title = "Engine RPM";
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
+            legend3.Enabled = false;
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
+            this.chart1.Location = new System.Drawing.Point(8, 14);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.MarkerBorderColor = System.Drawing.Color.Black;
-            series1.MarkerColor = System.Drawing.Color.DodgerBlue;
-            series1.MarkerSize = 7;
-            series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series1.Name = "Series1";
-            series1.SmartLabelStyle.AllowOutsidePlotArea = System.Windows.Forms.DataVisualization.Charting.LabelOutsidePlotAreaStyle.No;
-            series1.SmartLabelStyle.MaxMovingDistance = 40D;
-            series1.SmartLabelStyle.MinMovingDistance = 25D;
-            series1.SmartLabelStyle.MovingDirection = ((System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles)((((((System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.Top | System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.Bottom) 
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Legend = "Legend1";
+            series3.MarkerBorderColor = System.Drawing.Color.Black;
+            series3.MarkerColor = System.Drawing.Color.DodgerBlue;
+            series3.MarkerSize = 7;
+            series3.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series3.Name = "Series1";
+            series3.SmartLabelStyle.AllowOutsidePlotArea = System.Windows.Forms.DataVisualization.Charting.LabelOutsidePlotAreaStyle.No;
+            series3.SmartLabelStyle.MaxMovingDistance = 40D;
+            series3.SmartLabelStyle.MinMovingDistance = 25D;
+            series3.SmartLabelStyle.MovingDirection = ((System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles)((((((System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.Top | System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.Bottom) 
             | System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.TopLeft) 
             | System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.TopRight) 
             | System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.BottomLeft) 
             | System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.BottomRight)));
-            series1.YValuesPerPoint = 6;
-            this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(828, 356);
+            series3.YValuesPerPoint = 6;
+            this.chart1.Series.Add(series3);
+            this.chart1.Size = new System.Drawing.Size(844, 373);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
+            this.chart1.MouseEnter += new System.EventHandler(this.Chart1_MouseEnter);
+            this.chart1.MouseLeave += new System.EventHandler(this.Chart1_MouseLeave);
             // 
             // tabControl1
             // 
@@ -381,6 +389,11 @@
             // 
             this.diffRatio.DecimalPlaces = 2;
             this.diffRatio.Enabled = false;
+            this.diffRatio.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
             this.diffRatio.Location = new System.Drawing.Point(114, 119);
             this.diffRatio.Maximum = new decimal(new int[] {
             99,
@@ -394,7 +407,7 @@
             65536});
             this.diffRatio.Name = "diffRatio";
             this.diffRatio.Size = new System.Drawing.Size(103, 20);
-            this.diffRatio.TabIndex = 41;
+            this.diffRatio.TabIndex = 10;
             this.diffRatio.Value = new decimal(new int[] {
             345,
             0,
@@ -439,7 +452,7 @@
             this.removeGearButton.Location = new System.Drawing.Point(151, 357);
             this.removeGearButton.Name = "removeGearButton";
             this.removeGearButton.Size = new System.Drawing.Size(102, 25);
-            this.removeGearButton.TabIndex = 32;
+            this.removeGearButton.TabIndex = 12;
             this.removeGearButton.Text = "Remove Gear";
             this.removeGearButton.UseVisualStyleBackColor = true;
             this.removeGearButton.Click += new System.EventHandler(this.removePointButton_Click);
@@ -453,13 +466,13 @@
             this.columnHeader4,
             this.columnHeader5});
             this.gearListView.FullRowSelect = true;
-            listViewGroup1.Header = "Reverse";
-            listViewGroup1.Name = "Reverse";
-            listViewGroup2.Header = "Forward";
-            listViewGroup2.Name = "Forward";
+            listViewGroup5.Header = "Reverse";
+            listViewGroup5.Name = "Reverse";
+            listViewGroup6.Header = "Forward";
+            listViewGroup6.Name = "Forward";
             this.gearListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1,
-            listViewGroup2});
+            listViewGroup5,
+            listViewGroup6});
             this.gearListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.gearListView.HideSelection = false;
             this.gearListView.Location = new System.Drawing.Point(11, 41);
@@ -492,7 +505,7 @@
             this.addGearButton.Location = new System.Drawing.Point(11, 357);
             this.addGearButton.Name = "addGearButton";
             this.addGearButton.Size = new System.Drawing.Size(102, 25);
-            this.addGearButton.TabIndex = 31;
+            this.addGearButton.TabIndex = 11;
             this.addGearButton.Text = "Add Gear";
             this.addGearButton.UseVisualStyleBackColor = true;
             this.addGearButton.Click += new System.EventHandler(this.addPointButton_Click);
@@ -515,11 +528,10 @@
             // hasTorqueConverter
             // 
             this.hasTorqueConverter.AutoSize = true;
-            this.hasTorqueConverter.Enabled = false;
             this.hasTorqueConverter.Location = new System.Drawing.Point(32, 112);
             this.hasTorqueConverter.Name = "hasTorqueConverter";
             this.hasTorqueConverter.Size = new System.Drawing.Size(131, 17);
-            this.hasTorqueConverter.TabIndex = 42;
+            this.hasTorqueConverter.TabIndex = 8;
             this.hasTorqueConverter.Text = "Has Torque Converter";
             this.hasTorqueConverter.UseVisualStyleBackColor = true;
             // 
@@ -527,6 +539,11 @@
             // 
             this.stallRatio.DecimalPlaces = 2;
             this.stallRatio.Enabled = false;
+            this.stallRatio.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
             this.stallRatio.Location = new System.Drawing.Point(127, 139);
             this.stallRatio.Maximum = new decimal(new int[] {
             999,
@@ -540,7 +557,7 @@
             65536});
             this.stallRatio.Name = "stallRatio";
             this.stallRatio.Size = new System.Drawing.Size(103, 20);
-            this.stallRatio.TabIndex = 39;
+            this.stallRatio.TabIndex = 9;
             this.stallRatio.ThousandsSeparator = true;
             this.stallRatio.Value = new decimal(new int[] {
             272,
@@ -573,7 +590,7 @@
             0});
             this.retardPositions.Name = "retardPositions";
             this.retardPositions.Size = new System.Drawing.Size(103, 20);
-            this.retardPositions.TabIndex = 37;
+            this.retardPositions.TabIndex = 7;
             this.retardPositions.Value = new decimal(new int[] {
             3,
             0,
@@ -592,11 +609,10 @@
             // hasRetarder
             // 
             this.hasRetarder.AutoSize = true;
-            this.hasRetarder.Enabled = false;
             this.hasRetarder.Location = new System.Drawing.Point(32, 42);
             this.hasRetarder.Name = "hasRetarder";
             this.hasRetarder.Size = new System.Drawing.Size(89, 17);
-            this.hasRetarder.TabIndex = 0;
+            this.hasRetarder.TabIndex = 6;
             this.hasRetarder.Text = "Has Retarder";
             this.hasRetarder.UseVisualStyleBackColor = true;
             // 
@@ -684,6 +700,7 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.groupBox6);
             this.tabPage5.Controls.Add(this.groupBox12);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
@@ -692,6 +709,36 @@
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Compatibility";
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.label11);
+            this.groupBox6.Controls.Add(this.suitablesTextBox);
+            this.groupBox6.Location = new System.Drawing.Point(440, 31);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(407, 364);
+            this.groupBox6.TabIndex = 2;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Suitable For";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(15, 22);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(324, 26);
+            this.label11.TabIndex = 3;
+            this.label11.Text = "Only put 1 item per line. The items listed here will be included in the \r\n\"suitab" +
+    "le_for\" array. Use \"{{{NAME}}}\" to subsitute the truck name.";
+            // 
+            // suitablesTextBox
+            // 
+            this.suitablesTextBox.Location = new System.Drawing.Point(10, 56);
+            this.suitablesTextBox.Multiline = true;
+            this.suitablesTextBox.Name = "suitablesTextBox";
+            this.suitablesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.suitablesTextBox.Size = new System.Drawing.Size(387, 293);
+            this.suitablesTextBox.TabIndex = 0;
             // 
             // groupBox12
             // 
@@ -751,7 +798,7 @@
             this.importButton.Location = new System.Drawing.Point(35, 13);
             this.importButton.Name = "importButton";
             this.importButton.Size = new System.Drawing.Size(100, 25);
-            this.importButton.TabIndex = 25;
+            this.importButton.TabIndex = 13;
             this.importButton.Text = "Import";
             this.importButton.UseVisualStyleBackColor = true;
             this.importButton.Click += new System.EventHandler(this.importButton_Click);
@@ -762,7 +809,7 @@
             this.confirmButton.Location = new System.Drawing.Point(750, 13);
             this.confirmButton.Name = "confirmButton";
             this.confirmButton.Size = new System.Drawing.Size(100, 25);
-            this.confirmButton.TabIndex = 24;
+            this.confirmButton.TabIndex = 15;
             this.confirmButton.Text = "Confirm";
             this.confirmButton.UseVisualStyleBackColor = true;
             this.confirmButton.Click += new System.EventHandler(this.ConfirmButton_Click);
@@ -773,7 +820,7 @@
             this.cancelButton.Location = new System.Drawing.Point(635, 13);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(100, 25);
-            this.cancelButton.TabIndex = 23;
+            this.cancelButton.TabIndex = 14;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
@@ -843,6 +890,8 @@
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             this.tabPage5.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.groupBox12.ResumeLayout(false);
             this.groupBox12.PerformLayout();
             this.contentPanel.ResumeLayout(false);
@@ -912,5 +961,8 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox suitablesTextBox;
     }
 }

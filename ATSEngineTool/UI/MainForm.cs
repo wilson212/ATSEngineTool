@@ -465,6 +465,11 @@ namespace ATSEngineTool
             }
         }
 
+        private void toolStripSplitButton1_ButtonClick(object sender, EventArgs e)
+        {
+            toolStripSplitButton1.ShowDropDown();
+        }
+
         #endregion Truck Management Tab
 
         #region Engine Management

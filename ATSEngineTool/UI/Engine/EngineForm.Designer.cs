@@ -1509,7 +1509,7 @@
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage5.Size = new System.Drawing.Size(886, 426);
             this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "Conflicts";
+            this.tabPage5.Text = "Compatibility";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
             // groupBox12

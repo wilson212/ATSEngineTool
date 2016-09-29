@@ -52,8 +52,14 @@ namespace ATSEngineTool
         /// </summary>
         protected bool NewTransmission = false;
 
+        /// <summary>
+        /// Gets a list of all reverse gears
+        /// </summary>
         protected List<TransmissionGear> ReverseGears { get; set; } = new List<TransmissionGear>();
 
+        /// <summary>
+        /// Gets a list of all forward gears
+        /// </summary>
         protected List<TransmissionGear> ForwardGears { get; set; } = new List<TransmissionGear>();
 
         /// <summary>
@@ -66,6 +72,8 @@ namespace ATSEngineTool
             // Create form controls
             InitializeComponent();
             headerPanel.BackColor = Color.FromArgb(51, 53, 53);
+            chart1.ChartAreas[0].AxisX.Interval = 10;
+            chart1.MouseWheel += Chart1_MouseWheel;
 
             NewTransmission = transmission == null;
             Transmission = transmission ?? new Transmission();
@@ -94,15 +102,15 @@ namespace ATSEngineTool
                 }
                 else
                 {
-                    ReverseGears.Add(new TransmissionGear() { GearIndex = 0, Ratio = -5.55m });
+                    ReverseGears.Add(new TransmissionGear() { Ratio = -5.55m });
                     ForwardGears.AddRange(new[]
                     {
-                        new TransmissionGear() { GearIndex = 1, Ratio = 4.7m },
-                        new TransmissionGear() { GearIndex = 2, Ratio = 2.21m },
-                        new TransmissionGear() { GearIndex = 3, Ratio = 1.53m },
-                        new TransmissionGear() { GearIndex = 4, Ratio = 1.0m },
-                        new TransmissionGear() { GearIndex = 5, Ratio = 0.76m },
-                        new TransmissionGear() { GearIndex = 6, Ratio = 0.67m }
+                        new TransmissionGear() { Ratio = 4.7m },
+                        new TransmissionGear() { Ratio = 2.21m },
+                        new TransmissionGear() { Ratio = 1.53m },
+                        new TransmissionGear() { Ratio = 1.0m },
+                        new TransmissionGear() { Ratio = 0.76m },
+                        new TransmissionGear() { Ratio = 0.67m }
                     });
                 }
             }
@@ -134,6 +142,7 @@ namespace ATSEngineTool
                 fileCommentTextBox.Lines = transmission.Comment;
                 filenameTextBox.Text = transmission.FileName;
                 conflictsTextBox.Lines = transmission.Conflicts;
+                suitablesTextBox.Lines = transmission.SuitableFor;
             }
 
             // Fill torque ratios
@@ -148,15 +157,25 @@ namespace ATSEngineTool
             // Clear out any old items
             gearListView.Items.Clear();
 
+            // Reorder
+            ReverseGears = ReverseGears.OrderBy(x => x.Ratio).ToList();
+            ForwardGears = ForwardGears.OrderByDescending(x => x.Ratio).ToList();
+
             // Reverse Gears
             int i = 0;
-            foreach (TransmissionGear gear in ReverseGears.OrderBy(x => x.Ratio))
+            foreach (TransmissionGear gear in ReverseGears)
+            {
+                gear.GearIndex = ReverseGears.IndexOf(gear);
                 AddGear(gear, i++);
+            }
 
             // Forward Gears
             i = 0;
-            foreach (TransmissionGear gear in ForwardGears.OrderByDescending(x => x.Ratio))
+            foreach (TransmissionGear gear in ForwardGears)
+            {
+                gear.GearIndex = ForwardGears.IndexOf(gear);
                 AddGear(gear, i++);
+            }
         }
 
         /// <summary>
@@ -171,7 +190,7 @@ namespace ATSEngineTool
             ListViewItem item = new ListViewItem((index + 1).ToString());
             item.SubItems.Add(name);
             item.SubItems.Add($"{gear.Ratio}:1");
-            item.Tag = index;
+            item.Tag = gear.GearIndex;
 
             index = (gear.IsReverse) ? 0 : 1;
             gearListView.Groups[index].Items.Add(item);
@@ -225,41 +244,12 @@ namespace ATSEngineTool
         /// <param name="index">The index of the gear in the list (sorted by ratio desc)</param>
         /// <param name="gear">The gear we are fetching the name for</param>
         /// <returns></returns>
-        private string GetGearNameAtIndex(int index, TransmissionGear gear = null)
+        private string GetGearNameAtIndex(int index, TransmissionGear gear)
         {
-            if (String.IsNullOrWhiteSpace(gear.Name))
-            {
-                int i = (index / 2);
-                var mod = ((index + 2) % 2 == 1) ? "H" : "L";
-
-                if (gear.IsReverse)
-                {
-                    switch (ReverseGears.Count)
-                    {
-                        case 1: return "R";
-                        case 2: return (index == 0) ? "R1" : "R2";
-                        case 3:
-                        case 4:
-                            switch (index)
-                            {
-                                case 0:
-                                case 1: return "R1" + mod;
-                                case 2:
-                                case 3: return "R2" + mod;
-                            }
-                            break;
-                    }
-                }
-                else
-                {
-                    if (ForwardGears.Count < 7)
-                        return (index + 1).ToString();
-                    else
-                        return (i == 0) ? $"L{mod}" : i + mod;
-                }
-            }
-
-            return gear.Name;
+            if (gear.IsReverse)
+                return Transmission.GetGearNameAtIndex(index, gear, ReverseGears);
+            else
+                return Transmission.GetGearNameAtIndex(index, gear, ForwardGears);
         }
 
         /// <summary>
@@ -325,7 +315,7 @@ namespace ATSEngineTool
             }
 
             // Set new attribute values
-            Transmission.SeriesId = ((EngineSeries)seriesModelBox.SelectedItem).Id;
+            Transmission.SeriesId = ((TransmissionSeries)seriesModelBox.SelectedItem).Id;
             Transmission.UnitName = unitNameBox.Text.Trim();
             Transmission.Name = transNameBox.Text.Trim();
             Transmission.Price = (int)priceBox.Value;
@@ -334,6 +324,7 @@ namespace ATSEngineTool
             Transmission.Defaults = fileDefaultsTextBox.Lines;
             Transmission.Comment = fileCommentTextBox.Lines;
             Transmission.Conflicts = conflictsTextBox.Lines;
+            Transmission.SuitableFor = suitablesTextBox.Lines;
             Transmission.Retarder = (hasRetarder.Checked) ? (int)retardPositions.Value : 0;
             Transmission.StallTorqueRatio = (hasTorqueConverter.Checked) ? (int)stallRatio.Value : 0.0m;
 
@@ -454,7 +445,7 @@ namespace ATSEngineTool
         }
 
         /// <summary>
-        /// Plots the points on the chart
+        /// Plots the points (Rpm / speed) on the chart
         /// </summary>
         private void diffRatio_ValueChanged(object sender, EventArgs e)
         {
@@ -465,11 +456,13 @@ namespace ATSEngineTool
             int currentRpm = 0;
             int currentSpd = 0;
 
-            // Fill torque ratios
+            // Fill speeds at RPM intervals for each gear
             int i = 0;
-            foreach (var gear in ForwardGears.OrderByDescending(x => x.Ratio))
+            foreach (var gear in ForwardGears)
             {
+                // Get our gear name
                 string name = GetGearNameAtIndex(i, gear);
+
                 // After a shift, get the new RPM for our truck speed
                 currentRpm = GetRpmFromSpeed(currentSpd, gear);
 
@@ -699,6 +692,7 @@ namespace ATSEngineTool
             {
                 try
                 {
+                    // Create document
                     var document = new SiiDocument(typeof(AccessoryTransmissionData), typeof(TransmissionNames));
 
                     using (FileStream stream = File.OpenRead(Dialog.FileName))
@@ -712,6 +706,9 @@ namespace ATSEngineTool
                         List<string> objects = new List<string>(document.Definitions.Keys);
                         if (objects.Count == 0)
                         {
+                            MessageBox.Show("Unable to find any transmission date in this sii document!",
+                                "Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning
+                            );
                             return;
                         }
 
@@ -737,6 +734,7 @@ namespace ATSEngineTool
                         fileDefaultsTextBox.Lines = transmission.Defaults;
                         filenameTextBox.Text = Path.GetFileName(Dialog.FileName);
                         conflictsTextBox.Lines = transmission.Conflicts;
+                        suitablesTextBox.Lines = transmission.Suitables;
 
                         // Clear chart points and gears
                         chart1.Series[0].Points.Clear();
@@ -753,7 +751,8 @@ namespace ATSEngineTool
                             ReverseGears.Add(new TransmissionGear()
                             {
                                 Name = name,
-                                Ratio = item
+                                Ratio = item,
+                                GearIndex = i++
                             });
                         }
 
@@ -765,7 +764,8 @@ namespace ATSEngineTool
                             ForwardGears.Add(new TransmissionGear()
                             {
                                 Name = name,
-                                Ratio = item
+                                Ratio = item,
+                                GearIndex = i++
                             });
                         }
 
@@ -780,8 +780,8 @@ namespace ATSEngineTool
 
                         // Alert the user
                         MessageBox.Show(
-                           $"Successfully imported the transmission \"{transmission.Name}\"! You must now select a series for this transmission.",
-                           "Import Successful", MessageBoxButtons.OK, MessageBoxIcon.Information
+                            $"Successfully imported the transmission \"{transmission.Name}\"! You must now select a series for this transmission.",
+                            "Import Successful", MessageBoxButtons.OK, MessageBoxIcon.Information
                         );
                     }
                 }
@@ -808,6 +808,47 @@ namespace ATSEngineTool
                     MessageBox.Show(ex.Message, "An Error Occured", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void Chart1_MouseWheel(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                if (e.Delta < 0)
+                {
+                    chart1.ChartAreas[0].AxisX.ScaleView.ZoomReset();
+                    chart1.ChartAreas[0].AxisY.ScaleView.ZoomReset();
+                }
+
+                if (e.Delta > 0)
+                {
+                    double xMin = chart1.ChartAreas[0].AxisX.ScaleView.ViewMinimum;
+                    double xMax = chart1.ChartAreas[0].AxisX.ScaleView.ViewMaximum;
+                    double yMin = chart1.ChartAreas[0].AxisY.ScaleView.ViewMinimum;
+                    double yMax = chart1.ChartAreas[0].AxisY.ScaleView.ViewMaximum;
+
+                    double posXStart = chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.Location.X) - (xMax - xMin) / 2;
+                    double posXFinish = chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.Location.X) + (xMax - xMin) / 2;
+                    double posYStart = chart1.ChartAreas[0].AxisY.PixelPositionToValue(e.Location.Y) - (yMax - yMin) / 2;
+                    double posYFinish = chart1.ChartAreas[0].AxisY.PixelPositionToValue(e.Location.Y) + (yMax - yMin) / 2;
+
+                    chart1.ChartAreas[0].AxisX.ScaleView.Zoom(posXStart, posXFinish);
+                    chart1.ChartAreas[0].AxisY.ScaleView.Zoom(posYStart, posYFinish);
+                }
+            }
+            catch { }
+        }
+
+        private void Chart1_MouseLeave(object sender, EventArgs e)
+        {
+            if (chart1.Focused)
+                chart1.Parent.Focus();
+        }
+
+        private void Chart1_MouseEnter(object sender, EventArgs e)
+        {
+            if (!chart1.Focused)
+                chart1.Focus();
         }
     }
 }

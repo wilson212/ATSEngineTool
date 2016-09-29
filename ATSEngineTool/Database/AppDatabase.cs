@@ -135,6 +135,10 @@ namespace ATSEngineTool.Database
             {
                 // Delete old table rementants
                 CodeFirstSQLite.DropTable<TruckEngine>(this);
+                CodeFirstSQLite.DropTable<TruckTransmission>(this);
+                CodeFirstSQLite.DropTable<TransmissionGear>(this);
+                CodeFirstSQLite.DropTable<Transmission>(this);
+                CodeFirstSQLite.DropTable<TransmissionSeries>(this);
                 CodeFirstSQLite.DropTable<TorqueRatio>(this);
                 CodeFirstSQLite.DropTable<Engine>(this);
                 CodeFirstSQLite.DropTable<EngineSeries>(this);
@@ -150,6 +154,10 @@ namespace ATSEngineTool.Database
                 CodeFirstSQLite.CreateTable<Truck>(this);
                 CodeFirstSQLite.CreateTable<TorqueRatio>(this);
                 CodeFirstSQLite.CreateTable<TruckEngine>(this);
+                CodeFirstSQLite.CreateTable<TransmissionSeries>(this);
+                CodeFirstSQLite.CreateTable<Transmission>(this);
+                CodeFirstSQLite.CreateTable<TransmissionGear>(this);
+                CodeFirstSQLite.CreateTable<TruckTransmission>(this);
 
                 // Create version record
                 DbVersion version = new DbVersion();

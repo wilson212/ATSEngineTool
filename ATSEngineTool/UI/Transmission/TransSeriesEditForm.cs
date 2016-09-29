@@ -39,7 +39,12 @@ namespace ATSEngineTool
             {
                 string fn = Path.GetFileNameWithoutExtension(image);
                 iconBox.Items.Add(fn);
-                if (series != null && fn.Equals(series.Icon, StringComparison.OrdinalIgnoreCase))
+                if (series != null)
+                {
+                    if (fn.Equals(series.Icon, StringComparison.OrdinalIgnoreCase))
+                        iconBox.SelectedIndex = iconBox.Items.Count - 1;
+                }
+                else if (fn.Equals("transmission_generic", StringComparison.OrdinalIgnoreCase))
                     iconBox.SelectedIndex = iconBox.Items.Count - 1;
             }
 

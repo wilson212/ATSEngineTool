@@ -69,9 +69,6 @@ namespace ATSEngineTool.Database
         [Column, Required, Default(0)]
         public int Retarder { get; set; } = 0;
 
-        /// <summary>
-        /// 
-        /// </summary>
         [Column("Defaults"), Default("")]
         protected string _defaults { get; set; }
 
@@ -80,6 +77,9 @@ namespace ATSEngineTool.Database
 
         [Column("Conflicts"), Default("")]
         protected string _conflicts { get; set; }
+
+        [Column("SuitableFor"), Default("")]
+        protected string _suitables { get; set; }
 
         /// <summary>
         /// The name of the SII file, without extension.
@@ -170,6 +170,27 @@ namespace ATSEngineTool.Database
                     _conflicts = "";
                 else
                     _conflicts = String.Join("|", value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or Sets the Engine objects comment in the SII file.
+        /// </summary>
+        public string[] SuitableFor
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(_suitables))
+                    return null;
+
+                return _suitables.Split('|');
+            }
+            set
+            {
+                if (value == null || value.Length == 0)
+                    _suitables = "";
+                else
+                    _suitables = String.Join("|", value);
             }
         }
 
@@ -271,6 +292,22 @@ namespace ATSEngineTool.Database
             builder.AppendLine($"\t\tdifferential_ratio: {decvalue}");
             builder.AppendLine();
 
+            // Add Retarder
+            if (Retarder > 0)
+            {
+                builder.AppendLine("\t\t# Retarder");
+                builder.AppendLine($"\t\tretarder: {Retarder}");
+                builder.AppendLine();
+            }
+
+            if (StallTorqueRatio > 0.0m)
+            {
+                decvalue = StallTorqueRatio.ToString(Culture);
+                builder.AppendLine("\t\t# Torque Converter: 2.42, 2.34, 1.9, 1.79, 1.58");
+                builder.AppendLine($"\t\tstall_torque_ratio: {decvalue}");
+                builder.AppendLine();
+            }
+
             // Create gear lists
             var reverseGears = new List<TransmissionGear>(this.Gears.Where(x => x.IsReverse));
             var forwardGears = new List<TransmissionGear>(this.Gears.Where(x => !x.IsReverse));
@@ -319,7 +356,7 @@ namespace ATSEngineTool.Database
             if (hasNames)
             {
                 builder.AppendLine();
-                builder.AppendLine("transmission_names : .names");
+                builder.AppendLine("\ttransmission_names : .names");
                 builder.AppendLine("\t{");
 
                 // Neutral always first
@@ -332,7 +369,8 @@ namespace ATSEngineTool.Database
                     foreach (var gear in forwardGears)
                     {
                         name = GetGearNameAtIndex(i, gear, forwardGears);
-                        builder.AppendLine($"\t\tforward[{i++}]: \"{name}\"");
+                        string tab = (i <= 9) ? "\t\t" : "\t";
+                        builder.AppendLine($"\t\tforward[{i++}]:{tab}\"{name}\"");
                     }
                 }
 
@@ -345,7 +383,8 @@ namespace ATSEngineTool.Database
                     foreach (var gear in reverseGears)
                     {
                         name = GetGearNameAtIndex(i, gear, reverseGears);
-                        builder.AppendLine($"\t\treverse[{i++}]: \"{name}\"");
+                        string tab = (i <= 9) ? "\t\t" : "\t";
+                        builder.AppendLine($"\t\treverse[{i++}]:{tab}\"{name}\"");
                     }
                 }
 
@@ -361,17 +400,17 @@ namespace ATSEngineTool.Database
 
         /// <summary>
         /// Gets the gear name, or if the gear does not have a name, generates a name based off 
-        /// of the gear index.
+        /// of the gear index (Eaton Fuller Style).
         /// </summary>
         /// <param name="index">The index of the gear in the list (sorted by ratio desc)</param>
         /// <param name="gear">The gear we are fetching the name for</param>
         /// <returns></returns>
-        private string GetGearNameAtIndex(int index, TransmissionGear gear, List<TransmissionGear> gears)
+        public static string GetGearNameAtIndex(int index, TransmissionGear gear, List<TransmissionGear> gears)
         {
             if (String.IsNullOrWhiteSpace(gear.Name))
             {
                 int i = (index / 2);
-                var mod = ((index + 2) % 2 == 1) ? "H" : "L";
+                var affix = ((index + 2) % 2 == 1) ? "H" : "L";
 
                 if (gear.IsReverse)
                 {
@@ -381,22 +420,31 @@ namespace ATSEngineTool.Database
                         case 2: return (index == 0) ? "R1" : "R2";
                         case 3:
                         case 4:
-                            switch (index)
-                            {
-                                case 0:
-                                case 1: return "R1" + mod;
-                                case 2:
-                                case 3: return "R2" + mod;
-                            }
-                            break;
+                            i = (index + 2) / 2;
+                            return $"R{i}{affix}";
                     }
                 }
                 else
                 {
-                    if (gears.Count < 7)
+                    // 10 speeds are just 1- 10
+                    if (gears.Count < 11)
+                    {
                         return (index + 1).ToString();
+                    }
+                    else if (gears.Count < 14)
+                    {
+                        // Since 1 - 4 is numbered with no affix, add that to the gear index
+                        i = ((index + 5) / 2);
+                        affix = ((index + 5) % 2 == 1) ? "H" : "L";
+
+                        if (index == 0) return "L";
+                        else if (index < 5) return index.ToString();
+                        else return i + affix;
+                    }
                     else
-                        return (i == 0) ? $"L{mod}" : i + mod;
+                    {
+                        return (i == 0) ? $"L{affix}" : i + affix;
+                    }
                 }
             }
 

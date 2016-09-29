@@ -581,20 +581,21 @@
             this.toolStripSplitButton1.Size = new System.Drawing.Size(32, 22);
             this.toolStripSplitButton1.Text = "toolStripSplitButton1";
             this.toolStripSplitButton1.ToolTipText = "Change Item List";
+            this.toolStripSplitButton1.ButtonClick += new System.EventHandler(this.toolStripSplitButton1_ButtonClick);
             // 
             // enginesToolStripMenuItem
             // 
             this.enginesToolStripMenuItem.Checked = true;
             this.enginesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.enginesToolStripMenuItem.Name = "enginesToolStripMenuItem";
-            this.enginesToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.enginesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.enginesToolStripMenuItem.Text = "Engines";
             this.enginesToolStripMenuItem.Click += new System.EventHandler(this.enginesToolStripMenuItem_Click);
             // 
             // transmissionsToolStripMenuItem
             // 
             this.transmissionsToolStripMenuItem.Name = "transmissionsToolStripMenuItem";
-            this.transmissionsToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.transmissionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.transmissionsToolStripMenuItem.Text = "Transmissions";
             this.transmissionsToolStripMenuItem.Click += new System.EventHandler(this.transmissionsToolStripMenuItem_Click);
             // 

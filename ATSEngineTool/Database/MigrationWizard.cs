@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SQLite;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CrossLite;
 using CrossLite.CodeFirst;
 
 namespace ATSEngineTool.Database
 {
+    /// <summary>
+    /// This class is used to migrate changes to the AppData.db database
+    /// </summary>
     internal class MigrationWizard
     {
         protected AppDatabase Database { get; set; }
@@ -35,7 +32,7 @@ namespace ATSEngineTool.Database
                         MigrateTo_1_2();
                         break;
                     default:
-                        throw new Exception("Version out of range");
+                        throw new Exception($"Unexpected database version: {AppDatabase.DatabaseVersion}");
                 }
 
                 // Fetch version
