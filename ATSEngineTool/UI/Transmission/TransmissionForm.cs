@@ -163,17 +163,17 @@ namespace ATSEngineTool
 
             // Reverse Gears
             int i = 0;
-            foreach (TransmissionGear gear in ReverseGears)
+            foreach (var gear in ReverseGears)
             {
-                gear.GearIndex = ReverseGears.IndexOf(gear);
+                gear.GearIndex = i;
                 AddGear(gear, i++);
             }
 
             // Forward Gears
             i = 0;
-            foreach (TransmissionGear gear in ForwardGears)
+            foreach (var gear in ForwardGears)
             {
-                gear.GearIndex = ForwardGears.IndexOf(gear);
+                gear.GearIndex = i;
                 AddGear(gear, i++);
             }
         }
@@ -190,7 +190,7 @@ namespace ATSEngineTool
             ListViewItem item = new ListViewItem((index + 1).ToString());
             item.SubItems.Add(name);
             item.SubItems.Add($"{gear.Ratio}:1");
-            item.Tag = gear.GearIndex;
+            item.Tag = index;
 
             index = (gear.IsReverse) ? 0 : 1;
             gearListView.Groups[index].Items.Add(item);

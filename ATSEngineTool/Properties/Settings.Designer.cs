@@ -82,5 +82,17 @@ namespace ATSEngineTool.Properties {
                 this["UnitSystem"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ConsolidateSounds {
+            get {
+                return ((bool)(this["ConsolidateSounds"]));
+            }
+            set {
+                this["ConsolidateSounds"] = value;
+            }
+        }
     }
 }

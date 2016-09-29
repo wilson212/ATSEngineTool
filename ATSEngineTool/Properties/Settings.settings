@@ -17,5 +17,8 @@
     <Setting Name="UnitSystem" Type="ATSEngineTool.UnitSystem" Scope="User">
       <Value Profile="(Default)">Imperial</Value>
     </Setting>
+    <Setting Name="ConsolidateSounds" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
