@@ -303,7 +303,7 @@ namespace ATSEngineTool
             }
 
             // Check engine name
-            if (!Regex.Match(transNameBox.Text, @"^[a-z0-9_.,\-\s\t()]+$", RegexOptions.IgnoreCase).Success)
+            if (transNameBox.Text.Length < 2 || transNameBox.Text.Contains('"'))
             {
                 // Tell the user this isnt allowed
                 MessageBox.Show(

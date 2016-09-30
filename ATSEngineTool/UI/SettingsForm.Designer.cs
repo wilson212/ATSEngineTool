@@ -30,35 +30,41 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.linkCheckBox = new System.Windows.Forms.CheckBox();
-            this.ChangeButton = new System.Windows.Forms.Button();
-            this.SteamInstallPath = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.iUnitRatio = new System.Windows.Forms.RadioButton();
             this.mUnitRadio = new System.Windows.Forms.RadioButton();
             this.updateCheckBox = new System.Windows.Forms.CheckBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.linkCheckBox = new System.Windows.Forms.CheckBox();
+            this.ChangeButton = new System.Windows.Forms.Button();
+            this.SteamInstallPath = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.consolidateCheckBox = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.ConfirmButton = new System.Windows.Forms.Button();
             this.headerPanel = new System.Windows.Forms.Panel();
             this.shadowLabel1 = new System.Windows.Forms.ShadowLabel();
             this.footerPanel = new System.Windows.Forms.Panel();
             this.cancelButton = new System.Windows.Forms.Button();
             this.contentPanel = new System.Windows.Forms.Panel();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.consolidateCheckBox = new System.Windows.Forms.CheckBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.torqueOutput1 = new System.Windows.Forms.RadioButton();
+            this.torqueOutput2 = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.headerPanel.SuspendLayout();
             this.footerPanel.SuspendLayout();
             this.contentPanel.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -66,64 +72,12 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Location = new System.Drawing.Point(-1, 16);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(488, 213);
             this.tabControl1.TabIndex = 0;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.linkCheckBox);
-            this.tabPage2.Controls.Add(this.ChangeButton);
-            this.tabPage2.Controls.Add(this.SteamInstallPath);
-            this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(480, 187);
-            this.tabPage2.TabIndex = 0;
-            this.tabPage2.Text = "Steam Integration";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // linkCheckBox
-            // 
-            this.linkCheckBox.AutoSize = true;
-            this.linkCheckBox.Checked = true;
-            this.linkCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.linkCheckBox.Location = new System.Drawing.Point(40, 36);
-            this.linkCheckBox.Name = "linkCheckBox";
-            this.linkCheckBox.Size = new System.Drawing.Size(344, 17);
-            this.linkCheckBox.TabIndex = 27;
-            this.linkCheckBox.Text = "Integrate with Real Engines and Sounds Mod (Steam path required)";
-            this.linkCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // ChangeButton
-            // 
-            this.ChangeButton.Location = new System.Drawing.Point(386, 131);
-            this.ChangeButton.Name = "ChangeButton";
-            this.ChangeButton.Size = new System.Drawing.Size(66, 25);
-            this.ChangeButton.TabIndex = 26;
-            this.ChangeButton.Text = "Change";
-            this.ChangeButton.UseVisualStyleBackColor = true;
-            this.ChangeButton.Click += new System.EventHandler(this.ChangeButton_Click);
-            // 
-            // SteamInstallPath
-            // 
-            this.SteamInstallPath.Location = new System.Drawing.Point(28, 105);
-            this.SteamInstallPath.Name = "SteamInstallPath";
-            this.SteamInstallPath.ReadOnly = true;
-            this.SteamInstallPath.Size = new System.Drawing.Size(424, 20);
-            this.SteamInstallPath.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(27, 86);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(118, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Steam Installation Path:";
             // 
             // tabPage1
             // 
@@ -182,6 +136,100 @@
             this.updateCheckBox.TabIndex = 28;
             this.updateCheckBox.Text = "Enable program update check";
             this.updateCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.linkCheckBox);
+            this.tabPage2.Controls.Add(this.ChangeButton);
+            this.tabPage2.Controls.Add(this.SteamInstallPath);
+            this.tabPage2.Controls.Add(this.label1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(480, 187);
+            this.tabPage2.TabIndex = 0;
+            this.tabPage2.Text = "Steam Integration";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // linkCheckBox
+            // 
+            this.linkCheckBox.AutoSize = true;
+            this.linkCheckBox.Checked = true;
+            this.linkCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.linkCheckBox.Location = new System.Drawing.Point(40, 36);
+            this.linkCheckBox.Name = "linkCheckBox";
+            this.linkCheckBox.Size = new System.Drawing.Size(344, 17);
+            this.linkCheckBox.TabIndex = 27;
+            this.linkCheckBox.Text = "Integrate with Real Engines and Sounds Mod (Steam path required)";
+            this.linkCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // ChangeButton
+            // 
+            this.ChangeButton.Location = new System.Drawing.Point(386, 131);
+            this.ChangeButton.Name = "ChangeButton";
+            this.ChangeButton.Size = new System.Drawing.Size(66, 25);
+            this.ChangeButton.TabIndex = 26;
+            this.ChangeButton.Text = "Change";
+            this.ChangeButton.UseVisualStyleBackColor = true;
+            this.ChangeButton.Click += new System.EventHandler(this.ChangeButton_Click);
+            // 
+            // SteamInstallPath
+            // 
+            this.SteamInstallPath.Location = new System.Drawing.Point(28, 105);
+            this.SteamInstallPath.Name = "SteamInstallPath";
+            this.SteamInstallPath.ReadOnly = true;
+            this.SteamInstallPath.Size = new System.Drawing.Size(424, 20);
+            this.SteamInstallPath.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(27, 86);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(118, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Steam Installation Path:";
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.groupBox2);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(480, 187);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Sound Compile Options";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.consolidateCheckBox);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Location = new System.Drawing.Point(9, 6);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(460, 172);
+            this.groupBox2.TabIndex = 2;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Sound Consolidation";
+            // 
+            // consolidateCheckBox
+            // 
+            this.consolidateCheckBox.AutoSize = true;
+            this.consolidateCheckBox.Location = new System.Drawing.Point(127, 127);
+            this.consolidateCheckBox.Name = "consolidateCheckBox";
+            this.consolidateCheckBox.Size = new System.Drawing.Size(206, 17);
+            this.consolidateCheckBox.TabIndex = 3;
+            this.consolidateCheckBox.Text = "Consolidate Truck Engine Sound Files";
+            this.consolidateCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(18, 33);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(413, 52);
+            this.label2.TabIndex = 2;
+            this.label2.Text = resources.GetString("label2.Text");
             // 
             // ConfirmButton
             // 
@@ -251,46 +299,48 @@
             this.contentPanel.Size = new System.Drawing.Size(484, 222);
             this.contentPanel.TabIndex = 35;
             // 
-            // tabPage3
+            // tabPage4
             // 
-            this.tabPage3.Controls.Add(this.groupBox2);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(480, 187);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Sound Compile Options";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.tabPage4.Controls.Add(this.groupBox3);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(480, 187);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Engines";
+            this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // groupBox3
             // 
-            this.groupBox2.Controls.Add(this.consolidateCheckBox);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Location = new System.Drawing.Point(9, 6);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(460, 172);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Sound Consolidation";
+            this.groupBox3.Controls.Add(this.torqueOutput1);
+            this.groupBox3.Controls.Add(this.torqueOutput2);
+            this.groupBox3.Location = new System.Drawing.Point(11, 26);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(269, 113);
+            this.groupBox3.TabIndex = 33;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Torque Line";
             // 
-            // label2
+            // torqueOutput1
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(18, 33);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(413, 52);
-            this.label2.TabIndex = 2;
-            this.label2.Text = resources.GetString("label2.Text");
+            this.torqueOutput1.AutoSize = true;
+            this.torqueOutput1.Location = new System.Drawing.Point(29, 34);
+            this.torqueOutput1.Name = "torqueOutput1";
+            this.torqueOutput1.Size = new System.Drawing.Size(215, 17);
+            this.torqueOutput1.TabIndex = 29;
+            this.torqueOutput1.Text = "Imperial Units (2,050 Ft-ib @ 1200 RPM)";
+            this.torqueOutput1.UseVisualStyleBackColor = true;
             // 
-            // consolidateCheckBox
+            // torqueOutput2
             // 
-            this.consolidateCheckBox.AutoSize = true;
-            this.consolidateCheckBox.Location = new System.Drawing.Point(127, 127);
-            this.consolidateCheckBox.Name = "consolidateCheckBox";
-            this.consolidateCheckBox.Size = new System.Drawing.Size(206, 17);
-            this.consolidateCheckBox.TabIndex = 3;
-            this.consolidateCheckBox.Text = "Consolidate Truck Engine Sound Files";
-            this.consolidateCheckBox.UseVisualStyleBackColor = true;
+            this.torqueOutput2.AutoSize = true;
+            this.torqueOutput2.Location = new System.Drawing.Point(29, 68);
+            this.torqueOutput2.Name = "torqueOutput2";
+            this.torqueOutput2.Size = new System.Drawing.Size(201, 17);
+            this.torqueOutput2.TabIndex = 30;
+            this.torqueOutput2.TabStop = true;
+            this.torqueOutput2.Text = "Metric Units (2779 Nm @ 1200 RPM)";
+            this.torqueOutput2.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
@@ -308,18 +358,21 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";
             this.tabControl1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.headerPanel.ResumeLayout(false);
-            this.footerPanel.ResumeLayout(false);
-            this.contentPanel.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.headerPanel.ResumeLayout(false);
+            this.footerPanel.ResumeLayout(false);
+            this.contentPanel.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -347,5 +400,9 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox consolidateCheckBox;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton torqueOutput1;
+        private System.Windows.Forms.RadioButton torqueOutput2;
     }
 }

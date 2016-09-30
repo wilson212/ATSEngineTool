@@ -387,7 +387,10 @@ namespace ATSEngineTool.Database
 
             // Torque line
             builder.Append("\t\tinfo[]: \"");
-            builder.AppendLine($"{Digitize(this.Torque)} @@lb_ft@@ ({Digitize(this.NewtonMetres)} @@nm@@)\"");
+            if (Program.Config.TorqueOutputUnitSystem == UnitSystem.Imperial)
+                builder.AppendLine($"{Digitize(this.Torque)} @@lb_ft@@ ({Digitize(this.NewtonMetres)} @@nm@@)\"");
+            else
+                builder.AppendLine($"{Digitize(this.NewtonMetres)} @@nm@@ ({Digitize(this.Torque)} @@lb_ft@@)\"");
 
             // Rpm line
             builder.AppendLine($"\t\tinfo[]: \"{Digitize(this.PeakRpm)} @@rpm@@\"");

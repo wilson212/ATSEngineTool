@@ -32,6 +32,7 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EngineForm));
             this.label1 = new System.Windows.Forms.Label();
             this.unitNameBox = new System.Windows.Forms.TextBox();
@@ -139,6 +140,10 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.headerPanel = new System.Windows.Forms.Panel();
             this.shadowLabel1 = new System.Windows.Forms.ShadowLabel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.maxTorqueLabel = new System.Windows.Forms.Label();
+            this.maxHpLabel = new System.Windows.Forms.Label();
+            this.maxTrqLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.engineIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceBox)).BeginInit();
@@ -355,10 +360,15 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.maxTrqLabel);
+            this.groupBox5.Controls.Add(this.maxHpLabel);
+            this.groupBox5.Controls.Add(this.maxTorqueLabel);
+            this.groupBox5.Controls.Add(this.label2);
+            this.groupBox5.Controls.Add(this.removePointButton);
             this.groupBox5.Controls.Add(this.chart1);
             this.groupBox5.Location = new System.Drawing.Point(11, 10);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(589, 351);
+            this.groupBox5.Size = new System.Drawing.Size(858, 410);
             this.groupBox5.TabIndex = 26;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Torque Curves";
@@ -368,25 +378,45 @@
             chartArea1.AxisX.IsMarginVisible = false;
             chartArea1.AxisX.Title = "Rpm";
             chartArea1.AxisY.Title = "Torque";
+            chartArea1.AxisY2.Interval = 100D;
+            chartArea1.AxisY2.MajorGrid.Enabled = false;
+            chartArea1.AxisY2.Title = "Horsepower";
             chartArea1.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Enabled = false;
+            legend1.AutoFitMinFontSize = 8;
+            legend1.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row;
             legend1.Name = "Legend1";
+            legend1.Position.Auto = false;
+            legend1.Position.Height = 6F;
+            legend1.Position.Width = 32F;
+            legend1.Position.X = 35F;
+            legend1.Position.Y = 75F;
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(8, 19);
+            this.chart1.Location = new System.Drawing.Point(1, 11);
             this.chart1.Name = "chart1";
             series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             series1.Legend = "Legend1";
             series1.MarkerBorderColor = System.Drawing.Color.Black;
             series1.MarkerColor = System.Drawing.Color.DodgerBlue;
             series1.MarkerSize = 7;
             series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series1.Name = "Series1";
+            series1.Name = "Torque";
             series1.SmartLabelStyle.AllowOutsidePlotArea = System.Windows.Forms.DataVisualization.Charting.LabelOutsidePlotAreaStyle.No;
             series1.SmartLabelStyle.MinMovingDistance = 10D;
+            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series2.Legend = "Legend1";
+            series2.MarkerColor = System.Drawing.Color.Black;
+            series2.Name = "Horsepower";
+            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series2.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(578, 326);
+            this.chart1.Series.Add(series2);
+            this.chart1.Size = new System.Drawing.Size(623, 393);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -1058,7 +1088,6 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.removePointButton);
             this.tabPage2.Controls.Add(this.addPointButton);
             this.tabPage2.Controls.Add(this.ratioListView);
             this.tabPage2.Controls.Add(this.groupBox5);
@@ -1067,13 +1096,13 @@
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(886, 426);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Torque Curves";
+            this.tabPage2.Text = "Power Curves";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // removePointButton
             // 
             this.removePointButton.Enabled = false;
-            this.removePointButton.Location = new System.Drawing.Point(763, 328);
+            this.removePointButton.Location = new System.Drawing.Point(739, 339);
             this.removePointButton.Name = "removePointButton";
             this.removePointButton.Size = new System.Drawing.Size(100, 25);
             this.removePointButton.TabIndex = 29;
@@ -1083,7 +1112,7 @@
             // 
             // addPointButton
             // 
-            this.addPointButton.Location = new System.Drawing.Point(623, 328);
+            this.addPointButton.Location = new System.Drawing.Point(640, 349);
             this.addPointButton.Name = "addPointButton";
             this.addPointButton.Size = new System.Drawing.Size(100, 25);
             this.addPointButton.TabIndex = 28;
@@ -1102,11 +1131,10 @@
             this.ratioListView.FullRowSelect = true;
             this.ratioListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.ratioListView.HideSelection = false;
-            this.ratioListView.Location = new System.Drawing.Point(623, 26);
+            this.ratioListView.Location = new System.Drawing.Point(640, 92);
             this.ratioListView.MultiSelect = false;
             this.ratioListView.Name = "ratioListView";
-            this.ratioListView.Scrollable = false;
-            this.ratioListView.Size = new System.Drawing.Size(240, 296);
+            this.ratioListView.Size = new System.Drawing.Size(210, 251);
             this.ratioListView.TabIndex = 27;
             this.ratioListView.UseCompatibleStateImageBehavior = false;
             this.ratioListView.View = System.Windows.Forms.View.Details;
@@ -1116,18 +1144,18 @@
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Text = "Point #";
-            this.columnHeader1.Width = 50;
+            this.columnHeader1.Text = "#";
+            this.columnHeader1.Width = 36;
             // 
             // columnHeader2
             // 
             this.columnHeader2.Text = "Rpm";
-            this.columnHeader2.Width = 100;
+            this.columnHeader2.Width = 75;
             // 
             // columnHeader3
             // 
             this.columnHeader3.Text = "Torque %";
-            this.columnHeader3.Width = 120;
+            this.columnHeader3.Width = 75;
             // 
             // tabPage3
             // 
@@ -1621,6 +1649,42 @@
             this.shadowLabel1.TabIndex = 0;
             this.shadowLabel1.Text = "Engine Editor";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(630, 31);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(90, 13);
+            this.label2.TabIndex = 30;
+            this.label2.Text = "Max Horsepower:";
+            // 
+            // maxTorqueLabel
+            // 
+            this.maxTorqueLabel.AutoSize = true;
+            this.maxTorqueLabel.Location = new System.Drawing.Point(631, 53);
+            this.maxTorqueLabel.Name = "maxTorqueLabel";
+            this.maxTorqueLabel.Size = new System.Drawing.Size(67, 13);
+            this.maxTorqueLabel.TabIndex = 31;
+            this.maxTorqueLabel.Text = "Max Torque:";
+            // 
+            // maxHpLabel
+            // 
+            this.maxHpLabel.AutoSize = true;
+            this.maxHpLabel.Location = new System.Drawing.Point(736, 31);
+            this.maxHpLabel.Name = "maxHpLabel";
+            this.maxHpLabel.Size = new System.Drawing.Size(86, 13);
+            this.maxHpLabel.TabIndex = 32;
+            this.maxHpLabel.Text = "605 @ 2800 rpm";
+            // 
+            // maxTrqLabel
+            // 
+            this.maxTrqLabel.AutoSize = true;
+            this.maxTrqLabel.Location = new System.Drawing.Point(736, 53);
+            this.maxTrqLabel.Name = "maxTrqLabel";
+            this.maxTrqLabel.Size = new System.Drawing.Size(92, 13);
+            this.maxTrqLabel.TabIndex = 33;
+            this.maxTrqLabel.Text = "2050 @ 2800 rpm";
+            // 
             // EngineForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1642,6 +1706,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.priceBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.unlockBox)).EndInit();
             this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
@@ -1803,5 +1868,9 @@
         private System.Windows.Forms.GroupBox groupBox12;
         private System.Windows.Forms.TextBox conflictsTextBox;
         private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.Label maxTrqLabel;
+        private System.Windows.Forms.Label maxHpLabel;
+        private System.Windows.Forms.Label maxTorqueLabel;
+        private System.Windows.Forms.Label label2;
     }
 }

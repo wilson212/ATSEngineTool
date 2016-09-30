@@ -94,10 +94,11 @@
     <Compile Include="Database\Entities\EngineSound.cs" />
     <Compile Include="Database\Entities\Sound.cs" />
     <Compile Include="Database\SoundType.cs" />
-    <Compile Include="SoundPackageEditor.cs">
+    <Compile Include="Metrics.cs" />
+    <Compile Include="UI\Sound\SoundPackageEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SoundPackageEditor.Designer.cs">
+    <Compile Include="UI\Sound\SoundPackageEditor.Designer.cs">
       <DependentUpon>SoundPackageEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Transmission\TransmissionListEditor.cs">
@@ -222,7 +223,7 @@
     <Compile Include="Updater\GitHubRelease.cs" />
     <Compile Include="Updater\GitHubUser.cs" />
     <Compile Include="Updater\ProgramUpdater.cs" />
-    <EmbeddedResource Include="SoundPackageEditor.resx">
+    <EmbeddedResource Include="UI\Sound\SoundPackageEditor.resx">
       <DependentUpon>SoundPackageEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\AboutForm.resx">

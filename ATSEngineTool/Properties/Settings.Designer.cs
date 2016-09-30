@@ -85,13 +85,13 @@ namespace ATSEngineTool.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ConsolidateSounds {
+        [global::System.Configuration.DefaultSettingValueAttribute("Imperial")]
+        public global::ATSEngineTool.UnitSystem TorqueOutputUnitSystem {
             get {
-                return ((bool)(this["ConsolidateSounds"]));
+                return ((global::ATSEngineTool.UnitSystem)(this["TorqueOutputUnitSystem"]));
             }
             set {
-                this["ConsolidateSounds"] = value;
+                this["TorqueOutputUnitSystem"] = value;
             }
         }
     }

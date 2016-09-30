@@ -21,6 +21,11 @@ namespace ATSEngineTool
     public partial class EngineForm : Form
     {
         /// <summary>
+        /// Specifies the distance in RPMs that the current horsepower is plotted on the chart
+        /// </summary>
+        const int HP_POINT_DIST = 25;
+
+        /// <summary>
         /// Our engine WIP
         /// </summary>
         public Engine Engine { get; protected set; }
@@ -48,6 +53,7 @@ namespace ATSEngineTool
             // Create form controls
             InitializeComponent();
             headerPanel.BackColor = Color.FromArgb(51, 53, 53);
+            chart1.ChartAreas[0].AxisX.Interval = 300;
 
             NewEngine = engine == null;
             Engine = engine ?? new Engine();
@@ -58,6 +64,7 @@ namespace ATSEngineTool
                 labelTorque.Text = "Newton Metres:";
                 labelPeakTorque.Text = "Peak N·m RPM:";
                 chart1.ChartAreas[0].AxisY.Title = "Newton Metres";
+                maxTrqLabel.Text = "Max Newton Metres:";
             }
 
             // Add each sound to the lists
@@ -99,9 +106,6 @@ namespace ATSEngineTool
                 unlockBox.Value = engine.Unlock;
                 priceBox.Value = engine.Price;
                 horsepowerBox.Value = engine.Horsepower;
-                torqueBox.Value = (Program.Config.UnitSystem == UnitSystem.Imperial) 
-                    ? engine.Torque
-                    : engine.NewtonMetres;
                 peakRPMBox.Value = engine.PeakRpm;
                 idleRpmBox.Value = engine.IdleRpm;
                 rpmLimitBox.Value = engine.RpmLimit;
@@ -123,6 +127,11 @@ namespace ATSEngineTool
                 engineBrakeHigh.Value = engine.HighRpmRange_EngineBrake;
                 adBlueConsumption.Value = engine.AdblueConsumption;
                 adBlueNoPowerLimit.Value = engine.NoAdbluePowerLimit;
+
+                // Set torque last, to update the chart
+                torqueBox.Value = (Program.Config.UnitSystem == UnitSystem.Imperial)
+                    ? engine.Torque
+                    : engine.NewtonMetres;
             }
             else
             {
@@ -169,11 +178,11 @@ namespace ATSEngineTool
             }
 
             // Check engine name
-            if (!Regex.Match(engineNameBox.Text, @"^[a-z0-9_.,\-\s\t()]+$", RegexOptions.IgnoreCase).Success)
+            if (engineNameBox.Text.Length < 2 || engineNameBox.Text.Contains('"'))
             {
                 // Tell the user this isnt allowed
                 MessageBox.Show(
-                    "Invalid Engine Name string. Please use alpha-numeric, period, underscores, dashes or spaces only",
+                    "Invalid Engine Name string. Name must be at least 2 characters long and no quotes allowed",
                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning
                 );
 
@@ -291,7 +300,7 @@ namespace ATSEngineTool
                 priceBox.Enabled = true;
                 torqueBox.Enabled = true;
                 horsepowerBox.Enabled = true;
-                peakRPMBox.Enabled = true;
+                //peakRPMBox.Enabled = true;
                 rpmLimitBox.Enabled = true;
                 idleRpmBox.Enabled = true;
                 brakePositionsBox.Enabled = true;
@@ -347,11 +356,17 @@ namespace ATSEngineTool
 
             // Clear old chart points
             chart1.Series[0].Points.Clear();
+            chart1.Series[1].Points.Clear();
+
+            DataPoint lastPoint = null;
+            TorqueRatio highest = null;
+            double torque = 0;
+            double horsepower = 0;
 
             // Fill torque ratios
             foreach (TorqueRatio ratio in Ratios.OrderBy(x => x.RpmLevel))
             {
-                double torque = (double)Math.Round(torqueBox.Value * ratio.Ratio, 0);
+                torque = (double)Math.Round(torqueBox.Value * ratio.Ratio, 0);
                 int index = chart1.Series[0].Points.AddXY(ratio.RpmLevel, torque);
                 DataPoint point = chart1.Series[0].Points[index];
 
@@ -359,7 +374,57 @@ namespace ATSEngineTool
                     point.ToolTip = $"{torque} lb-ft @ {ratio.RpmLevel} RPM";
                 else
                     point.ToolTip = $"{torque} Nm @ {ratio.RpmLevel} RPM";
+
+                // Set the highest and earliest ratio
+                if (highest == null || ratio.Ratio > highest.Ratio)
+                    highest = ratio;
+
+                // === Plot Horsepower
+                if (lastPoint != null)
+                {
+                    // Get torque difference from last point
+                    double deltaY = point.YValues[0] - lastPoint.YValues[0];
+                    // Get RPM difference from last point
+                    double deltaX = point.XValue - lastPoint.XValue;
+                    // Calculate slope angle (rpm distance * (torque rise per rpm))
+                    double slope = HP_POINT_DIST * (deltaY / deltaX);
+                    // Calculate the last plots starting Torque value
+                    double torqueAtPoint = lastPoint.YValues[0];
+
+                    // Now we walk from the last point, to right before the current one
+                    double start = lastPoint.XValue + HP_POINT_DIST;
+                    double stop = point.XValue;
+
+                    // Now we plot the horsepower points, up until we hit the next torque point
+                    for (int rpm = (int)start; rpm < stop; rpm += HP_POINT_DIST)
+                    {
+                        // increment torque rating by our dermined curve rise
+                        torqueAtPoint += slope;
+
+                        // Plot the horsepower point
+                        horsepower = Math.Round((torqueAtPoint * rpm) / 5252, 0);
+                        index = chart1.Series[1].Points.AddXY(rpm, horsepower);
+                        chart1.Series[1].Points[index].ToolTip = $"#VALY HP @ {rpm} RPM";
+                    }
+                }
+
+                // Plot the Horsepower plots
+                horsepower = Math.Round((torque * ratio.RpmLevel) / 5252, 0);
+                index = chart1.Series[1].Points.AddXY(ratio.RpmLevel, horsepower);
+                chart1.Series[1].Points[index].ToolTip = $"#VALY HP @ {ratio.RpmLevel} RPM";
+                chart1.Series[1].Points[index].MarkerStyle = MarkerStyle.Circle;
+                chart1.Series[1].Points[index].MarkerColor = Color.Black;
+
+                // Set the last point
+                lastPoint = point;
             }
+
+            // Update labels
+            DataPoint pnt = chart1.Series[1].Points.FindMaxByValue("Y");
+            maxHpLabel.Text = $"{pnt.YValues[0]} @ {pnt.XValue} RPM";
+            torque = (double)Math.Round(torqueBox.Value * highest.Ratio, 0);
+            maxTrqLabel.Text = $"{torque} @ {highest.RpmLevel} RPM";
+            peakRPMBox.Value = highest.RpmLevel;
         }
 
         private void horsepowerBox_ValueChanged_1(object sender, EventArgs e)

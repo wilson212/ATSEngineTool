@@ -15,11 +15,16 @@ namespace ATSEngineTool
             SteamInstallPath.Text = Program.Config.SteamPath;
             linkCheckBox.Checked = Program.Config.IntegrateWithMod;
             updateCheckBox.Checked = Program.Config.UpdateCheck;
-            consolidateCheckBox.Checked = Program.Config.ConsolidateSounds;
+            tabControl1.TabPages.Remove(tabPage3);
             if (Program.Config.UnitSystem == UnitSystem.Metric)
             {
                 mUnitRadio.Checked = true;
             }
+
+            if (Program.Config.TorqueOutputUnitSystem == UnitSystem.Imperial)
+                torqueOutput1.Checked = true;
+            else
+                torqueOutput2.Checked = true;
         }
 
         private void ChangeButton_Click(object sender, EventArgs e)
@@ -69,8 +74,10 @@ namespace ATSEngineTool
             Program.Config.UpdateCheck = updateCheckBox.Checked;
             Program.Config.SteamPath = SteamInstallPath.Text;
             Program.Config.IntegrateWithMod = linkCheckBox.Checked;
+            Program.Config.TorqueOutputUnitSystem = (torqueOutput1.Checked)
+                ? UnitSystem.Imperial
+                : UnitSystem.Metric;
             Program.Config.UnitSystem = (iUnitRatio.Checked) ? UnitSystem.Imperial : UnitSystem.Metric;
-            Program.Config.ConsolidateSounds = consolidateCheckBox.Checked;
             Program.Config.Save();
             this.Close();
         }
