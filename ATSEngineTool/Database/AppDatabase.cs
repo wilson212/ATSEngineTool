@@ -37,9 +37,9 @@ namespace ATSEngineTool.Database
 
         public DbSet<EngineSeries> EngineSeries { get; protected set; }
 
-        public DbSet<SoundPackage> EngineSounds { get; protected set; }
+        public DbSet<SoundPackage> SoundPackages { get; protected set; }
 
-        public DbSet<Sound> TruckSounds { get; protected set; }
+        public DbSet<EngineSound> EngineSounds { get; protected set; }
 
         public DbSet<TruckEngine> TruckEngines { get; protected set; }
 
@@ -102,7 +102,8 @@ namespace ATSEngineTool.Database
             DbVersions = new DbSet<DbVersion>(this);
             Engines = new DbSet<Engine>(this);
             EngineSeries = new DbSet<EngineSeries>(this);
-            EngineSounds = new DbSet<SoundPackage>(this);
+            SoundPackages = new DbSet<SoundPackage>(this);
+            EngineSounds = new DbSet<EngineSound>(this);
             TruckEngines = new DbSet<TruckEngine>(this);
             TorqueRatios = new DbSet<TorqueRatio>(this);
             TransmissionSeries = new DbSet<TransmissionSeries>(this);
@@ -153,6 +154,7 @@ namespace ATSEngineTool.Database
                 CodeFirstSQLite.DropTable<Engine>(this);
                 CodeFirstSQLite.DropTable<EngineSeries>(this);
                 CodeFirstSQLite.DropTable<SoundPackage>(this);
+                CodeFirstSQLite.DropTable<EngineSound>(this);
                 CodeFirstSQLite.DropTable<Truck>(this);
                 CodeFirstSQLite.DropTable<DbVersion>(this);
 
@@ -160,6 +162,7 @@ namespace ATSEngineTool.Database
                 CodeFirstSQLite.CreateTable<DbVersion>(this);
                 CodeFirstSQLite.CreateTable<EngineSeries>(this);
                 CodeFirstSQLite.CreateTable<SoundPackage>(this);
+                CodeFirstSQLite.CreateTable<EngineSound>(this);
                 CodeFirstSQLite.CreateTable<Engine>(this);
                 CodeFirstSQLite.CreateTable<Truck>(this);
                 CodeFirstSQLite.CreateTable<TorqueRatio>(this);

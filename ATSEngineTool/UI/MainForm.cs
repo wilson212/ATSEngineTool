@@ -93,6 +93,10 @@ namespace ATSEngineTool
                 }
             }
 
+            // ========================= HIDE SOUND TAB - NOT FINISHED ======================= //
+            this.tabControl1.TabPages.Remove(tabPage5);
+            // =============================================================================== //
+
             // Load database
             using (AppDatabase db = new AppDatabase())
             {
@@ -103,6 +107,8 @@ namespace ATSEngineTool
 
                 // Fill Transmissions
                 FillTransmissionSeries(db);
+
+                //FillSoundPackages(db);
 
                 // Set label text
                 dbVersionLabel.Text = AppDatabase.DatabaseVersion.ToString();
@@ -117,10 +123,6 @@ namespace ATSEngineTool
             soundListView.CanExpandGetter = model => ((SoundWrapper)model).ChildCount > 0;
             soundListView.ChildrenGetter = model => ((SoundWrapper)model).Children;
 
-            // ========================= HIDE SOUND TAB - NOT FINISHED ======================= //
-            this.tabControl1.TabPages.Remove(tabPage5);
-            // =============================================================================== //
-
             // Check for updates?
             if (Program.Config.UpdateCheck)
             {
@@ -131,12 +133,28 @@ namespace ATSEngineTool
 
         #region Functions
 
+        private void FillSoundPackages(AppDatabase db)
+        {
+            // Clear old junk
+            packageListView.Items.Clear();
+            soundListView.Items.Clear();
+
+            // Fill in packages
+            foreach (var package in db.SoundPackages)
+            {
+                ListViewItem item = new ListViewItem();
+                item.Tag = package;
+                item.Text = package.ToString();
+                packageListView.Items.Add(item);
+            }
+        }
+
         private void FillTransmissionSeries(AppDatabase db)
         {
             transSeriesListView.Items.Clear();
             transmissionListView.Items.Clear();
 
-            // Fill in trucks
+            // Fill in transmission series
             foreach (var series in db.TransmissionSeries)
             {
                 ListViewItem item = new ListViewItem();
@@ -1154,10 +1172,37 @@ namespace ATSEngineTool
             if (packageListView.SelectedItems.Count == 0) return;
 
             // Always verify that this isnt a mistake
-            var package = (SoundPackage)transmissionListView.SelectedItems[0].Tag;
+            var package = (SoundPackage)packageListView.SelectedItems[0].Tag;
 
-            var truckList = new List<Sound>();
-            var engineList = new List<Engine>();
+            var objectList = new List<SoundWrapper>()
+            {
+                new SoundWrapper() { SoundName = "Interior" },
+                new SoundWrapper() { SoundName = "Exterior" },
+            };
+            var soundList = new List<EngineSound>(package.EngineSounds.OrderBy(x => (int)x.Attribute));
+            SoundWrapper wrapper = null;
+
+            foreach (var sound in soundList)
+            {
+                if (wrapper == null || wrapper.Sound.Attribute != sound.Attribute)
+                {
+                    wrapper = new SoundWrapper()
+                    {
+                        Sound = sound
+                    };
+                    objectList[(int)sound.Type].Children.Add(wrapper);
+                }
+                else
+                {
+                    wrapper.Children.Add(new SoundWrapper()
+                    {
+                        Sound = sound
+                    });
+                }
+            }
+
+            soundListView.Roots = objectList;
+            //soundListView.SetObjects(objectList);
         }
     }
 }

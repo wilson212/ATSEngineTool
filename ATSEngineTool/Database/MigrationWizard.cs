@@ -43,6 +43,9 @@ namespace ATSEngineTool.Database
                         case "1.2":
                             MigrateTo_1_3();
                             break;
+                        case "1.3":
+                            MigrateTo_1_4();
+                            break;
                         default:
                             throw new Exception($"Unexpected database version: {AppDatabase.DatabaseVersion}");
                     }
@@ -50,6 +53,26 @@ namespace ATSEngineTool.Database
                     // Fetch version
                     Database.GetVersion();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Migrates to 1.4, which added EngineSounds to the database
+        /// </summary>
+        private void MigrateTo_1_4()
+        {
+            // Run the update in a transaction
+            using (var trans = Database.BeginTransaction())
+            {
+                // Create the `EngineSound` table
+                Database.CreateTable<EngineSound>();
+
+                // Update database version
+                string sql = "INSERT INTO `DbVersion`(`Version`, `AppliedOn`) VALUES({0}, {1});";
+                Database.Execute(String.Format(sql, Version.Parse("1.4"), Epoch.Now));
+
+                // Commit
+                trans.Commit();
             }
         }
 

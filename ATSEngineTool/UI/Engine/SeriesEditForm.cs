@@ -45,7 +45,7 @@ namespace ATSEngineTool
             // Add each sound to the lists
             using (AppDatabase db = new AppDatabase())
             {
-                foreach (SoundPackage sound in db.EngineSounds)
+                foreach (SoundPackage sound in db.SoundPackages)
                 {
                     soundBox.Items.Add(sound);
                     if (Series != null && sound.Id == series.SoundId)

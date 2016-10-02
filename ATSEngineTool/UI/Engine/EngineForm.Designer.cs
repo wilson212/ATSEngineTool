@@ -160,6 +160,9 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.headerPanel = new System.Windows.Forms.Panel();
             this.shadowLabel1 = new System.Windows.Forms.ShadowLabel();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.label45 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.engineIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceBox)).BeginInit();
@@ -380,6 +383,9 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.label45);
+            this.groupBox5.Controls.Add(this.radioButton2);
+            this.groupBox5.Controls.Add(this.radioButton1);
             this.groupBox5.Controls.Add(this.maxTrqLabel);
             this.groupBox5.Controls.Add(this.maxHpLabel);
             this.groupBox5.Controls.Add(this.maxTorqueLabel);
@@ -483,7 +489,7 @@
             series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             this.chart1.Series.Add(series1);
             this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(623, 393);
+            this.chart1.Size = new System.Drawing.Size(623, 361);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -1866,6 +1872,38 @@
             this.shadowLabel1.TabIndex = 0;
             this.shadowLabel1.Text = "Engine Editor";
             // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
+            this.radioButton1.Location = new System.Drawing.Point(291, 378);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(54, 17);
+            this.radioButton1.TabIndex = 34;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Spline";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(351, 378);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(45, 17);
+            this.radioButton2.TabIndex = 35;
+            this.radioButton2.Text = "Line";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(220, 380);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(65, 13);
+            this.label45.TabIndex = 36;
+            this.label45.Text = "Chart Type: ";
+            // 
             // EngineForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2078,5 +2116,8 @@
         private System.Windows.Forms.ListView suitsListView;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.Label label45;
     }
 }

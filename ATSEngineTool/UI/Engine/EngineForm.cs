@@ -140,17 +140,18 @@ namespace ATSEngineTool
                     ? engine.Torque
                     : engine.NewtonMetres;
             }
-            else
-            {
-                // Force change to update graph
-                torqueBox.Value = (Program.Config.UnitSystem == UnitSystem.Imperial) ? 1650 : Engine.TorqueToNm(1650);
-            }
 
             // Fill torque ratios
             PopulateTorqueRatios();
 
             // Fill Conflicts
             PopulateTransmissions();
+
+            if (NewEngine)
+            {
+                // Force change to update graph
+                torqueBox.Value = (Program.Config.UnitSystem == UnitSystem.Imperial) ? 1650 : Engine.TorqueToNm(1650);
+            }
         }
 
         private void PopulateTransmissions()
@@ -897,6 +898,12 @@ namespace ATSEngineTool
         private void suitsListView_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             SuitablesChanged = true;
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            chart1.Series[0].ChartType = (radioButton1.Checked) ? SeriesChartType.Spline : SeriesChartType.Line;
+            chart1.Series[1].ChartType = chart1.Series[0].ChartType;
         }
     }
 }

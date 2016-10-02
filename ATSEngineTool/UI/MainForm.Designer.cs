@@ -125,8 +125,8 @@
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStrip8 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
+            this.newPackageButton = new System.Windows.Forms.ToolStripButton();
+            this.removePackageButton = new System.Windows.Forms.ToolStripButton();
             this.packageListView = new System.Windows.Forms.ListView();
             this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
@@ -1126,16 +1126,19 @@
             // 
             // olvColumn1
             // 
+            this.olvColumn1.AspectName = "SoundName";
             this.olvColumn1.Text = "Sound Name";
             this.olvColumn1.Width = 150;
             // 
             // olvColumn2
             // 
+            this.olvColumn2.AspectName = "Filename";
             this.olvColumn2.Text = "Filename";
             this.olvColumn2.Width = 150;
             // 
             // olvColumn3
             // 
+            this.olvColumn3.AspectName = "Volume";
             this.olvColumn3.Text = "Volume";
             // 
             // label10
@@ -1195,37 +1198,37 @@
             this.toolStripButton3.Image = global::ATSEngineTool.Properties.Resources.edit;
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(120, 22);
-            this.toolStripButton3.Text = "Edit Transmission";
+            this.toolStripButton3.Size = new System.Drawing.Size(84, 22);
+            this.toolStripButton3.Text = "Edit Sound";
             // 
             // toolStrip8
             // 
             this.toolStrip8.AutoSize = false;
             this.toolStrip8.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip8.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton4,
-            this.toolStripButton5});
+            this.newPackageButton,
+            this.removePackageButton});
             this.toolStrip8.Location = new System.Drawing.Point(32, 22);
             this.toolStrip8.Name = "toolStrip8";
             this.toolStrip8.Size = new System.Drawing.Size(246, 25);
             this.toolStrip8.TabIndex = 28;
             this.toolStrip8.Text = "toolStrip8";
             // 
-            // toolStripButton4
+            // newPackageButton
             // 
-            this.toolStripButton4.Image = global::ATSEngineTool.Properties.Resources.add;
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(76, 22);
-            this.toolStripButton4.Text = "Add New";
+            this.newPackageButton.Image = global::ATSEngineTool.Properties.Resources.add;
+            this.newPackageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.newPackageButton.Name = "newPackageButton";
+            this.newPackageButton.Size = new System.Drawing.Size(76, 22);
+            this.newPackageButton.Text = "Add New";
             // 
-            // toolStripButton5
+            // removePackageButton
             // 
-            this.toolStripButton5.Image = global::ATSEngineTool.Properties.Resources.DeleteRed;
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(70, 22);
-            this.toolStripButton5.Text = "Remove";
+            this.removePackageButton.Image = global::ATSEngineTool.Properties.Resources.DeleteRed;
+            this.removePackageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.removePackageButton.Name = "removePackageButton";
+            this.removePackageButton.Size = new System.Drawing.Size(70, 22);
+            this.removePackageButton.Text = "Remove";
             // 
             // packageListView
             // 
@@ -1500,8 +1503,8 @@
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ToolStrip toolStrip8;
-        private System.Windows.Forms.ToolStripButton toolStripButton4;
-        private System.Windows.Forms.ToolStripButton toolStripButton5;
+        private System.Windows.Forms.ToolStripButton newPackageButton;
+        private System.Windows.Forms.ToolStripButton removePackageButton;
         private System.Windows.Forms.ListView packageListView;
         private System.Windows.Forms.ColumnHeader columnHeader14;
         private BrightIdeasSoftware.TreeListView soundListView;

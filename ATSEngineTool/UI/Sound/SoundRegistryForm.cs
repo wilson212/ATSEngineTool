@@ -31,7 +31,7 @@ namespace ATSEngineTool
             soundListView.Groups[1].Items.Clear();
 
             List<string> installed = new List<string>();
-            foreach (SoundPackage sound in db.EngineSounds)
+            foreach (SoundPackage sound in db.SoundPackages)
             {
                 installed.Add(sound.FolderName);
                 ListViewItem item = new ListViewItem(sound.FolderName);
@@ -122,7 +122,7 @@ namespace ATSEngineTool
                 // Update the sound in the database
                 using (AppDatabase db = new AppDatabase())
                 {
-                    db.EngineSounds.Update(sound);
+                    db.SoundPackages.Update(sound);
                 }
 
                 // Update the listview
@@ -147,7 +147,7 @@ namespace ATSEngineTool
                 {
                     using (AppDatabase db = new AppDatabase())
                     {
-                        db.EngineSounds.Add(sound);
+                        db.SoundPackages.Add(sound);
                     }
 
                     // Change Groups
@@ -230,7 +230,7 @@ namespace ATSEngineTool
             // Ok then... remove it!
             using (AppDatabase db = new AppDatabase())
             {
-                db.EngineSounds.Remove(sound);
+                db.SoundPackages.Remove(sound);
 
                 // Set values
                 packageNameBox.Text = "";

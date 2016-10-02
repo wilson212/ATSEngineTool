@@ -128,7 +128,7 @@ namespace ATSEngineTool
             // Sync engine sounds
             using (AppDatabase db = new AppDatabase())
             {
-                foreach (SoundPackage sound in db.EngineSounds)
+                foreach (SoundPackage sound in db.SoundPackages)
                 {
                     // Mod folder path to the sounds
                     path = Path.Combine(ModPath, "sound", "truck", "engine", sound.FolderName);

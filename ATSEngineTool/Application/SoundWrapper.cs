@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ATSEngineTool.Database;
 
 namespace ATSEngineTool
 {
@@ -8,8 +9,14 @@ namespace ATSEngineTool
 
         public List<SoundWrapper> Children { get; protected set; } = new List<SoundWrapper>();
 
-        public string Label { get; set; }
+        public string SoundName { get; set; }
+
+        public string Filename { get; set; } = string.Empty;
+
+        public string Volume { get; set; } = string.Empty;
 
         public SoundWrapper Parent { get; set; }
+
+        public EngineSound Sound { get; set; }
     }
 }

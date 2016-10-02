@@ -49,8 +49,10 @@ namespace ATSEngineTool.Database
         /// </remarks>
         public virtual IEnumerable<EngineSeries> Series { get; set; }
 
-        public virtual IEnumerable<Sound> TruckSounds { get; set; }
-
+        /// <summary>
+        /// Gets a list of <see cref="EngineSound"/> entities that reference this 
+        /// <see cref="SoundPackage"/>
+        /// </summary>
         public virtual IEnumerable<EngineSound> EngineSounds { get; set; }
 
 
