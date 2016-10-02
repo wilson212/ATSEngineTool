@@ -20,5 +20,8 @@
     <Setting Name="TorqueOutputUnitSystem" Type="ATSEngineTool.UnitSystem" Scope="User">
       <Value Profile="(Default)">Imperial</Value>
     </Setting>
+    <Setting Name="CompileOption" Type="ATSEngineTool.CompileOption" Scope="User">
+      <Value Profile="(Default)">TransmissionOnly</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

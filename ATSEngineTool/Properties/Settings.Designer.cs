@@ -94,5 +94,17 @@ namespace ATSEngineTool.Properties {
                 this["TorqueOutputUnitSystem"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("TransmissionOnly")]
+        public global::ATSEngineTool.CompileOption CompileOption {
+            get {
+                return ((global::ATSEngineTool.CompileOption)(this["CompileOption"]));
+            }
+            set {
+                this["CompileOption"] = value;
+            }
+        }
     }
 }

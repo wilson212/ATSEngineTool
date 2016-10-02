@@ -62,6 +62,10 @@ namespace ATSEngineTool
         /// </summary>
         protected List<TransmissionGear> ForwardGears { get; set; } = new List<TransmissionGear>();
 
+        protected bool ConflictsChanged { get; set; } = false;
+
+        protected bool SuitablesChanged { get; set; } = false;
+
         /// <summary>
         /// Icon file path
         /// </summary>
@@ -82,6 +86,8 @@ namespace ATSEngineTool
             if (Program.Config.UnitSystem == UnitSystem.Metric)
             {
                 chart1.ChartAreas[0].AxisX.Title = "Speed (Kph)";
+                conflictListView.Columns[2].Text = "N·m";
+                suitsListView.Columns[2].Text = "N·m";
             }
 
             // Add each sound to the lists
@@ -147,6 +153,8 @@ namespace ATSEngineTool
 
             // Fill torque ratios
             PopulateGears();
+
+            PopulateEngines();
         }
 
         /// <summary>
@@ -175,6 +183,62 @@ namespace ATSEngineTool
             {
                 gear.GearIndex = i;
                 AddGear(gear, i++);
+            }
+        }
+
+        private void PopulateEngines()
+        {
+            // Clear transmissions
+            int groupId = -1;
+            ListViewGroup group1 = null;
+            ListViewGroup group2 = null;
+
+            using (AppDatabase db = new AppDatabase())
+            {
+                var conflicts = new List<int>();
+                var suits = new List<int>();
+                if (!NewTransmission)
+                {
+                    conflicts.AddRange(Transmission.EngineConflicts.Select(x => x.EngineId));
+                    suits.AddRange(Transmission.SuitableEngines.Select(x => x.EngineId));
+                }
+
+                foreach (var engine in db.Engines.OrderBy(x => x.SeriesId).ThenByDescending(x => x.Price))
+                {
+                    if (engine.SeriesId != groupId)
+                    {
+                        groupId = engine.SeriesId;
+                        var series = engine.Series; // lazy loaded... load just once
+                        group1 = new ListViewGroup(series.Name);
+                        conflictListView.Groups.Add(group1);
+                        group2 = new ListViewGroup(series.Name);
+                        suitsListView.Groups.Add(group2);
+                    }
+
+                    // Add transmission to conflicts box
+                    ListViewItem item = new ListViewItem(engine.Name);
+                    item.Checked = conflicts.Contains(engine.Id);
+                    item.SubItems.Add(engine.Horsepower.ToString());
+                    if (Program.Config.UnitSystem == UnitSystem.Imperial)
+                        item.SubItems.Add(engine.Torque.ToString());
+                    else
+                        item.SubItems.Add(engine.NewtonMetres.ToString());
+                    item.Tag = engine.Id;
+                    group1.Items.Add(item);
+                    conflictListView.Items.Add(item);
+
+                    // Add transmission to suitibles box
+                    item = new ListViewItem(engine.Name);
+                    item.Checked = suits.Contains(engine.Id);
+                    item.SubItems.Add(engine.Horsepower.ToString());
+                    if (Program.Config.UnitSystem == UnitSystem.Imperial)
+                        item.SubItems.Add(engine.Torque.ToString());
+                    else
+                        item.SubItems.Add(engine.NewtonMetres.ToString());
+                    item.Tag = engine.Id;
+                    group2.Items.Add(item);
+                    suitsListView.Items.Add(item);
+                }
             }
         }
 
@@ -342,7 +406,7 @@ namespace ATSEngineTool
                 {
                     if (NewTransmission)
                     {
-                        // Ensure this engine doesnt exist already!
+                        // Ensure this transmission doesnt exist already!
                         if (db.Transmissions.Contains(Transmission))
                         {
                             trans.Dispose();
@@ -355,8 +419,36 @@ namespace ATSEngineTool
                             return;
                         }
 
-                        // Add the engine
+                        // Add the transmission
                         db.Transmissions.Add(Transmission);
+
+                        // Add conflicts if any
+                        if (conflictListView.CheckedItems.Count > 0)
+                        {
+                            var ids = conflictListView.CheckedItems.Cast<ListViewItem>().Select(x => (int)x.Tag);
+                            foreach (var item in ids)
+                            {
+                                db.AccessoryConflicts.Add(new AccessoryConflict()
+                                {
+                                    EngineId = item,
+                                    TransmissionId = Transmission.Id
+                                });
+                            }
+                        }
+
+                        // Add suitible fors if any
+                        if (suitsListView.CheckedItems.Count > 0)
+                        {
+                            var ids = suitsListView.CheckedItems.Cast<ListViewItem>().Select(x => (int)x.Tag);
+                            foreach (var item in ids)
+                            {
+                                db.SuitableAccessories.Add(new SuitableAccessory()
+                                {
+                                    EngineId = item,
+                                    TransmissionId = Transmission.Id
+                                });
+                            }
+                        }
                     }
                     else
                     {
@@ -369,6 +461,56 @@ namespace ATSEngineTool
                         {
                             foreach (var gear in gears)
                                 db.TransmissionGears.Remove(gear);
+                        }
+
+                        // Set Conflicts
+                        if (ConflictsChanged)
+                        {
+                            var conflicts = new List<AccessoryConflict>(Transmission.EngineConflicts);
+                            if (conflicts.Count > 0)
+                            {
+                                foreach (var conflict in conflicts)
+                                    db.AccessoryConflicts.Remove(conflict);
+                            }
+
+                            // Add new conflicts
+                            if (conflictListView.CheckedItems.Count > 0)
+                            {
+                                var ids = conflictListView.CheckedItems.Cast<ListViewItem>().Select(x => (int)x.Tag);
+                                foreach (var item in ids)
+                                {
+                                    db.AccessoryConflicts.Add(new AccessoryConflict()
+                                    {
+                                        EngineId = item,
+                                        TransmissionId = Transmission.Id
+                                    });
+                                }
+                            }
+                        }
+
+                        // Set Suitables
+                        if (SuitablesChanged)
+                        {
+                            var suits = new List<SuitableAccessory>(Transmission.SuitableEngines);
+                            if (suits.Count > 0)
+                            {
+                                foreach (var item in suits)
+                                    db.SuitableAccessories.Remove(item);
+                            }
+
+                            // Add new conflicts
+                            if (suitsListView.CheckedItems.Count > 0)
+                            {
+                                var ids = suitsListView.CheckedItems.Cast<ListViewItem>().Select(x => (int)x.Tag);
+                                foreach (var item in ids)
+                                {
+                                    db.SuitableAccessories.Add(new SuitableAccessory()
+                                    {
+                                        EngineId = item,
+                                        TransmissionId = Transmission.Id
+                                    });
+                                }
+                            }
                         }
                     }
 
@@ -849,6 +991,16 @@ namespace ATSEngineTool
         {
             if (!chart1.Focused)
                 chart1.Focus();
+        }
+
+        private void suitsListView_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            SuitablesChanged = true;
+        }
+
+        private void conflictListView_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            ConflictsChanged = true;
         }
     }
 }

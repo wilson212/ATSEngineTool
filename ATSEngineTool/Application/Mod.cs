@@ -211,7 +211,7 @@ namespace ATSEngineTool
                     // Create engine files
                     foreach (Engine engine in truck.TruckEngines.Select(x => x.Engine))
                     {
-                        string contents = engine.ToSiiFormat().Replace("{{{NAME}}}", truck.UnitName);
+                        string contents = engine.ToSiiFormat(truck.UnitName);
                         SoundPackage sound = engine.Series.SoundPackage;
 
                         // === Add engine to sound list
@@ -309,7 +309,7 @@ namespace ATSEngineTool
 
                         foreach (var transmission in list.Select(x => x.Transmission))
                         {
-                            string contents = transmission.ToSiiFormat().Replace("{{{NAME}}}", truck.UnitName);
+                            string contents = transmission.ToSiiFormat(truck.UnitName);
 
                             // Create/Open the engine.sii file, and write the new contents
                             string path = Path.Combine(transPath, transmission.FileName);

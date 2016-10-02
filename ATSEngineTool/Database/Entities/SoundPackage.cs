@@ -49,6 +49,11 @@ namespace ATSEngineTool.Database
         /// </remarks>
         public virtual IEnumerable<EngineSeries> Series { get; set; }
 
+        public virtual IEnumerable<Sound> TruckSounds { get; set; }
+
+        public virtual IEnumerable<EngineSound> EngineSounds { get; set; }
+
+
         public override string ToString() => Name;
 
         public override bool Equals(object obj)

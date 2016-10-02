@@ -36,7 +36,14 @@ namespace ATSEngineTool
         /// </summary>
         protected bool NewEngine = false;
 
+        /// <summary>
+        /// Gets a list of Ratios for this engines torque curve
+        /// </summary>
         protected List<TorqueRatio> Ratios { get; set; } = new List<TorqueRatio>();
+
+        protected bool ConflictsChanged { get; set; } = false;
+
+        protected bool SuitablesChanged { get; set; } = false;
 
         /// <summary>
         /// English culture for numbers
@@ -64,7 +71,7 @@ namespace ATSEngineTool
                 labelTorque.Text = "Newton Metres:";
                 labelPeakTorque.Text = "Peak N·m RPM:";
                 chart1.ChartAreas[0].AxisY.Title = "Newton Metres";
-                maxTrqLabel.Text = "Max Newton Metres:";
+                maxTorqueLabel.Text = "Max Newton Metres:";
             }
 
             // Add each sound to the lists
@@ -141,6 +148,57 @@ namespace ATSEngineTool
 
             // Fill torque ratios
             PopulateTorqueRatios();
+
+            // Fill Conflicts
+            PopulateTransmissions();
+        }
+
+        private void PopulateTransmissions()
+        {
+            // Clear transmissions
+            int groupId = -1;
+            ListViewGroup group1 = null;
+            ListViewGroup group2 = null;
+
+            using (AppDatabase db = new AppDatabase())
+            {
+                var conflicts = new List<int>();
+                var suits = new List<int>();
+                if (!NewEngine)
+                {
+                    conflicts.AddRange(Engine.TransmissionConflicts.Select(x => x.TransmissionId));
+                    suits.AddRange(Engine.SuitableTransmissions.Select(x => x.TransmissionId));
+                }
+
+                foreach (var trans in db.Transmissions.OrderBy(x => x.SeriesId).ThenByDescending(x => x.Price))
+                {
+                    if (trans.SeriesId != groupId)
+                    {
+                        groupId = trans.SeriesId;
+                        var series = trans.Series; // lazy loaded... load just once
+                        group1 = new ListViewGroup(series.Name);
+                        conflictListView.Groups.Add(group1);
+                        group2 = new ListViewGroup(series.Name);
+                        suitsListView.Groups.Add(group2);
+                    }
+
+                    // Add transmission to conflicts box
+                    ListViewItem item = new ListViewItem(trans.Name);
+                    item.Checked = conflicts.Contains(trans.Id);
+                    item.SubItems.Add(trans.DifferentialRatio.ToString());
+                    item.Tag = trans.Id;
+                    group1.Items.Add(item);
+                    conflictListView.Items.Add(item);
+
+                    // Add transmission to suitibles box
+                    item = new ListViewItem(trans.Name);
+                    item.Checked = suits.Contains(trans.Id);
+                    item.SubItems.Add(trans.DifferentialRatio.ToString());
+                    item.Tag = trans.Id;
+                    group2.Items.Add(item);
+                    suitsListView.Items.Add(item);
+                }
+            }
         }
 
         /// <summary>
@@ -252,6 +310,34 @@ namespace ATSEngineTool
 
                         // Add the engine
                         db.Engines.Add(Engine);
+
+                        // Add conflicts
+                        if (conflictListView.CheckedItems.Count > 0)
+                        {
+                            var ids = conflictListView.CheckedItems.Cast<ListViewItem>().Select(x => (int)x.Tag);
+                            foreach (var item in ids)
+                            {
+                                db.AccessoryConflicts.Add(new AccessoryConflict()
+                                {
+                                    EngineId = Engine.Id,
+                                    TransmissionId = item
+                                });
+                            }
+                        }
+
+                        // Add suitible fors
+                        if (suitsListView.CheckedItems.Count > 0)
+                        {
+                            var ids = suitsListView.CheckedItems.Cast<ListViewItem>().Select(x => (int)x.Tag);
+                            foreach (var item in ids)
+                            {
+                                db.SuitableAccessories.Add(new SuitableAccessory()
+                                {
+                                    EngineId = Engine.Id,
+                                    TransmissionId = item
+                                });
+                            }
+                        }
                     }
                     else
                     {
@@ -264,6 +350,56 @@ namespace ATSEngineTool
                         {
                             foreach (TorqueRatio ratio in ratios)
                                 db.TorqueRatios.Remove(ratio);
+                        }
+
+                        // Set Conflicts
+                        if (ConflictsChanged)
+                        {
+                            var conflicts = new List<AccessoryConflict>(Engine.TransmissionConflicts);
+                            if (conflicts.Count > 0)
+                            {
+                                foreach (var conflict in conflicts)
+                                    db.AccessoryConflicts.Remove(conflict);
+                            }
+
+                            // Add new conflicts
+                            if (conflictListView.CheckedItems.Count > 0)
+                            {
+                                var ids = conflictListView.CheckedItems.Cast<ListViewItem>().Select(x => (int)x.Tag);
+                                foreach (var item in ids)
+                                {
+                                    db.AccessoryConflicts.Add(new AccessoryConflict()
+                                    {
+                                        EngineId = Engine.Id,
+                                        TransmissionId = item
+                                    });
+                                }
+                            }
+                        }
+
+                        // Set Suitables
+                        if (SuitablesChanged)
+                        {
+                            var suits = new List<SuitableAccessory>(Engine.SuitableTransmissions);
+                            if (suits.Count > 0)
+                            {
+                                foreach (var item in suits)
+                                    db.SuitableAccessories.Remove(item);
+                            }
+
+                            // Add new conflicts
+                            if (suitsListView.CheckedItems.Count > 0)
+                            {
+                                var ids = suitsListView.CheckedItems.Cast<ListViewItem>().Select(x => (int)x.Tag);
+                                foreach (var item in ids)
+                                {
+                                    db.SuitableAccessories.Add(new SuitableAccessory()
+                                    {
+                                        EngineId = Engine.Id,
+                                        TransmissionId = item
+                                    });
+                                }
+                            }
                         }
                     }
 
@@ -366,14 +502,21 @@ namespace ATSEngineTool
             // Fill torque ratios
             foreach (TorqueRatio ratio in Ratios.OrderBy(x => x.RpmLevel))
             {
+                // Plot the torque point
                 torque = (double)Math.Round(torqueBox.Value * ratio.Ratio, 0);
                 int index = chart1.Series[0].Points.AddXY(ratio.RpmLevel, torque);
                 DataPoint point = chart1.Series[0].Points[index];
 
+                // Set tool tip and covert chart value for later
                 if (Program.Config.UnitSystem == UnitSystem.Imperial)
+                {
                     point.ToolTip = $"{torque} lb-ft @ {ratio.RpmLevel} RPM";
+                }
                 else
+                {
                     point.ToolTip = $"{torque} Nm @ {ratio.RpmLevel} RPM";
+                    torque = Engine.NmToTorque((int)torque);
+                }
 
                 // Set the highest and earliest ratio
                 if (highest == null || ratio.Ratio > highest.Ratio)
@@ -382,21 +525,28 @@ namespace ATSEngineTool
                 // === Plot Horsepower
                 if (lastPoint != null)
                 {
+                    // Calculate the last plots starting Torque value
+                    double torqueAtPoint = lastPoint.YValues[0];
                     // Get torque difference from last point
                     double deltaY = point.YValues[0] - lastPoint.YValues[0];
                     // Get RPM difference from last point
                     double deltaX = point.XValue - lastPoint.XValue;
-                    // Calculate slope angle (rpm distance * (torque rise per rpm))
-                    double slope = HP_POINT_DIST * (deltaY / deltaX);
-                    // Calculate the last plots starting Torque value
-                    double torqueAtPoint = lastPoint.YValues[0];
 
-                    // Now we walk from the last point, to right before the current one
-                    double start = lastPoint.XValue + HP_POINT_DIST;
+                    // Convert Nm to Torque if using the Metric System
+                    if (Program.Config.UnitSystem == UnitSystem.Metric)
+                    {
+                        deltaY = Engine.NmToTorque((int)deltaY);
+                        torqueAtPoint = Engine.NmToTorque((int)torqueAtPoint);
+                    }
+
+                    // Calculate slope angle (rpm distance * (torque rise per rpm)),
+                    // Then walk from the last point, to right before the current one
+                    double slope = HP_POINT_DIST * (deltaY / deltaX);
+                    double rpm = lastPoint.XValue + HP_POINT_DIST;
                     double stop = point.XValue;
 
                     // Now we plot the horsepower points, up until we hit the next torque point
-                    for (int rpm = (int)start; rpm < stop; rpm += HP_POINT_DIST)
+                    for (; rpm < stop; rpm += HP_POINT_DIST)
                     {
                         // increment torque rating by our dermined curve rise
                         torqueAtPoint += slope;
@@ -406,7 +556,7 @@ namespace ATSEngineTool
                         index = chart1.Series[1].Points.AddXY(rpm, horsepower);
                         chart1.Series[1].Points[index].ToolTip = $"#VALY HP @ {rpm} RPM";
                     }
-                }
+                }  
 
                 // Plot the Horsepower plots
                 horsepower = Math.Round((torque * ratio.RpmLevel) / 5252, 0);
@@ -737,6 +887,16 @@ namespace ATSEngineTool
                     MessageBox.Show(ex.Message, "An Error Occured", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void conflictListView_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            ConflictsChanged = true;
+        }
+
+        private void suitsListView_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            SuitablesChanged = true;
         }
     }
 }

@@ -184,6 +184,9 @@ namespace ATSEngineTool.Database
         [Column("Conflicts"), Default("")]
         protected string _conflicts { get; set; }
 
+        [Column("SuitableFor"), Default("")]
+        protected string _suitables { get; set; }
+
         /// <summary>
         /// The name of the SII file, without extension.
         /// </summary>
@@ -276,6 +279,27 @@ namespace ATSEngineTool.Database
             }
         }
 
+        /// <summary>
+        /// Gets or Sets the Engine objects comment in the SII file.
+        /// </summary>
+        public string[] SuitableFor
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(_suitables))
+                    return null;
+
+                return _suitables.Split('|');
+            }
+            set
+            {
+                if (value == null || value.Length == 0)
+                    _suitables = "";
+                else
+                    _suitables = String.Join("|", value);
+            }
+        }
+
         #endregion Columns
 
         #region Foreign Keys
@@ -307,11 +331,19 @@ namespace ATSEngineTool.Database
         /// Gets a list of <see cref="TruckEngine"/> entities that reference this 
         /// <see cref="Engine"/>
         /// </summary>
-        /// <remarks>
-        /// A lazy loaded enumeration that fetches all TruckEngine objects
-        /// that are bound by the foreign key and this Engine.Id.
-        /// </remarks>
         public virtual IEnumerable<TruckEngine> ItemOf { get; set; }
+
+        /// <summary>
+        /// Gets a list of <see cref="AccessoryConflict"/> entities that reference this 
+        /// <see cref="Engine"/>
+        /// </summary>
+        public virtual IEnumerable<AccessoryConflict> TransmissionConflicts { get; set; }
+
+        /// <summary>
+        /// Gets a list of <see cref="AccessoryConflict"/> entities that reference this 
+        /// <see cref="Engine"/>
+        /// </summary>
+        public virtual IEnumerable<SuitableAccessory> SuitableTransmissions { get; set; }
 
         #endregion
 
@@ -348,12 +380,12 @@ namespace ATSEngineTool.Database
         /// Serializes this engine into SII format, and returns the result
         /// </summary>
         /// <returns></returns>
-        public string ToSiiFormat()
+        public string ToSiiFormat(string truckName)
         {
             // Create local variables
             EngineSeries series = this.Series;
             StringBuilder builder = new StringBuilder();
-            string name = this.UnitName + ".{{{NAME}}}.engine";
+            string name = $"{this.UnitName}.{truckName}.engine";
             string decvalue;
 
             // Write file intro
@@ -470,13 +502,44 @@ namespace ATSEngineTool.Database
                     builder.AppendLine($"\t\tdefaults[]: \"{line}\"");
             }
 
+            // Define is we output suitible_for and conflict_with for transmissions
+            bool go = Program.Config.CompileOption == CompileOption.EngineOnly
+                   || Program.Config.CompileOption == CompileOption.Both;
+            var conflicts = this.TransmissionConflicts.ToList();
+            var suitables = this.SuitableTransmissions.ToList();
+
             // Write the conflict_with[]...
-            if (Conflicts != null && Conflicts.Length > 0)
+            if ((go && conflicts.Count > 0) || (Conflicts != null && Conflicts.Length > 0))
             {
                 builder.AppendLine();
                 builder.AppendLine("\t\t# Conflicts");
-                foreach (string line in Conflicts)
-                    builder.AppendLine($"\t\tconflict_with[]: \"{line}\"");
+
+                // Transmissions?
+                if (go)
+                    foreach (string line in conflicts.Select(x => x.Transmission.UnitName))
+                        builder.AppendLine($"\t\tconflict_with[]: \"{line}.{truckName}.transmission\"");
+
+                // Other Conflicts
+                if (Conflicts != null)
+                    foreach (string line in Conflicts)
+                        builder.AppendLine($"\t\tconflict_with[]: \"{line}\"");
+            }
+
+            // Write the suitable_for[]...
+            if ((go && suitables.Count > 0) || (SuitableFor != null && SuitableFor.Length > 0))
+            {
+                builder.AppendLine();
+                builder.AppendLine("\t\t# Suitables");
+
+                // Transmissions?
+                if (go)
+                    foreach (string eng in suitables.Select(x => x.Transmission.UnitName))
+                        builder.AppendLine($"\t\tsuitable_for[]: \"{eng}.{truckName}.transmission\"");
+
+                // Other Suitables
+                if (SuitableFor != null)
+                    foreach (string line in SuitableFor)
+                        builder.AppendLine($"\t\tsuitable_for[]: \"{line}\"");
             }
 
             // Close brackets
@@ -484,7 +547,7 @@ namespace ATSEngineTool.Database
             builder.AppendLine("}");
 
             // Define file paths
-            return builder.ToString().TrimEnd();
+            return builder.ToString().Replace("{{{NAME}}}", truckName).TrimEnd();
         }
 
         /// <summary>

@@ -117,10 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="label2.Text" xml:space="preserve">
-    <value>Typically, each truck her their own engine sound files. Trucks using the same engines 
-will cause duplicate files in your sound folder. By enabling the "Consolidated" option, 
-all of your trucks will pull their engine sounds from master folder (ie: no duplicate files). 
-If you enabled Real engines and Sounds integration, this feature is always enabled.</value>
-  </data>
 </root>

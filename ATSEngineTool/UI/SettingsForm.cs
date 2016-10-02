@@ -15,16 +15,30 @@ namespace ATSEngineTool
             SteamInstallPath.Text = Program.Config.SteamPath;
             linkCheckBox.Checked = Program.Config.IntegrateWithMod;
             updateCheckBox.Checked = Program.Config.UpdateCheck;
-            tabControl1.TabPages.Remove(tabPage3);
             if (Program.Config.UnitSystem == UnitSystem.Metric)
             {
                 mUnitRadio.Checked = true;
             }
 
+            // Torque line option
             if (Program.Config.TorqueOutputUnitSystem == UnitSystem.Imperial)
                 torqueOutput1.Checked = true;
             else
                 torqueOutput2.Checked = true;
+
+            // SuitableFor and ConflictWith compile option
+            switch (Program.Config.CompileOption)
+            {
+                case CompileOption.TransmissionOnly:
+                    transmissionRadio.Checked = true;
+                    break;
+                case CompileOption.EngineOnly:
+                    engineRadio.Checked = true;
+                    break;
+                default:
+                    bothRadio.Checked = true;
+                    break;
+            }
         }
 
         private void ChangeButton_Click(object sender, EventArgs e)
@@ -78,6 +92,16 @@ namespace ATSEngineTool
                 ? UnitSystem.Imperial
                 : UnitSystem.Metric;
             Program.Config.UnitSystem = (iUnitRatio.Checked) ? UnitSystem.Imperial : UnitSystem.Metric;
+
+            // Compile option
+            if (transmissionRadio.Checked)
+                Program.Config.CompileOption = CompileOption.TransmissionOnly;
+            else if (engineRadio.Checked)
+                Program.Config.CompileOption = CompileOption.EngineOnly;
+            else
+                Program.Config.CompileOption = CompileOption.Both;
+
+            // Save and close
             Program.Config.Save();
             this.Close();
         }

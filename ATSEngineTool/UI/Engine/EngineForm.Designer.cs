@@ -50,6 +50,11 @@
             this.label7 = new System.Windows.Forms.Label();
             this.engineNameBox = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.maxTrqLabel = new System.Windows.Forms.Label();
+            this.maxHpLabel = new System.Windows.Forms.Label();
+            this.maxTorqueLabel = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.removePointButton = new System.Windows.Forms.Button();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.label28 = new System.Windows.Forms.Label();
@@ -94,7 +99,6 @@
             this.peakRPMBox = new System.Windows.Forms.NumericUpDown();
             this.labelPeakTorque = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.removePointButton = new System.Windows.Forms.Button();
             this.addPointButton = new System.Windows.Forms.Button();
             this.ratioListView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -129,9 +133,25 @@
             this.label10 = new System.Windows.Forms.Label();
             this.fileCommentTextBox = new System.Windows.Forms.TextBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.label41 = new System.Windows.Forms.Label();
+            this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.conflictListView = new System.Windows.Forms.ListView();
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.label39 = new System.Windows.Forms.Label();
             this.conflictsTextBox = new System.Windows.Forms.TextBox();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.groupBox14 = new System.Windows.Forms.GroupBox();
+            this.suitsListView = new System.Windows.Forms.ListView();
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label42 = new System.Windows.Forms.Label();
+            this.label43 = new System.Windows.Forms.Label();
+            this.groupBox15 = new System.Windows.Forms.GroupBox();
+            this.label44 = new System.Windows.Forms.Label();
+            this.suitablesTextBox = new System.Windows.Forms.TextBox();
             this.contentPanel = new System.Windows.Forms.Panel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.footerPanel = new System.Windows.Forms.Panel();
@@ -140,10 +160,6 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.headerPanel = new System.Windows.Forms.Panel();
             this.shadowLabel1 = new System.Windows.Forms.ShadowLabel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.maxTorqueLabel = new System.Windows.Forms.Label();
-            this.maxHpLabel = new System.Windows.Forms.Label();
-            this.maxTrqLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.engineIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceBox)).BeginInit();
@@ -184,7 +200,11 @@
             this.groupBox9.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.groupBox13.SuspendLayout();
             this.groupBox12.SuspendLayout();
+            this.tabPage6.SuspendLayout();
+            this.groupBox14.SuspendLayout();
+            this.groupBox15.SuspendLayout();
             this.contentPanel.SuspendLayout();
             this.footerPanel.SuspendLayout();
             this.headerPanel.SuspendLayout();
@@ -372,6 +392,53 @@
             this.groupBox5.TabIndex = 26;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Torque Curves";
+            // 
+            // maxTrqLabel
+            // 
+            this.maxTrqLabel.AutoSize = true;
+            this.maxTrqLabel.Location = new System.Drawing.Point(736, 53);
+            this.maxTrqLabel.Name = "maxTrqLabel";
+            this.maxTrqLabel.Size = new System.Drawing.Size(92, 13);
+            this.maxTrqLabel.TabIndex = 33;
+            this.maxTrqLabel.Text = "2050 @ 2800 rpm";
+            // 
+            // maxHpLabel
+            // 
+            this.maxHpLabel.AutoSize = true;
+            this.maxHpLabel.Location = new System.Drawing.Point(736, 31);
+            this.maxHpLabel.Name = "maxHpLabel";
+            this.maxHpLabel.Size = new System.Drawing.Size(86, 13);
+            this.maxHpLabel.TabIndex = 32;
+            this.maxHpLabel.Text = "605 @ 2800 rpm";
+            // 
+            // maxTorqueLabel
+            // 
+            this.maxTorqueLabel.AutoSize = true;
+            this.maxTorqueLabel.Location = new System.Drawing.Point(631, 53);
+            this.maxTorqueLabel.Name = "maxTorqueLabel";
+            this.maxTorqueLabel.Size = new System.Drawing.Size(67, 13);
+            this.maxTorqueLabel.TabIndex = 31;
+            this.maxTorqueLabel.Text = "Max Torque:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(630, 31);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(90, 13);
+            this.label2.TabIndex = 30;
+            this.label2.Text = "Max Horsepower:";
+            // 
+            // removePointButton
+            // 
+            this.removePointButton.Enabled = false;
+            this.removePointButton.Location = new System.Drawing.Point(739, 339);
+            this.removePointButton.Name = "removePointButton";
+            this.removePointButton.Size = new System.Drawing.Size(100, 25);
+            this.removePointButton.TabIndex = 29;
+            this.removePointButton.Text = "Remove Point";
+            this.removePointButton.UseVisualStyleBackColor = true;
+            this.removePointButton.Click += new System.EventHandler(this.removePointButton_Click);
             // 
             // chart1
             // 
@@ -643,6 +710,7 @@
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
+            this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Location = new System.Drawing.Point(-1, 21);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -1099,17 +1167,6 @@
             this.tabPage2.Text = "Power Curves";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // removePointButton
-            // 
-            this.removePointButton.Enabled = false;
-            this.removePointButton.Location = new System.Drawing.Point(739, 339);
-            this.removePointButton.Name = "removePointButton";
-            this.removePointButton.Size = new System.Drawing.Size(100, 25);
-            this.removePointButton.TabIndex = 29;
-            this.removePointButton.Text = "Remove Point";
-            this.removePointButton.UseVisualStyleBackColor = true;
-            this.removePointButton.Click += new System.EventHandler(this.removePointButton_Click);
-            // 
             // addPointButton
             // 
             this.addPointButton.Location = new System.Drawing.Point(640, 349);
@@ -1531,20 +1588,80 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.label41);
+            this.tabPage5.Controls.Add(this.groupBox13);
             this.tabPage5.Controls.Add(this.groupBox12);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage5.Size = new System.Drawing.Size(886, 426);
             this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "Compatibility";
+            this.tabPage5.Text = "Conflicts";
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label41.Location = new System.Drawing.Point(95, 16);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(696, 13);
+            this.label41.TabIndex = 5;
+            this.label41.Text = "This engine will display in game for these accessories, and show the user an erro" +
+    "r if selected with a conflicting accessory";
+            // 
+            // groupBox13
+            // 
+            this.groupBox13.Controls.Add(this.label6);
+            this.groupBox13.Controls.Add(this.conflictListView);
+            this.groupBox13.Location = new System.Drawing.Point(455, 45);
+            this.groupBox13.Name = "groupBox13";
+            this.groupBox13.Size = new System.Drawing.Size(407, 364);
+            this.groupBox13.TabIndex = 2;
+            this.groupBox13.TabStop = false;
+            this.groupBox13.Text = "Transmission Conflicts";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(44, 23);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(318, 13);
+            this.label6.TabIndex = 20;
+            this.label6.Text = "Select the transmissions that are NOT compatible with this engine.";
+            // 
+            // conflictListView
+            // 
+            this.conflictListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.conflictListView.AutoArrange = false;
+            this.conflictListView.CheckBoxes = true;
+            this.conflictListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader10,
+            this.columnHeader13});
+            this.conflictListView.FullRowSelect = true;
+            this.conflictListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.conflictListView.Location = new System.Drawing.Point(11, 56);
+            this.conflictListView.Name = "conflictListView";
+            this.conflictListView.Size = new System.Drawing.Size(385, 293);
+            this.conflictListView.TabIndex = 19;
+            this.conflictListView.UseCompatibleStateImageBehavior = false;
+            this.conflictListView.View = System.Windows.Forms.View.Details;
+            this.conflictListView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.conflictListView_ItemChecked);
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Text = "Name";
+            this.columnHeader10.Width = 297;
+            // 
+            // columnHeader13
+            // 
+            this.columnHeader13.Text = "Diff. Ratio";
             // 
             // groupBox12
             // 
             this.groupBox12.Controls.Add(this.label39);
             this.groupBox12.Controls.Add(this.conflictsTextBox);
-            this.groupBox12.Location = new System.Drawing.Point(19, 31);
+            this.groupBox12.Location = new System.Drawing.Point(24, 45);
             this.groupBox12.Name = "groupBox12";
             this.groupBox12.Size = new System.Drawing.Size(407, 364);
             this.groupBox12.TabIndex = 1;
@@ -1563,12 +1680,112 @@
             // 
             // conflictsTextBox
             // 
-            this.conflictsTextBox.Location = new System.Drawing.Point(10, 56);
+            this.conflictsTextBox.Location = new System.Drawing.Point(11, 56);
             this.conflictsTextBox.Multiline = true;
             this.conflictsTextBox.Name = "conflictsTextBox";
             this.conflictsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.conflictsTextBox.Size = new System.Drawing.Size(387, 293);
+            this.conflictsTextBox.Size = new System.Drawing.Size(385, 293);
             this.conflictsTextBox.TabIndex = 0;
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.groupBox14);
+            this.tabPage6.Controls.Add(this.label43);
+            this.tabPage6.Controls.Add(this.groupBox15);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Size = new System.Drawing.Size(886, 426);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "Compatibility";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // groupBox14
+            // 
+            this.groupBox14.Controls.Add(this.suitsListView);
+            this.groupBox14.Controls.Add(this.label42);
+            this.groupBox14.Location = new System.Drawing.Point(455, 45);
+            this.groupBox14.Name = "groupBox14";
+            this.groupBox14.Size = new System.Drawing.Size(407, 364);
+            this.groupBox14.TabIndex = 9;
+            this.groupBox14.TabStop = false;
+            this.groupBox14.Text = "Transmission Compatibility";
+            // 
+            // suitsListView
+            // 
+            this.suitsListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.suitsListView.AutoArrange = false;
+            this.suitsListView.CheckBoxes = true;
+            this.suitsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader4,
+            this.columnHeader5});
+            this.suitsListView.FullRowSelect = true;
+            this.suitsListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.suitsListView.Location = new System.Drawing.Point(11, 56);
+            this.suitsListView.Name = "suitsListView";
+            this.suitsListView.Size = new System.Drawing.Size(385, 293);
+            this.suitsListView.TabIndex = 21;
+            this.suitsListView.UseCompatibleStateImageBehavior = false;
+            this.suitsListView.View = System.Windows.Forms.View.Details;
+            this.suitsListView.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.suitsListView_ItemCheck);
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Name";
+            this.columnHeader4.Width = 297;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "Diff. Ratio";
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(57, 23);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(292, 13);
+            this.label42.TabIndex = 20;
+            this.label42.Text = "Select the transmissions that are compatible with this engine.";
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label43.Location = new System.Drawing.Point(162, 16);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(562, 13);
+            this.label43.TabIndex = 8;
+            this.label43.Text = "This engine will only appear in game if one of these accessories are selected in " +
+    "the truck already.";
+            // 
+            // groupBox15
+            // 
+            this.groupBox15.Controls.Add(this.label44);
+            this.groupBox15.Controls.Add(this.suitablesTextBox);
+            this.groupBox15.Location = new System.Drawing.Point(24, 45);
+            this.groupBox15.Name = "groupBox15";
+            this.groupBox15.Size = new System.Drawing.Size(407, 364);
+            this.groupBox15.TabIndex = 7;
+            this.groupBox15.TabStop = false;
+            this.groupBox15.Text = "Suitable For";
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Location = new System.Drawing.Point(15, 22);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(324, 26);
+            this.label44.TabIndex = 3;
+            this.label44.Text = "Only put 1 item per line. The items listed here will be included in the \r\n\"suitab" +
+    "le_for\" array. Use \"{{{NAME}}}\" to subsitute the truck name.";
+            // 
+            // suitablesTextBox
+            // 
+            this.suitablesTextBox.Location = new System.Drawing.Point(10, 56);
+            this.suitablesTextBox.Multiline = true;
+            this.suitablesTextBox.Name = "suitablesTextBox";
+            this.suitablesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.suitablesTextBox.Size = new System.Drawing.Size(387, 293);
+            this.suitablesTextBox.TabIndex = 0;
             // 
             // contentPanel
             // 
@@ -1649,42 +1866,6 @@
             this.shadowLabel1.TabIndex = 0;
             this.shadowLabel1.Text = "Engine Editor";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(630, 31);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(90, 13);
-            this.label2.TabIndex = 30;
-            this.label2.Text = "Max Horsepower:";
-            // 
-            // maxTorqueLabel
-            // 
-            this.maxTorqueLabel.AutoSize = true;
-            this.maxTorqueLabel.Location = new System.Drawing.Point(631, 53);
-            this.maxTorqueLabel.Name = "maxTorqueLabel";
-            this.maxTorqueLabel.Size = new System.Drawing.Size(67, 13);
-            this.maxTorqueLabel.TabIndex = 31;
-            this.maxTorqueLabel.Text = "Max Torque:";
-            // 
-            // maxHpLabel
-            // 
-            this.maxHpLabel.AutoSize = true;
-            this.maxHpLabel.Location = new System.Drawing.Point(736, 31);
-            this.maxHpLabel.Name = "maxHpLabel";
-            this.maxHpLabel.Size = new System.Drawing.Size(86, 13);
-            this.maxHpLabel.TabIndex = 32;
-            this.maxHpLabel.Text = "605 @ 2800 rpm";
-            // 
-            // maxTrqLabel
-            // 
-            this.maxTrqLabel.AutoSize = true;
-            this.maxTrqLabel.Location = new System.Drawing.Point(736, 53);
-            this.maxTrqLabel.Name = "maxTrqLabel";
-            this.maxTrqLabel.Size = new System.Drawing.Size(92, 13);
-            this.maxTrqLabel.TabIndex = 33;
-            this.maxTrqLabel.Text = "2050 @ 2800 rpm";
-            // 
             // EngineForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1751,8 +1932,17 @@
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
+            this.groupBox13.ResumeLayout(false);
+            this.groupBox13.PerformLayout();
             this.groupBox12.ResumeLayout(false);
             this.groupBox12.PerformLayout();
+            this.tabPage6.ResumeLayout(false);
+            this.tabPage6.PerformLayout();
+            this.groupBox14.ResumeLayout(false);
+            this.groupBox14.PerformLayout();
+            this.groupBox15.ResumeLayout(false);
+            this.groupBox15.PerformLayout();
             this.contentPanel.ResumeLayout(false);
             this.footerPanel.ResumeLayout(false);
             this.headerPanel.ResumeLayout(false);
@@ -1872,5 +2062,21 @@
         private System.Windows.Forms.Label maxHpLabel;
         private System.Windows.Forms.Label maxTorqueLabel;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.GroupBox groupBox13;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ListView conflictListView;
+        private System.Windows.Forms.ColumnHeader columnHeader10;
+        private System.Windows.Forms.ColumnHeader columnHeader13;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.GroupBox groupBox14;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.GroupBox groupBox15;
+        private System.Windows.Forms.Label label44;
+        private System.Windows.Forms.TextBox suitablesTextBox;
+        private System.Windows.Forms.ListView suitsListView;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
     }
 }

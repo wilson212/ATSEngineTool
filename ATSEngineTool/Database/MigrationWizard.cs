@@ -21,33 +21,69 @@ namespace ATSEngineTool.Database
         /// </summary>
         internal void MigrateTables()
         {
-            while (AppDatabase.CurrentVersion != AppDatabase.DatabaseVersion)
+            if (AppDatabase.CurrentVersion != AppDatabase.DatabaseVersion)
             {
-                switch (AppDatabase.DatabaseVersion.ToString())
-                {
-                    case "1.0":
-                        MigrateTo_1_1();
-                        break;
-                    case "1.1":
-                        MigrateTo_1_2();
-                        break;
-                    default:
-                        throw new Exception($"Unexpected database version: {AppDatabase.DatabaseVersion}");
-                }
+                // Create backup
+                File.Copy(
+                    Path.Combine(Program.RootPath, "data", "AppData.db"),
+                    Path.Combine(Program.RootPath, "data", "backups", $"AppData_v1.2_{Epoch.Now}.db")
+                );
 
-                // Fetch version
-                Database.GetVersion();
+                // Perform updates until we are caught up!
+                while (AppDatabase.CurrentVersion != AppDatabase.DatabaseVersion)
+                {
+                    switch (AppDatabase.DatabaseVersion.ToString())
+                    {
+                        case "1.0":
+                            MigrateTo_1_1();
+                            break;
+                        case "1.1":
+                            MigrateTo_1_2();
+                            break;
+                        case "1.2":
+                            MigrateTo_1_3();
+                            break;
+                        default:
+                            throw new Exception($"Unexpected database version: {AppDatabase.DatabaseVersion}");
+                    }
+
+                    // Fetch version
+                    Database.GetVersion();
+                }
             }
         }
 
+        /// <summary>
+        /// Migrates to 1.3, which added an Engine/Transmission Conflict table
+        /// </summary>
+        private void MigrateTo_1_3()
+        {
+            // Run the update in a transaction
+            using (var trans = Database.BeginTransaction())
+            {
+                // Create the `TransmissionConflict` table
+                Database.CreateTable<AccessoryConflict>();
+
+                // Create the `SuitableAccessory` table
+                Database.CreateTable<SuitableAccessory>();
+
+                // Add the `SuitableFor` column to the `Engine` table
+                Database.Execute("ALTER TABLE `Engine` ADD COLUMN `SuitableFor` TEXT DEFAULT \"\";");
+
+                // Update database version
+                string sql = "INSERT INTO `DbVersion`(`Version`, `AppliedOn`) VALUES({0}, {1});";
+                Database.Execute(String.Format(sql, Version.Parse("1.3"), Epoch.Now));
+
+                // Commit
+                trans.Commit();
+            }
+        }
+
+        /// <summary>
+        /// Migrates to 1.1, which added more field options to Engines
+        /// </summary>
         private void MigrateTo_1_1()
         {
-            // Create backup
-            File.Copy(
-                Path.Combine(Program.RootPath, "data", "AppData.db"),
-                Path.Combine(Program.RootPath, "data", "backups", $"AppData_v1.0_{Epoch.Now}.db")
-            );
-
             // Run the update in a transaction
             using (var trans = Database.BeginTransaction())
             {
@@ -76,14 +112,11 @@ namespace ATSEngineTool.Database
             }
         }
 
+        /// <summary>
+        /// Migrates to 1.2, which added transmissions to the program
+        /// </summary>
         private void MigrateTo_1_2()
         {
-            // Create backup
-            File.Copy(
-                Path.Combine(Program.RootPath, "data", "AppData.db"),
-                Path.Combine(Program.RootPath, "data", "backups", $"AppData_v1.1_{Epoch.Now}.db")
-            );
-
             // Run the update in a transaction
             using (var trans = Database.BeginTransaction())
             {

@@ -222,6 +222,8 @@ namespace ATSEngineTool.Database
             }
         }
 
+        #region Child Database Sets
+
         /// <summary>
         /// Gets a list of <see cref="TransmissionGear"/> entities that reference this 
         /// <see cref="Transmission"/>
@@ -231,6 +233,26 @@ namespace ATSEngineTool.Database
         /// that are bound by the foreign key and this TransmissionSeries.Id.
         /// </remarks>
         public virtual IEnumerable<TransmissionGear> Gears { get; set; }
+
+        /// <summary>
+        /// Gets a list of <see cref="AccessoryConflict"/> entities that reference this 
+        /// <see cref="Transmission"/>
+        /// </summary>
+        public virtual IEnumerable<AccessoryConflict> EngineConflicts { get; set; }
+
+        /// <summary>
+        /// Gets a list of <see cref="SuitableAccessory"/> entities that reference this 
+        /// <see cref="Transmission"/>
+        /// </summary>
+        public virtual IEnumerable<SuitableAccessory> SuitableEngines { get; set; }
+
+        /// <summary>
+        /// Gets a list of <see cref="TruckTransmission"/> entities that reference this 
+        /// <see cref="Transmission"/>
+        /// </summary>
+        public virtual IEnumerable<TruckTransmission> ItemOf { get; set; }
+
+        #endregion
 
         /// <summary>
         /// English culture for numbers
@@ -243,12 +265,12 @@ namespace ATSEngineTool.Database
         /// Serializes this transmission into SII format, and returns the result
         /// </summary>
         /// <returns></returns>
-        public string ToSiiFormat()
+        public string ToSiiFormat(string truckName)
         {
             // Create local variables
             var series = this.Series;
             StringBuilder builder = new StringBuilder();
-            string name = this.UnitName + ".{{{NAME}}}.transmission";
+            string name = $"{this.UnitName}.{truckName}.transmission";
             string decvalue;
 
             bool hasNames = Gears.Any(x => !String.IsNullOrEmpty(x.Name));
@@ -340,13 +362,44 @@ namespace ATSEngineTool.Database
                     builder.AppendLine($"\t\tdefaults[]: \"{line}\"");
             }
 
+            // Define is we output suitible_for and conflict_with for engines
+            bool go = Program.Config.CompileOption == CompileOption.TransmissionOnly
+                   || Program.Config.CompileOption == CompileOption.Both;
+            var conflicts = this.EngineConflicts.ToList();
+            var suitables = this.SuitableEngines.ToList();
+
             // Write the conflict_with[]...
-            if (Conflicts != null && Conflicts.Length > 0)
+            if ((go && conflicts.Count > 0) || (Conflicts != null && Conflicts.Length > 0))
             {
                 builder.AppendLine();
                 builder.AppendLine("\t\t# Conflicts");
-                foreach (string line in Conflicts)
-                    builder.AppendLine($"\t\tconflict_with[]: \"{line}\"");
+
+                // Engines?
+                if (go)
+                    foreach (string eng in conflicts.Select(x => x.Engine.UnitName))
+                        builder.AppendLine($"\t\tconflict_with[]: \"{eng}.{truckName}.engine\"");
+
+                // Other Conflicts
+                if (Conflicts != null)
+                    foreach (string line in Conflicts)
+                        builder.AppendLine($"\t\tconflict_with[]: \"{line}\"");
+            }
+
+            // Write the conflict_with[]...
+            if ((go && suitables.Count > 0) || (SuitableFor != null && SuitableFor.Length > 0))
+            {
+                builder.AppendLine();
+                builder.AppendLine("\t\t# Suitables");
+
+                // Engines?
+                if (go)
+                    foreach (string eng in suitables.Select(x => x.Engine.UnitName))
+                        builder.AppendLine($"\t\tsuitable_for[]: \"{eng}.{truckName}.engine\"");
+
+                // Other Suitables
+                if (SuitableFor != null)
+                    foreach (string line in SuitableFor)
+                        builder.AppendLine($"\t\tsuitable_for[]: \"{line}\"");
             }
 
             // Close brackets
@@ -395,7 +448,7 @@ namespace ATSEngineTool.Database
             builder.AppendLine("}");
 
             // Define file paths
-            return builder.ToString().TrimEnd();
+            return builder.ToString().Replace("{{{NAME}}}", truckName).TrimEnd();
         }
 
         /// <summary>

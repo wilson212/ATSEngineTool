@@ -113,6 +113,14 @@ namespace ATSEngineTool
             var imp = (Program.Config.UnitSystem == UnitSystem.Imperial);
             engineListView.Columns[3].Text = (imp) ? "Torque" : "N·m";
 
+            // Setup the TreeListView (sounds)
+            soundListView.CanExpandGetter = model => ((SoundWrapper)model).ChildCount > 0;
+            soundListView.ChildrenGetter = model => ((SoundWrapper)model).Children;
+
+            // ========================= HIDE SOUND TAB - NOT FINISHED ======================= //
+            this.tabControl1.TabPages.Remove(tabPage5);
+            // =============================================================================== //
+
             // Check for updates?
             if (Program.Config.UpdateCheck)
             {
@@ -226,7 +234,7 @@ namespace ATSEngineTool
             {
                 var gears = trans.Gears.ToList();
                 var forward = gears.Where(x => !x.IsReverse).Count();
-                var reverse = gears.Where(x => x.IsReverse).Count();
+                var reverse = gears.Count - forward;
 
                 ListViewItem item = new ListViewItem(trans.Name);
                 item.SubItems.Add(forward.ToString());
@@ -1140,5 +1148,16 @@ namespace ATSEngineTool
         }
 
         #endregion Transmission Management
+
+        private void packageListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (packageListView.SelectedItems.Count == 0) return;
+
+            // Always verify that this isnt a mistake
+            var package = (SoundPackage)transmissionListView.SelectedItems[0].Tag;
+
+            var truckList = new List<Sound>();
+            var engineList = new List<Engine>();
+        }
     }
 }

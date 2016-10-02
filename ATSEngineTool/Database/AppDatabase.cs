@@ -22,7 +22,7 @@ namespace ATSEngineTool.Database
         /// <summary>
         /// Gets the latest database version
         /// </summary>
-        public static Version CurrentVersion { get; protected set; } = new Version(1, 2);
+        public static Version CurrentVersion { get; protected set; } = new Version(1, 3);
 
         /// <summary>
         /// Gets the current database tables version
@@ -39,6 +39,8 @@ namespace ATSEngineTool.Database
 
         public DbSet<SoundPackage> EngineSounds { get; protected set; }
 
+        public DbSet<Sound> TruckSounds { get; protected set; }
+
         public DbSet<TruckEngine> TruckEngines { get; protected set; }
 
         public DbSet<TorqueRatio> TorqueRatios { get; protected set; }
@@ -46,6 +48,10 @@ namespace ATSEngineTool.Database
         public DbSet<TransmissionSeries> TransmissionSeries { get; protected set; }
 
         public DbSet<Transmission> Transmissions { get; protected set; }
+
+        public DbSet<AccessoryConflict> AccessoryConflicts { get; protected set; }
+
+        public DbSet<SuitableAccessory> SuitableAccessories { get; protected set; }
 
         public DbSet<TransmissionGear> TransmissionGears { get; protected set; }
 
@@ -101,6 +107,8 @@ namespace ATSEngineTool.Database
             TorqueRatios = new DbSet<TorqueRatio>(this);
             TransmissionSeries = new DbSet<TransmissionSeries>(this);
             Transmissions = new DbSet<Transmission>(this);
+            AccessoryConflicts = new DbSet<AccessoryConflict>(this);
+            SuitableAccessories = new DbSet<SuitableAccessory>(this);
             TransmissionGears = new DbSet<TransmissionGear>(this);
             TruckTransmissions = new DbSet<TruckTransmission>(this);
             Trucks = new DbSet<Truck>(this);
@@ -137,6 +145,8 @@ namespace ATSEngineTool.Database
                 CodeFirstSQLite.DropTable<TruckEngine>(this);
                 CodeFirstSQLite.DropTable<TruckTransmission>(this);
                 CodeFirstSQLite.DropTable<TransmissionGear>(this);
+                CodeFirstSQLite.DropTable<AccessoryConflict>(this);
+                CodeFirstSQLite.DropTable<SuitableAccessory>(this);
                 CodeFirstSQLite.DropTable<Transmission>(this);
                 CodeFirstSQLite.DropTable<TransmissionSeries>(this);
                 CodeFirstSQLite.DropTable<TorqueRatio>(this);
@@ -156,6 +166,8 @@ namespace ATSEngineTool.Database
                 CodeFirstSQLite.CreateTable<TruckEngine>(this);
                 CodeFirstSQLite.CreateTable<TransmissionSeries>(this);
                 CodeFirstSQLite.CreateTable<Transmission>(this);
+                CodeFirstSQLite.CreateTable<SuitableAccessory>(this);
+                CodeFirstSQLite.CreateTable<AccessoryConflict>(this);
                 CodeFirstSQLite.CreateTable<TransmissionGear>(this);
                 CodeFirstSQLite.CreateTable<TruckTransmission>(this);
 

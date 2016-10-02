@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TransmissionForm));
-            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("Reverse", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("Forward", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup9 = new System.Windows.Forms.ListViewGroup("Reverse", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup10 = new System.Windows.Forms.ListViewGroup("Forward", System.Windows.Forms.HorizontalAlignment.Left);
             this.label1 = new System.Windows.Forms.Label();
             this.unitNameBox = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -74,20 +74,35 @@
             this.label2 = new System.Windows.Forms.Label();
             this.hasRetarder = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.label29 = new System.Windows.Forms.Label();
             this.fileDefaultsTextBox = new System.Windows.Forms.TextBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
             this.fileCommentTextBox = new System.Windows.Forms.TextBox();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.suitablesTextBox = new System.Windows.Forms.TextBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label14 = new System.Windows.Forms.Label();
+            this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.conflictListView = new System.Windows.Forms.ListView();
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.label39 = new System.Windows.Forms.Label();
             this.conflictsTextBox = new System.Windows.Forms.TextBox();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.suitsListView = new System.Windows.Forms.ListView();
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label16 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.suitablesTextBox = new System.Windows.Forms.TextBox();
             this.contentPanel = new System.Windows.Forms.Panel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.footerPanel = new System.Windows.Forms.Panel();
@@ -111,12 +126,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.stallRatio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.retardPositions)).BeginInit();
             this.tabPage2.SuspendLayout();
-            this.tabPage4.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.groupBox7.SuspendLayout();
-            this.tabPage5.SuspendLayout();
-            this.groupBox6.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            this.groupBox13.SuspendLayout();
             this.groupBox12.SuspendLayout();
+            this.tabPage5.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.contentPanel.SuspendLayout();
             this.footerPanel.SuspendLayout();
             this.headerPanel.SuspendLayout();
@@ -302,36 +320,36 @@
             // 
             // chart1
             // 
-            chartArea3.AxisX.IsMarginVisible = false;
-            chartArea3.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
-            chartArea3.AxisX.Title = "Speed (Mph)";
-            chartArea3.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
-            chartArea3.AxisY.Title = "Engine RPM";
-            chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
-            legend3.Enabled = false;
-            legend3.Name = "Legend1";
-            this.chart1.Legends.Add(legend3);
+            chartArea5.AxisX.IsMarginVisible = false;
+            chartArea5.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
+            chartArea5.AxisX.Title = "Speed (Mph)";
+            chartArea5.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
+            chartArea5.AxisY.Title = "Engine RPM";
+            chartArea5.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea5);
+            legend5.Enabled = false;
+            legend5.Name = "Legend1";
+            this.chart1.Legends.Add(legend5);
             this.chart1.Location = new System.Drawing.Point(8, 14);
             this.chart1.Name = "chart1";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Legend = "Legend1";
-            series3.MarkerBorderColor = System.Drawing.Color.Black;
-            series3.MarkerColor = System.Drawing.Color.DodgerBlue;
-            series3.MarkerSize = 7;
-            series3.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series3.Name = "Series1";
-            series3.SmartLabelStyle.AllowOutsidePlotArea = System.Windows.Forms.DataVisualization.Charting.LabelOutsidePlotAreaStyle.No;
-            series3.SmartLabelStyle.MaxMovingDistance = 40D;
-            series3.SmartLabelStyle.MinMovingDistance = 25D;
-            series3.SmartLabelStyle.MovingDirection = ((System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles)((((((System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.Top | System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.Bottom) 
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series5.Legend = "Legend1";
+            series5.MarkerBorderColor = System.Drawing.Color.Black;
+            series5.MarkerColor = System.Drawing.Color.DodgerBlue;
+            series5.MarkerSize = 7;
+            series5.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series5.Name = "Series1";
+            series5.SmartLabelStyle.AllowOutsidePlotArea = System.Windows.Forms.DataVisualization.Charting.LabelOutsidePlotAreaStyle.No;
+            series5.SmartLabelStyle.MaxMovingDistance = 40D;
+            series5.SmartLabelStyle.MinMovingDistance = 25D;
+            series5.SmartLabelStyle.MovingDirection = ((System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles)((((((System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.Top | System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.Bottom) 
             | System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.TopLeft) 
             | System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.TopRight) 
             | System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.BottomLeft) 
             | System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.BottomRight)));
-            series3.YValuesPerPoint = 6;
-            this.chart1.Series.Add(series3);
+            series5.YValuesPerPoint = 6;
+            this.chart1.Series.Add(series5);
             this.chart1.Size = new System.Drawing.Size(844, 373);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -342,6 +360,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Location = new System.Drawing.Point(-1, 21);
@@ -466,13 +485,13 @@
             this.columnHeader4,
             this.columnHeader5});
             this.gearListView.FullRowSelect = true;
-            listViewGroup5.Header = "Reverse";
-            listViewGroup5.Name = "Reverse";
-            listViewGroup6.Header = "Forward";
-            listViewGroup6.Name = "Forward";
+            listViewGroup9.Header = "Reverse";
+            listViewGroup9.Name = "Reverse";
+            listViewGroup10.Header = "Forward";
+            listViewGroup10.Name = "Forward";
             this.gearListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup5,
-            listViewGroup6});
+            listViewGroup9,
+            listViewGroup10});
             this.gearListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.gearListView.HideSelection = false;
             this.gearListView.Location = new System.Drawing.Point(11, 41);
@@ -627,17 +646,17 @@
             this.tabPage2.Text = "Speed Chart";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // tabPage4
+            // tabPage3
             // 
-            this.tabPage4.Controls.Add(this.groupBox9);
-            this.tabPage4.Controls.Add(this.groupBox7);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(886, 426);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Accessories and Comments";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.tabPage3.Controls.Add(this.groupBox9);
+            this.tabPage3.Controls.Add(this.groupBox7);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(886, 426);
+            this.tabPage3.TabIndex = 3;
+            this.tabPage3.Text = "Accessories and Comments";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // groupBox9
             // 
@@ -698,53 +717,89 @@
             this.fileCommentTextBox.Size = new System.Drawing.Size(387, 293);
             this.fileCommentTextBox.TabIndex = 0;
             // 
-            // tabPage5
+            // tabPage4
             // 
-            this.tabPage5.Controls.Add(this.groupBox6);
-            this.tabPage5.Controls.Add(this.groupBox12);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(886, 426);
-            this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "Compatibility";
-            this.tabPage5.UseVisualStyleBackColor = true;
+            this.tabPage4.Controls.Add(this.label14);
+            this.tabPage4.Controls.Add(this.groupBox13);
+            this.tabPage4.Controls.Add(this.groupBox12);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(886, 426);
+            this.tabPage4.TabIndex = 4;
+            this.tabPage4.Text = "Conflicts";
+            this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // groupBox6
+            // label14
             // 
-            this.groupBox6.Controls.Add(this.label11);
-            this.groupBox6.Controls.Add(this.suitablesTextBox);
-            this.groupBox6.Location = new System.Drawing.Point(440, 31);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(407, 364);
-            this.groupBox6.TabIndex = 2;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Suitable For";
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(80, 15);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(727, 13);
+            this.label14.TabIndex = 4;
+            this.label14.Text = "This transmission will display in game for these accessories, and show the user a" +
+    "n error if selected with a conflicting accessory";
             // 
-            // label11
+            // groupBox13
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(15, 22);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(324, 26);
-            this.label11.TabIndex = 3;
-            this.label11.Text = "Only put 1 item per line. The items listed here will be included in the \r\n\"suitab" +
-    "le_for\" array. Use \"{{{NAME}}}\" to subsitute the truck name.";
+            this.groupBox13.Controls.Add(this.label12);
+            this.groupBox13.Controls.Add(this.conflictListView);
+            this.groupBox13.Location = new System.Drawing.Point(455, 45);
+            this.groupBox13.Name = "groupBox13";
+            this.groupBox13.Size = new System.Drawing.Size(407, 364);
+            this.groupBox13.TabIndex = 3;
+            this.groupBox13.TabStop = false;
+            this.groupBox13.Text = "Engine Conflicts";
             // 
-            // suitablesTextBox
+            // label12
             // 
-            this.suitablesTextBox.Location = new System.Drawing.Point(10, 56);
-            this.suitablesTextBox.Multiline = true;
-            this.suitablesTextBox.Name = "suitablesTextBox";
-            this.suitablesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.suitablesTextBox.Size = new System.Drawing.Size(387, 293);
-            this.suitablesTextBox.TabIndex = 0;
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(44, 23);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(318, 13);
+            this.label12.TabIndex = 20;
+            this.label12.Text = "Select the engines that are NOT compatible with this transmission.";
+            // 
+            // conflictListView
+            // 
+            this.conflictListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.conflictListView.AutoArrange = false;
+            this.conflictListView.CheckBoxes = true;
+            this.conflictListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader10,
+            this.columnHeader2,
+            this.columnHeader13});
+            this.conflictListView.FullRowSelect = true;
+            this.conflictListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.conflictListView.Location = new System.Drawing.Point(11, 56);
+            this.conflictListView.Name = "conflictListView";
+            this.conflictListView.Size = new System.Drawing.Size(385, 293);
+            this.conflictListView.TabIndex = 19;
+            this.conflictListView.UseCompatibleStateImageBehavior = false;
+            this.conflictListView.View = System.Windows.Forms.View.Details;
+            this.conflictListView.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.conflictListView_ItemCheck);
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Text = "Name";
+            this.columnHeader10.Width = 220;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Horsepower";
+            this.columnHeader2.Width = 70;
+            // 
+            // columnHeader13
+            // 
+            this.columnHeader13.Text = "Torque";
+            this.columnHeader13.Width = 70;
             // 
             // groupBox12
             // 
             this.groupBox12.Controls.Add(this.label39);
             this.groupBox12.Controls.Add(this.conflictsTextBox);
-            this.groupBox12.Location = new System.Drawing.Point(19, 31);
+            this.groupBox12.Location = new System.Drawing.Point(24, 45);
             this.groupBox12.Name = "groupBox12";
             this.groupBox12.Size = new System.Drawing.Size(407, 364);
             this.groupBox12.TabIndex = 1;
@@ -769,6 +824,114 @@
             this.conflictsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.conflictsTextBox.Size = new System.Drawing.Size(387, 293);
             this.conflictsTextBox.TabIndex = 0;
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.groupBox8);
+            this.tabPage5.Controls.Add(this.label16);
+            this.tabPage5.Controls.Add(this.groupBox6);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(886, 426);
+            this.tabPage5.TabIndex = 5;
+            this.tabPage5.Text = "Compatibility";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.label17);
+            this.groupBox8.Controls.Add(this.suitsListView);
+            this.groupBox8.Location = new System.Drawing.Point(455, 45);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(407, 364);
+            this.groupBox8.TabIndex = 6;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Engine Compatibility";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(57, 23);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(292, 13);
+            this.label17.TabIndex = 20;
+            this.label17.Text = "Select the engines that are compatible with this transmission.";
+            // 
+            // suitsListView
+            // 
+            this.suitsListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.suitsListView.AutoArrange = false;
+            this.suitsListView.CheckBoxes = true;
+            this.suitsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader3,
+            this.columnHeader6,
+            this.columnHeader7});
+            this.suitsListView.FullRowSelect = true;
+            this.suitsListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.suitsListView.Location = new System.Drawing.Point(11, 56);
+            this.suitsListView.Name = "suitsListView";
+            this.suitsListView.Size = new System.Drawing.Size(385, 293);
+            this.suitsListView.TabIndex = 19;
+            this.suitsListView.UseCompatibleStateImageBehavior = false;
+            this.suitsListView.View = System.Windows.Forms.View.Details;
+            this.suitsListView.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.suitsListView_ItemCheck);
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Name";
+            this.columnHeader3.Width = 220;
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Horsepower";
+            this.columnHeader6.Width = 70;
+            // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Text = "Torque";
+            this.columnHeader7.Width = 70;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(147, 15);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(562, 13);
+            this.label16.TabIndex = 5;
+            this.label16.Text = "This engine will only appear in game if one of these accessories are selected in " +
+    "the truck already.";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.label11);
+            this.groupBox6.Controls.Add(this.suitablesTextBox);
+            this.groupBox6.Location = new System.Drawing.Point(24, 45);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(407, 364);
+            this.groupBox6.TabIndex = 3;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Suitable For";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(15, 22);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(324, 26);
+            this.label11.TabIndex = 3;
+            this.label11.Text = "Only put 1 item per line. The items listed here will be included in the \r\n\"suitab" +
+    "le_for\" array. Use \"{{{NAME}}}\" to subsitute the truck name.";
+            // 
+            // suitablesTextBox
+            // 
+            this.suitablesTextBox.Location = new System.Drawing.Point(10, 56);
+            this.suitablesTextBox.Multiline = true;
+            this.suitablesTextBox.Name = "suitablesTextBox";
+            this.suitablesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.suitablesTextBox.Size = new System.Drawing.Size(387, 293);
+            this.suitablesTextBox.TabIndex = 0;
             // 
             // contentPanel
             // 
@@ -884,16 +1047,23 @@
             ((System.ComponentModel.ISupportInitialize)(this.stallRatio)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.retardPositions)).EndInit();
             this.tabPage2.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
-            this.tabPage5.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
+            this.groupBox13.ResumeLayout(false);
+            this.groupBox13.PerformLayout();
             this.groupBox12.ResumeLayout(false);
             this.groupBox12.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.contentPanel.ResumeLayout(false);
             this.footerPanel.ResumeLayout(false);
             this.headerPanel.ResumeLayout(false);
@@ -926,7 +1096,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Panel contentPanel;
         private System.Windows.Forms.Panel footerPanel;
-        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.PictureBox seriesIcon;
         private System.Windows.Forms.GroupBox groupBox9;
@@ -938,7 +1108,7 @@
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.TextBox filenameTextBox;
         private System.Windows.Forms.Button importButton;
-        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.GroupBox groupBox12;
         private System.Windows.Forms.TextBox conflictsTextBox;
         private System.Windows.Forms.Label label39;
@@ -961,8 +1131,23 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox suitablesTextBox;
+        private System.Windows.Forms.GroupBox groupBox13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ListView conflictListView;
+        private System.Windows.Forms.ColumnHeader columnHeader10;
+        private System.Windows.Forms.ColumnHeader columnHeader13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ListView suitsListView;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.ColumnHeader columnHeader7;
     }
 }
