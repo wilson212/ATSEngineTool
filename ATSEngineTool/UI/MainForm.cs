@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ATSEngineTool.Database;
 using ATSEngineTool.Properties;
+using BrightIdeasSoftware;
 
 namespace ATSEngineTool
 {
@@ -94,7 +95,7 @@ namespace ATSEngineTool
             }
 
             // ========================= HIDE SOUND TAB - NOT FINISHED ======================= //
-            this.tabControl1.TabPages.Remove(tabPage5);
+            //this.tabControl1.TabPages.Remove(tabPage5);
             // =============================================================================== //
 
             // Load database
@@ -108,7 +109,7 @@ namespace ATSEngineTool
                 // Fill Transmissions
                 FillTransmissionSeries(db);
 
-                //FillSoundPackages(db);
+                FillSoundPackages(db);
 
                 // Set label text
                 dbVersionLabel.Text = AppDatabase.DatabaseVersion.ToString();
@@ -973,14 +974,6 @@ namespace ATSEngineTool
             }
         }
 
-        private void soundMenuItem_Click(object sender, EventArgs e)
-        {
-            using (SoundRegistryForm frm = new SoundRegistryForm())
-            {
-                frm.ShowDialog();
-            }
-        }
-
         #endregion Menu Events
 
         #region Transmission Management
@@ -1173,36 +1166,144 @@ namespace ATSEngineTool
 
             // Always verify that this isnt a mistake
             var package = (SoundPackage)packageListView.SelectedItems[0].Tag;
-
+            var soundList = new List<EngineSound>(package.EngineSounds.OrderBy(x => x.Attribute).ThenBy(x => x.Type));
             var objectList = new List<SoundWrapper>()
             {
                 new SoundWrapper() { SoundName = "Interior" },
                 new SoundWrapper() { SoundName = "Exterior" },
             };
-            var soundList = new List<EngineSound>(package.EngineSounds.OrderBy(x => (int)x.Attribute));
             SoundWrapper wrapper = null;
 
             foreach (var sound in soundList)
             {
-                if (wrapper == null || wrapper.Sound.Attribute != sound.Attribute)
+                // If changine sound type or attribute
+                if (wrapper == null || wrapper.Sound.Type != sound.Type || wrapper.Sound.Attribute != sound.Attribute)
                 {
-                    wrapper = new SoundWrapper()
+                    if (sound.IsSoundArray)
                     {
-                        Sound = sound
-                    };
+                        wrapper = new SoundWrapper() { Sound = sound, SoundName = sound.Attribute.ToString() };
+                        wrapper.Children.Add(new SoundWrapper()
+                        {
+                            SoundName = sound.Attribute.ToString(),
+                            Sound = sound
+                        });
+                    }
+                    else
+                    {
+                        wrapper = new SoundWrapper()
+                        {
+                            SoundName = sound.Attribute.ToString(),
+                            Sound = sound,
+                        };
+                    }
+
                     objectList[(int)sound.Type].Children.Add(wrapper);
                 }
                 else
                 {
                     wrapper.Children.Add(new SoundWrapper()
                     {
+                        SoundName = sound.Attribute.ToString(),
                         Sound = sound
                     });
                 }
             }
 
             soundListView.Roots = objectList;
+            soundListView.Expand(objectList[0]);
             //soundListView.SetObjects(objectList);
+        }
+
+        private void packageListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (packageListView.SelectedItems.Count == 0) return;
+            SoundPackage package = packageListView.SelectedItems[0].Tag as SoundPackage;
+
+            using (SoundPackageEditor frm = new SoundPackageEditor(package))
+            {
+                frm.ShowDialog();
+            }
+        }
+
+        private void newPackageButton_Click(object sender, EventArgs e)
+        {
+            using (SoundPackageEditor frm = new SoundPackageEditor())
+            {
+                var result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    using (AppDatabase db = new AppDatabase())
+                    {
+                        FillSoundPackages(db);
+                    }
+                }
+            }
+        }
+
+        private void removePackageButton_Click(object sender, EventArgs e)
+        {
+            // If we have no selected packages, skimp out here
+            if (packageListView.SelectedItems.Count == 0) return;
+
+            ListViewItem selected = packageListView.SelectedItems[0];
+            var package = selected.Tag as SoundPackage;
+            var items = package.Series.ToList();
+
+            if (items.Count > 0)
+            {
+                // Tell the use they are making a mistake!
+                var result = MessageBox.Show($"This sound package is being use by \"{items[0]}\". If you proceed, all "
+                    + "engines that use this sound package will also be deleted. Are you sure you want to do this?",
+                    "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning
+                );
+
+                // phew... /wipesSweatOffBrow
+                if (result != DialogResult.Yes) return;
+            }
+            else
+            {
+                // Tell the use they are making a mistake!
+                var result = MessageBox.Show("Are you sure you want to remove this sound pack?",
+                    "Validation", MessageBoxButtons.YesNo, MessageBoxIcon.Question
+                );
+
+                // phew... /wipesSweatOffBrow
+                if (result != DialogResult.Yes) return;
+            }
+
+            // ReLoad engine series from the database
+            using (AppDatabase db = new AppDatabase())
+            {
+                db.SoundPackages.Remove(package);
+
+                FillSoundPackages(db);
+            }
+
+            // Finally delete sound folder
+            DirectoryExt.Delete(Path.Combine(Program.RootPath, "sounds", "engine", package.FolderName));
+        }
+
+        private void soundListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            // If we have no selected packages, skimp out here
+            if (packageListView.SelectedItems.Count == 0) return;
+
+            var selected = (OLVListItem)soundListView.HitTest(e.Location).Item;
+            if (selected != null)
+            {
+                var wrapper = selected.RowObject as SoundWrapper;
+                if (wrapper.ChildCount > 0) return;
+
+                using (SoundEditor frm = new SoundEditor(wrapper.Sound.Package, wrapper.Sound))
+                {
+                    var result = frm.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        int index = soundListView.IndexOf(wrapper);
+                        soundListView.RedrawItems(index, index, false);
+                    }
+                }
+            }
         }
     }
 }

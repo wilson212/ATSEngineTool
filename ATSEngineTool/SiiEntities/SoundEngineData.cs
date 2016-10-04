@@ -3,7 +3,7 @@
 namespace ATSEngineTool.SiiEntities
 {
     [SiiUnit("sound_engine_data")]
-    internal sealed class SoundEngineData
+    public sealed class SoundEngineData
     {
         [SiiAttribute("name")]
         public string Name { get; private set; }
@@ -21,7 +21,7 @@ namespace ATSEngineTool.SiiEntities
         public double MinRPM { get; private set; }
 
         [SiiAttribute("volume")]
-        public double Volume { get; private set; }
+        public double Volume { get; private set; } = 1.0;
 
         [SiiAttribute("is_2d")]
         public bool Is2D { get; private set; }

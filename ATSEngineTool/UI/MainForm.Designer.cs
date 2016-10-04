@@ -134,7 +134,6 @@
             this.closeMenuItem = new System.Windows.Forms.MenuItem();
             this.menuItem3 = new System.Windows.Forms.MenuItem();
             this.settingsMenuItem = new System.Windows.Forms.MenuItem();
-            this.soundMenuItem = new System.Windows.Forms.MenuItem();
             this.aboutMenuItem = new System.Windows.Forms.MenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -1112,23 +1111,27 @@
             this.olvColumn2,
             this.olvColumn3});
             this.soundListView.Cursor = System.Windows.Forms.Cursors.Default;
+            this.soundListView.FullRowSelect = true;
             this.soundListView.HeaderMaximumHeight = 24;
             this.soundListView.HeaderMinimumHeight = 24;
             this.soundListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.soundListView.Location = new System.Drawing.Point(391, 48);
+            this.soundListView.MultiSelect = false;
             this.soundListView.Name = "soundListView";
+            this.soundListView.SelectAllOnControlA = false;
             this.soundListView.ShowGroups = false;
             this.soundListView.Size = new System.Drawing.Size(388, 309);
             this.soundListView.TabIndex = 32;
             this.soundListView.UseCompatibleStateImageBehavior = false;
             this.soundListView.View = System.Windows.Forms.View.Details;
             this.soundListView.VirtualMode = true;
+            this.soundListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.soundListView_MouseDoubleClick);
             // 
             // olvColumn1
             // 
             this.olvColumn1.AspectName = "SoundName";
             this.olvColumn1.Text = "Sound Name";
-            this.olvColumn1.Width = 150;
+            this.olvColumn1.Width = 155;
             // 
             // olvColumn2
             // 
@@ -1221,6 +1224,7 @@
             this.newPackageButton.Name = "newPackageButton";
             this.newPackageButton.Size = new System.Drawing.Size(76, 22);
             this.newPackageButton.Text = "Add New";
+            this.newPackageButton.Click += new System.EventHandler(this.newPackageButton_Click);
             // 
             // removePackageButton
             // 
@@ -1229,6 +1233,7 @@
             this.removePackageButton.Name = "removePackageButton";
             this.removePackageButton.Size = new System.Drawing.Size(70, 22);
             this.removePackageButton.Text = "Remove";
+            this.removePackageButton.Click += new System.EventHandler(this.removePackageButton_Click);
             // 
             // packageListView
             // 
@@ -1247,6 +1252,7 @@
             this.packageListView.UseCompatibleStateImageBehavior = false;
             this.packageListView.View = System.Windows.Forms.View.Details;
             this.packageListView.SelectedIndexChanged += new System.EventHandler(this.packageListView_SelectedIndexChanged);
+            this.packageListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.packageListView_MouseDoubleClick);
             // 
             // columnHeader14
             // 
@@ -1277,8 +1283,7 @@
             // 
             this.menuItem3.Index = 1;
             this.menuItem3.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.settingsMenuItem,
-            this.soundMenuItem});
+            this.settingsMenuItem});
             this.menuItem3.Text = "Edit";
             // 
             // settingsMenuItem
@@ -1286,12 +1291,6 @@
             this.settingsMenuItem.Index = 0;
             this.settingsMenuItem.Text = "Settings";
             this.settingsMenuItem.Click += new System.EventHandler(this.settingsMenuItem_Click);
-            // 
-            // soundMenuItem
-            // 
-            this.soundMenuItem.Index = 1;
-            this.soundMenuItem.Text = "Sound Manager";
-            this.soundMenuItem.Click += new System.EventHandler(this.soundMenuItem_Click);
             // 
             // aboutMenuItem
             // 
@@ -1470,7 +1469,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.MenuItem settingsMenuItem;
         private System.Windows.Forms.MenuItem aboutMenuItem;
-        private System.Windows.Forms.MenuItem soundMenuItem;
         private System.Windows.Forms.PictureBox updatePicture;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.TabPage tabPage4;

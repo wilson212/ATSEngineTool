@@ -131,6 +131,26 @@ namespace ATSEngineTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Default {
+            get {
+                object obj = ResourceManager.GetObject("Default", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Default_w900 {
+            get {
+                object obj = ResourceManager.GetObject("Default_w900", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap DeleteRed {
@@ -156,6 +176,16 @@ namespace ATSEngineTool.Properties {
         internal static System.Drawing.Bitmap edit_add {
             get {
                 object obj = ResourceManager.GetObject("edit_add", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Foursquare {
+            get {
+                object obj = ResourceManager.GetObject("Foursquare", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

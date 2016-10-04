@@ -1,0 +1,24 @@
+SiiNunit
+{
+	# sound package name should be "<sound_unit_name>.soundpack
+	sound_package : isx.soundpack
+	{
+		# Package version can be any string with any length.
+		package_version: "1.0"
+
+		# Display name can be any string with any length.
+		display_name: "Cummins ISX15"
+
+		# Author can be any string with any length.
+		author: "Kriechbaum"
+
+		# Icon inside the root directory of the mod.
+		icon: "miconimage.jpg"
+		
+		# The output sii filename for interior sounds
+		default_interior_filename: "interior_isx.sii"
+		
+		# The output sii filename for exterior sounds
+		default_exterior_filename: "exterior_isx.sii"
+	}
+}

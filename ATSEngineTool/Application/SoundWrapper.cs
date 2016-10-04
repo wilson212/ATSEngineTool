@@ -11,9 +11,21 @@ namespace ATSEngineTool
 
         public string SoundName { get; set; }
 
-        public string Filename { get; set; } = string.Empty;
+        public string Filename
+        {
+            get
+            {
+                return (Children.Count > 0) ? string.Empty : Sound.FileName;
+            }
+        }
 
-        public string Volume { get; set; } = string.Empty;
+        public string Volume
+        {
+            get
+            {
+                return (Children.Count > 0) ? string.Empty : (Sound.Volume * 100) + "%";
+            }
+        }
 
         public SoundWrapper Parent { get; set; }
 

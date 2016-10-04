@@ -181,6 +181,7 @@ namespace ATSEngineTool
             // Local variables
             string truckpath, soundPath, enginePath;
             var soundData = new Dictionary<SoundPackage, List<Engine>>();
+            var soundFiles = new Dictionary<SoundPackage, string[]>();
             var suitableFor = new StringBuilder();
             ProgressUpdate(progress, "Generating engine def files");
 
@@ -252,50 +253,35 @@ namespace ATSEngineTool
                         }
 
                         // === Interior
-                        // Open the sound interrior template file
-                        using (FileStream stream = File.OpenRead(filePath))
-                        using (StreamReader reader = new StreamReader(stream))
+                        if (!soundFiles.ContainsKey(sound))
+                            soundFiles.Add(sound, sound.ToSiiFormat());
+                        
+                        // Add truck name
+                        string contents = soundFiles[sound][0]
+                            .Replace("{{{NAME}}}", truck.UnitName)
+                            .Replace("{{{SUITABLE}}}", suitableFor.ToString().TrimEnd(Environment.NewLine.ToCharArray()));
+
+                        // Create new file
+                        string path = Path.Combine(soundPath, sound.InteriorFileName);
+                        using (FileStream str = File.Open(path, FileMode.Create))
+                        using (StreamWriter writer = new StreamWriter(str))
                         {
-                            // Add truck name
-                            string contents = reader.ReadToEnd();
-                            contents = contents.Replace("{{{NAME}}}", truck.UnitName);
-
-                            // Add suitable engines
-                            contents = contents.Replace("{{{SUITABLE}}}", 
-                                suitableFor.ToString().TrimEnd(Environment.NewLine.ToCharArray())
-                            );
-
-                            // Create new file
-                            string path = Path.Combine(soundPath, sound.InteriorFileName);
-                            using (FileStream str = File.Open(path, FileMode.Create))
-                            using (StreamWriter writer = new StreamWriter(str))
-                            {
-                                writer.Write(contents);
-                            }
+                            writer.Write(contents);
                         }
 
                         // === Exterior
-                        // Open the sound interrior template file
-                        filePath = Path.Combine(root, "exterior.sii");
-                        using (FileStream stream = File.OpenRead(filePath))
-                        using (StreamReader reader = new StreamReader(stream))
+
+                        // Add truck name
+                        contents = soundFiles[sound][1]
+                            .Replace("{{{NAME}}}", truck.UnitName)
+                            .Replace("{{{SUITABLE}}}", suitableFor.ToString().TrimEnd(Environment.NewLine.ToCharArray()));
+
+                        // Create new file
+                        path = Path.Combine(soundPath, sound.ExteriorFileName);
+                        using (FileStream str = File.Open(path, FileMode.Create))
+                        using (StreamWriter writer = new StreamWriter(str))
                         {
-                            // Add truck name
-                            string contents = reader.ReadToEnd();
-                            contents = contents.Replace("{{{NAME}}}", truck.UnitName);
-
-                            // Add suitable engines
-                            contents = contents.Replace("{{{SUITABLE}}}",
-                                suitableFor.ToString().TrimEnd(Environment.NewLine.ToCharArray())
-                            );
-
-                            // Create new file
-                            string path = Path.Combine(soundPath, sound.ExteriorFileName);
-                            using (FileStream str = File.Open(path, FileMode.Create))
-                            using (StreamWriter writer = new StreamWriter(str))
-                            {
-                                writer.Write(contents);
-                            }
+                            writer.Write(contents);
                         }
                     } // End foreach sound
 

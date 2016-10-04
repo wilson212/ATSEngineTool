@@ -1,6 +1,6 @@
 ﻿namespace ATSEngineTool.Database
 {
-    public enum SoundType
+    public enum SoundType : int
     {
         Interior,
         Exterior

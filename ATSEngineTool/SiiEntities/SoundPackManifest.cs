@@ -22,5 +22,8 @@ namespace ATSEngineTool.SiiEntities
 
         [SiiAttribute("default_exterior_filename")]
         public string ExteriorName { get; private set; }
+
+        [SiiAttribute("use_common_sound_sui")]
+        public bool UseDirectives { get; private set; } = true;
     }
 }

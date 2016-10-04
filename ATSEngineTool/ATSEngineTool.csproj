@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="Application\CompileOption.cs" />
     <Compile Include="Application\ExceptionHandler.cs" />
+    <Compile Include="Application\SoundPackageReader.cs" />
     <Compile Include="Application\UnitSystem.cs" />
     <Compile Include="Database\SoundAttribute.cs" />
     <Compile Include="Database\Entities\TransmissionGear.cs" />
@@ -101,7 +102,14 @@
     <Compile Include="Database\Entities\SuitableAccessory.cs" />
     <Compile Include="Application\Metrics.cs" />
     <Compile Include="Application\SoundWrapper.cs" />
+    <Compile Include="Extensions\StringBuilderExtensions.cs" />
     <Compile Include="SiiEntities\SoundPackManifest.cs" />
+    <Compile Include="UI\Sound\SoundEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Sound\SoundEditor.Designer.cs">
+      <DependentUpon>SoundEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Sound\SoundPackageEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,12 +181,6 @@
     <Compile Include="UI\Engine\SeriesEditForm.Designer.cs">
       <DependentUpon>SeriesEditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Sound\SoundRegistryForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Sound\SoundRegistryForm.Designer.cs">
-      <DependentUpon>SoundRegistryForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\TruckEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -230,6 +232,9 @@
     <Compile Include="Updater\GitHubRelease.cs" />
     <Compile Include="Updater\GitHubUser.cs" />
     <Compile Include="Updater\ProgramUpdater.cs" />
+    <EmbeddedResource Include="UI\Sound\SoundEditor.resx">
+      <DependentUpon>SoundEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Sound\SoundPackageEditor.resx">
       <DependentUpon>SoundPackageEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -244,9 +249,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\Sound\SoundRegistryForm.resx">
-      <DependentUpon>SoundRegistryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Transmission\EditGearForm.resx">
       <DependentUpon>EditGearForm.cs</DependentUpon>
@@ -286,6 +288,9 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="data\Default.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="data\Migration_14.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="graphics\cat__3406.dds">
@@ -370,6 +375,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Resources\Default.espack" />
+    <EmbeddedResource Include="Resources\Default.w900.espack" />
     <None Include="sounds\common\ext\air_brake1.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -1039,6 +1046,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="misc_piston.ico" />
+    <None Include="Resources\Foursquare.png" />
     <None Include="Resources\loading.gif" />
     <None Include="Resources\vistaWarning.png" />
     <None Include="Resources\vistaerror.png" />

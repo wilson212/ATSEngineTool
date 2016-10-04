@@ -123,5 +123,10 @@ namespace ATSEngineTool
 
             return Result;
         }
+
+        public static Stream GetResource(string ResourceName)
+        {
+            return Assembly.GetExecutingAssembly().GetManifestResourceStream(ResourceName);
+        }
     }
 }

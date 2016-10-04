@@ -3,7 +3,7 @@
 namespace ATSEngineTool.SiiEntities
 {
     [SiiUnit("accessory_sound_data")]
-    internal class AccessorySoundData
+    public class AccessorySoundData
     {
         [SiiAttribute("name")]
         public string Name { get; private set; }
@@ -35,17 +35,35 @@ namespace ATSEngineTool.SiiEntities
         [SiiAttribute("air_brake")]
         public SoundData[] AirBrakes { get; private set; }
 
+        [SiiAttribute("engine_exhaust")]
+        public SoundEngineData[] EngineExhaust{ get; private set; }
+
         [SiiAttribute("engine_brake")]
         public SoundEngineData[] EngineBrake { get; private set; }
 
         [SiiAttribute("horn")]
         public SoundData Horn { get; private set; }
 
+        [SiiAttribute("air_horn")]
+        public SoundData AirHorn { get; private set; }
+
         [SiiAttribute("reverse")]
         public SoundData Reverse { get; private set; }
 
         [SiiAttribute("change_gear")]
         public SoundData ChangeGear { get; private set; }
+
+        [SiiAttribute("blinker_on")]
+        public SoundData BlinkerOn { get; private set; }
+
+        [SiiAttribute("blinker_off")]
+        public SoundData BlinkerOff { get; private set; }
+
+        [SiiAttribute("wipers_up")]
+        public SoundData WipersUp { get; private set; }
+
+        [SiiAttribute("wipers_down")]
+        public SoundData WipersDown { get; private set; }
 
         [SiiAttribute("exterior_sound")]
         public bool Exterior { get; private set; }

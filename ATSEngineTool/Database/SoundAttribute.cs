@@ -9,15 +9,21 @@
         Engine,
         EngineLoad,
         EngineNoFuel,
+        EngineExhaust,
         EngineBrake,
 
         Turbo,
 
-        AirGear,
-        AirBrake,
+        AirGears,
+        AirBrakes,
 
         Horn,
         Reverse,
         ChangeGear,
+        AirHorn,
+        BlinkerOn,
+        BlinkerOff,
+        WiperUp,
+        WiperDown,
     }
 }

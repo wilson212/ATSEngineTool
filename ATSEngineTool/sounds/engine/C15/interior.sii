@@ -1,6 +1,6 @@
 SiiNunit
 {
-accessory_sound_data : c15.{{{NAME}}}.isound
+accessory_sound_data : c15.isound
 {
 	exterior_sound: false
 
@@ -47,8 +47,6 @@ accessory_sound_data : c15.{{{NAME}}}.isound
 	wipers_down: .wipers_down
 
 @include "/def/vehicle/truck/common_sound_int.sui"
-
-	{{{SUITABLE}}}
 }
 
 sound_data: .start

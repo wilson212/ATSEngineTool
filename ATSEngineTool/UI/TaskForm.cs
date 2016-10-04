@@ -141,7 +141,13 @@ namespace ATSEngineTool
         /// <param name="Style">The progress bar style</param>
         /// <exception cref="Exception">Thrown if the Task form is already open and running. Use the IsOpen property
         /// to determine if the form is already running</exception>
-        public static void Show(Form Parent, string WindowTitle, string InstructionText, string SubMessage, bool Cancelable, ProgressBarStyle Style, int ProgressBarSteps)
+        public static void Show(Form Parent, 
+            string WindowTitle, 
+            string InstructionText, 
+            string SubMessage = "", 
+            bool Cancelable = false, 
+            ProgressBarStyle Style = ProgressBarStyle.Marquee, 
+            int ProgressBarSteps = 0)
         {
             // Make sure we dont have an already active form
             if (Instance != null && !Instance.IsDisposed)

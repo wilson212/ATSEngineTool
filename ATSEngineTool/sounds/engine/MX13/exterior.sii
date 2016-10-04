@@ -1,6 +1,6 @@
 SiiNunit
 {
-accessory_sound_data : mx13.{{{NAME}}}.esound
+accessory_sound_data : mx13.esound
 {
 	exterior_sound: true
 
@@ -44,8 +44,6 @@ accessory_sound_data : mx13.{{{NAME}}}.esound
 	reverse: .reverse
 
 @include "/def/vehicle/truck/common_sound_ext.sui"
-
-	{{{SUITABLE}}}
 }
 
 sound_data: .start

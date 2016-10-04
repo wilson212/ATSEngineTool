@@ -1,6 +1,6 @@
 SiiNunit
 {
-accessory_sound_data : isx.{{{NAME}}}.esound
+accessory_sound_data : isx.package.esound
 {
 	start: .start
 	stop: .stop
@@ -37,8 +37,6 @@ accessory_sound_data : isx.{{{NAME}}}.esound
 	exterior_sound: true
 
 @include "/def/vehicle/truck/common_sound_ext.sui"
-
-	{{{SUITABLE}}}
 }
 
 sound_data: .start

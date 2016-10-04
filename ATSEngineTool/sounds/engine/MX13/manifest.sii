@@ -1,0 +1,21 @@
+SiiNunit
+{
+	# sound package name should be "<sound_unit_name>.soundpack
+	sound_package : mx13.soundpack
+	{
+		# Package version can be any string with any length.
+		package_version: "1.0"
+
+		# Display name can be any string with any length.
+		display_name: "Paccar Mx-13"
+
+		# Author can be any string with any length.
+		author: "Kriechbaum"
+		
+		# The output sii filename for interior sounds
+		default_interior_filename: "interior_mx13.sii"
+		
+		# The output sii filename for exterior sounds
+		default_exterior_filename: "exterior_mx13.sii"
+	}
+}
