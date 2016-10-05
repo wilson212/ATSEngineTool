@@ -58,7 +58,7 @@ namespace ATSEngineTool.Database
         /// Gets or Sets the package version number
         /// </summary>
         [Column, Required, Default(1.0)]
-        public double Version { get; set; }
+        public decimal Version { get; set; }
 
         /// <summary>
         /// Gets a list of <see cref="EngineSeries"/> that reference this 
@@ -160,8 +160,8 @@ namespace ATSEngineTool.Database
 
             // Start building attributes
             WriteAttribute(SoundAttribute.Start, ".start", sounds, classMap, builder);
-            WriteAttribute(SoundAttribute.Stop, ".stop", sounds, classMap, builder);
             WriteAttribute(SoundAttribute.StartNoFuel, ".startbad", sounds, classMap, builder);
+            WriteAttribute(SoundAttribute.Stop, ".stop", sounds, classMap, builder);
             builder.AppendLine();
 
             // Engine specific
@@ -247,8 +247,8 @@ namespace ATSEngineTool.Database
                 if (sound[0].IsSoundArray)
                 {
                     // Apply ordering if need be
-                    if (EngineSound.IsEngineSoundType(attribute) && sound.Count > 1)
-                        sound = sound.OrderBy(x => x.PitchReference).ToList();
+                    //if (EngineSound.IsEngineSoundType(attribute) && sound.Count > 1)
+                        //sound = sound.OrderBy(x => x.PitchReference).ToList();
 
                     int i = 0;
                     foreach (var snd in sound)

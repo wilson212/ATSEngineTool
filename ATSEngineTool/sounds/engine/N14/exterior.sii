@@ -49,26 +49,26 @@ accessory_sound_data : n14.esound
 
 sound_data: .start
 {
-	name: "/sound/truck/engine/N14/ext/engine_on.ogg"
+	name: "@EP/ext/engine_on.ogg"
 	looped: false
 }
 
 sound_data: .startbad
 {
-	name: "/sound/truck/engine/N14/ext/engine_on_bad.ogg"
+	name: "@EP/ext/engine_on_bad.ogg"
 	looped: false
 }
 
 
 sound_data: .stop
 {
-	name: "/sound/truck/engine/N14/ext/engine_off.ogg"
+	name: "@EP/ext/engine_off.ogg"
 	looped: false
 }
 
 sound_engine_data: .e0
 {
-	name: "/sound/truck/engine/N14/ext/500rpm.ogg"
+	name: "@EP/ext/500rpm.ogg"
 
 	looped: true
 
@@ -81,7 +81,7 @@ sound_engine_data: .e0
 
 sound_engine_data: .e1
 {
-	name: "/sound/truck/engine/N14/ext/1000rpm.ogg"
+	name: "@EP/ext/1000rpm.ogg"
 
 	looped: true
 
@@ -94,7 +94,7 @@ sound_engine_data: .e1
 
 sound_engine_data: .e2
 {
-	name: "/sound/truck/engine/N14/ext/1500rpm.ogg"
+	name: "@EP/ext/1500rpm.ogg"
 
 	looped: true
 
@@ -107,7 +107,7 @@ sound_engine_data: .e2
 
 sound_engine_data: .e3
 {
-	name: "/sound/truck/engine/N14/ext/2000rpm.ogg"
+	name: "@EP/ext/2000rpm.ogg"
 
 	looped: true
 
@@ -120,7 +120,7 @@ sound_engine_data: .e3
 
 sound_engine_data: .e4
 {
-	name: "/sound/truck/engine/N14/ext/turbo_idle.ogg"
+	name: "@EP/ext/turbo_idle.ogg"
 
 	looped: true
 
@@ -133,7 +133,7 @@ sound_engine_data: .e4
 
 sound_engine_data: .e5
 {
-	name: "/sound/truck/engine/N14/ext/turbo_idle2.ogg"
+	name: "@EP/ext/turbo_idle2.ogg"
 
 	looped: true
 
@@ -146,7 +146,7 @@ sound_engine_data: .e5
 
 sound_engine_data: .el0
 {
-	name: "/sound/truck/engine/N14/ext/exhaust_idle.ogg"
+	name: "@EP/ext/exhaust_idle.ogg"
 
 	looped: true
 
@@ -159,7 +159,7 @@ sound_engine_data: .el0
 
 sound_engine_data: .el1
 {
-	name: "/sound/truck/engine/N14/ext/1000rpm_exhaust.ogg"
+	name: "@EP/ext/1000rpm_exhaust.ogg"
 
 	looped: true
 
@@ -172,7 +172,7 @@ sound_engine_data: .el1
 
 sound_engine_data: .el2
 {
-	name: "/sound/truck/engine/N14/ext/1500rpm_exhaust.ogg"
+	name: "@EP/ext/1500rpm_exhaust.ogg"
 
 	looped: true
 
@@ -185,7 +185,7 @@ sound_engine_data: .el2
 
 sound_engine_data: .el3
 {
-	name: "/sound/truck/engine/N14/ext/2000rpm_exhaust.ogg"
+	name: "@EP/ext/2000rpm_exhaust.ogg"
 
 	looped: true
 
@@ -198,7 +198,7 @@ sound_engine_data: .el3
 
 sound_engine_data: .el4
 {
-	name: "/sound/truck/engine/N14/ext/2200rpm_exhaust.ogg"
+	name: "@EP/ext/2200rpm_exhaust.ogg"
 
 	looped: true
 
@@ -211,7 +211,7 @@ sound_engine_data: .el4
 
 sound_engine_data: .enf0
 {
-	name: "/sound/truck/engine/N14/ext/1000rpm.ogg"
+	name: "@EP/ext/1000rpm.ogg"
 
 	looped: true
 	is_2d: true
@@ -224,7 +224,7 @@ sound_engine_data: .enf0
 
 sound_engine_data: .enf1
 {
-	name: "/sound/truck/engine/N14/ext/lever_le_pied_ext.ogg"
+	name: "@EP/ext/lever_le_pied_ext.ogg"
 	looped: true
 
 	pitch_reference: 1690
@@ -236,7 +236,7 @@ sound_engine_data: .enf1
 
 sound_engine_data: .enf2
 {
-	name: "/sound/truck/engine/N14/ext/1500rpm.ogg"
+	name: "@EP/ext/1500rpm.ogg"
 
 	looped: true
 
@@ -249,7 +249,7 @@ sound_engine_data: .enf2
 
 sound_engine_data: .enf3
 {
-	name: "/sound/truck/engine/N14/ext/turbo_idle.ogg"
+	name: "@EP/ext/turbo_idle.ogg"
 
 	looped: true
 
@@ -262,7 +262,7 @@ sound_engine_data: .enf3
 
 sound_engine_data: .enf4
 {
-	name: "/sound/truck/engine/N14/ext/turbo_idle2.ogg"
+	name: "@EP/ext/turbo_idle2.ogg"
 
 	looped: true
 
@@ -275,7 +275,7 @@ sound_engine_data: .enf4
 
 sound_data: .t
 {
-	name: "/sound/truck/engine/N14/ext/turbo_ext.ogg"
+	name: "@EP/ext/turbo_ext.ogg"
 	looped: true
 
 	volume: 0.87
@@ -283,53 +283,53 @@ sound_data: .t
 
 sound_data: .airgear0
 {
-	name: "/sound/truck/common/ext/gear_air_1.ogg"
+	name: "@CP/ext/gear_air_1.ogg"
 		volume: 0.25
 }
 
 sound_data: .airgear1
 {
-	name: "/sound/truck/common/ext/gear_air_2.ogg"
+	name: "@CP/ext/gear_air_2.ogg"
 		volume: 0.04
 }
 
 sound_data: .airgear2
 {
-	name: "/sound/truck/common/ext/gear_air_3.ogg"
+	name: "@CP/ext/gear_air_3.ogg"
 		volume: 0.04
 }
 
 sound_data: .airbrake0
 {
-	name: "/sound/truck/common/ext/air_brake1.ogg"
+	name: "@CP/ext/air_brake1.ogg"
 
 	looped: false
 }
 
 sound_data: .airbrake1
 {
-	name: "/sound/truck/common/ext/air_brake2.ogg"
+	name: "@CP/ext/air_brake2.ogg"
 
 	looped: false
 }
 
 sound_data: .airbrake2
 {
-	name: "/sound/truck/common/ext/air_brake3.ogg"
+	name: "@CP/ext/air_brake3.ogg"
 
 	looped: false
 }
 
 sound_data: .airbrake3
 {
-	name: "/sound/truck/common/ext/air_brake4.ogg"
+	name: "@CP/ext/air_brake4.ogg"
 
 	looped: false
 }
 
 sound_engine_data: .eb
 {
-	name: "/sound/truck/engine/N14/ext/engine_brake_ext.ogg"
+	name: "@EP/ext/engine_brake_ext.ogg"
 	looped: true
 	is_2d: true
 	pitch_reference: 1520
@@ -341,19 +341,19 @@ sound_engine_data: .eb
 
 sound_data: .horn
 {
-	name: "/sound/truck/common/ext/horn.ogg"
+	name: "@CP/ext/horn.ogg"
 	looped: true
 }
 
 sound_data: .ahorn
 {
-	name: "/sound/truck/common/ext/air_horn.ogg"
+	name: "@CP/ext/air_horn.ogg"
 	looped: true
 }
 
 sound_data: .reverse
 {
-	name: "/sound/truck/common/ext/reverse.ogg"
+	name: "@CP/ext/reverse.ogg"
 	looped: true
 }
 

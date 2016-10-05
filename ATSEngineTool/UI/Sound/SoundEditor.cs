@@ -22,45 +22,75 @@ namespace ATSEngineTool
 
         protected SoundPackage Package { get; set; }
 
-        public SoundEditor(SoundPackage package, EngineSound sound = null)
+        public SoundEditor(SoundPackage package, SoundType type)
+        {
+            InitializeComponent();
+            headerPanel.BackColor = Color.FromArgb(51, 53, 53);
+
+            NewSound = true;
+            Sound = new EngineSound();
+            Package = package;
+            Type = type;
+
+            InitializeForm();
+        }
+
+        public SoundEditor(EngineSound sound)
         {
             InitializeComponent();
             headerPanel.BackColor = Color.FromArgb(51, 53, 53);
 
             NewSound = sound == null;
-            Sound = sound ?? new EngineSound();
-            Package = package;
+            Sound = sound;
+            Package = sound.Package;
             Type = (sound?.Type ?? SoundType.Interior);
 
+            InitializeForm();
+        }
+
+        private void InitializeForm()
+        {
             // Set title
             if (Type == SoundType.Interior)
                 this.Text = "Interior Sound Editor";
             else
                 this.Text = "Exterior Sound Editor";
 
+            var existing = new List<SoundAttribute>();
+            if (NewSound)
+                existing.AddRange(Package.EngineSounds.Where(x => x.Type == Type).Select(x => x.Attribute));
+
             // Fill selection box
-            int i = 0;
             foreach (var name in Enum.GetNames(typeof(SoundAttribute)))
             {
+                // Skip existing sounds for this package that are not array sounds
+                var val = (SoundAttribute)Enum.Parse(typeof(SoundAttribute), name);
+                if (existing.Contains(val) && !EngineSound.ArraySounds.Contains(val))
+                    continue;
+
+                // Add item
                 attrType.Items.Add(name);
-                if (sound != null && name == sound.Attribute.ToString())
+                if (Sound != null && name == Sound.Attribute.ToString())
                     attrType.SelectedIndex = attrType.Items.Count - 1;
-                i++;
             }
 
-            if (Sound != null)
+            if (!NewSound)
             {
-                string prefix = (Type == SoundType.Exterior) ? "ext/" : "int/";
-                fileNameBox.Text = prefix + sound.FileName;
-                volumeBox.Value = (decimal)(sound.Volume * 100);
-                checkBox2D.Checked = sound.Is2D;
-                checkBoxLooped.Checked = sound.Looped;
-                if (sound.IsEngineSound)
+                attrType.Enabled = false;
+                fileNameBox.Text = Sound.FileName;
+                volumeBox.Value = (decimal)(Sound.Volume * 100);
+                checkBox2D.Checked = Sound.Is2D;
+                checkBoxLooped.Checked = Sound.Looped;
+                if (Sound.IsEngineSound)
                 {
-                    pitchBox.Value = (int)sound.PitchReference;
-                    maxRpmBox.Value = (int)sound.MaxRpm;
-                    minRpmBox.Value = (int)sound.MinRpm;
+                    pitchBox.Value = Sound.PitchReference;
+                    maxRpmBox.Value = Sound.MaxRpm;
+                    minRpmBox.Value = Sound.MinRpm;
                 }
+            }
+            else
+            {
+                attrType.SelectedIndex = 0;
             }
         }
 
@@ -102,73 +132,44 @@ namespace ATSEngineTool
 
         private bool PassesValidaion()
         {
-            // Remove bad file system characters
-            string file = fileNameBox.Text.MakeFileNameSafe();
-
-            // Check for empty strings
-            if (String.IsNullOrWhiteSpace(file))
+            try
             {
-                // Tell the user this isnt allowed
-                MessageBox.Show(
-                    "Invalid or no sound filename specified. Please Try again",
-                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning
-                );
+                // Remove bad file system characters
+                string file = Path.GetFileName(fileNameBox.Text);
 
+                // Check for empty strings
+                if (String.IsNullOrWhiteSpace(file))
+                {
+                    // Tell the user this isnt allowed
+                    MessageBox.Show(
+                        "Invalid or no sound filename specified. Please Try again",
+                        "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning
+                    );
+
+                    return false;
+                }
+
+                // Add Extensions if they are missing
+                if (!Path.HasExtension(file)) file += ".ogg";
+
+                // Set text box values again
+                fileNameBox.Text = file;
+                return true;
+            }
+            catch
+            {
                 return false;
             }
-
-            // Add Extensions if they are missing
-            if (!Path.HasExtension(file)) file += ".ogg";
-
-            // Set text box values again
-            fileNameBox.Text = file;
-            return true;
         }
         
         private void searchButton_Click(object sender, EventArgs e)
         {
-            string folderPath = Path.Combine(Program.RootPath, "sounds", "engine", Package.FolderName);
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Title = "Select Sound File";
-            dialog.Filter = "Ogg Vorbis Sound|*.ogg";
-            dialog.InitialDirectory = folderPath;
-            if (dialog.ShowDialog() == DialogResult.OK)
+            using (SoundFileManager frm = new SoundFileManager(Package))
             {
-                string fileName = Path.GetFileName(dialog.FileName);
-                string directory = Path.GetFileName(Path.GetDirectoryName(dialog.FileName));
-
-                // Sound import?
-                if (!dialog.FileName.StartsWith(folderPath))
+                var result = frm.ShowDialog();
+                if (result == DialogResult.OK)
                 {
-                    return;
-                }
-
-                // Switching?
-                if (Type == SoundType.Interior && directory.StartsWith("ext"))
-                {
-                    // Ask the user what they are doing
-                    var result = AskUserAboutSwitch(Type);
-                    if (result != DialogResult.Yes) return;
-
-                    // copy file over
-                    File.Copy(dialog.FileName, Path.Combine(folderPath, "int", fileName));
-                    fileNameBox.Text = "int/" + fileName;
-                }
-                else if (Type == SoundType.Exterior && directory.StartsWith("int"))
-                {
-                    // Ask the user what they are doing
-                    var result = AskUserAboutSwitch(Type);
-                    if (result != DialogResult.Yes) return;
-
-                    // copy file over
-                    File.Copy(dialog.FileName, Path.Combine(folderPath, "ext", fileName));
-                    fileNameBox.Text = "ext/" + fileName;
-                }
-                else
-                {
-                    // just select the file
-                    string prefix = (Type == SoundType.Exterior) ? "ext/" : "int/";
-                    fileNameBox.Text = prefix + fileName;
+                    fileNameBox.Text = frm.SoundPath;
                 }
             }
         }

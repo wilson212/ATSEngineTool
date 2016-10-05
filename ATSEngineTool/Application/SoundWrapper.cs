@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using ATSEngineTool.Database;
 
 namespace ATSEngineTool
@@ -9,13 +10,15 @@ namespace ATSEngineTool
 
         public List<SoundWrapper> Children { get; protected set; } = new List<SoundWrapper>();
 
-        public string SoundName { get; set; }
+        public string SoundName { get; set; } = string.Empty;
+
+        public SoundType Catagory => Sound.Type;
 
         public string Filename
         {
             get
             {
-                return (Children.Count > 0) ? string.Empty : Sound.FileName;
+                return (Children.Count > 0) ? string.Empty : Path.GetFileName(Sound.FileName);
             }
         }
 
@@ -30,5 +33,19 @@ namespace ATSEngineTool
         public SoundWrapper Parent { get; set; }
 
         public EngineSound Sound { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is SoundWrapper)
+            {
+                return ((SoundWrapper)obj).SoundName == this.SoundName;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

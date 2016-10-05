@@ -121,9 +121,9 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.toolStrip7 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.newSoundButton = new System.Windows.Forms.ToolStripButton();
+            this.removeSoundButton = new System.Windows.Forms.ToolStripButton();
+            this.editSoundButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip8 = new System.Windows.Forms.ToolStrip();
             this.newPackageButton = new System.Windows.Forms.ToolStripButton();
             this.removePackageButton = new System.Windows.Forms.ToolStripButton();
@@ -189,7 +189,7 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(816, 451);
+            this.tabControl1.Size = new System.Drawing.Size(816, 434);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -1084,7 +1084,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(808, 425);
+            this.tabPage5.Size = new System.Drawing.Size(808, 408);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Sound Management";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -1125,6 +1125,7 @@
             this.soundListView.UseCompatibleStateImageBehavior = false;
             this.soundListView.View = System.Windows.Forms.View.Details;
             this.soundListView.VirtualMode = true;
+            this.soundListView.SelectedIndexChanged += new System.EventHandler(this.soundListView_SelectedIndexChanged);
             this.soundListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.soundListView_MouseDoubleClick);
             // 
             // olvColumn1
@@ -1169,40 +1170,44 @@
             this.toolStrip7.AutoSize = false;
             this.toolStrip7.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip7.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2,
-            this.toolStripButton3});
+            this.newSoundButton,
+            this.removeSoundButton,
+            this.editSoundButton});
             this.toolStrip7.Location = new System.Drawing.Point(391, 22);
             this.toolStrip7.Name = "toolStrip7";
             this.toolStrip7.Size = new System.Drawing.Size(388, 25);
             this.toolStrip7.TabIndex = 29;
             this.toolStrip7.Text = "toolStrip7";
             // 
-            // toolStripButton1
+            // newSoundButton
             // 
-            this.toolStripButton1.Image = global::ATSEngineTool.Properties.Resources.add;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(76, 22);
-            this.toolStripButton1.Text = "Add New";
+            this.newSoundButton.Enabled = false;
+            this.newSoundButton.Image = global::ATSEngineTool.Properties.Resources.add;
+            this.newSoundButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.newSoundButton.Name = "newSoundButton";
+            this.newSoundButton.Size = new System.Drawing.Size(76, 22);
+            this.newSoundButton.Text = "Add New";
+            this.newSoundButton.Click += new System.EventHandler(this.newSoundButton_Click);
             // 
-            // toolStripButton2
+            // removeSoundButton
             // 
-            this.toolStripButton2.Enabled = false;
-            this.toolStripButton2.Image = global::ATSEngineTool.Properties.Resources.DeleteRed;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(70, 22);
-            this.toolStripButton2.Text = "Remove";
+            this.removeSoundButton.Enabled = false;
+            this.removeSoundButton.Image = global::ATSEngineTool.Properties.Resources.DeleteRed;
+            this.removeSoundButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.removeSoundButton.Name = "removeSoundButton";
+            this.removeSoundButton.Size = new System.Drawing.Size(70, 22);
+            this.removeSoundButton.Text = "Remove";
+            this.removeSoundButton.Click += new System.EventHandler(this.removeSoundButton_Click);
             // 
-            // toolStripButton3
+            // editSoundButton
             // 
-            this.toolStripButton3.Enabled = false;
-            this.toolStripButton3.Image = global::ATSEngineTool.Properties.Resources.edit;
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(84, 22);
-            this.toolStripButton3.Text = "Edit Sound";
+            this.editSoundButton.Enabled = false;
+            this.editSoundButton.Image = global::ATSEngineTool.Properties.Resources.edit;
+            this.editSoundButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.editSoundButton.Name = "editSoundButton";
+            this.editSoundButton.Size = new System.Drawing.Size(84, 22);
+            this.editSoundButton.Text = "Edit Sound";
+            this.editSoundButton.Click += new System.EventHandler(this.editSoundButton_Click);
             // 
             // toolStrip8
             // 
@@ -1497,9 +1502,9 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ToolStrip toolStrip7;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton newSoundButton;
+        private System.Windows.Forms.ToolStripButton removeSoundButton;
+        private System.Windows.Forms.ToolStripButton editSoundButton;
         private System.Windows.Forms.ToolStrip toolStrip8;
         private System.Windows.Forms.ToolStripButton newPackageButton;
         private System.Windows.Forms.ToolStripButton removePackageButton;

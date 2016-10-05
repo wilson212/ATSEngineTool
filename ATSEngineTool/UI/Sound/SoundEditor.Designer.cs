@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SoundEditor));
             this.contentPanel = new System.Windows.Forms.Panel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.searchButton = new System.Windows.Forms.Button();
             this.attrType = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -48,6 +51,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.maxRpmBox = new System.Windows.Forms.NumericUpDown();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.footerPanel = new System.Windows.Forms.Panel();
             this.confirmButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
@@ -55,6 +59,7 @@
             this.shadowLabel1 = new System.Windows.Forms.ShadowLabel();
             this.contentPanel.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.volumeBox)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -73,11 +78,12 @@
             this.contentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contentPanel.Location = new System.Drawing.Point(0, 65);
             this.contentPanel.Name = "contentPanel";
-            this.contentPanel.Size = new System.Drawing.Size(509, 297);
+            this.contentPanel.Size = new System.Drawing.Size(509, 299);
             this.contentPanel.TabIndex = 35;
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.pictureBox1);
             this.groupBox3.Controls.Add(this.searchButton);
             this.groupBox3.Controls.Add(this.attrType);
             this.groupBox3.Controls.Add(this.label1);
@@ -85,14 +91,25 @@
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Location = new System.Drawing.Point(19, 17);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(471, 101);
+            this.groupBox3.Size = new System.Drawing.Size(471, 105);
             this.groupBox3.TabIndex = 45;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Sound Information";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::ATSEngineTool.Properties.Resources.question_button;
+            this.pictureBox1.Location = new System.Drawing.Point(384, 59);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(20, 20);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox1.TabIndex = 32;
+            this.pictureBox1.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBox1, resources.GetString("pictureBox1.ToolTip"));
+            // 
             // searchButton
             // 
-            this.searchButton.Location = new System.Drawing.Point(354, 58);
+            this.searchButton.Location = new System.Drawing.Point(354, 59);
             this.searchButton.Name = "searchButton";
             this.searchButton.Size = new System.Drawing.Size(27, 20);
             this.searchButton.TabIndex = 31;
@@ -113,7 +130,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(86, 61);
+            this.label1.Location = new System.Drawing.Point(86, 62);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(86, 13);
             this.label1.TabIndex = 28;
@@ -121,7 +138,7 @@
             // 
             // fileNameBox
             // 
-            this.fileNameBox.Location = new System.Drawing.Point(178, 58);
+            this.fileNameBox.Location = new System.Drawing.Point(178, 59);
             this.fileNameBox.Name = "fileNameBox";
             this.fileNameBox.Size = new System.Drawing.Size(170, 20);
             this.fileNameBox.TabIndex = 29;
@@ -142,7 +159,7 @@
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.checkBox2D);
             this.groupBox2.Controls.Add(this.volumeBox);
-            this.groupBox2.Location = new System.Drawing.Point(19, 129);
+            this.groupBox2.Location = new System.Drawing.Point(19, 128);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(235, 150);
             this.groupBox2.TabIndex = 44;
@@ -152,7 +169,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(21, 43);
+            this.label2.Location = new System.Drawing.Point(24, 37);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(79, 13);
             this.label2.TabIndex = 34;
@@ -161,7 +178,7 @@
             // checkBoxLooped
             // 
             this.checkBoxLooped.AutoSize = true;
-            this.checkBoxLooped.Location = new System.Drawing.Point(61, 85);
+            this.checkBoxLooped.Location = new System.Drawing.Point(64, 79);
             this.checkBoxLooped.Name = "checkBoxLooped";
             this.checkBoxLooped.Size = new System.Drawing.Size(106, 17);
             this.checkBoxLooped.TabIndex = 31;
@@ -171,7 +188,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(193, 43);
+            this.label3.Location = new System.Drawing.Point(196, 37);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(15, 13);
             this.label3.TabIndex = 36;
@@ -180,7 +197,7 @@
             // checkBox2D
             // 
             this.checkBox2D.AutoSize = true;
-            this.checkBox2D.Location = new System.Drawing.Point(61, 108);
+            this.checkBox2D.Location = new System.Drawing.Point(64, 102);
             this.checkBox2D.Name = "checkBox2D";
             this.checkBox2D.Size = new System.Drawing.Size(84, 17);
             this.checkBox2D.TabIndex = 32;
@@ -189,7 +206,7 @@
             // 
             // volumeBox
             // 
-            this.volumeBox.Location = new System.Drawing.Point(103, 41);
+            this.volumeBox.Location = new System.Drawing.Point(106, 35);
             this.volumeBox.Maximum = new decimal(new int[] {
             200,
             0,
@@ -212,7 +229,7 @@
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.maxRpmBox);
-            this.groupBox1.Location = new System.Drawing.Point(260, 129);
+            this.groupBox1.Location = new System.Drawing.Point(260, 128);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(230, 150);
             this.groupBox1.TabIndex = 43;
@@ -222,7 +239,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(27, 38);
+            this.label4.Location = new System.Drawing.Point(27, 37);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(87, 13);
             this.label4.TabIndex = 37;
@@ -230,7 +247,7 @@
             // 
             // minRpmBox
             // 
-            this.minRpmBox.Location = new System.Drawing.Point(120, 118);
+            this.minRpmBox.Location = new System.Drawing.Point(120, 114);
             this.minRpmBox.Maximum = new decimal(new int[] {
             3000,
             0,
@@ -247,7 +264,7 @@
             // 
             // pitchBox
             // 
-            this.pitchBox.Location = new System.Drawing.Point(120, 36);
+            this.pitchBox.Location = new System.Drawing.Point(120, 35);
             this.pitchBox.Maximum = new decimal(new int[] {
             3000,
             0,
@@ -265,7 +282,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(60, 120);
+            this.label6.Location = new System.Drawing.Point(60, 116);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(54, 13);
             this.label6.TabIndex = 41;
@@ -274,7 +291,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(57, 81);
+            this.label5.Location = new System.Drawing.Point(57, 77);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(57, 13);
             this.label5.TabIndex = 39;
@@ -282,7 +299,7 @@
             // 
             // maxRpmBox
             // 
-            this.maxRpmBox.Location = new System.Drawing.Point(120, 79);
+            this.maxRpmBox.Location = new System.Drawing.Point(120, 75);
             this.maxRpmBox.Maximum = new decimal(new int[] {
             3000,
             0,
@@ -297,6 +314,14 @@
             0,
             0});
             // 
+            // toolTip1
+            // 
+            this.toolTip1.AutomaticDelay = 2000;
+            this.toolTip1.AutoPopDelay = 20000;
+            this.toolTip1.InitialDelay = 200;
+            this.toolTip1.ReshowDelay = 400;
+            this.toolTip1.ShowAlways = true;
+            // 
             // footerPanel
             // 
             this.footerPanel.BackColor = System.Drawing.Color.DimGray;
@@ -304,7 +329,7 @@
             this.footerPanel.Controls.Add(this.confirmButton);
             this.footerPanel.Controls.Add(this.cancelButton);
             this.footerPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.footerPanel.Location = new System.Drawing.Point(0, 362);
+            this.footerPanel.Location = new System.Drawing.Point(0, 364);
             this.footerPanel.Name = "footerPanel";
             this.footerPanel.Size = new System.Drawing.Size(509, 50);
             this.footerPanel.TabIndex = 36;
@@ -361,7 +386,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(509, 412);
+            this.ClientSize = new System.Drawing.Size(509, 414);
             this.Controls.Add(this.contentPanel);
             this.Controls.Add(this.footerPanel);
             this.Controls.Add(this.headerPanel);
@@ -374,6 +399,7 @@
             this.contentPanel.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.volumeBox)).EndInit();
@@ -415,5 +441,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button searchButton;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

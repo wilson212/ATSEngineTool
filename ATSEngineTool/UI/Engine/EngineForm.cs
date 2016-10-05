@@ -491,6 +491,10 @@ namespace ATSEngineTool
                 ? String.Concat(Engine.TorqueToNm(torqueBox.Value), " (Nm)")
                 : String.Concat(Engine.NmToTorque(torqueBox.Value), " (Trq)");
 
+            // disable buttons
+            addPointButton.Enabled = false;
+            removePointButton.Enabled = false;
+
             // Clear old chart points
             chart1.Series[0].Points.Clear();
             chart1.Series[1].Points.Clear();
@@ -571,11 +575,25 @@ namespace ATSEngineTool
             }
 
             // Update labels
-            DataPoint pnt = chart1.Series[1].Points.FindMaxByValue("Y");
-            maxHpLabel.Text = $"{pnt.YValues[0]} @ {pnt.XValue} RPM";
-            torque = (double)Math.Round(torqueBox.Value * highest.Ratio, 0);
-            maxTrqLabel.Text = $"{torque} @ {highest.RpmLevel} RPM";
-            peakRPMBox.Value = highest.RpmLevel;
+            if (chart1.Series[1].Points.Count > 0)
+            {
+                DataPoint pnt = chart1.Series[1].Points.FindMaxByValue("Y");
+                maxHpLabel.Text = $"{pnt.YValues[0]} @ {pnt.XValue} RPM";
+                torque = (double)Math.Round(torqueBox.Value * highest.Ratio, 0);
+                maxTrqLabel.Text = $"{torque} @ {highest.RpmLevel} RPM";
+                peakRPMBox.Value = highest?.RpmLevel ?? 1200;
+                peakRPMBox.Enabled = false; // no user edit
+            }
+            else
+            {
+                peakRPMBox.Enabled = true;
+                maxHpLabel.Text = $"";
+                maxTrqLabel.Text = $"";
+            }
+
+            // Enable buttons
+            addPointButton.Enabled = true;
+            removePointButton.Enabled = true;
         }
 
         private void horsepowerBox_ValueChanged_1(object sender, EventArgs e)

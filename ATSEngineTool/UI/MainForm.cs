@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -9,6 +10,7 @@ using System.Windows.Forms;
 using ATSEngineTool.Database;
 using ATSEngineTool.Properties;
 using BrightIdeasSoftware;
+using CrossLite;
 
 namespace ATSEngineTool
 {
@@ -94,10 +96,6 @@ namespace ATSEngineTool
                 }
             }
 
-            // ========================= HIDE SOUND TAB - NOT FINISHED ======================= //
-            //this.tabControl1.TabPages.Remove(tabPage5);
-            // =============================================================================== //
-
             // Load database
             using (AppDatabase db = new AppDatabase())
             {
@@ -130,6 +128,17 @@ namespace ATSEngineTool
                 ProgramUpdater.CheckCompleted += Updater_CheckCompleted;
                 ProgramUpdater.CheckForUpdateAsync();
             }
+
+            /*
+            string database = Path.Combine(Program.RootPath, "../../", "data", "Migration_14.db");
+            var Builder = new SQLiteConnectionStringBuilder();
+            Builder.DataSource = database;
+            using (var context = new CrossLite.SQLiteContext(Builder))
+            {
+                context.Connection.Open();
+                context.Execute("VACUUM;");
+            }
+            */
         }
 
         #region Functions
@@ -924,12 +933,14 @@ namespace ATSEngineTool
             }
             catch (Exception ex)
             {
+                TaskForm.CloseForm();
                 MessageBox.Show(ex.Message, "An Error Occured", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
                 this.Enabled = true;
-                TaskForm.CloseForm();
+                if (TaskForm.IsOpen)
+                    TaskForm.CloseForm();
             }
         }
 
@@ -1166,52 +1177,72 @@ namespace ATSEngineTool
 
             // Always verify that this isnt a mistake
             var package = (SoundPackage)packageListView.SelectedItems[0].Tag;
-            var soundList = new List<EngineSound>(package.EngineSounds.OrderBy(x => x.Attribute).ThenBy(x => x.Type));
-            var objectList = new List<SoundWrapper>()
-            {
-                new SoundWrapper() { SoundName = "Interior" },
-                new SoundWrapper() { SoundName = "Exterior" },
-            };
+            var soundList = new List<EngineSound>(package.EngineSounds.OrderBy(x => x.Attribute));
             SoundWrapper wrapper = null;
 
-            foreach (var sound in soundList)
+            // Create tree Roots
+            var objectList = new List<SoundWrapper>()
             {
-                // If changine sound type or attribute
-                if (wrapper == null || wrapper.Sound.Type != sound.Type || wrapper.Sound.Attribute != sound.Attribute)
-                {
-                    if (sound.IsSoundArray)
-                    {
-                        wrapper = new SoundWrapper() { Sound = sound, SoundName = sound.Attribute.ToString() };
-                        wrapper.Children.Add(new SoundWrapper()
-                        {
-                            SoundName = sound.Attribute.ToString(),
-                            Sound = sound
-                        });
-                    }
-                    else
-                    {
-                        wrapper = new SoundWrapper()
-                        {
-                            SoundName = sound.Attribute.ToString(),
-                            Sound = sound,
-                        };
-                    }
+                new SoundWrapper() { SoundName = "Interior", Sound = new EngineSound() { Type = SoundType.Interior } },
+                new SoundWrapper() { SoundName = "Exterior", Sound = new EngineSound() { Type = SoundType.Exterior }},
+            };
 
-                    objectList[(int)sound.Type].Children.Add(wrapper);
-                }
-                else
+            // Add sounds to the tree roots
+            wrapper = objectList[0];
+            foreach (var sound in soundList.Where(x => x.Type == SoundType.Interior))
+            {
+                wrapper = AddSoundToList(sound, wrapper, objectList[0]);
+            }
+
+            wrapper = objectList[1];
+            foreach (var sound in soundList.Where(x => x.Type == SoundType.Exterior))
+            {
+                wrapper = AddSoundToList(sound, wrapper, objectList[1]);
+            }
+
+            soundListView.Roots = objectList;
+            //soundListView.Expand(objectList[0]);
+        }
+
+        private SoundWrapper AddSoundToList(EngineSound sound, SoundWrapper parent, SoundWrapper top)
+        {
+            SoundWrapper wrapper = parent;
+            // If changine sound type or attribute
+            if (parent == null || parent.Sound.Type != sound.Type || parent.Sound.Attribute != sound.Attribute)
+            {
+                if (sound.IsSoundArray)
                 {
+                    wrapper = new SoundWrapper() { Sound = sound, SoundName = sound.Attribute.ToString(), Parent = parent };
                     wrapper.Children.Add(new SoundWrapper()
                     {
+                        Parent = wrapper,
                         SoundName = sound.Attribute.ToString(),
                         Sound = sound
                     });
                 }
+                else
+                {
+                    wrapper = new SoundWrapper()
+                    {
+                        Parent = parent,
+                        SoundName = sound.Attribute.ToString(),
+                        Sound = sound,
+                    };
+                }
+
+                top.Children.Add(wrapper);
+            }
+            else
+            {
+                wrapper.Children.Add(new SoundWrapper()
+                {
+                    Parent = parent,
+                    SoundName = sound.Attribute.ToString(),
+                    Sound = sound
+                });
             }
 
-            soundListView.Roots = objectList;
-            soundListView.Expand(objectList[0]);
-            //soundListView.SetObjects(objectList);
+            return wrapper;
         }
 
         private void packageListView_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -1264,7 +1295,7 @@ namespace ATSEngineTool
             {
                 // Tell the use they are making a mistake!
                 var result = MessageBox.Show("Are you sure you want to remove this sound pack?",
-                    "Validation", MessageBoxButtons.YesNo, MessageBoxIcon.Question
+                    "Verification", MessageBoxButtons.YesNo, MessageBoxIcon.Question
                 );
 
                 // phew... /wipesSweatOffBrow
@@ -1292,9 +1323,16 @@ namespace ATSEngineTool
             if (selected != null)
             {
                 var wrapper = selected.RowObject as SoundWrapper;
-                if (wrapper.ChildCount > 0) return;
+                if (wrapper.ChildCount > 0)
+                {
+                    if (soundListView.IsExpanded(wrapper))
+                        soundListView.Collapse(wrapper);
+                    else
+                        soundListView.Expand(wrapper);
+                    return;
+                }
 
-                using (SoundEditor frm = new SoundEditor(wrapper.Sound.Package, wrapper.Sound))
+                using (SoundEditor frm = new SoundEditor(wrapper.Sound))
                 {
                     var result = frm.ShowDialog();
                     if (result == DialogResult.OK)
@@ -1302,6 +1340,84 @@ namespace ATSEngineTool
                         int index = soundListView.IndexOf(wrapper);
                         soundListView.RedrawItems(index, index, false);
                     }
+                }
+            }
+        }
+
+        private void soundListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            editSoundButton.Enabled = (
+                soundListView.SelectedItem != null
+                && ((SoundWrapper)soundListView.SelectedItem.RowObject).ChildCount == 0
+            );
+            removeSoundButton.Enabled = editSoundButton.Enabled;
+            newSoundButton.Enabled = soundListView.SelectedItem != null;
+        }
+
+        private void editSoundButton_Click(object sender, EventArgs e)
+        {
+            var selected = soundListView.SelectedItem;
+            if (selected == null) return;
+
+            var wrapper = selected.RowObject as SoundWrapper;
+            if (wrapper.ChildCount > 0) return;
+
+            using (SoundEditor frm = new SoundEditor(wrapper.Sound))
+            {
+                var result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    int index = soundListView.IndexOf(wrapper);
+                    soundListView.RedrawItems(index, index, false);
+                }
+            }
+
+        }
+
+        private void removeSoundButton_Click(object sender, EventArgs e)
+        {
+            var selected = soundListView.SelectedItem;
+            if (selected == null) return;
+
+            var wrapper = selected.RowObject as SoundWrapper;
+            if (wrapper.ChildCount > 0) return;
+
+            // Tell the use they are making a mistake!
+            var result = MessageBox.Show($"Are you sure you want to remove the sound \"{wrapper.SoundName}\"?",
+                "Validation", MessageBoxButtons.YesNo, MessageBoxIcon.Question
+            );
+
+            // phew... /wipesSweatOffBrow
+            if (result != DialogResult.Yes) return;
+
+            // Open database
+            using (AppDatabase db = new AppDatabase())
+            {
+                // Remove
+                db.EngineSounds.Remove(wrapper.Sound);
+
+                // Refill Sounds
+                packageListView_SelectedIndexChanged(sender, e);
+            }
+        }
+
+        private void newSoundButton_Click(object sender, EventArgs e)
+        {
+            // If we have no selected packages, skimp out here
+            var item = soundListView.SelectedItem;
+            if (item == null) return;
+
+            var wrapper = item.RowObject as SoundWrapper;
+            ListViewItem selected = packageListView.SelectedItems[0];
+            var package = selected.Tag as SoundPackage;
+
+            using (SoundEditor frm = new SoundEditor(package, wrapper.Catagory))
+            {
+                var result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    // Refill Sounds
+                    packageListView_SelectedIndexChanged(sender, e);
                 }
             }
         }

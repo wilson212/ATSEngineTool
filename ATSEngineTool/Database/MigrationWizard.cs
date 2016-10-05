@@ -86,7 +86,7 @@ namespace ATSEngineTool.Database
                 bool found = Database.ExecuteScalar<int>("SELECT COUNT(Id) FROM `EngineSeries` WHERE Name='ISX12'") == 1;
                 if (found)
                 {
-                    var series = Database.Query<EngineSeries>("SELECT Id FROM `EngineSeries` WHERE Name='ISX12'").First();
+                    var series = Database.Query<EngineSeries>("SELECT * FROM `EngineSeries` WHERE Name='ISX12'").First();
                     series.Displacement = 11.9m;
                     Database.EngineSeries.Update(series);
                 }
@@ -98,7 +98,7 @@ namespace ATSEngineTool.Database
                     var package1 = new SoundPackage()
                     {
                         Author = "SCS",
-                        Version = 1.4,
+                        Version = 1.4m,
                         Name = "Default Engine Sounds",
                         UnitName = "std",
                         FolderName = "default",
@@ -108,7 +108,7 @@ namespace ATSEngineTool.Database
                     var package2 = new SoundPackage()
                     {
                         Author = "SCS",
-                        Version = 1.4,
+                        Version = 1.4m,
                         Name = "Default Engine Sounds (w900)",
                         UnitName = "std",
                         FolderName = "default.w900",

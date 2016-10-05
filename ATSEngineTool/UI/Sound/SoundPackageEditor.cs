@@ -119,7 +119,7 @@ namespace ATSEngineTool
             // Add or update the package details
             Package.Name = packageNameBox.Text;
             Package.Author = labelAuthor.Text;
-            Package.Version = Double.Parse(labelVersion.Text, CultureInfo.InvariantCulture);
+            Package.Version = Decimal.Parse(labelVersion.Text, CultureInfo.InvariantCulture);
             Package.UnitName = unitNameBox.Text;
             Package.FolderName = folderNameBox.Text;
             Package.InteriorFileName = intFilenameBox.Text;

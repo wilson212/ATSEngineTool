@@ -1169,11 +1169,6 @@
             0,
             0,
             0});
-            this.peakRPMBox.Minimum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
             this.peakRPMBox.Name = "peakRPMBox";
             this.peakRPMBox.Size = new System.Drawing.Size(103, 20);
             this.peakRPMBox.TabIndex = 8;

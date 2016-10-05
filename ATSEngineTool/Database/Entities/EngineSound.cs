@@ -122,12 +122,10 @@ namespace ATSEngineTool.Database
             SoundAttribute.EngineBrake,
             SoundAttribute.EngineLoad,
             SoundAttribute.EngineNoFuel,
-            SoundAttribute.Start,
-            SoundAttribute.StartNoFuel,
-            SoundAttribute.Stop
+            SoundAttribute.EngineExhaust
         };
 
-        private static SoundAttribute[] ArraySounds = new[]
+        public static SoundAttribute[] ArraySounds = new[]
         {
             SoundAttribute.Engine,
             SoundAttribute.EngineBrake,
@@ -179,7 +177,7 @@ namespace ATSEngineTool.Database
             this.Type = type;
             this.Attribute = attr;
 
-            this.FileName = Path.GetFileName(data.Name);
+            this.FileName = data.Name;
             this.Is2D = data.Is2D;
             this.Looped = data.Looped;
             this.MinRpm = (int)data.MinRPM;
@@ -193,7 +191,7 @@ namespace ATSEngineTool.Database
             this.Type = type;
             this.Attribute = attr;
 
-            this.FileName = Path.GetFileName(data.Name);
+            this.FileName = data.Name;
             this.Is2D = data.Is2D;
             this.Looped = data.Looped;
             this.Volume = data.Volume;
@@ -213,10 +211,28 @@ namespace ATSEngineTool.Database
             builder.Append(tab1);
             builder.AppendLine("{");
 
+            // Figure out file path
+            string file = this.FileName;
+            if (this.FileName.StartsWith("@"))
+            {
+                string directive = this.FileName.Substring(1, 2);
+                switch (directive.ToUpperInvariant())
+                {
+                    case "CP":
+                        file = this.FileName.Replace($"@{directive}", "/sound/truck/common");
+                        break;
+                    case "EP":
+                        file = this.FileName.Replace($"@{directive}", $"/sound/truck/engine/{package.FolderName}");
+                        break;
+                    default:
+                        file = this.FileName.Replace($"@{directive}", $"/sound/truck/default");
+                        break;
+                }
+            }
+
             // Write attributes
-            string path = package.FolderPath + ((Type == SoundType.Interior) ? "int" : "ext");
             builder.Append(tab2);
-            builder.AppendLine($"name: \"{path}/{this.FileName}\"");
+            builder.AppendLine($"name: \"{file}\"");
             builder.Append(tab2);
             builder.AppendLineIf(this.Looped, "looped: true", "looped: false");
 
@@ -234,16 +250,16 @@ namespace ATSEngineTool.Database
                     builder.AppendLine($"pitch_reference: {this.PitchReference}");
                 }
 
-                if (this.MaxRpm > 0)
-                {
-                    builder.Append(tab2);
-                    builder.AppendLine($"max_rpm: {this.MaxRpm}.0");
-                }
-
                 if (this.MinRpm > 0)
                 {
                     builder.Append(tab2);
                     builder.AppendLine($"min_rpm: {this.MinRpm}.0");
+                }
+
+                if (this.MaxRpm > 0)
+                {
+                    builder.Append(tab2);
+                    builder.AppendLine($"max_rpm: {this.MaxRpm}.0");
                 }
             }
 
