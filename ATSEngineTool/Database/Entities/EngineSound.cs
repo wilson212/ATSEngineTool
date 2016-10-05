@@ -168,6 +168,13 @@ namespace ATSEngineTool.Database
         /// </summary>
         public bool IsSoundArray => ArraySounds.Contains(this.Attribute);
 
+        /// <summary>
+        /// Gets wether the specified sound attribute is an engine_sound_data object type
+        /// </summary>
+        /// <param name="attr"></param>
+        /// <returns></returns>
+        public static bool IsEngineSoundType(SoundAttribute attr) => EngineSounds.Contains(attr);
+
         #endregion
 
         public EngineSound() { }
@@ -196,8 +203,6 @@ namespace ATSEngineTool.Database
             this.Looped = data.Looped;
             this.Volume = data.Volume;
         }
-
-        public static bool IsEngineSoundType(SoundAttribute attr) => EngineSounds.Contains(attr);
 
         internal string ToSiiFormat(string objectName, SoundPackage package, bool indent = false)
         {

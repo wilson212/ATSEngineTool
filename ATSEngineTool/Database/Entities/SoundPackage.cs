@@ -176,8 +176,8 @@ namespace ATSEngineTool.Database
             builder.AppendLine();
 
             // Air gears and brakes
-            WriteAttribute(SoundAttribute.AirGears, ".airgear", sounds, classMap, builder);
-            WriteAttribute(SoundAttribute.AirBrakes, ".airbrake", sounds, classMap, builder);
+            WriteAttribute(SoundAttribute.AirGears, ".airgear", sounds, classMap, builder, indexArrays: true);
+            WriteAttribute(SoundAttribute.AirBrakes, ".airbrake", sounds, classMap, builder, indexArrays: true);
             // No blank line needed (already there)
 
             // Engine Brake
@@ -237,7 +237,8 @@ namespace ATSEngineTool.Database
                                     Dictionary<SoundAttribute, List<EngineSound>> sounds, 
                                     Dictionary<string, EngineSound> classMap,
                                     StringBuilder builder,
-                                    bool appendLineOnSingle = false)
+                                    bool appendLineOnSingle = false,
+                                    bool indexArrays = false)
         {
             // Only add the sound if it exists (obviously)
             if (sounds.ContainsKey(attribute))
@@ -255,7 +256,7 @@ namespace ATSEngineTool.Database
                     {
                         string cname = objectName + i++;
                         builder.Append(DoubleTab);
-                        builder.AppendLine($"{name}[]: {cname}");
+                        builder.AppendLineIf(indexArrays, $"{name}[{i-1}]: {cname}", $"{name}[]: {cname}");
                         classMap.Add(cname, snd);
                     }
                     builder.AppendLine();

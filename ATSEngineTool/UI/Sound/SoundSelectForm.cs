@@ -13,21 +13,25 @@ using ATSEngineTool.Database;
 
 namespace ATSEngineTool
 {
-    public partial class SoundFileManager : Form
+    public partial class SoundSelectForm : Form
     {
         protected SoundPackage Package { get; set; }
 
         public string SoundPath { get; private set; }
 
-        public SoundFileManager(SoundPackage package)
+        public SoundSelectForm(SoundPackage package)
         {
+            // Create controls and style the header
             InitializeComponent();
+            headerPanel.BackColor = Color.FromArgb(51, 53, 53);
 
+            // Create treeView image list
             treeView1.ImageList = new ImageList();
             treeView1.ImageList.Images.Add(Resources.folder2);
             treeView1.ImageList.Images.Add(Resources.folder_open2);
             treeView1.ImageList.Images.Add(Resources.music);
 
+            // Fill the tree
             Package = package;
             FillTree();
         }
@@ -203,6 +207,9 @@ namespace ATSEngineTool
         /// </summary>
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
+            e.Cancel = true; // never show
+            return;
+            /*
             var node = treeView1.SelectedNode;
             if (node != null)
             {
@@ -213,6 +220,7 @@ namespace ATSEngineTool
             {
                 e.Cancel = true;
             }
+            */
         }
 
         /// <summary>

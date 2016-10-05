@@ -139,7 +139,6 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.headerPanel = new System.Windows.Forms.Panel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -175,7 +174,6 @@
             this.panel1.SuspendLayout();
             this.headerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -200,7 +198,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(808, 425);
+            this.tabPage1.Size = new System.Drawing.Size(808, 408);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Main Page";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -548,7 +546,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(808, 425);
+            this.tabPage2.Size = new System.Drawing.Size(808, 408);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Truck Management";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -717,7 +715,7 @@
             this.tabPage3.Controls.Add(this.engineListView);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(808, 425);
+            this.tabPage3.Size = new System.Drawing.Size(808, 408);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Engine Management";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -901,7 +899,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(808, 425);
+            this.tabPage4.Size = new System.Drawing.Size(808, 408);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Transmission Management";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1398,7 +1396,6 @@
             this.panel1.ResumeLayout(false);
             this.headerPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1417,7 +1414,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ListView truckListView2;
         private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel headerPanel;
         private System.Windows.Forms.PictureBox pictureBox2;

@@ -88,10 +88,9 @@ namespace ATSEngineTool
                     minRpmBox.Value = Sound.MinRpm;
                 }
             }
-            else
-            {
+            
+            if (attrType.SelectedIndex == -1)
                 attrType.SelectedIndex = 0;
-            }
         }
 
         private void confirmButton_Click(object sender, EventArgs e)
@@ -164,7 +163,7 @@ namespace ATSEngineTool
         
         private void searchButton_Click(object sender, EventArgs e)
         {
-            using (SoundFileManager frm = new SoundFileManager(Package))
+            using (SoundSelectForm frm = new SoundSelectForm(Package))
             {
                 var result = frm.ShowDialog();
                 if (result == DialogResult.OK)

@@ -105,11 +105,11 @@
     <Compile Include="Application\SoundWrapper.cs" />
     <Compile Include="Extensions\StringBuilderExtensions.cs" />
     <Compile Include="SiiEntities\SoundPackManifest.cs" />
-    <Compile Include="UI\Sound\SoundFileManager.cs">
+    <Compile Include="UI\Sound\SoundSelectForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Sound\SoundFileManager.Designer.cs">
-      <DependentUpon>SoundFileManager.cs</DependentUpon>
+    <Compile Include="UI\Sound\SoundSelectForm.Designer.cs">
+      <DependentUpon>SoundSelectForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Sound\SoundEditor.cs">
       <SubType>Form</SubType>
@@ -242,8 +242,8 @@
     <EmbeddedResource Include="UI\Sound\SoundEditor.resx">
       <DependentUpon>SoundEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Sound\SoundFileManager.resx">
-      <DependentUpon>SoundFileManager.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Sound\SoundSelectForm.resx">
+      <DependentUpon>SoundSelectForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Sound\SoundPackageEditor.resx">
       <DependentUpon>SoundPackageEditor.cs</DependentUpon>
@@ -570,6 +570,9 @@
     <None Include="sounds\engine\3406E\int\turbo_int.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="sounds\engine\3406E\manifest.sii">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="sounds\engine\C15\exterior.sii">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -672,16 +675,25 @@
     <None Include="sounds\engine\C15\int\turbo_int.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="sounds\engine\C15\manifest.sii">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="sounds\engine\default.w900\exterior.sii">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="sounds\engine\default.w900\interior.sii">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="sounds\engine\default.w900\manifest.sii">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="sounds\engine\default\exterior.sii">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="sounds\engine\default\interior.sii">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="sounds\engine\default\manifest.sii">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="sounds\engine\ISX\exterior.sii">
@@ -795,6 +807,9 @@
     <None Include="sounds\engine\ISX\int\turbo_int.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="sounds\engine\ISX\manifest.sii">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="sounds\engine\MX13\exterior.sii">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -895,6 +910,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="sounds\engine\MX13\int\ventilo.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="sounds\engine\MX13\manifest.sii">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="sounds\engine\N14\exterior.sii">
@@ -1003,6 +1021,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="sounds\engine\N14\int\turbo_int.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="sounds\engine\N14\manifest.sii">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="sounds\noises\lift_axle.ogg">
