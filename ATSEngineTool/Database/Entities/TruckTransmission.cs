@@ -10,13 +10,13 @@ namespace ATSEngineTool.Database
         /// The Unique item ID
         /// </summary>
         [Column, Required, PrimaryKey]
-        protected int TransmissionId { get; set; }
+        public int TransmissionId { get; set; }
 
         /// <summary>
         /// The Unique item ID
         /// </summary>
         [Column, Required, PrimaryKey]
-        protected int TruckId { get; set; }
+        public int TruckId { get; set; }
 
         #region Virtual Foreign Keys
 

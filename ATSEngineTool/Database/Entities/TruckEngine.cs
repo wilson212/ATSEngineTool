@@ -12,24 +12,30 @@ namespace ATSEngineTool.Database
         /// The Unique item ID
         /// </summary>
         [Column, Required, PrimaryKey]
-        protected int TruckId { get; set; }
+        public int TruckId { get; set; }
 
         /// <summary>
         /// The Unique item ID
         /// </summary>
         [Column, Required, PrimaryKey]
-        protected int EngineId { get; set; }
+        public int EngineId { get; set; }
 
         #endregion
 
         #region Virtual Foreign Keys
 
         [InverseKey("Id")]
-        [ForeignKey("TruckId", OnDelete = ReferentialIntegrity.Cascade)]
+        [ForeignKey("TruckId",
+            OnDelete = ReferentialIntegrity.Cascade,
+            OnUpdate = ReferentialIntegrity.Cascade
+        )]
         protected virtual ForeignKey<Truck> FK_Truck { get; set; }
 
         [InverseKey("Id")]
-        [ForeignKey("EngineId", OnDelete = ReferentialIntegrity.Cascade)]
+        [ForeignKey("EngineId",
+            OnDelete = ReferentialIntegrity.Cascade,
+            OnUpdate = ReferentialIntegrity.Cascade
+        )]
         protected virtual ForeignKey<Engine> FK_Engine { get; set; }
 
         #endregion

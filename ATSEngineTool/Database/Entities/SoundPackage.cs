@@ -76,38 +76,12 @@ namespace ATSEngineTool.Database
         /// </summary>
         public virtual IEnumerable<EngineSound> EngineSounds { get; set; }
 
-        /// <summary>
-        /// Returns the relative sounds filepath
-        /// </summary>
-        public string FolderPath
-        {
-            get
-            {
-                bool isSCSsound = this.FolderName.Equals("default", StringComparison.InvariantCultureIgnoreCase);
-                return (isSCSsound) ? "/sound/truck/default/" : $"/sound/truck/engine/{this.FolderName}/";
-            }
-        }
-
         private static string SingleTab = "";
         private static string DoubleTab = "\t";
 
-
-        public override string ToString() => Name;
-
-        public override bool Equals(object obj)
-        {
-            if (obj is SoundPackage)
-            {
-                SoundPackage compare = (SoundPackage)obj;
-                return compare.Id == this.Id;
-            }
-            return false;
-        }
-
-        public override int GetHashCode() => this.Id.GetHashCode();
-
         /// <summary>
-        /// Returns an array of 2 pre-compiled sii files.
+        /// Returns an array of 2 pre-compiled sii files. 0 index is the interior
+        /// sii file, while index 1 is the exterior.
         /// </summary>
         /// <returns></returns>
         public string[] ToSiiFormat()
@@ -224,14 +198,16 @@ namespace ATSEngineTool.Database
         }
 
         /// <summary>
-        /// Writes an attribute to the StringBuilder if it exists in the sounds list.
+        /// Writes an attribute to the StringBuilder if the attribute type exists in the sounds list.
         /// </summary>
-        /// <param name="attribute"></param>
-        /// <param name="objectName"></param>
-        /// <param name="sounds"></param>
-        /// <param name="classMap"></param>
-        /// <param name="builder"></param>
-        /// <param name="appendLineOnSingle"></param>
+        /// <param name="attribute">The attribute type to write to the buffer</param>
+        /// <param name="objectName">
+        /// The unique object name to give this object. Attribute arrays will have their index appended to this name.
+        /// </param>
+        /// <param name="sounds">The list of sound attributes and their sounds for this package</param>
+        /// <param name="classMap">A ruuning list of objects that will be later written to the buffer.</param>
+        /// <param name="builder">The current string buffer</param>
+        /// <param name="appendLineOnSingle">If true, a blank line will be inserted after writing this attribute.</param>
         private void WriteAttribute(SoundAttribute attribute, 
                                     string objectName,
                                     Dictionary<SoundAttribute, List<EngineSound>> sounds, 
@@ -247,10 +223,6 @@ namespace ATSEngineTool.Database
                 string name = EngineSound.AttributeNames[attribute];
                 if (sound[0].IsSoundArray)
                 {
-                    // Apply ordering if need be
-                    //if (EngineSound.IsEngineSoundType(attribute) && sound.Count > 1)
-                        //sound = sound.OrderBy(x => x.PitchReference).ToList();
-
                     int i = 0;
                     foreach (var snd in sound)
                     {
@@ -270,5 +242,23 @@ namespace ATSEngineTool.Database
                 }
             }
         }
+
+        #region overrides
+
+        public override string ToString() => Name;
+
+        public override bool Equals(object obj)
+        {
+            if (obj is SoundPackage)
+            {
+                SoundPackage compare = (SoundPackage)obj;
+                return compare.Id == this.Id;
+            }
+            return false;
+        }
+
+        public override int GetHashCode() => this.Id.GetHashCode();
+
+        #endregion overrides
     }
 }

@@ -163,6 +163,11 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.headerPanel = new System.Windows.Forms.Panel();
             this.shadowLabel1 = new System.Windows.Forms.ShadowLabel();
+            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.groupBox16 = new System.Windows.Forms.GroupBox();
+            this.truckListView = new System.Windows.Forms.ListView();
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label46 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.engineIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceBox)).BeginInit();
@@ -211,6 +216,8 @@
             this.contentPanel.SuspendLayout();
             this.footerPanel.SuspendLayout();
             this.headerPanel.SuspendLayout();
+            this.tabPage7.SuspendLayout();
+            this.groupBox16.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -749,6 +756,7 @@
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage6);
+            this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Location = new System.Drawing.Point(-1, 21);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -1899,6 +1907,59 @@
             this.shadowLabel1.TabIndex = 0;
             this.shadowLabel1.Text = "Engine Editor";
             // 
+            // tabPage7
+            // 
+            this.tabPage7.Controls.Add(this.groupBox16);
+            this.tabPage7.Location = new System.Drawing.Point(4, 22);
+            this.tabPage7.Name = "tabPage7";
+            this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage7.Size = new System.Drawing.Size(886, 426);
+            this.tabPage7.TabIndex = 6;
+            this.tabPage7.Text = "Truck List";
+            this.tabPage7.UseVisualStyleBackColor = true;
+            // 
+            // groupBox16
+            // 
+            this.groupBox16.Controls.Add(this.truckListView);
+            this.groupBox16.Controls.Add(this.label46);
+            this.groupBox16.Location = new System.Drawing.Point(240, 31);
+            this.groupBox16.Name = "groupBox16";
+            this.groupBox16.Size = new System.Drawing.Size(407, 364);
+            this.groupBox16.TabIndex = 10;
+            this.groupBox16.TabStop = false;
+            this.groupBox16.Text = "Truck List";
+            // 
+            // truckListView
+            // 
+            this.truckListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.truckListView.AutoArrange = false;
+            this.truckListView.CheckBoxes = true;
+            this.truckListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader6});
+            this.truckListView.FullRowSelect = true;
+            this.truckListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.truckListView.Location = new System.Drawing.Point(11, 56);
+            this.truckListView.Name = "truckListView";
+            this.truckListView.Size = new System.Drawing.Size(385, 293);
+            this.truckListView.TabIndex = 21;
+            this.truckListView.UseCompatibleStateImageBehavior = false;
+            this.truckListView.View = System.Windows.Forms.View.Details;
+            this.truckListView.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.truckListView_ItemCheck);
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Name";
+            this.columnHeader6.Width = 350;
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Location = new System.Drawing.Point(40, 23);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(327, 13);
+            this.label46.TabIndex = 20;
+            this.label46.Text = "Select the trucks that will have this engine added to their engine list:";
+            // 
             // EngineForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1980,6 +2041,9 @@
             this.contentPanel.ResumeLayout(false);
             this.footerPanel.ResumeLayout(false);
             this.headerPanel.ResumeLayout(false);
+            this.tabPage7.ResumeLayout(false);
+            this.groupBox16.ResumeLayout(false);
+            this.groupBox16.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2115,5 +2179,10 @@
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.TabPage tabPage7;
+        private System.Windows.Forms.GroupBox groupBox16;
+        private System.Windows.Forms.ListView truckListView;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.Label label46;
     }
 }

@@ -28,7 +28,7 @@ namespace ATSEngineTool.Database
                 File.Copy(
                     Path.Combine(Program.RootPath, "data", "AppData.db"),
                     Path.Combine(Program.RootPath, "data", "backups", 
-                        $"AppData_v1.{AppDatabase.DatabaseVersion}_{Epoch.Now}.db"
+                        $"AppData_v{AppDatabase.DatabaseVersion}_{Epoch.Now}.db"
                     )
                 );
 

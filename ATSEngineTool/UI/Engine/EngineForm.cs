@@ -45,6 +45,8 @@ namespace ATSEngineTool
 
         protected bool SuitablesChanged { get; set; } = false;
 
+        protected bool TrucksChanged { get; set; } = false;
+
         /// <summary>
         /// English culture for numbers
         /// </summary>
@@ -97,6 +99,20 @@ namespace ATSEngineTool
                     Ratios.Add(new TorqueRatio() { Ratio = 0.77m, RpmLevel = 1900 });
                     Ratios.Add(new TorqueRatio() { Ratio = 0.5m, RpmLevel = 2400 });
                     Ratios.Add(new TorqueRatio() { Ratio = 0m, RpmLevel = 2600 });
+                }
+
+                // Grab a list of trucks that use this engine
+                List<int> trucks = new List<int>();
+                if (!NewEngine)
+                    trucks.AddRange(engine.ItemOf.Select(x => x.TruckId));
+
+                // Add trucks to the truck list
+                foreach (var truck in db.Trucks)
+                {
+                    ListViewItem item = new ListViewItem(truck.Name);
+                    item.Tag = truck.Id;
+                    item.Checked = trucks.Contains(truck.Id);
+                    truckListView.Items.Add(item);
                 }
             }
 
@@ -311,34 +327,6 @@ namespace ATSEngineTool
 
                         // Add the engine
                         db.Engines.Add(Engine);
-
-                        // Add conflicts
-                        if (conflictListView.CheckedItems.Count > 0)
-                        {
-                            var ids = conflictListView.CheckedItems.Cast<ListViewItem>().Select(x => (int)x.Tag);
-                            foreach (var item in ids)
-                            {
-                                db.AccessoryConflicts.Add(new AccessoryConflict()
-                                {
-                                    EngineId = Engine.Id,
-                                    TransmissionId = item
-                                });
-                            }
-                        }
-
-                        // Add suitible fors
-                        if (suitsListView.CheckedItems.Count > 0)
-                        {
-                            var ids = suitsListView.CheckedItems.Cast<ListViewItem>().Select(x => (int)x.Tag);
-                            foreach (var item in ids)
-                            {
-                                db.SuitableAccessories.Add(new SuitableAccessory()
-                                {
-                                    EngineId = Engine.Id,
-                                    TransmissionId = item
-                                });
-                            }
-                        }
                     }
                     else
                     {
@@ -356,51 +344,70 @@ namespace ATSEngineTool
                         // Set Conflicts
                         if (ConflictsChanged)
                         {
-                            var conflicts = new List<AccessoryConflict>(Engine.TransmissionConflicts);
-                            if (conflicts.Count > 0)
-                            {
-                                foreach (var conflict in conflicts)
-                                    db.AccessoryConflicts.Remove(conflict);
-                            }
+                            // Remove old
+                            foreach (var conflict in Engine.TransmissionConflicts)
+                                db.AccessoryConflicts.Remove(conflict);
 
-                            // Add new conflicts
-                            if (conflictListView.CheckedItems.Count > 0)
-                            {
-                                var ids = conflictListView.CheckedItems.Cast<ListViewItem>().Select(x => (int)x.Tag);
-                                foreach (var item in ids)
-                                {
-                                    db.AccessoryConflicts.Add(new AccessoryConflict()
-                                    {
-                                        EngineId = Engine.Id,
-                                        TransmissionId = item
-                                    });
-                                }
-                            }
                         }
 
                         // Set Suitables
                         if (SuitablesChanged)
                         {
-                            var suits = new List<SuitableAccessory>(Engine.SuitableTransmissions);
-                            if (suits.Count > 0)
-                            {
-                                foreach (var item in suits)
-                                    db.SuitableAccessories.Remove(item);
-                            }
+                            // Remove old
+                            foreach (var item in Engine.SuitableTransmissions)
+                                db.SuitableAccessories.Remove(item);
 
-                            // Add new conflicts
-                            if (suitsListView.CheckedItems.Count > 0)
+                        }
+
+                        // Set compatible trucks
+                        if (TrucksChanged)
+                        {
+                            // Remove old
+                            foreach (var item in Engine.ItemOf)
+                                db.TruckEngines.Remove(item);
+
+                        }
+                    }
+
+                    // Add conflicts
+                    if ((NewEngine || ConflictsChanged) && conflictListView.CheckedItems.Count > 0)
+                    {
+                        var ids = conflictListView.CheckedItems.Cast<ListViewItem>().Select(x => (int)x.Tag);
+                        foreach (var item in ids)
+                        {
+                            db.AccessoryConflicts.Add(new AccessoryConflict()
                             {
-                                var ids = suitsListView.CheckedItems.Cast<ListViewItem>().Select(x => (int)x.Tag);
-                                foreach (var item in ids)
-                                {
-                                    db.SuitableAccessories.Add(new SuitableAccessory()
-                                    {
-                                        EngineId = Engine.Id,
-                                        TransmissionId = item
-                                    });
-                                }
-                            }
+                                EngineId = Engine.Id,
+                                TransmissionId = item
+                            });
+                        }
+                    }
+
+                    // Add suitible fors
+                    if ((NewEngine || SuitablesChanged) && suitsListView.CheckedItems.Count > 0)
+                    {
+                        var ids = suitsListView.CheckedItems.Cast<ListViewItem>().Select(x => (int)x.Tag);
+                        foreach (var item in ids)
+                        {
+                            db.SuitableAccessories.Add(new SuitableAccessory()
+                            {
+                                EngineId = Engine.Id,
+                                TransmissionId = item
+                            });
+                        }
+                    }
+
+                    // Add new truck engines
+                    if ((NewEngine || TrucksChanged) && truckListView.CheckedItems.Count > 0)
+                    {
+                        var ids = truckListView.CheckedItems.Cast<ListViewItem>().Select(x => (int)x.Tag);
+                        foreach (var item in ids)
+                        {
+                            db.TruckEngines.Add(new TruckEngine()
+                            {
+                                EngineId = Engine.Id,
+                                TruckId = item
+                            });
                         }
                     }
 
@@ -922,6 +929,11 @@ namespace ATSEngineTool
         {
             chart1.Series[0].ChartType = (radioButton1.Checked) ? SeriesChartType.Spline : SeriesChartType.Line;
             chart1.Series[1].ChartType = chart1.Series[0].ChartType;
+        }
+
+        private void truckListView_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            TrucksChanged = true;
         }
     }
 }
