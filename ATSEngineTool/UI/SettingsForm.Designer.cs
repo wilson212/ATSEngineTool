@@ -40,6 +40,11 @@
             this.SteamInstallPath = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.bothRadio = new System.Windows.Forms.RadioButton();
+            this.transmissionRadio = new System.Windows.Forms.RadioButton();
+            this.engineRadio = new System.Windows.Forms.RadioButton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.torqueOutput1 = new System.Windows.Forms.RadioButton();
             this.torqueOutput2 = new System.Windows.Forms.RadioButton();
@@ -49,21 +54,16 @@
             this.footerPanel = new System.Windows.Forms.Panel();
             this.cancelButton = new System.Windows.Forms.Button();
             this.contentPanel = new System.Windows.Forms.Panel();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.transmissionRadio = new System.Windows.Forms.RadioButton();
-            this.engineRadio = new System.Windows.Forms.RadioButton();
-            this.bothRadio = new System.Windows.Forms.RadioButton();
-            this.label2 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.headerPanel.SuspendLayout();
             this.footerPanel.SuspendLayout();
             this.contentPanel.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -200,6 +200,61 @@
             this.tabPage4.Text = "Compile Options";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.label2);
+            this.groupBox4.Controls.Add(this.bothRadio);
+            this.groupBox4.Controls.Add(this.transmissionRadio);
+            this.groupBox4.Controls.Add(this.engineRadio);
+            this.groupBox4.Location = new System.Drawing.Point(239, 17);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(230, 152);
+            this.groupBox4.TabIndex = 34;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Suitable For";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(15, 22);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(206, 26);
+            this.label2.TabIndex = 32;
+            this.label2.Text = "Define if Engines or Transmissins will have\r\nthe suitible_for[] array for each ot" +
+    "her.";
+            // 
+            // bothRadio
+            // 
+            this.bothRadio.AutoSize = true;
+            this.bothRadio.Location = new System.Drawing.Point(18, 121);
+            this.bothRadio.Name = "bothRadio";
+            this.bothRadio.Size = new System.Drawing.Size(199, 17);
+            this.bothRadio.TabIndex = 31;
+            this.bothRadio.TabStop = true;
+            this.bothRadio.Text = "Both (Unexpected results may occur)";
+            this.bothRadio.UseVisualStyleBackColor = true;
+            // 
+            // transmissionRadio
+            // 
+            this.transmissionRadio.AutoSize = true;
+            this.transmissionRadio.Location = new System.Drawing.Point(18, 75);
+            this.transmissionRadio.Name = "transmissionRadio";
+            this.transmissionRadio.Size = new System.Drawing.Size(115, 17);
+            this.transmissionRadio.TabIndex = 29;
+            this.transmissionRadio.Text = "Transmissions Only";
+            this.transmissionRadio.UseVisualStyleBackColor = true;
+            // 
+            // engineRadio
+            // 
+            this.engineRadio.AutoSize = true;
+            this.engineRadio.Location = new System.Drawing.Point(18, 98);
+            this.engineRadio.Name = "engineRadio";
+            this.engineRadio.Size = new System.Drawing.Size(87, 17);
+            this.engineRadio.TabIndex = 30;
+            this.engineRadio.TabStop = true;
+            this.engineRadio.Text = "Engines Only";
+            this.engineRadio.UseVisualStyleBackColor = true;
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.torqueOutput1);
@@ -300,61 +355,6 @@
             this.contentPanel.Size = new System.Drawing.Size(484, 222);
             this.contentPanel.TabIndex = 35;
             // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.label2);
-            this.groupBox4.Controls.Add(this.bothRadio);
-            this.groupBox4.Controls.Add(this.transmissionRadio);
-            this.groupBox4.Controls.Add(this.engineRadio);
-            this.groupBox4.Location = new System.Drawing.Point(239, 17);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(230, 152);
-            this.groupBox4.TabIndex = 34;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Conflicts and Suitables";
-            // 
-            // transmissionRadio
-            // 
-            this.transmissionRadio.AutoSize = true;
-            this.transmissionRadio.Location = new System.Drawing.Point(18, 75);
-            this.transmissionRadio.Name = "transmissionRadio";
-            this.transmissionRadio.Size = new System.Drawing.Size(115, 17);
-            this.transmissionRadio.TabIndex = 29;
-            this.transmissionRadio.Text = "Transmissions Only";
-            this.transmissionRadio.UseVisualStyleBackColor = true;
-            // 
-            // engineRadio
-            // 
-            this.engineRadio.AutoSize = true;
-            this.engineRadio.Location = new System.Drawing.Point(18, 98);
-            this.engineRadio.Name = "engineRadio";
-            this.engineRadio.Size = new System.Drawing.Size(87, 17);
-            this.engineRadio.TabIndex = 30;
-            this.engineRadio.TabStop = true;
-            this.engineRadio.Text = "Engines Only";
-            this.engineRadio.UseVisualStyleBackColor = true;
-            // 
-            // bothRadio
-            // 
-            this.bothRadio.AutoSize = true;
-            this.bothRadio.Location = new System.Drawing.Point(18, 121);
-            this.bothRadio.Name = "bothRadio";
-            this.bothRadio.Size = new System.Drawing.Size(199, 17);
-            this.bothRadio.TabIndex = 31;
-            this.bothRadio.TabStop = true;
-            this.bothRadio.Text = "Both (Unexpected results may occur)";
-            this.bothRadio.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 22);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(206, 39);
-            this.label2.TabIndex = 32;
-            this.label2.Text = "Define if Engines or Transmissins will have\r\nthe suitible_for[] and conflict_with" +
-    "[] array \r\nfor each other.";
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -378,13 +378,13 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.tabPage4.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.headerPanel.ResumeLayout(false);
             this.footerPanel.ResumeLayout(false);
             this.contentPanel.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }

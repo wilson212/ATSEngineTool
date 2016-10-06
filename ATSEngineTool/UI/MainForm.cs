@@ -320,6 +320,7 @@ namespace ATSEngineTool
             if (truckListView2.SelectedItems.Count == 0) return;
 
             // Clear out existing data
+            truckItemListView.BeginUpdate();
             truckItemListView.Items.Clear();
             truckItemListView.Groups.Clear();
 
@@ -327,6 +328,7 @@ namespace ATSEngineTool
             ListViewItem selected = truckListView2.SelectedItems[0];
             Truck truck = selected.Tag as Truck;
             ListViewGroup group = new ListViewGroup() { Tag = -1 };
+            Dictionary<int, ListViewGroup> groups = new Dictionary<int, ListViewGroup>();
 
             if (enginesToolStripMenuItem.Checked)
             {
@@ -336,29 +338,30 @@ namespace ATSEngineTool
                     // Load engines from the database
                     using (AppDatabase db = new AppDatabase())
                     {
+                        // Grab series and create a group for each one
+                        foreach (var series in db.EngineSeries.OrderBy(x => x.ToString()))
+                        {
+                            group = new ListViewGroup(series.ToString());
+                            group.Tag = series.Id;
+                            groups.Add(series.Id, group);
+                        }
+
                         // Grab the trucks engines, ordered by Brand, then by Horsepower
-                        return from x in truck.TruckEngines
-                               let engine = x.Engine // Fetch once from DB (lazy loaded)
-                               orderby engine.Series.ToString() ascending, engine.Horsepower descending
-                               select engine;
+                        return truck.TruckEngines.Select(x => x.Engine).OrderByDescending(x => x.Horsepower);
                     }
                 });
 
-                // Fill in trucks
+                // Add Groups
+                truckItemListView.Groups.AddRange(groups.Values.ToArray());
+
+                // Add truck items
                 foreach (Engine eng in engines)
                 {
                     // Setup group?
-                    if (((int)group.Tag) != eng.SeriesId)
-                    {
-                        group = new ListViewGroup(eng.Series.ToString());
-                        group.Tag = eng.SeriesId;
-                        truckItemListView.Groups.Add(group);
-                    }
-
                     ListViewItem item = new ListViewItem();
                     item.Tag = eng;
                     item.Text = eng.Name;
-                    group.Items.Add(item);
+                    groups[eng.SeriesId].Items.Add(item);
                     truckItemListView.Items.Add(item);
                 }
             }
@@ -370,33 +373,34 @@ namespace ATSEngineTool
                     // Load engines from the database
                     using (AppDatabase db = new AppDatabase())
                     {
-                        // Grab the trucks engines, ordered by Brand, then by Horsepower
-                        return from x in truck.TruckTransmissions
-                               let trans = x.Transmission // Fetch once from DB (lazy loaded)
-                               orderby trans.Series.ToString() ascending, trans.Price descending
-                               select trans;
+                        // Grab series and create a group for each one
+                        foreach (var series in db.TransmissionSeries.OrderBy(x => x.ToString()))
+                        {
+                            group = new ListViewGroup(series.ToString());
+                            group.Tag = series.Id;
+                            groups.Add(series.Id, group);
+                        }
+
+                        // Grab the trucks transmissions, ordered by Price
+                        return truck.TruckTransmissions.Select(x => x.Transmission).OrderByDescending(x => x.Price);
                     }
                 });
 
-                // Fill in trucks
+                // Add Groups
+                truckItemListView.Groups.AddRange(groups.Values.ToArray());
+
+                // Add truck items
                 foreach (var trans in transmissions)
                 {
-                    // Setup group?
-                    if (((int)group.Tag) != trans.SeriesId)
-                    {
-                        group = new ListViewGroup(trans.Series.ToString());
-                        group.Tag = trans.SeriesId;
-                        truckItemListView.Groups.Add(group);
-                    }
-
                     ListViewItem item = new ListViewItem();
                     item.Tag = trans;
                     item.Text = trans.Name;
-                    group.Items.Add(item);
+                    groups[trans.SeriesId].Items.Add(item);
                     truckItemListView.Items.Add(item);
                 }
             }
 
+            truckItemListView.EndUpdate();
             truckListView2.Focus();
         }
 
@@ -473,6 +477,9 @@ namespace ATSEngineTool
             // If we have no selected trucks, skimp out here
             if (truckListView2.SelectedItems.Count == 0) return;
 
+            // Disable button spam 
+            modifyButton.Enabled = false;
+
             ListViewItem selected = truckListView2.SelectedItems[0];
             Truck truck = selected.Tag as Truck;
 
@@ -498,6 +505,9 @@ namespace ATSEngineTool
                     }
                 }
             }
+
+            // Enable button
+            modifyButton.Enabled = true;
         }
 
         private void toolStripSplitButton1_ButtonClick(object sender, EventArgs e)

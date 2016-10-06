@@ -509,15 +509,14 @@ namespace ATSEngineTool.Database
             var suitables = this.SuitableTransmissions.ToList();
 
             // Write the conflict_with[]...
-            if ((go && conflicts.Count > 0) || (Conflicts != null && Conflicts.Length > 0))
+            if (conflicts.Count > 0 || (Conflicts != null && Conflicts.Length > 0))
             {
                 builder.AppendLine();
                 builder.AppendLine("\t\t# Conflicts");
 
-                // Transmissions?
-                if (go)
-                    foreach (string line in conflicts.Select(x => x.Transmission.UnitName))
-                        builder.AppendLine($"\t\tconflict_with[]: \"{line}.{truckName}.transmission\"");
+                // Transmissions
+                foreach (string line in conflicts.Select(x => x.Transmission.UnitName))
+                    builder.AppendLine($"\t\tconflict_with[]: \"{line}.{truckName}.transmission\"");
 
                 // Other Conflicts
                 if (Conflicts != null)

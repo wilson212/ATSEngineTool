@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Drawing;
@@ -31,43 +32,46 @@ namespace ATSEngineTool
             engineListView1.Columns[2].Text = (imp) ? "Torque" : "N·m";
             engineListView2.Columns[2].Text = (imp) ? "Torque" : "N·m";
 
+            // Great 2 group lists, one for installed, and one for non-installed
+            Dictionary<int, ListViewGroup> groups1 = new Dictionary<int, ListViewGroup>();
+            Dictionary<int, ListViewGroup> groups2 = new Dictionary<int, ListViewGroup>();
+
+            // Set internals
             Truck = truck;
-            ListViewGroup group1 = new ListViewGroup();
-            ListViewGroup group2 = new ListViewGroup();
-            int lastModelId = -1;
+            ListViewGroup group;
             int index = 0;
 
             // Load engines from the database
             using (AppDatabase db = new AppDatabase())
             {
-                // Grab the trucks engines, ordered by Brand
-                var engines = from x in db.Engines
-                              orderby x.Series.ToString() ascending,
-                                      x.Horsepower descending
-                              select x;
+                // Grab engine series and create a group for each one
+                foreach (var series in db.EngineSeries.OrderBy(x => x.ToString()))
+                {
+                    // Fetch name once
+                    string name = series.ToString();
 
-                var listItems = truck.TruckEngines.Select(x => x.Engine.Id).ToList();
+                    // Group 1 (not installed)
+                    group = new ListViewGroup(name);
+                    group.Tag = index;
+                    groups1.Add(series.Id, group);
+                    engineListView1.Groups.Add(group);
+                    // Group 2 (installed)
+                    group = new ListViewGroup(name);
+                    group.Tag = index;
+                    groups2.Add(series.Id, group);
+                    engineListView2.Groups.Add(group);
+
+                    // Increment index
+                    index++;
+                }
+
+                // Get installed engines
+                var listItems = truck.TruckEngines.Select(x => x.EngineId).ToList();
 
                 // Fill in trucks
-                foreach (Engine eng in engines)
+                foreach (Engine eng in db.Engines.OrderByDescending(x => x.Horsepower))
                 {
-                    // Setup a new group?
-                    if (lastModelId != eng.SeriesId)
-                    {
-                        lastModelId = eng.SeriesId;
-                        string name = eng.Series.ToString();
-
-                        group1 = new ListViewGroup(name);
-                        group1.Tag = index;
-                        engineListView1.Groups.Add(group1);
-
-                        group2 = new ListViewGroup(name);
-                        group2.Tag = index;
-                        engineListView2.Groups.Add(group2);
-
-                        index++;
-                    }
-
+                    // Create the list view row
                     ListViewItem item = new ListViewItem();
                     item.Tag = eng;
                     item.Text = eng.Name;
@@ -82,13 +86,13 @@ namespace ATSEngineTool
                     // Switch list depending on if the engine is installed
                     if (listItems.Contains(eng.Id))
                     {
+                        groups2[eng.SeriesId].Items.Add(item);
                         engineListView2.Items.Add(item);
-                        group2.Items.Add(item);
                     }
                     else
                     {
+                        groups1[eng.SeriesId].Items.Add(item);
                         engineListView1.Items.Add(item);
-                        group1.Items.Add(item);
                     }
                 }
             }

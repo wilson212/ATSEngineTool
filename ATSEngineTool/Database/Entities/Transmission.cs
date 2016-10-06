@@ -369,15 +369,14 @@ namespace ATSEngineTool.Database
             var suitables = this.SuitableEngines.ToList();
 
             // Write the conflict_with[]...
-            if ((go && conflicts.Count > 0) || (Conflicts != null && Conflicts.Length > 0))
+            if (conflicts.Count > 0 || (Conflicts != null && Conflicts.Length > 0))
             {
                 builder.AppendLine();
                 builder.AppendLine("\t\t# Conflicts");
 
-                // Engines?
-                if (go)
-                    foreach (string eng in conflicts.Select(x => x.Engine.UnitName))
-                        builder.AppendLine($"\t\tconflict_with[]: \"{eng}.{truckName}.engine\"");
+                // Engines
+                foreach (string eng in conflicts.Select(x => x.Engine.UnitName))
+                    builder.AppendLine($"\t\tconflict_with[]: \"{eng}.{truckName}.engine\"");
 
                 // Other Conflicts
                 if (Conflicts != null)
