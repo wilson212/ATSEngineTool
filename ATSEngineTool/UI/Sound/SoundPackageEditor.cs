@@ -1,40 +1,60 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ATSEngineTool.Database;
 using ATSEngineTool.SiiEntities;
-using Sii;
 
 namespace ATSEngineTool
 {
     public partial class SoundPackageEditor : Form
     {
-        internal AccessorySoundData Interior { get; set; }
+        /// <summary>
+        /// The interior sound data accessory
+        /// </summary>
+        private AccessorySoundData Interior { get; set; }
 
-        internal AccessorySoundData Exterior { get; set; }
+        /// <summary>
+        /// The exterior sound data accessory
+        /// </summary>
+        private AccessorySoundData Exterior { get; set; }
 
-        internal SoundPackage Package { get; set; }
+        /// <summary>
+        /// The current sound package being edited or created
+        /// </summary>
+        private SoundPackage Package { get; set; }
 
-        internal bool NewPackage { get; set; }
+        /// <summary>
+        /// Indicates whether this is a new or existing sound package
+        /// </summary>
+        private bool NewPackage { get; set; }
 
-        internal bool Imported { get; set; } = false;
+        /// <summary>
+        /// If the user decides to import an espack, then this turns true
+        /// </summary>
+        private bool Imported { get; set; } = false;
 
+        /// <summary>
+        /// Gets the imported espacks full file path
+        /// </summary>
         protected string PackageFilePath { get; set; }
 
         public SoundPackageEditor(SoundPackage package = null)
         {
+            // Create controls and style the header
             InitializeComponent();
             headerPanel.BackColor = Color.FromArgb(51, 53, 53);
+
+            // Set internals
             NewPackage = package == null;
             Package = package ?? new SoundPackage();
 
+            // Set form input field values if existing package
             if (!NewPackage)
             {
                 labelAuthor.Text = Package.Author;
@@ -63,13 +83,44 @@ namespace ATSEngineTool
             dialog.Filter = "Sound Package|*.espack";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
+                // Try and mount the sound package
                 using (var reader = new SoundPackageReader(dialog.FileName))
                 {
                     // Load the manifest, interior and exterior files
                     string name = string.Empty;
-                    var manifest = reader.GetManifest(out name);
-                    Interior = reader.GetSoundFile(SoundType.Interior);
-                    Exterior = reader.GetSoundFile(SoundType.Exterior);
+                    SoundPackManifest manifest = null;
+                    Interior = null; // Reset
+                    Exterior = null; // Reset
+
+                    // Try and parse the internal sii files
+                    try
+                    {
+                        manifest = reader.GetManifest(out name);
+                        Interior = reader.GetSoundFile(SoundType.Interior);
+                        Exterior = reader.GetSoundFile(SoundType.Exterior);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Be fancy and generate a good error message
+                        StringBuilder builder = new StringBuilder();
+                        if (manifest == null)
+                            builder.AppendLine("Failed to parse the package manifest file!");
+                        else
+                            builder.AppendLineIf(Interior == null, "Failed to parse the interior.sii file!", "Failed to parse the exterior.sii file!");
+                        builder.AppendLine();
+                        builder.Append("Error: ").AppendLine(ex.Message);
+
+                        if (ex is Sii.SiiSyntaxException)
+                        {
+                            var siiEx = ex as Sii.SiiSyntaxException;
+                            builder.AppendLine("Line: " + siiEx.Span.Start.Line);
+                            builder.AppendLine("Column: " + siiEx.Span.Start.Column);
+                        }
+
+                        // Alert the user
+                        MessageBox.Show(builder.ToString().TrimEnd(), "Sii Parse Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
                     // Ensure manifest
                     if (manifest == null)
@@ -133,30 +184,32 @@ namespace ATSEngineTool
                 {
                     // Add or update the existing package
                     db.SoundPackages.AddOrUpdate(Package);
-                    return;
                 }
-
-                // Else, we imported. We do this in a seperate task
-                try
+                else
                 {
-                    // Show task form
-                    TaskForm.Show(this, 
-                        "Importing Sound Package", 
-                        "Importing Sound Package", 
-                        "Please wait while the sound package is installed..."
-                    );
+                    // Else, we imported. We do this in a seperate task
+                    try
+                    {
+                        // Show task form
+                        TaskForm.Show(this,
+                            "Importing Sound Package",
+                            "Importing Sound Package",
+                            "Please wait while the sound package is installed..."
+                        );
 
-                    // Import sound
-                    await Task.Run(() => ImportSoundPack(db));
+                        // Import sound
+                        await Task.Run(() => ImportSoundPack(db));
 
-                    // Close task form
-                    TaskForm.CloseForm();
-                }
-                catch (Exception ex)
-                {
-                    TaskForm.CloseForm();
-                    ExceptionHandler.GenerateExceptionLog(ex);
-                    MessageBox.Show(ex.Message, "Sound Installation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        // Close task form
+                        TaskForm.CloseForm();
+                    }
+                    catch (Exception ex)
+                    {
+                        TaskForm.CloseForm();
+                        ExceptionHandler.GenerateExceptionLog(ex);
+                        MessageBox.Show(ex.Message, "Sound Installation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
             }
 

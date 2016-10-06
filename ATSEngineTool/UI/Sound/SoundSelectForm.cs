@@ -50,13 +50,20 @@ namespace ATSEngineTool
             node.Tag = "@CP";
             treeView1.Nodes.Add(node);
 
+            // Create engine node
+            TreeNode engineNode = new TreeNode("engine");
+            engineNode.Tag = "@EP";
+
             // Engines for this package only
             string enginePath = Path.Combine(Program.RootPath, "sounds", "engine", Package.FolderName);
             directory = new DirectoryInfo(enginePath);
             node = RecursiveTreeNodes(directory);
-            node.Text = "engine/" + node.Text;
-            node.Tag = "@EP";
-            treeView1.Nodes.Add(node);
+            node.Text = node.Text;
+            node.Tag = directory.FullName;
+
+            // Add nodes
+            engineNode.Nodes.Add(node);
+            treeView1.Nodes.Add(engineNode);
         }
 
         /// <summary>
@@ -69,6 +76,7 @@ namespace ATSEngineTool
             node.ImageIndex = 0;
             node.SelectedImageIndex = 0;
 
+            // Add Directories
             DirectoryInfo[] dirs = directory.GetDirectories();
             foreach (var dir in dirs)
             {
@@ -77,6 +85,7 @@ namespace ATSEngineTool
                 node.Nodes.Add(subNode);
             }
 
+            // Add files in this directory
             foreach (var file in directory.GetFiles("*.ogg"))
             {
                 TreeNode subNode = new TreeNode(file.Name);
@@ -100,12 +109,18 @@ namespace ATSEngineTool
             return node;
         }
 
+        /// <summary>
+        /// Changes the folder image to open on expand
+        /// </summary>
         private void treeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e)
         {
             e.Node.ImageIndex = 1;
             e.Node.SelectedImageIndex = 1;
         }
 
+        /// <summary>
+        /// Changes the folder image to closed on collapse
+        /// </summary>
         private void treeView1_BeforeCollapse(object sender, TreeViewCancelEventArgs e)
         {
             e.Node.ImageIndex = 0;
@@ -129,6 +144,7 @@ namespace ATSEngineTool
 
             // Close form
             this.DialogResult = DialogResult.OK;
+            this.Close();
         }
 
         private void importSoundToolStripMenuItem_Click(object sender, EventArgs e)

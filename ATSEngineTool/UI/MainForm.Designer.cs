@@ -668,7 +668,6 @@
             this.truckListView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader2});
             this.truckListView2.FullRowSelect = true;
-            this.truckListView2.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.truckListView2.HideSelection = false;
             this.truckListView2.Location = new System.Drawing.Point(31, 50);
             this.truckListView2.MultiSelect = false;
@@ -832,7 +831,6 @@
             this.seriesListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader3});
             this.seriesListView.FullRowSelect = true;
-            this.seriesListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.seriesListView.HideSelection = false;
             this.seriesListView.Location = new System.Drawing.Point(32, 49);
             this.seriesListView.MultiSelect = false;
@@ -1016,7 +1014,6 @@
             this.transSeriesListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader9});
             this.transSeriesListView.FullRowSelect = true;
-            this.transSeriesListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.transSeriesListView.HideSelection = false;
             this.transSeriesListView.Location = new System.Drawing.Point(32, 49);
             this.transSeriesListView.MultiSelect = false;
@@ -1113,7 +1110,7 @@
             this.soundListView.HeaderMaximumHeight = 24;
             this.soundListView.HeaderMinimumHeight = 24;
             this.soundListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.soundListView.Location = new System.Drawing.Point(391, 48);
+            this.soundListView.Location = new System.Drawing.Point(391, 49);
             this.soundListView.MultiSelect = false;
             this.soundListView.Name = "soundListView";
             this.soundListView.SelectAllOnControlA = false;
@@ -1147,7 +1144,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(29, 361);
+            this.label10.Location = new System.Drawing.Point(29, 362);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(107, 13);
             this.label10.TabIndex = 31;
@@ -1157,7 +1154,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(388, 361);
+            this.label11.Location = new System.Drawing.Point(388, 362);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(107, 13);
             this.label11.TabIndex = 30;
@@ -1171,7 +1168,7 @@
             this.newSoundButton,
             this.removeSoundButton,
             this.editSoundButton});
-            this.toolStrip7.Location = new System.Drawing.Point(391, 22);
+            this.toolStrip7.Location = new System.Drawing.Point(391, 23);
             this.toolStrip7.Name = "toolStrip7";
             this.toolStrip7.Size = new System.Drawing.Size(388, 25);
             this.toolStrip7.TabIndex = 29;
@@ -1214,7 +1211,7 @@
             this.toolStrip8.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newPackageButton,
             this.removePackageButton});
-            this.toolStrip8.Location = new System.Drawing.Point(32, 22);
+            this.toolStrip8.Location = new System.Drawing.Point(32, 23);
             this.toolStrip8.Name = "toolStrip8";
             this.toolStrip8.Size = new System.Drawing.Size(246, 25);
             this.toolStrip8.TabIndex = 28;
@@ -1245,9 +1242,8 @@
             this.packageListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader14});
             this.packageListView.FullRowSelect = true;
-            this.packageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.packageListView.HideSelection = false;
-            this.packageListView.Location = new System.Drawing.Point(32, 48);
+            this.packageListView.Location = new System.Drawing.Point(32, 49);
             this.packageListView.MultiSelect = false;
             this.packageListView.Name = "packageListView";
             this.packageListView.Size = new System.Drawing.Size(246, 310);

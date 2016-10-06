@@ -16,6 +16,8 @@ namespace ATSEngineTool
 {
     public partial class MainForm : Form
     {
+        private MultipleListViewColumnSorter ListViewSorter { get; set; }
+
         public MainForm()
         {
             // Create form controls
@@ -107,6 +109,7 @@ namespace ATSEngineTool
                 // Fill Transmissions
                 FillTransmissionSeries(db);
 
+                // Fill Sound Packages
                 FillSoundPackages(db);
 
                 // Set label text
@@ -129,16 +132,12 @@ namespace ATSEngineTool
                 ProgramUpdater.CheckForUpdateAsync();
             }
 
-            /*
-            string database = Path.Combine(Program.RootPath, "../../", "data", "Migration_14.db");
-            var Builder = new SQLiteConnectionStringBuilder();
-            Builder.DataSource = database;
-            using (var context = new CrossLite.SQLiteContext(Builder))
-            {
-                context.Connection.Open();
-                context.Execute("VACUUM;");
-            }
-            */
+            // Enable sorting behavior on certain listviews
+            ListViewSorter = new MultipleListViewColumnSorter();
+            ListViewSorter.AddListView(truckListView2);
+            ListViewSorter.AddListView(seriesListView);
+            ListViewSorter.AddListView(transSeriesListView);
+            ListViewSorter.AddListView(packageListView);
         }
 
         #region Functions
@@ -203,7 +202,7 @@ namespace ATSEngineTool
             truckListView1.Items.Clear();
 
             // Fill in trucks
-            foreach (Truck truck in db.Trucks)
+            foreach (Truck truck in db.Trucks.OrderBy(x => x.Name))
             {
                 ListViewItem item = new ListViewItem();
                 item.Tag = truck;
@@ -918,12 +917,13 @@ namespace ATSEngineTool
                     TaskForm.Progress.Report(update);
 
                     // Compile Mod
-                    Mod.Compile(trucks, TaskForm.Progress);
+                    var usedSounds = Mod.Compile(trucks, TaskForm.Progress);
 
                     // Are we sync'ing the Compiled and Mod folders?
                     if (syncCheckBox.Checked)
                     {
                         Mod.Sync(
+                            usedSounds,
                             Program.Config.IntegrateWithMod && cleanModCheckBox.Checked,
                             Program.Config.IntegrateWithMod && cleanSoundsCheckBox.Checked,
                             TaskForm.Progress

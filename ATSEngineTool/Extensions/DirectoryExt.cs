@@ -49,7 +49,8 @@ namespace System
         public static void Delete(string path)
         {
             DirectoryInfo Dir = new DirectoryInfo(path);
-            Delete(Dir);
+            if (Dir.Exists)
+                Delete(Dir);
         }
 
         public static void Delete(FileSystemInfo fileSystemInfo)

@@ -104,6 +104,8 @@
     <Compile Include="Application\Metrics.cs" />
     <Compile Include="Application\SoundWrapper.cs" />
     <Compile Include="Extensions\StringBuilderExtensions.cs" />
+    <Compile Include="Application\ListViewColumnSorterExt.cs" />
+    <Compile Include="Application\MultipleListViewColumnSorter.cs" />
     <Compile Include="SiiEntities\SoundPackManifest.cs" />
     <Compile Include="UI\Sound\SoundSelectForm.cs">
       <SubType>Form</SubType>
@@ -364,6 +366,24 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="graphics\engn14_01.tobj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="graphics\eng_mx11.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="graphics\eng_mx11.mat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="graphics\eng_mx11.tobj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="graphics\eng_mx13.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="graphics\eng_mx13.mat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="graphics\eng_mx13.tobj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="graphics\transmission_generic.dds">
