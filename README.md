@@ -26,6 +26,7 @@ Any time you change an engine's sound package, you need to make sure that your c
 Sound data is now stored in the AppData.db database file (as of 2.8.0). You are now able to edit your engine sounds data, such as volume and pitch references within the app itself. You will need to create an Engine Sounds Package (.espack) for your custom sounds that you may have imported previously. This is pretty simple to do, and you can use the included sound packages in the release section as a reference. An **E**_ngine_ **S**_ounds_ **Pack**_age_ is basically a ZIP file with a custom file extension. 
 
 There are some changes to the interior and exterior sound files from before as well:
+
 1. You will need to remove the {{{NAME}}} and {{{SUITABLE}}} tags.
 2. The sound files now use a few directives for the compiler such as (@EP (engine sound path) and @CP (common sound path)). What was once "/sound/truck/engine/N14/int/sound.ogg" is now "@EP/int/sound.ogg". You can still used long paths, but the with the users ability to modify the package install folder, your hard paths could get broken.
 3. You will also need to create a manifest.sii file which can be copied from and modifed from the included sound packages.
