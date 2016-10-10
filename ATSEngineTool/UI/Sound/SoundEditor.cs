@@ -65,7 +65,7 @@ namespace ATSEngineTool
             {
                 // Skip existing sounds for this package that are not array sounds
                 var val = (SoundAttribute)Enum.Parse(typeof(SoundAttribute), name);
-                if (existing.Contains(val) && !EngineSound.ArraySounds.Contains(val))
+                if (existing.Contains(val) && !SoundInfo.Attributes[val].IsArray)
                     continue;
 
                 // Add item
@@ -122,7 +122,7 @@ namespace ATSEngineTool
         private void attrType_SelectedIndexChanged(object sender, EventArgs e)
         {
             var attr = (SoundAttribute)Enum.Parse(typeof(SoundAttribute), attrType.SelectedItem.ToString());
-            groupBox1.Enabled = EngineSound.IsEngineSoundType(attr);
+            groupBox1.Enabled = SoundInfo.Attributes[attr].IsEngineSound;
 
             pitchBox.Enabled = groupBox1.Enabled;
             maxRpmBox.Enabled = groupBox1.Enabled;

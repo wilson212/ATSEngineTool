@@ -65,5 +65,38 @@ namespace System
                 builder.AppendLine();
             return builder;
         }
+
+        /// <summary>
+        /// Appends the specified character if the <paramref name="condition"/> is true
+        /// </summary>
+        /// <param name="condition">Indicates whether we append a newline to the end of this StringBuilder</param>
+        public static StringBuilder AppendIf(this StringBuilder builder, bool condition, char c, int repeatCount = 1)
+        {
+            if (condition)
+                builder.Append(c, repeatCount);
+            return builder;
+        }
+
+        /// <summary>
+        /// Appends the specified string if the <paramref name="condition"/> is true
+        /// </summary>
+        /// <param name="condition">Indicates whether we append a newline to the end of this StringBuilder</param>
+        public static StringBuilder AppendIf(this StringBuilder builder, bool condition, string value, int repeatCount = 1)
+        {
+            if (condition)
+                builder.Append(value, repeatCount);
+            return builder;
+        }
+
+        /// <summary>
+        /// Appends the specified string if the <paramref name="condition"/> is true
+        /// </summary>
+        /// <param name="condition">Indicates whether we append a newline to the end of this StringBuilder</param>
+        public static StringBuilder Append(this StringBuilder builder, string value, int repeatCount = 1)
+        {
+            for (int i = 0; i < repeatCount; i++)
+                builder.Append(value);
+            return builder;
+        }
     }
 }

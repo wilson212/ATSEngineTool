@@ -10,7 +10,7 @@ using CrossLite.CodeFirst;
 namespace ATSEngineTool.Database
 {
     [Table]
-    [CompositeUnique("SeriesId", "UnitName")]
+    [CompositeUnique(nameof(SeriesId), nameof(UnitName))]
     public class Engine
     {
         #region Columns
@@ -350,11 +350,6 @@ namespace ATSEngineTool.Database
         #region Properties
 
         /// <summary>
-        /// English culture for numbers
-        /// </summary>
-        protected static readonly CultureInfo Culture = CultureInfo.CreateSpecificCulture("en-US");
-
-        /// <summary>
         /// Gets or Sets the NewtonMetre value for this engine. Changing this value
         /// will also change the <see cref="Torque"/> setting
         /// </summary>
@@ -384,104 +379,97 @@ namespace ATSEngineTool.Database
         {
             // Create local variables
             EngineSeries series = this.Series;
-            StringBuilder builder = new StringBuilder();
+            SiiFileBuilder builder = new SiiFileBuilder();
             string name = $"{this.UnitName}.{truckName}.engine";
             string decvalue;
-
-            // Write file intro
-            builder.AppendLine("SiiNunit");
-            builder.AppendLine("{");
 
             // Make sure we have a file comment
             if (Comment == null || Comment.Length == 0)
                 Comment = new string[] { "Generated with the ATS Engine Generator Tool by Wilson212" };
 
+            // Write file intro
+            builder.WriteStartDocument();
+
             // Write file comment
-            builder.AppendLine("\t/**");
-            foreach (string line in Comment)
-                builder.AppendLine($"\t * {line}");
-            builder.AppendLine("\t */");
+            builder.WriteCommentBlock(Comment);
 
             // Begin the engine accessory
-            builder.AppendLine($"\taccessory_engine_data : {name}");
-            builder.AppendLine("\t{");
+            builder.WriteStructStart("accessory_engine_data", name);
 
             // Generic Info
-            builder.AppendLine($"\t\tname: \"{this.Name}\"");
-            builder.AppendLine($"\t\tprice: {this.Price}\t# Engine price");
-            builder.AppendLine($"\t\tunlock: {this.Unlock}\t\t# Unlocks @ Level");
-            builder.AppendLine();
+            builder.WriteAttribute("name", this.Name);
+            builder.WriteAttribute("price", this.Price, "# Engine price", 1);
+            builder.WriteAttribute("unlock", this.Unlock, "# Unlocks @ Level", 2);
+            builder.WriteLine();
 
             // Horsepower line
-            builder.AppendLine("\t\t# Engine display info");
-            builder.Append("\t\tinfo[]: \"");
-            builder.AppendLine($"{Digitize(this.Horsepower)} @@hp@@ ({Digitize(HorsepowerToKilowatts(this.Horsepower))}@@kw@@)\"");
+            builder.WriteLine("# Engine display info");
+            builder.WriteAttribute("info[]", $"{Digitize(this.Horsepower)} @@hp@@ ({Digitize(HorsepowerToKilowatts(this.Horsepower))}@@kw@@)");
 
             // Torque line
-            builder.Append("\t\tinfo[]: \"");
+            builder.Write("info[]: \"");
             if (Program.Config.TorqueOutputUnitSystem == UnitSystem.Imperial)
-                builder.AppendLine($"{Digitize(this.Torque)} @@lb_ft@@ ({Digitize(this.NewtonMetres)} @@nm@@)\"");
+                builder.WriteLine($"{Digitize(this.Torque)} @@lb_ft@@ ({Digitize(this.NewtonMetres)} @@nm@@)\"");
             else
-                builder.AppendLine($"{Digitize(this.NewtonMetres)} @@nm@@ ({Digitize(this.Torque)} @@lb_ft@@)\"");
+                builder.WriteLine($"{Digitize(this.NewtonMetres)} @@nm@@ ({Digitize(this.Torque)} @@lb_ft@@)\"");
 
             // Rpm line
-            builder.AppendLine($"\t\tinfo[]: \"{Digitize(this.PeakRpm)} @@rpm@@\"");
+            builder.WriteAttribute($"info[]", $"{Digitize(this.PeakRpm)} @@rpm@@");
 
             // Icon
-            builder.AppendLine($"\t\ticon: \"{series.EngineIcon}\"");
-            builder.AppendLine();
+            builder.WriteAttribute($"icon", series.EngineIcon);
+            builder.WriteLine();
 
             // Performance
-            decvalue = series.Displacement.ToString(Culture);
-            builder.AppendLine("\t\t# Engine Specs");
-            builder.AppendLine($"\t\ttorque: {this.NewtonMetres}\t# Engine power in Newton-metres");
-            builder.AppendLine($"\t\tvolume: {decvalue}\t# Engine size in liters. Used for Realistic Fuel Consumption settings");
-            builder.AppendLine();
+            builder.WriteLine("# Engine Specs");
+            builder.WriteAttribute("torque", this.NewtonMetres, "# Engine power in Newton-metres");
+            builder.WriteAttribute("volume", series.Displacement, "# Engine size in liters. Used for Realistic Fuel Consumption settings");
+            builder.WriteLine();
 
             // Torque Curves
-            builder.AppendLine("\t\t# Torque Curves");
+            builder.WriteLine("# Torque Curves");
             foreach (TorqueRatio ratio in TorqueRatios.OrderBy(x => x.RpmLevel))
             {
-                decvalue = ratio.Ratio.ToString(Culture);
-                builder.AppendLine($"\t\ttorque_curve[]: ({ratio.RpmLevel}, {decvalue})");
+                decvalue = ratio.Ratio.ToString(Program.NumberFormat);
+                builder.WriteAttribute($"torque_curve[]", $"({ratio.RpmLevel}, {decvalue})", false);
             }
-            builder.AppendLine();
+            builder.WriteLine();
 
             // RPM datas
-            builder.AppendLine("\t\t# RPM Data");
-            builder.AppendLine($"\t\trpm_idle: {this.IdleRpm}\t\t\t# RPM at idle");
-            builder.AppendLine($"\t\trpm_limit: {this.RpmLimit}\t\t\t# Governed RPM limit");
-            builder.AppendLine($"\t\trpm_limit_neutral: {this.RpmLimitNeutral}\t# RPM limit in neutral gear");
-            builder.AppendLine($"\t\trpm_range_low_gear: ({this.MinRpmRange_LowGear}, {this.MaxRpmRange_LowGear})");
-            builder.AppendLine($"\t\trpm_range_high_gear: ({this.MinRpmRange_HighGear}, {this.MaxRpmRange_HighGear})");
-            builder.AppendLine($"\t\trpm_range_power_boost: ({this.LowRpmRange_PowerBoost}, {this.HighRpmRange_PowerBoost})");
+            builder.WriteLine("# RPM Data");
+            builder.WriteAttribute("rpm_idle", this.IdleRpm, "# RPM at idle", 3);
+            builder.WriteAttribute("rpm_limit", this.RpmLimit, "# Governed RPM limit", 3);
+            builder.WriteAttribute("rpm_limit_neutral", this.RpmLimitNeutral, "# RPM limit in neutral gear");
+            builder.WriteAttribute("rpm_range_low_gear", $"({this.MinRpmRange_LowGear}, {this.MaxRpmRange_LowGear})", false);
+            builder.WriteAttribute("rpm_range_high_gear", $"({this.MinRpmRange_HighGear}, {this.MaxRpmRange_HighGear})", false);
+            builder.WriteAttribute("rpm_range_power_boost", $"({this.LowRpmRange_PowerBoost}, {this.HighRpmRange_PowerBoost})", false);
 
             if (HighRpmRange_EngineBrake > 0)
             {
-                builder.AppendLine($"\t\trpm_range_engine_brake: ({this.LowRpmRange_EngineBrake}, {this.HighRpmRange_EngineBrake})");
+                builder.WriteAttribute("rpm_range_engine_brake", $"({this.LowRpmRange_EngineBrake}, {this.HighRpmRange_EngineBrake})", false);
             }
 
             // Engine Brake
             string val = this.BrakeDownshift ? "1" : "0";
-            decvalue = this.BrakeStrength.ToString(Culture);
-            builder.AppendLine();
-            builder.AppendLine("\t\t# Engine Brake data");
-            builder.AppendLine($"\t\tengine_brake: {decvalue}\t\t\t\t# Engine Brake Strength");
-            builder.AppendLine($"\t\tengine_brake_downshift: {val}\t# Enable automatic downshift for Engine Brake");
-            builder.AppendLine($"\t\tengine_brake_positions: {this.BrakePositions}\t# The number of engine brake intensities");
-            builder.AppendLine();
+            decvalue = this.BrakeStrength.ToString("0.0", Program.NumberFormat);
+            builder.WriteLine();
+            builder.WriteLine("# Engine Brake data");
+            builder.WriteAttribute("engine_brake", decvalue, false, "# Engine Brake Strength", 3);
+            builder.WriteAttribute("engine_brake_downshift", val, false, "# Enable automatic downshift for Engine Brake");
+            builder.WriteAttribute("engine_brake_positions", this.BrakePositions, "# The number of engine brake intensities");
+            builder.WriteLine();
 
             // AdBlue
             if (this.AdblueConsumption > 0.00m || this.NoAdbluePowerLimit > 0.00m)
             {
-                builder.AppendLine("\t\t# Adblue Settings");
+                builder.WriteLine("\t\t# Adblue Settings");
                 if (this.AdblueConsumption > 0.00m)
-                    builder.AppendLine($"\t\tadblue_consumption: {this.AdblueConsumption.ToString(Culture)}");
+                    builder.WriteAttribute("adblue_consumption", this.AdblueConsumption);
 
                 if (this.NoAdbluePowerLimit > 0.00m)
-                    builder.AppendLine($"\t\tno_adblue_power_limit: {this.NoAdbluePowerLimit.ToString(Culture)}");
+                    builder.WriteAttribute("no_adblue_power_limit", this.NoAdbluePowerLimit);
 
-                builder.AppendLine();
+                builder.WriteLine();
             }
 
             // Sound Data
@@ -489,17 +477,17 @@ namespace ATSEngineTool.Database
             string intpath = "/def/vehicle/truck/{{{NAME}}}/sound/" + sound.InteriorFileName;
             string extpath = "/def/vehicle/truck/{{{NAME}}}/sound/" + sound.ExteriorFileName;
 
-            builder.AppendLine("\t\t# Sound Data");
-            builder.AppendLine($"\t\tdefaults[]: \"{intpath}\"");
-            builder.AppendLine($"\t\tdefaults[]: \"{extpath}\"");
+            builder.WriteLine("# Sound Data");
+            builder.WriteAttribute("defaults[]", intpath);
+            builder.WriteAttribute("defaults[]", extpath);
 
             // Write the default[]...
             if (Defaults != null && Defaults.Length > 0)
             {
-                builder.AppendLine();
-                builder.AppendLine("\t\t# Attachments");
+                builder.WriteLine();
+                builder.WriteLine("# Attachments");
                 foreach (string line in Defaults)
-                    builder.AppendLine($"\t\tdefaults[]: \"{line}\"");
+                    builder.WriteAttribute($"defaults[]", line);
             }
 
             // Define is we output suitible_for and conflict_with for transmissions
@@ -511,39 +499,38 @@ namespace ATSEngineTool.Database
             // Write the conflict_with[]...
             if (conflicts.Count > 0 || (Conflicts != null && Conflicts.Length > 0))
             {
-                builder.AppendLine();
-                builder.AppendLine("\t\t# Conflicts");
+                builder.WriteLine();
+                builder.WriteLine("# Conflicts");
 
                 // Transmissions
                 foreach (string line in conflicts.Select(x => x.Transmission.UnitName))
-                    builder.AppendLine($"\t\tconflict_with[]: \"{line}.{truckName}.transmission\"");
+                    builder.WriteAttribute("conflict_with[]", $"{line}.{truckName}.transmission");
 
                 // Other Conflicts
                 if (Conflicts != null)
                     foreach (string line in Conflicts)
-                        builder.AppendLine($"\t\tconflict_with[]: \"{line}\"");
+                        builder.WriteAttribute("conflict_with[]", line);
             }
 
             // Write the suitable_for[]...
             if ((go && suitables.Count > 0) || (SuitableFor != null && SuitableFor.Length > 0))
             {
-                builder.AppendLine();
-                builder.AppendLine("\t\t# Suitables");
+                builder.WriteLine();
+                builder.WriteLine("# Suitables");
 
                 // Transmissions?
                 if (go)
-                    foreach (string eng in suitables.Select(x => x.Transmission.UnitName))
-                        builder.AppendLine($"\t\tsuitable_for[]: \"{eng}.{truckName}.transmission\"");
+                    foreach (string trans in suitables.Select(x => x.Transmission.UnitName))
+                        builder.WriteAttribute("suitable_for[]", $"{trans}.{truckName}.transmission");
 
                 // Other Suitables
                 if (SuitableFor != null)
                     foreach (string line in SuitableFor)
-                        builder.AppendLine($"\t\tsuitable_for[]: \"{line}\"");
+                        builder.WriteAttribute("suitable_for[]", line);
             }
 
             // Close brackets
-            builder.AppendLine("\t}");
-            builder.AppendLine("}");
+            builder.WriteEndDocument();
 
             // Define file paths
             return builder.ToString().Replace("{{{NAME}}}", truckName).TrimEnd();
@@ -558,7 +545,7 @@ namespace ATSEngineTool.Database
         private string Digitize(decimal value)
         {
             int val = (int)value;
-            return val.ToString("N0", Culture).Replace(",", "@@dg@@");
+            return val.ToString("N0", Program.NumberFormat).Replace(",", "@@dg@@");
         }
 
         public override bool Equals(object obj)

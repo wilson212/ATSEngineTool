@@ -10,7 +10,7 @@ using CrossLite.CodeFirst;
 namespace ATSEngineTool.Database
 {
     [Table]
-    [CompositeUnique("SeriesId", "UnitName")]
+    [CompositeUnique(nameof(SeriesId), nameof(UnitName))]
     public class Transmission
     {
         /// <summary>
@@ -254,11 +254,6 @@ namespace ATSEngineTool.Database
 
         #endregion
 
-        /// <summary>
-        /// English culture for numbers
-        /// </summary>
-        protected static readonly CultureInfo Culture = CultureInfo.CreateSpecificCulture("en-US");
-
         public override string ToString() => Name;
 
         /// <summary>
@@ -269,65 +264,56 @@ namespace ATSEngineTool.Database
         {
             // Create local variables
             var series = this.Series;
-            StringBuilder builder = new StringBuilder();
-            string name = $"{this.UnitName}.{truckName}.transmission";
-            string decvalue;
-
-            bool hasNames = Gears.Any(x => !String.IsNullOrEmpty(x.Name));
-
-            // Write file intro
-            builder.AppendLine("SiiNunit");
-            builder.AppendLine("{");
+            var builder = new SiiFileBuilder();
+            var name = $"{this.UnitName}.{truckName}.transmission";
+            var hasNames = Gears.Any(x => !String.IsNullOrEmpty(x.Name));
 
             // Make sure we have a file comment
             if (Comment == null || Comment.Length == 0)
                 Comment = new string[] { "Generated with the ATS Engine Generator Tool by Wilson212" };
 
+            // Write file intro
+            builder.WriteStartDocument();
+
             // Write file comment
-            builder.AppendLine("\t/**");
-            foreach (string line in Comment)
-                builder.AppendLine($"\t * {line}");
-            builder.AppendLine("\t */");
+            builder.WriteCommentBlock(Comment);
 
             // Begin the engine accessory
-            builder.AppendLine($"\taccessory_transmission_data : {name}");
-            builder.AppendLine("\t{");
+            builder.WriteStructStart("accessory_transmission_data", name);
 
             // Generic Info
-            builder.AppendLine($"\t\tname: \"{this.Name}\"");
-            builder.AppendLine($"\t\tprice: {this.Price}\t# Engine price");
-            builder.AppendLine($"\t\tunlock: {this.Unlock}\t\t# Unlocks @ Level");
-            builder.AppendLine($"\t\ticon: \"{series.Icon}\"");
-            builder.AppendLine();
+            builder.WriteAttribute("name", this.Name);
+            builder.WriteAttribute("price", this.Price, "# Transmission price", 1);
+            builder.WriteAttribute("unlock", this.Unlock, "# Unlocks @ Level", 2);
+            builder.WriteAttribute("icon", series.Icon);
+            builder.WriteLine();
 
             // Add names if we have them
             if (hasNames)
             {
-                builder.AppendLine("\t\t# Transmission gear names");
-                builder.AppendLine($"\t\ttransmission_names: .names");
-                builder.AppendLine();
+                builder.WriteLine("# Transmission gear names");
+                builder.WriteAttribute("transmission_names", ".names", false);
+                builder.WriteLine();
             }
 
             // Diff Ratio
-            decvalue = this.DifferentialRatio.ToString(Culture);
-            builder.AppendLine("\t\t# Differential Ratio: 2.64, 2.85, 2.93, 3.08, 3.25, 3.36, 3.40?, 3.42, 3.55, 3.58(single) 3.70, 3.73?, 3.78, 3.91, 4.10");
-            builder.AppendLine($"\t\tdifferential_ratio: {decvalue}");
-            builder.AppendLine();
+            builder.WriteLine("# Differential Ratio: 2.64, 2.85, 2.93, 3.08, 3.25, 3.36, 3.40?, 3.42, 3.55, 3.58(single) 3.70, 3.73?, 3.78, 3.91, 4.10");
+            builder.WriteAttribute("differential_ratio", this.DifferentialRatio);
+            builder.WriteLine();
 
             // Add Retarder
             if (Retarder > 0)
             {
-                builder.AppendLine("\t\t# Retarder");
-                builder.AppendLine($"\t\tretarder: {Retarder}");
-                builder.AppendLine();
+                builder.WriteLine("# Retarder");
+                builder.WriteAttribute("retarder", Retarder);
+                builder.WriteLine();
             }
 
             if (StallTorqueRatio > 0.0m)
             {
-                decvalue = StallTorqueRatio.ToString(Culture);
-                builder.AppendLine("\t\t# Torque Converter: 2.42, 2.34, 1.9, 1.79, 1.58");
-                builder.AppendLine($"\t\tstall_torque_ratio: {decvalue}");
-                builder.AppendLine();
+                builder.WriteLine("# Torque Converter: 2.42, 2.34, 1.9, 1.79, 1.58");
+                builder.WriteAttribute("stall_torque_ratio", StallTorqueRatio);
+                builder.WriteLine();
             }
 
             // Create gear lists
@@ -336,30 +322,28 @@ namespace ATSEngineTool.Database
 
             // Reverse Gears
             int i = 0;
-            builder.AppendLine($"\t\t# reverse gears");
+            builder.WriteLine($"# reverse gears");
             foreach (var gear in reverseGears)
             {
-                decvalue = gear.Ratio.ToString(Culture);
-                builder.AppendLine($"\t\tratios_reverse[{i++}]: {decvalue}");
+                builder.WriteAttribute($"ratios_reverse[{i++}]", gear.Ratio);
             }
-            builder.AppendLine();
+            builder.WriteLine();
 
             // Forward Gears
             i = 0;
-            builder.AppendLine($"\t\t# forward gears");
+            builder.WriteLine($"# forward gears");
             foreach (var gear in forwardGears)
             {
-                decvalue = gear.Ratio.ToString(Culture);
-                builder.AppendLine($"\t\tratios_forward[{i++}]: {decvalue}");
+                builder.WriteAttribute($"ratios_forward[{i++}]", gear.Ratio);
             }
 
             // Write the default[]...
             if (Defaults != null && Defaults.Length > 0)
             {
-                builder.AppendLine();
-                builder.AppendLine("\t\t# Attachments");
+                builder.WriteLine();
+                builder.WriteLine("# Attachments");
                 foreach (string line in Defaults)
-                    builder.AppendLine($"\t\tdefaults[]: \"{line}\"");
+                    builder.WriteAttribute("defaults[]", line);
             }
 
             // Define is we output suitible_for and conflict_with for engines
@@ -371,58 +355,56 @@ namespace ATSEngineTool.Database
             // Write the conflict_with[]...
             if (conflicts.Count > 0 || (Conflicts != null && Conflicts.Length > 0))
             {
-                builder.AppendLine();
-                builder.AppendLine("\t\t# Conflicts");
+                builder.WriteLine();
+                builder.WriteLine("# Conflicts");
 
                 // Engines
                 foreach (string eng in conflicts.Select(x => x.Engine.UnitName))
-                    builder.AppendLine($"\t\tconflict_with[]: \"{eng}.{truckName}.engine\"");
+                    builder.WriteAttribute("conflict_with[]", $"{eng}.{truckName}.engine");
 
                 // Other Conflicts
                 if (Conflicts != null)
                     foreach (string line in Conflicts)
-                        builder.AppendLine($"\t\tconflict_with[]: \"{line}\"");
+                        builder.WriteAttribute("conflict_with[]", line);
             }
 
             // Write the conflict_with[]...
             if ((go && suitables.Count > 0) || (SuitableFor != null && SuitableFor.Length > 0))
             {
-                builder.AppendLine();
-                builder.AppendLine("\t\t# Suitables");
+                builder.WriteLine();
+                builder.WriteLine("# Suitables");
 
                 // Engines?
                 if (go)
                     foreach (string eng in suitables.Select(x => x.Engine.UnitName))
-                        builder.AppendLine($"\t\tsuitable_for[]: \"{eng}.{truckName}.engine\"");
+                        builder.WriteAttribute("suitable_for[]", $"{eng}.{truckName}.engine");
 
                 // Other Suitables
                 if (SuitableFor != null)
                     foreach (string line in SuitableFor)
-                        builder.AppendLine($"\t\tsuitable_for[]: \"{line}\"");
+                        builder.WriteAttribute("suitable_for[]", line);
             }
 
             // Close brackets
-            builder.AppendLine("\t}");
+            builder.WriteStructEnd();
 
             // Do we have gear names?
             if (hasNames)
             {
-                builder.AppendLine();
-                builder.AppendLine("\ttransmission_names : .names");
-                builder.AppendLine("\t{");
+                builder.WriteLine();
+                builder.WriteStructStart("transmission_names", ".names");
 
                 // Neutral always first
-                builder.AppendLine("\t\tneutral:\t\t\"N\"");
+                builder.WriteAttribute("neutral", "N");
                 if (forwardGears.Any(x => !String.IsNullOrEmpty(x.Name)))
                 {
                     i = 0;
-                    builder.AppendLine();
-                    builder.AppendLine("\t\t# Forward Gear Names");
+                    builder.WriteLine();
+                    builder.WriteLine("# Forward Gear Names");
                     foreach (var gear in forwardGears)
                     {
                         name = GetGearNameAtIndex(i, gear, forwardGears);
-                        string tab = (i <= 9) ? "\t\t" : "\t";
-                        builder.AppendLine($"\t\tforward[{i++}]:{tab}\"{name}\"");
+                        builder.WriteAttribute($"forward[{i++}]", name);
                     }
                 }
 
@@ -430,21 +412,20 @@ namespace ATSEngineTool.Database
                 if (reverseGears.Any(x => !String.IsNullOrEmpty(x.Name)))
                 {
                     i = 0;
-                    builder.AppendLine();
-                    builder.AppendLine("\t\t# Reverse Gear Names");
-                    foreach (var gear in reverseGears)
+                    builder.WriteLine();
+                    builder.WriteLine("# Reverse Gear Names");
+                    foreach (var gear in forwardGears)
                     {
                         name = GetGearNameAtIndex(i, gear, reverseGears);
-                        string tab = (i <= 9) ? "\t\t" : "\t";
-                        builder.AppendLine($"\t\treverse[{i++}]:{tab}\"{name}\"");
+                        builder.WriteAttribute($"reverse[{i++}]", name);
                     }
                 }
 
-                builder.AppendLine("\t}");
+                builder.WriteStructEnd();
             }
 
             // End brace
-            builder.AppendLine("}");
+            builder.WriteEndDocument();
 
             // Define file paths
             return builder.ToString().Replace("{{{NAME}}}", truckName).TrimEnd();

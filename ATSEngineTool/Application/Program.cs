@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Security.Principal;
@@ -24,6 +25,11 @@ namespace ATSEngineTool
         /// Program Version
         /// </summary>
         public static Version Version { get; private set; } = new Version(2, 8, 3);
+
+        /// <summary>
+        /// English number format info
+        /// </summary>
+        public static readonly NumberFormatInfo NumberFormat = CultureInfo.CreateSpecificCulture("en-US").NumberFormat;
 
         /// <summary>
         /// Returns whether this application is running in administrator mode.

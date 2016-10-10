@@ -111,135 +111,98 @@ namespace ATSEngineTool.Database
             }
 
             // Local variables
-            string name = this.UnitName + ".{{{NAME}}}." + ((type == SoundType.Interior) ? "isound" : "esound");
-            StringBuilder builder = new StringBuilder();
-            // objectName => Sound
-            var classMap = new Dictionary<string, EngineSound>();
+            var builder = new SiiFileBuilder();
+            var sb = new StringBuilder();
+            var objectMap = new Dictionary<string, EngineSound>();
+
+            // Figure out the accessory name
+            sb.Append(this.UnitName).Append(".{{{NAME}}}.");
+            sb.AppendLineIf(type == SoundType.Exterior, "esound", "isound");
 
             // Write file intro
-            builder.AppendLine("SiiNunit");
-            builder.AppendLine("{");
+            builder.IndentStructs = false;
+            builder.WriteStartDocument();
 
-            // Begin the accessory
-            builder.Append(SingleTab);
-            builder.AppendLine($"accessory_sound_data : {name}");
-            builder.Append(SingleTab);
-            builder.AppendLine("{");
+            // Write the accessory type
+            builder.WriteStructStart("accessory_sound_data", sb.ToString().TrimEnd());
 
-            // Mark exterior or interior
-            builder.Append(DoubleTab);
-            builder.AppendLineIf(type == SoundType.Interior, "exterior_sound: false");
-            builder.AppendLineIf(type == SoundType.Exterior, "exterior_sound: true");
-            builder.AppendLine();
+            // Mark exterior or interior attribute
+            builder.WriteAttribute("exterior_sound", type == SoundType.Exterior);
+            builder.WriteLine();
 
-            // Start building attributes
-            WriteAttribute(SoundAttribute.Start, ".start", sounds, classMap, builder);
-            WriteAttribute(SoundAttribute.StartNoFuel, ".startbad", sounds, classMap, builder);
-            WriteAttribute(SoundAttribute.Stop, ".stop", sounds, classMap, builder);
-            builder.AppendLine();
-
-            // Engine specific
-            WriteAttribute(SoundAttribute.Engine, ".e", sounds, classMap, builder);
-            WriteAttribute(SoundAttribute.EngineLoad, ".el", sounds, classMap, builder);
-            WriteAttribute(SoundAttribute.EngineNoFuel, ".enf", sounds, classMap, builder);
-            WriteAttribute(SoundAttribute.EngineExhaust, ".ee", sounds, classMap, builder);
-            // No blank line needed (already there)
-
-            // Turbo
-            WriteAttribute(SoundAttribute.Turbo, ".t", sounds, classMap, builder);
-            builder.AppendLine();
-
-            // Air gears and brakes
-            WriteAttribute(SoundAttribute.AirGears, ".airgear", sounds, classMap, builder, indexArrays: true);
-            WriteAttribute(SoundAttribute.AirBrakes, ".airbrake", sounds, classMap, builder, indexArrays: true);
-            // No blank line needed (already there)
-
-            // Engine Brake
-            WriteAttribute(SoundAttribute.EngineBrake, ".eb", sounds, classMap, builder);
-            // No blank line needed (already there)
-
-            // Truck sounds
-            WriteAttribute(SoundAttribute.Horn, ".horn", sounds, classMap, builder);
-            WriteAttribute(SoundAttribute.AirHorn, ".ahorn", sounds, classMap, builder);
-            WriteAttribute(SoundAttribute.Reverse, ".reverse", sounds, classMap, builder);
-            builder.AppendLine();
-
-            // More Truck sounds
-            WriteAttribute(SoundAttribute.BlinkerOn, ".blinker_on", sounds, classMap, builder);
-            WriteAttribute(SoundAttribute.BlinkerOff, ".blinker_off", sounds, classMap, builder);
-            WriteAttribute(SoundAttribute.WiperUp, ".wipers_up", sounds, classMap, builder);
-            WriteAttribute(SoundAttribute.WiperDown, ".wipers_down", sounds, classMap, builder);
-            builder.AppendLine();
+            // ===
+            // === Write Attributes
+            // ===
+            foreach (var info in SoundInfo.Attributes.Values)
+            {
+                WriteAttribute(info, sounds, objectMap, builder);
+            }
 
             // Include directive
-            builder.AppendLineIf(type == SoundType.Interior, "@include \"/def/vehicle/truck/common_sound_int.sui\"");
-            builder.AppendLineIf(type == SoundType.Exterior, "@include \"/def/vehicle/truck/common_sound_ext.sui\"");
-            builder.AppendLine();
-            builder.Append(DoubleTab);
-            builder.AppendLine("{{{SUITABLE}}}");
-            builder.AppendLine();
+            builder.WriteLineIf(type == SoundType.Interior, "@include \"/def/vehicle/truck/common_sound_int.sui\"");
+            builder.WriteLineIf(type == SoundType.Exterior, "@include \"/def/vehicle/truck/common_sound_ext.sui\"");
+            builder.WriteLine();
+            builder.WriteLine("{{{SUITABLE}}}");
 
             // Close Accessory
-            builder.Append(SingleTab);
-            builder.AppendLine("}");
-            builder.AppendLine();
+            builder.WriteStructEnd();
+            builder.WriteLine();
 
-            // Append class objects
-            foreach (var item in classMap)
+            // ===
+            // === Append class objects
+            // ===
+            foreach (var item in objectMap)
             {
-                builder.AppendLine(item.Value.ToSiiFormat(item.Key, this));
+                builder.WriteLine(item.Value.ToSiiFormat(item.Key, this));
             }
 
             // Close SiiNUnit
-            builder.AppendLineIf(type == SoundType.Interior, "@include \"/def/vehicle/truck/common_sound_int_data.sui\"");
-            builder.AppendLineIf(type == SoundType.Exterior, "@include \"/def/vehicle/truck/common_sound_ext_data.sui\"");
-            builder.AppendLine("}");
-            return builder.ToString().TrimEnd();
+            builder.WriteLineIf(type == SoundType.Interior, "@include \"/def/vehicle/truck/common_sound_int_data.sui\"");
+            builder.WriteLineIf(type == SoundType.Exterior, "@include \"/def/vehicle/truck/common_sound_ext_data.sui\"");
+            builder.WriteEndDocument();
+            return builder.ToString();
         }
 
         /// <summary>
         /// Writes an attribute to the StringBuilder if the attribute type exists in the sounds list.
         /// </summary>
-        /// <param name="attribute">The attribute type to write to the buffer</param>
-        /// <param name="objectName">
-        /// The unique object name to give this object. Attribute arrays will have their index appended to this name.
-        /// </param>
         /// <param name="sounds">The list of sound attributes and their sounds for this package</param>
         /// <param name="classMap">A ruuning list of objects that will be later written to the buffer.</param>
         /// <param name="builder">The current string buffer</param>
-        /// <param name="appendLineOnSingle">If true, a blank line will be inserted after writing this attribute.</param>
-        private void WriteAttribute(SoundAttribute attribute, 
-                                    string objectName,
-                                    Dictionary<SoundAttribute, List<EngineSound>> sounds, 
-                                    Dictionary<string, EngineSound> classMap,
-                                    StringBuilder builder,
-                                    bool appendLineOnSingle = false,
-                                    bool indexArrays = false)
+        private void WriteAttribute(SoundInfo info, 
+            Dictionary<SoundAttribute, List<EngineSound>> sounds, 
+            Dictionary<string, EngineSound> classMap,
+            SiiFileBuilder builder)
         {
             // Only add the sound if it exists (obviously)
-            if (sounds.ContainsKey(attribute))
+            if (sounds.ContainsKey(info.AttributeType))
             {
-                var sound = sounds[attribute];
-                string name = EngineSound.AttributeNames[attribute];
-                if (sound[0].IsSoundArray)
+                var sound = sounds[info.AttributeType];
+                if (info.IsArray)
                 {
                     int i = 0;
+                    string name = info.AttributeName;
                     foreach (var snd in sound)
                     {
-                        string cname = objectName + i++;
-                        builder.Append(DoubleTab);
-                        builder.AppendLineIf(indexArrays, $"{name}[{i-1}]: {cname}", $"{name}[]: {cname}");
-                        classMap.Add(cname, snd);
+                        // Write attribute line
+                        string sname = info.StructName + i++;
+                        builder.WriteLineIf(info.Indexed, $"{name}[{i - 1}]: {sname}", $"{name}[]: {sname}");
+
+                        // Add to classmap
+                        classMap.Add(sname, snd);
                     }
-                    builder.AppendLine();
                 }
                 else
                 {
-                    builder.Append(DoubleTab);
-                    builder.AppendLine($"{name}: {objectName}");
-                    builder.AppendLineIf(appendLineOnSingle);
-                    classMap.Add(objectName, sound[0]);
+                    // Write attribute line
+                    builder.WriteAttribute(info.AttributeName, info.StructName, false);
+
+                    // Add to classmap
+                    classMap.Add(info.StructName, sound[0]);
                 }
+
+                // Trailing line?
+                builder.WriteLineIf(info.EmptyLineAfter);
             }
         }
 

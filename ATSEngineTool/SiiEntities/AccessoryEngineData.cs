@@ -52,7 +52,7 @@ namespace ATSEngineTool.SiiEntities
         public string[] Conflicts { get; private set; }
 
         [SiiAttribute("torque_curve")]
-        public Vector2[] TorqueCurve { get; private set; }
+        public Vector2[] TorqueCurves { get; private set; }
 
         [SiiAttribute("rpm_range_low_gear")]
         public Vector2 RpmRange_LowGear { get; set; }

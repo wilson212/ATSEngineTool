@@ -114,6 +114,10 @@
             this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.soundListView = new BrightIdeasSoftware.TreeListView();
+            this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.toolStrip7 = new System.Windows.Forms.ToolStrip();
@@ -135,10 +139,6 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.headerPanel = new System.Windows.Forms.Panel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.soundListView = new BrightIdeasSoftware.TreeListView();
-            this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -168,12 +168,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.soundListView)).BeginInit();
             this.toolStrip7.SuspendLayout();
             this.toolStrip8.SuspendLayout();
             this.panel1.SuspendLayout();
             this.headerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.soundListView)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -1095,6 +1095,51 @@
             this.pictureBox6.TabIndex = 33;
             this.pictureBox6.TabStop = false;
             // 
+            // soundListView
+            // 
+            this.soundListView.AllColumns.Add(this.olvColumn1);
+            this.soundListView.AllColumns.Add(this.olvColumn2);
+            this.soundListView.AllColumns.Add(this.olvColumn3);
+            this.soundListView.CellEditUseWholeCell = false;
+            this.soundListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvColumn1,
+            this.olvColumn2,
+            this.olvColumn3});
+            this.soundListView.Cursor = System.Windows.Forms.Cursors.Default;
+            this.soundListView.FullRowSelect = true;
+            this.soundListView.HeaderMaximumHeight = 24;
+            this.soundListView.HeaderMinimumHeight = 24;
+            this.soundListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.soundListView.Location = new System.Drawing.Point(391, 49);
+            this.soundListView.MultiSelect = false;
+            this.soundListView.Name = "soundListView";
+            this.soundListView.SelectAllOnControlA = false;
+            this.soundListView.ShowGroups = false;
+            this.soundListView.Size = new System.Drawing.Size(388, 309);
+            this.soundListView.TabIndex = 32;
+            this.soundListView.UseCompatibleStateImageBehavior = false;
+            this.soundListView.View = System.Windows.Forms.View.Details;
+            this.soundListView.VirtualMode = true;
+            this.soundListView.SelectedIndexChanged += new System.EventHandler(this.soundListView_SelectedIndexChanged);
+            this.soundListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.soundListView_MouseDoubleClick);
+            // 
+            // olvColumn1
+            // 
+            this.olvColumn1.AspectName = "SoundName";
+            this.olvColumn1.Text = "Sound Name";
+            this.olvColumn1.Width = 155;
+            // 
+            // olvColumn2
+            // 
+            this.olvColumn2.AspectName = "Filename";
+            this.olvColumn2.Text = "Filename";
+            this.olvColumn2.Width = 150;
+            // 
+            // olvColumn3
+            // 
+            this.olvColumn3.AspectName = "Volume";
+            this.olvColumn3.Text = "Volume";
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -1258,7 +1303,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 80);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(809, 411);
+            this.panel1.Size = new System.Drawing.Size(809, 432);
             this.panel1.TabIndex = 2;
             // 
             // headerPanel
@@ -1283,56 +1328,11 @@
             this.pictureBox2.TabIndex = 8;
             this.pictureBox2.TabStop = false;
             // 
-            // soundListView
-            // 
-            this.soundListView.AllColumns.Add(this.olvColumn1);
-            this.soundListView.AllColumns.Add(this.olvColumn2);
-            this.soundListView.AllColumns.Add(this.olvColumn3);
-            this.soundListView.CellEditUseWholeCell = false;
-            this.soundListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.olvColumn1,
-            this.olvColumn2,
-            this.olvColumn3});
-            this.soundListView.Cursor = System.Windows.Forms.Cursors.Default;
-            this.soundListView.FullRowSelect = true;
-            this.soundListView.HeaderMaximumHeight = 24;
-            this.soundListView.HeaderMinimumHeight = 24;
-            this.soundListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.soundListView.Location = new System.Drawing.Point(391, 49);
-            this.soundListView.MultiSelect = false;
-            this.soundListView.Name = "soundListView";
-            this.soundListView.SelectAllOnControlA = false;
-            this.soundListView.ShowGroups = false;
-            this.soundListView.Size = new System.Drawing.Size(388, 309);
-            this.soundListView.TabIndex = 32;
-            this.soundListView.UseCompatibleStateImageBehavior = false;
-            this.soundListView.View = System.Windows.Forms.View.Details;
-            this.soundListView.VirtualMode = true;
-            this.soundListView.SelectedIndexChanged += new System.EventHandler(this.soundListView_SelectedIndexChanged);
-            this.soundListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.soundListView_MouseDoubleClick);
-            // 
-            // olvColumn1
-            // 
-            this.olvColumn1.AspectName = "SoundName";
-            this.olvColumn1.Text = "Sound Name";
-            this.olvColumn1.Width = 155;
-            // 
-            // olvColumn2
-            // 
-            this.olvColumn2.AspectName = "Filename";
-            this.olvColumn2.Text = "Filename";
-            this.olvColumn2.Width = 150;
-            // 
-            // olvColumn3
-            // 
-            this.olvColumn3.AspectName = "Volume";
-            this.olvColumn3.Text = "Volume";
-            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(809, 491);
+            this.ClientSize = new System.Drawing.Size(809, 512);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.headerPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -1384,6 +1384,7 @@
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.soundListView)).EndInit();
             this.toolStrip7.ResumeLayout(false);
             this.toolStrip7.PerformLayout();
             this.toolStrip8.ResumeLayout(false);
@@ -1391,7 +1392,6 @@
             this.panel1.ResumeLayout(false);
             this.headerPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.soundListView)).EndInit();
             this.ResumeLayout(false);
 
         }

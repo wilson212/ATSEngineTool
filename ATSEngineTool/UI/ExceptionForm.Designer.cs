@@ -65,9 +65,9 @@
             this.InstructionText.ForeColor = System.Drawing.Color.MidnightBlue;
             this.InstructionText.Location = new System.Drawing.Point(50, 15);
             this.InstructionText.Name = "InstructionText";
-            this.InstructionText.Size = new System.Drawing.Size(313, 19);
+            this.InstructionText.Size = new System.Drawing.Size(244, 19);
             this.InstructionText.TabIndex = 1;
-            this.InstructionText.Text = "ATSEngineTool Has Encountered An Error!";
+            this.InstructionText.Text = "Whoops! Something went wrong!";
             // 
             // ErrorIcon
             // 

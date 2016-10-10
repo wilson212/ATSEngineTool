@@ -41,16 +41,22 @@ namespace ATSEngineTool
         /// </summary>
         protected List<TorqueRatio> Ratios { get; set; } = new List<TorqueRatio>();
 
+        /// <summary>
+        /// Indictes whether the conflicting transmissions box had a check change
+        /// </summary>
         protected bool ConflictsChanged { get; set; } = false;
 
+        /// <summary>
+        /// Indictes whether the suitable transmissions box had a check change
+        /// </summary>
         protected bool SuitablesChanged { get; set; } = false;
 
-        protected bool TrucksChanged { get; set; } = false;
-
         /// <summary>
-        /// English culture for numbers
+        /// /// <summary>
+        /// Indictes whether the trucks box had a check change
         /// </summary>
-        protected CultureInfo Culture = CultureInfo.CreateSpecificCulture("en-US");
+        /// </summary>
+        protected bool TrucksChanged { get; set; } = false;
 
         /// <summary>
         /// Icon file path
@@ -861,7 +867,7 @@ namespace ATSEngineTool
                         Ratios.Clear();
 
                         // Set new torque curves
-                        foreach (Vector2 vector in engine.TorqueCurve)
+                        foreach (Vector2 vector in engine.TorqueCurves)
                         {
                             TorqueRatio ratio = new TorqueRatio();
                             ratio.RpmLevel = (int)vector.X;

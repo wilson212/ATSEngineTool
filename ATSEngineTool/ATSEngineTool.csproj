@@ -91,6 +91,11 @@
     <Compile Include="Application\ExceptionHandler.cs" />
     <Compile Include="Application\SoundPackageReader.cs" />
     <Compile Include="Application\UnitSystem.cs" />
+    <Compile Include="Application\SiiFileBuilder.cs" />
+    <Compile Include="SoundInfo.cs" />
+    <Compile Include="Controls\PageControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Database\SoundAttribute.cs" />
     <Compile Include="Database\Entities\TransmissionGear.cs" />
     <Compile Include="Database\Entities\TransmissionSeries.cs" />
@@ -106,6 +111,12 @@
     <Compile Include="Extensions\StringBuilderExtensions.cs" />
     <Compile Include="Application\ListViewColumnSorterExt.cs" />
     <Compile Include="Application\MultipleListViewColumnSorter.cs" />
+    <Compile Include="UI\Sound\NewPackageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Sound\NewPackageForm.Designer.cs">
+      <DependentUpon>NewPackageForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SiiEntities\SoundPackManifest.cs" />
     <Compile Include="UI\Sound\SoundSelectForm.cs">
       <SubType>Form</SubType>
@@ -241,6 +252,9 @@
     <Compile Include="Updater\GitHubRelease.cs" />
     <Compile Include="Updater\GitHubUser.cs" />
     <Compile Include="Updater\ProgramUpdater.cs" />
+    <EmbeddedResource Include="UI\Sound\NewPackageForm.resx">
+      <DependentUpon>NewPackageForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Sound\SoundEditor.resx">
       <DependentUpon>SoundEditor.cs</DependentUpon>
     </EmbeddedResource>

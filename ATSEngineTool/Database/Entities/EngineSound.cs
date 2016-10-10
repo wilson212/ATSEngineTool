@@ -116,64 +116,15 @@ namespace ATSEngineTool.Database
 
         #region Class Properties
 
-        private static SoundAttribute[] EngineSounds = new[]
-        {
-            SoundAttribute.Engine,
-            SoundAttribute.EngineBrake,
-            SoundAttribute.EngineLoad,
-            SoundAttribute.EngineNoFuel,
-            SoundAttribute.EngineExhaust
-        };
-
-        public static SoundAttribute[] ArraySounds = new[]
-        {
-            SoundAttribute.Engine,
-            SoundAttribute.EngineBrake,
-            SoundAttribute.EngineLoad,
-            SoundAttribute.EngineNoFuel,
-            SoundAttribute.EngineExhaust,
-            SoundAttribute.AirBrakes,
-            SoundAttribute.AirGears
-        };
-
-        internal static Dictionary<SoundAttribute, string> AttributeNames = new Dictionary<SoundAttribute, string>()
-        {
-            { SoundAttribute.Start, "start" },
-            { SoundAttribute.Stop, "stop" },
-            { SoundAttribute.StartNoFuel, "start_no_fuel" },
-            { SoundAttribute.Engine, "engine" },
-            { SoundAttribute.EngineLoad, "engine_load" },
-            { SoundAttribute.EngineNoFuel, "engine_nofuel" },
-            { SoundAttribute.EngineExhaust, "engine_exhaust" },
-            { SoundAttribute.Turbo, "turbo" },
-            { SoundAttribute.AirGears, "air_gear" },
-            { SoundAttribute.AirBrakes, "air_brake" },
-            { SoundAttribute.EngineBrake, "engine_brake" },
-            { SoundAttribute.Horn, "horn" },
-            { SoundAttribute.AirHorn, "air_horn" },
-            { SoundAttribute.Reverse, "reverse" },
-            { SoundAttribute.BlinkerOn, "blinker_on" },
-            { SoundAttribute.BlinkerOff, "blinker_off" },
-            { SoundAttribute.WiperUp, "wipers_up" },
-            { SoundAttribute.WiperDown, "wipers_down" },
-        };
-
         /// <summary>
         /// Gets whether this sound is an engine sound, or truck sound.
         /// </summary>
-        public bool IsEngineSound => EngineSounds.Contains(this.Attribute);
+        public bool IsEngineSound => SoundInfo.Attributes[this.Attribute].IsEngineSound;
 
         /// <summary>
         /// Gets whether this sound is an array Attribute
         /// </summary>
-        public bool IsSoundArray => ArraySounds.Contains(this.Attribute);
-
-        /// <summary>
-        /// Gets wether the specified sound attribute is an engine_sound_data object type
-        /// </summary>
-        /// <param name="attr"></param>
-        /// <returns></returns>
-        public static bool IsEngineSoundType(SoundAttribute attr) => EngineSounds.Contains(attr);
+        public bool IsSoundArray => SoundInfo.Attributes[this.Attribute].IsArray;
 
         #endregion
 
