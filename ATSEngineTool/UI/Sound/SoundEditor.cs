@@ -134,7 +134,7 @@ namespace ATSEngineTool
             try
             {
                 // Remove bad file system characters
-                string file = Path.GetFileName(fileNameBox.Text);
+                string file = fileNameBox.Text;
 
                 // Check for empty strings
                 if (String.IsNullOrWhiteSpace(file))

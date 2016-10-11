@@ -40,7 +40,7 @@ namespace ATSEngineTool
         /// <summary>
         /// Indicates whether an empty line should follow this sound attribute
         /// </summary>
-        public bool EmptyLineAfter { get; protected set; } = false;
+        public bool AppendLineAfter { get; protected set; } = false;
 
         /// <summary>
         /// Gets a list of all supported sound attributes
@@ -57,7 +57,7 @@ namespace ATSEngineTool
             this.StructName = sname;
             this.IsArray = array;
             this.IsEngineSound = engine;
-            this.EmptyLineAfter = space;
+            this.AppendLineAfter = space;
         }
 
         /// <summary>

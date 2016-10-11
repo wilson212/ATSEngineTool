@@ -283,8 +283,8 @@ namespace ATSEngineTool.Database
 
             // Generic Info
             builder.WriteAttribute("name", this.Name);
-            builder.WriteAttribute("price", this.Price, "# Transmission price", 1);
-            builder.WriteAttribute("unlock", this.Unlock, "# Unlocks @ Level", 2);
+            builder.WriteAttribute("price", this.Price, "Transmission price", 1);
+            builder.WriteAttribute("unlock", this.Unlock, "Unlocks @ Level", 2);
             builder.WriteAttribute("icon", series.Icon);
             builder.WriteLine();
 
@@ -347,8 +347,8 @@ namespace ATSEngineTool.Database
             }
 
             // Define is we output suitible_for and conflict_with for engines
-            bool go = Program.Config.CompileOption == CompileOption.TransmissionOnly
-                   || Program.Config.CompileOption == CompileOption.Both;
+            bool writeSuitables = Program.Config.CompileOption == CompileOption.TransmissionOnly
+                               || Program.Config.CompileOption == CompileOption.Both;
             var conflicts = this.EngineConflicts.ToList();
             var suitables = this.SuitableEngines.ToList();
 
@@ -369,13 +369,13 @@ namespace ATSEngineTool.Database
             }
 
             // Write the conflict_with[]...
-            if ((go && suitables.Count > 0) || (SuitableFor != null && SuitableFor.Length > 0))
+            if ((writeSuitables && suitables.Count > 0) || (SuitableFor != null && SuitableFor.Length > 0))
             {
                 builder.WriteLine();
                 builder.WriteLine("# Suitables");
 
                 // Engines?
-                if (go)
+                if (writeSuitables)
                     foreach (string eng in suitables.Select(x => x.Engine.UnitName))
                         builder.WriteAttribute("suitable_for[]", $"{eng}.{truckName}.engine");
 

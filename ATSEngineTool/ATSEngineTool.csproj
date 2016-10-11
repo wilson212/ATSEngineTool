@@ -92,7 +92,7 @@
     <Compile Include="Application\SoundPackageReader.cs" />
     <Compile Include="Application\UnitSystem.cs" />
     <Compile Include="Application\SiiFileBuilder.cs" />
-    <Compile Include="SoundInfo.cs" />
+    <Compile Include="Application\SoundInfo.cs" />
     <Compile Include="Controls\PageControl.cs">
       <SubType>Component</SubType>
     </Compile>

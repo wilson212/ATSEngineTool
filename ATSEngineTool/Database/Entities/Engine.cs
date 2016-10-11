@@ -398,8 +398,8 @@ namespace ATSEngineTool.Database
 
             // Generic Info
             builder.WriteAttribute("name", this.Name);
-            builder.WriteAttribute("price", this.Price, "# Engine price", 1);
-            builder.WriteAttribute("unlock", this.Unlock, "# Unlocks @ Level", 2);
+            builder.WriteAttribute("price", this.Price, "Engine price", 1);
+            builder.WriteAttribute("unlock", this.Unlock, "Unlocks @ Level", 2);
             builder.WriteLine();
 
             // Horsepower line
@@ -422,8 +422,8 @@ namespace ATSEngineTool.Database
 
             // Performance
             builder.WriteLine("# Engine Specs");
-            builder.WriteAttribute("torque", this.NewtonMetres, "# Engine power in Newton-metres");
-            builder.WriteAttribute("volume", series.Displacement, "# Engine size in liters. Used for Realistic Fuel Consumption settings");
+            builder.WriteAttribute("torque", this.NewtonMetres, "Engine power in Newton-metres");
+            builder.WriteAttribute("volume", series.Displacement, "Engine size in liters. Used for Realistic Fuel Consumption settings");
             builder.WriteLine();
 
             // Torque Curves
@@ -437,9 +437,9 @@ namespace ATSEngineTool.Database
 
             // RPM datas
             builder.WriteLine("# RPM Data");
-            builder.WriteAttribute("rpm_idle", this.IdleRpm, "# RPM at idle", 3);
-            builder.WriteAttribute("rpm_limit", this.RpmLimit, "# Governed RPM limit", 3);
-            builder.WriteAttribute("rpm_limit_neutral", this.RpmLimitNeutral, "# RPM limit in neutral gear");
+            builder.WriteAttribute("rpm_idle", this.IdleRpm, "RPM at idle", 3);
+            builder.WriteAttribute("rpm_limit", this.RpmLimit, "Governed RPM limit", 3);
+            builder.WriteAttribute("rpm_limit_neutral", this.RpmLimitNeutral, "RPM limit in neutral gear");
             builder.WriteAttribute("rpm_range_low_gear", $"({this.MinRpmRange_LowGear}, {this.MaxRpmRange_LowGear})", false);
             builder.WriteAttribute("rpm_range_high_gear", $"({this.MinRpmRange_HighGear}, {this.MaxRpmRange_HighGear})", false);
             builder.WriteAttribute("rpm_range_power_boost", $"({this.LowRpmRange_PowerBoost}, {this.HighRpmRange_PowerBoost})", false);
@@ -454,9 +454,9 @@ namespace ATSEngineTool.Database
             decvalue = this.BrakeStrength.ToString("0.0", Program.NumberFormat);
             builder.WriteLine();
             builder.WriteLine("# Engine Brake data");
-            builder.WriteAttribute("engine_brake", decvalue, false, "# Engine Brake Strength", 3);
-            builder.WriteAttribute("engine_brake_downshift", val, false, "# Enable automatic downshift for Engine Brake");
-            builder.WriteAttribute("engine_brake_positions", this.BrakePositions, "# The number of engine brake intensities");
+            builder.WriteAttribute("engine_brake", decvalue, false, "Engine Brake Strength", 3);
+            builder.WriteAttribute("engine_brake_downshift", val, false, "Enable automatic downshift for Engine Brake");
+            builder.WriteAttribute("engine_brake_positions", this.BrakePositions, "The number of engine brake intensities");
             builder.WriteLine();
 
             // AdBlue
@@ -491,8 +491,8 @@ namespace ATSEngineTool.Database
             }
 
             // Define is we output suitible_for and conflict_with for transmissions
-            bool go = Program.Config.CompileOption == CompileOption.EngineOnly
-                   || Program.Config.CompileOption == CompileOption.Both;
+            bool writeSuitables = Program.Config.CompileOption == CompileOption.EngineOnly
+                               || Program.Config.CompileOption == CompileOption.Both;
             var conflicts = this.TransmissionConflicts.ToList();
             var suitables = this.SuitableTransmissions.ToList();
 
@@ -513,13 +513,13 @@ namespace ATSEngineTool.Database
             }
 
             // Write the suitable_for[]...
-            if ((go && suitables.Count > 0) || (SuitableFor != null && SuitableFor.Length > 0))
+            if ((writeSuitables && suitables.Count > 0) || (SuitableFor != null && SuitableFor.Length > 0))
             {
                 builder.WriteLine();
                 builder.WriteLine("# Suitables");
 
                 // Transmissions?
-                if (go)
+                if (writeSuitables)
                     foreach (string trans in suitables.Select(x => x.Transmission.UnitName))
                         builder.WriteAttribute("suitable_for[]", $"{trans}.{truckName}.transmission");
 

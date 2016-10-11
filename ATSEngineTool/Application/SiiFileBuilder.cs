@@ -209,7 +209,7 @@ namespace ATSEngineTool
             if (!String.IsNullOrEmpty(comment))
             {
                 Builder.Append('\t', commentPadding);
-                Builder.AppendLine(comment);
+                Builder.Append("# ").AppendLine(comment);
             }
             else
             {
@@ -276,6 +276,20 @@ namespace ATSEngineTool
         {
             Builder.Clear();
             NewLine = true;
+        }
+
+        /// <summary>
+        /// Appends a directive to the current buffer
+        /// </summary>
+        public SiiFileBuilder WriteDirective(string value)
+        {
+            // Always write on a new line!
+            if (!NewLine) this.WriteLine();
+
+            // Just append, no tabs
+            Builder.AppendLine(value);
+            NewLine = true;
+            return this;
         }
 
         /// <summary>

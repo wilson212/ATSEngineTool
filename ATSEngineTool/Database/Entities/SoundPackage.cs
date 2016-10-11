@@ -138,9 +138,14 @@ namespace ATSEngineTool.Database
                 WriteAttribute(info, sounds, objectMap, builder);
             }
 
-            // Include directive
+            // Include directive.. Directives have no tabs at all!
+            int tabs = builder.Indent;
+            builder.Indent = 0;
             builder.WriteLineIf(type == SoundType.Interior, "@include \"/def/vehicle/truck/common_sound_int.sui\"");
             builder.WriteLineIf(type == SoundType.Exterior, "@include \"/def/vehicle/truck/common_sound_ext.sui\"");
+            builder.Indent = tabs;
+
+            // Add suitables
             builder.WriteLine();
             builder.WriteLine("{{{SUITABLE}}}");
 
@@ -156,9 +161,14 @@ namespace ATSEngineTool.Database
                 builder.WriteLine(item.Value.ToSiiFormat(item.Key, this));
             }
 
-            // Close SiiNUnit
+            // Write the include directive
+            tabs = builder.Indent;
+            builder.Indent = 0;
             builder.WriteLineIf(type == SoundType.Interior, "@include \"/def/vehicle/truck/common_sound_int_data.sui\"");
             builder.WriteLineIf(type == SoundType.Exterior, "@include \"/def/vehicle/truck/common_sound_ext_data.sui\"");
+            builder.Indent = tabs;
+
+            // Close SiiNUnit
             builder.WriteEndDocument();
             return builder.ToString();
         }
@@ -202,7 +212,7 @@ namespace ATSEngineTool.Database
                 }
 
                 // Trailing line?
-                builder.WriteLineIf(info.EmptyLineAfter);
+                builder.WriteLineIf(info.AppendLineAfter);
             }
         }
 
