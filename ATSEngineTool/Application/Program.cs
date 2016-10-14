@@ -24,7 +24,7 @@ namespace ATSEngineTool
         /// <summary>
         /// Program Version
         /// </summary>
-        public static Version Version { get; private set; } = new Version(2, 8, 4);
+        public static Version Version { get; private set; } = new Version(2, 8, 5);
 
         /// <summary>
         /// English number format info
@@ -34,7 +34,7 @@ namespace ATSEngineTool
         /// <summary>
         /// Returns whether this application is running in administrator mode.
         /// </summary>
-        public static bool IsAdministrator
+        public static bool RunAsAdmin
         {
             get
             {

@@ -125,7 +125,7 @@ namespace ATSEngineTool
                     Log.WriteLine("Program Version: " + Program.Version.ToString());
                     Log.WriteLine("Os Version: " + Environment.OSVersion.VersionString);
                     Log.WriteLine("Architecture: " + ((Environment.Is64BitOperatingSystem) ? "x64" : "x86"));
-                    Log.WriteLine("RunAs Admin: " + ((Program.IsAdministrator) ? "True" : "False"));
+                    Log.WriteLine("RunAs Admin: " + ((Program.RunAsAdmin) ? "True" : "False"));
                     Log.WriteLine();
                     Log.WriteLine("-------- Exception --------");
 

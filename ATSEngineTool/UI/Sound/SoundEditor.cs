@@ -98,6 +98,8 @@ namespace ATSEngineTool
             if (!PassesValidaion()) return;
 
             // Set new values
+            if (NewSound)
+                Sound.Attribute = (SoundAttribute)attrType.SelectedItem;
             Sound.Package = Package;
             Sound.FileName = fileNameBox.Text;
             Sound.Volume = (double)(volumeBox.Value / 100);
