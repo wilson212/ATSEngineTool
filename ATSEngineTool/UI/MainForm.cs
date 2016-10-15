@@ -1218,7 +1218,7 @@ namespace ATSEngineTool
         {
             SoundWrapper wrapper = parent;
             // If changine sound type or attribute
-            if (parent == null || parent.Sound.Type != sound.Type || parent.Sound.Attribute != sound.Attribute)
+            if (parent == null || parent.Sound.Attribute != sound.Attribute)
             {
                 if (sound.IsSoundArray)
                 {

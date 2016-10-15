@@ -43,7 +43,7 @@ namespace ATSEngineTool
             NewSound = sound == null;
             Sound = sound;
             Package = sound.Package;
-            Type = (sound?.Type ?? SoundType.Interior);
+            Type = sound.Type;
 
             InitializeForm();
         }
@@ -69,7 +69,7 @@ namespace ATSEngineTool
                     continue;
 
                 // Add item
-                attrType.Items.Add(name);
+                attrType.Items.Add(val);
                 if (Sound != null && name == Sound.Attribute.ToString())
                     attrType.SelectedIndex = attrType.Items.Count - 1;
             }
@@ -98,8 +98,8 @@ namespace ATSEngineTool
             if (!PassesValidaion()) return;
 
             // Set new values
-            if (NewSound)
-                Sound.Attribute = (SoundAttribute)attrType.SelectedItem;
+            Sound.Attribute = (SoundAttribute)attrType.SelectedItem;
+            Sound.Type = Type;
             Sound.Package = Package;
             Sound.FileName = fileNameBox.Text;
             Sound.Volume = (double)(volumeBox.Value / 100);
