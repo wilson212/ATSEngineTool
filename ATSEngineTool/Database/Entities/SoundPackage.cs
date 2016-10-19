@@ -76,9 +76,6 @@ namespace ATSEngineTool.Database
         /// </summary>
         public virtual IEnumerable<EngineSound> EngineSounds { get; set; }
 
-        private static string SingleTab = "";
-        private static string DoubleTab = "\t";
-
         /// <summary>
         /// Returns an array of 2 pre-compiled sii files. 0 index is the interior
         /// sii file, while index 1 is the exterior.
@@ -112,19 +109,19 @@ namespace ATSEngineTool.Database
 
             // Local variables
             var builder = new SiiFileBuilder();
-            var sb = new StringBuilder();
             var objectMap = new Dictionary<string, EngineSound>();
 
             // Figure out the accessory name
-            sb.Append(this.UnitName).Append(".{{{NAME}}}.");
-            sb.AppendLineIf(type == SoundType.Exterior, "esound", "isound");
+            var name = new StringBuilder(this.UnitName);
+            name.Append(".{{{NAME}}}.");
+            name.AppendLineIf(type == SoundType.Exterior, "esound", "isound");
 
             // Write file intro
             builder.IndentStructs = false;
             builder.WriteStartDocument();
 
             // Write the accessory type
-            builder.WriteStructStart("accessory_sound_data", sb.ToString().TrimEnd());
+            builder.WriteStructStart("accessory_sound_data", name.ToString().TrimEnd());
 
             // Mark exterior or interior attribute
             builder.WriteAttribute("exterior_sound", type == SoundType.Exterior);
@@ -139,11 +136,10 @@ namespace ATSEngineTool.Database
             }
 
             // Include directive.. Directives have no tabs at all!
-            int tabs = builder.Indent;
-            builder.Indent = 0;
-            builder.WriteLineIf(type == SoundType.Interior, "@include \"/def/vehicle/truck/common_sound_int.sui\"");
-            builder.WriteLineIf(type == SoundType.Exterior, "@include \"/def/vehicle/truck/common_sound_ext.sui\"");
-            builder.Indent = tabs;
+            if (type == SoundType.Interior)
+                builder.WriteInclude("/def/vehicle/truck/common_sound_int.sui");
+            else
+                builder.WriteInclude("/def/vehicle/truck/common_sound_ext.sui");
 
             // Add suitables
             builder.WriteLine();
@@ -162,11 +158,10 @@ namespace ATSEngineTool.Database
             }
 
             // Write the include directive
-            tabs = builder.Indent;
-            builder.Indent = 0;
-            builder.WriteLineIf(type == SoundType.Interior, "@include \"/def/vehicle/truck/common_sound_int_data.sui\"");
-            builder.WriteLineIf(type == SoundType.Exterior, "@include \"/def/vehicle/truck/common_sound_ext_data.sui\"");
-            builder.Indent = tabs;
+            if (type == SoundType.Interior)
+                builder.WriteInclude("/def/vehicle/truck/common_sound_int_data.sui");
+            else
+                builder.WriteInclude("/def/vehicle/truck/common_sound_ext_data.sui");
 
             // Close SiiNUnit
             builder.WriteEndDocument();

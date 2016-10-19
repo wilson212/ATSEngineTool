@@ -5,8 +5,17 @@ using System.Text;
 namespace ATSEngineTool
 {
     /// <summary>
-    /// This class is used to create formated Sii files.
+    /// Represents a writer that provides a forward-only way to generate Sii file formated data.
     /// </summary>
+    /// <example>
+    /// var writer = new SiiFileBuilder();
+    /// writer.WriteStartDocument();
+    /// writer.WriteStructStart("sound_data", ".test.sound");
+    /// writer.WriteAttribute("some_bool", true);
+    /// writer.WriteStructEnd();
+    /// writer.WriteEndDocument();
+    /// string fileFormat = writer.ToString();
+    /// </example>
     public sealed class SiiFileBuilder
     {
         /// <summary>
@@ -26,15 +35,40 @@ namespace ATSEngineTool
         public bool IndentStructs { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets the character string to use when indenting. This can be set to any string value. 
-        /// However, to ensure valid SII format, you should specify only valid white space 
-        /// characters, such as space characters, tabs, carriage returns, or line feeds. 
-        /// The default is a tab.
+        /// Gets or sets the character string to use when indenting new lines.
+        /// The default is a single tab.
         /// </summary>
-        public string IndentChars { get; set; } = "\t";
+        /// <remarks>
+        /// This can be set to any string value. However, to ensure valid SII format, you should 
+        /// specify only valid white space characters, such as space characters, tabs, carriage returns, 
+        /// or line feeds. 
+        /// </remarks>
+        public string IndentLineChars { get; set; } = "\t";
 
         /// <summary>
-        /// Gets or Sets the current indent level of the document
+        /// Gets or sets the character string to use when indenting attribute values. The default
+        /// is a single space.
+        /// </summary>
+        /// <remarks>
+        /// This can be set to any string value. However, to ensure valid SII format, you should 
+        /// specify only valid white space characters, such as space characters, tabs, carriage returns, 
+        /// or line feeds. 
+        /// </remarks>
+        public string IndentAttributeValueChars { get; set; } = " ";
+
+        /// <summary>
+        /// Gets or sets the character string to use when indenting attribute in-line comments (after value). 
+        /// The default is a single tab.
+        /// </summary>
+        /// <remarks>
+        /// This can be set to any string value. However, to ensure valid SII format, you should 
+        /// specify only valid white space characters, such as space characters, tabs, carriage returns, 
+        /// or line feeds. 
+        /// </remarks>
+        public string IndentInlineCommentChars { get; set; } = "\t";
+
+        /// <summary>
+        /// Gets or Sets the current line indent level of the document
         /// </summary>
         public int Indent
         {
@@ -117,6 +151,9 @@ namespace ATSEngineTool
         /// <returns></returns>
         public SiiFileBuilder WriteCommentBlock(IEnumerable<string> lines)
         {
+            // Ensure we write on a new line!
+            if (!NewLine) this.WriteLine();
+
             // Open comment
             this.WriteLine("/**");
 
@@ -146,13 +183,13 @@ namespace ATSEngineTool
                 throw new Exception("Cannot write a struct outside of the document");
 
             // Write the type and name line
-            Builder.AppendIf(NewLine, IndentChars, Indent)
+            Builder.AppendIf(NewLine, IndentLineChars, Indent)
                 .Append(type)
                 .Append(" : ")
                 .AppendLine(name);
 
             // Add Open brace   
-            Builder.Append(IndentChars, Indent).AppendLine("{");
+            Builder.Append(IndentLineChars, Indent).AppendLine("{");
 
             // Inicate new line and increase indent
             NewLine = true;
@@ -178,7 +215,7 @@ namespace ATSEngineTool
             Indent--;
 
             // Write close brace and decrease indent
-            Builder.Append(IndentChars, Indent).AppendLine("}");
+            Builder.Append(IndentLineChars, Indent).AppendLine("}");
             NewLine = true;
             OpenStruct = false;
             return this;
@@ -201,14 +238,19 @@ namespace ATSEngineTool
             // Always start on a newline!
             if (!NewLine) this.WriteLine();
 
-            // Append the attribute string
-            Builder.Append(IndentChars, Indent).Append(name).Append(':');
-            Builder.Append(' ').AppendIf(quote, '"').Append(value).AppendIf(quote, '"');
+            // Indent the line and write the attribute name
+            Builder.Append(IndentLineChars, Indent).Append(name);
 
-            // Append comment or close line
-            if (!String.IsNullOrEmpty(comment))
+            // Write the colon seperator and indent for attribute value
+            Builder.Append(':').Append(IndentAttributeValueChars);
+            
+            // Write attribute value, applying qoutes if a string value
+            Builder.AppendIf(quote, '"').Append(value).AppendIf(quote, '"');
+
+            // Append in-line comment if we have one. Close line
+            if (!String.IsNullOrWhiteSpace(comment))
             {
-                Builder.Append('\t', commentPadding);
+                Builder.Append(IndentInlineCommentChars, commentPadding);
                 Builder.Append("# ").AppendLine(comment);
             }
             else
@@ -279,16 +321,15 @@ namespace ATSEngineTool
         }
 
         /// <summary>
-        /// Appends a directive to the current buffer
+        /// Appends an @include directive to the current buffer
         /// </summary>
-        public SiiFileBuilder WriteDirective(string value)
+        public SiiFileBuilder WriteInclude(string value)
         {
             // Always write on a new line!
             if (!NewLine) this.WriteLine();
 
-            // Just append, no tabs
-            Builder.AppendLine(value);
-            NewLine = true;
+            // @include directives must not have tabs or spaces before them
+            Builder.AppendLine($"@include \"{value}\"");
             return this;
         }
 
@@ -303,6 +344,20 @@ namespace ATSEngineTool
         }
 
         /// <summary>
+        /// Appends a new line to this string builder if the <paramref name="condition"/> is true
+        /// </summary>
+        /// <param name="condition">Indicates whether we append a newline to the end of this StringBuilder</param>
+        public SiiFileBuilder WriteLineIf(bool condition)
+        {
+            if (condition)
+            {
+                Builder.AppendLine();
+                NewLine = true;
+            }
+            return this;
+        }
+
+        /// <summary>
         /// Appends an Object to this string builder if the <paramref name="condition"/> is true.
         /// </summary>
         /// <param name="condition">Indicates whether we append this object to the end of this StringBuilder</param>
@@ -310,7 +365,7 @@ namespace ATSEngineTool
         public SiiFileBuilder WriteIf(bool condition, object value)
         {
             if (condition)
-                Builder.AppendIf(NewLine, IndentChars, Indent).Append(value);
+                Builder.AppendIf(NewLine, IndentLineChars, Indent).Append(value);
 
             NewLine = false;
             return this;
@@ -325,7 +380,7 @@ namespace ATSEngineTool
         {
             if (condition)
             {
-                Builder.AppendIf(NewLine, IndentChars, Indent).AppendLine(value);
+                Builder.AppendIf(NewLine, IndentLineChars, Indent).AppendLine(value);
                 NewLine = true;
             }
             return this;
@@ -339,25 +394,11 @@ namespace ATSEngineTool
         public SiiFileBuilder WriteLineIf(bool condition, string trueValue, string falseValue)
         {
             if (condition)
-                Builder.AppendIf(NewLine, IndentChars, Indent).AppendLine(trueValue);
+                Builder.AppendIf(NewLine, IndentLineChars, Indent).AppendLine(trueValue);
             else
-                Builder.AppendIf(NewLine, IndentChars, Indent).AppendLine(falseValue);
+                Builder.AppendIf(NewLine, IndentLineChars, Indent).AppendLine(falseValue);
 
             NewLine = true;
-            return this;
-        }
-
-        /// <summary>
-        /// Appends a new line to this string builder if the <paramref name="condition"/> is true
-        /// </summary>
-        /// <param name="condition">Indicates whether we append a newline to the end of this StringBuilder</param>
-        public SiiFileBuilder WriteLineIf(bool condition)
-        {
-            if (condition)
-            {
-                Builder.AppendIf(NewLine, IndentChars, Indent).AppendLine();
-                NewLine = true;
-            }
             return this;
         }
 
@@ -368,7 +409,7 @@ namespace ATSEngineTool
         /// <returns></returns>
         public SiiFileBuilder Write(string value)
         {
-            Builder.AppendIf(NewLine, IndentChars, Indent).Append(value);
+            Builder.AppendIf(NewLine, IndentLineChars, Indent).Append(value);
             NewLine = false;
             return this;
         }
@@ -378,7 +419,7 @@ namespace ATSEngineTool
         /// </summary>
         public SiiFileBuilder WriteLine(string value)
         {
-            Builder.AppendIf(NewLine, IndentChars, Indent).AppendLine(value);
+            Builder.AppendIf(NewLine, IndentLineChars, Indent).AppendLine(value);
             NewLine = true;
             return this;
         }
