@@ -70,7 +70,6 @@ namespace ATSEngineTool.Database
             Builder = new SQLiteConnectionStringBuilder();
             Builder.DataSource = database;
             Builder.ForeignKeys = true;
-            EscapeCharacters = new char[2] { '`', '`' };
         }
 
         /// <summary>

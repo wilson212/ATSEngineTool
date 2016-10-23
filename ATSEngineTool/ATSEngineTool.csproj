@@ -208,7 +208,6 @@
       <DependentUpon>TruckEditForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Application\Program.cs" />
-    <Compile Include="Application\Range.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Controls\ShadowLabel.cs">
       <SubType>Component</SubType>

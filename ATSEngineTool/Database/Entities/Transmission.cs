@@ -266,7 +266,7 @@ namespace ATSEngineTool.Database
             var series = this.Series;
             var builder = new SiiFileBuilder();
             var name = $"{this.UnitName}.{truckName}.transmission";
-            var hasNames = Gears.Any(x => !String.IsNullOrEmpty(x.Name));
+            var hasNames = Gears.Any(x => !String.IsNullOrWhiteSpace(x.Name));
 
             // Make sure we have a file comment
             if (Comment == null || Comment.Length == 0)
@@ -396,29 +396,25 @@ namespace ATSEngineTool.Database
 
                 // Neutral always first
                 builder.WriteAttribute("neutral", "N");
-                if (forwardGears.Any(x => !String.IsNullOrEmpty(x.Name)))
+
+                // Forward Gears
+                i = 0; // Reset
+                builder.WriteLine();
+                builder.WriteLine("# Forward Gear Names");
+                foreach (var gear in forwardGears)
                 {
-                    i = 0;
-                    builder.WriteLine();
-                    builder.WriteLine("# Forward Gear Names");
-                    foreach (var gear in forwardGears)
-                    {
-                        name = GetGearNameAtIndex(i, gear, forwardGears);
-                        builder.WriteAttribute($"forward[{i++}]", name);
-                    }
+                    name = GetGearNameAtIndex(i, gear, forwardGears);
+                    builder.WriteAttribute($"forward[{i++}]", name);
                 }
 
                 // Reverse Gears
-                if (reverseGears.Any(x => !String.IsNullOrEmpty(x.Name)))
+                i = 0; // Reset
+                builder.WriteLine();
+                builder.WriteLine("# Reverse Gear Names");
+                foreach (var gear in reverseGears)
                 {
-                    i = 0;
-                    builder.WriteLine();
-                    builder.WriteLine("# Reverse Gear Names");
-                    foreach (var gear in forwardGears)
-                    {
-                        name = GetGearNameAtIndex(i, gear, reverseGears);
-                        builder.WriteAttribute($"reverse[{i++}]", name);
-                    }
+                    name = GetGearNameAtIndex(i, gear, reverseGears);
+                    builder.WriteAttribute($"reverse[{i++}]", name);
                 }
 
                 builder.WriteStructEnd();
