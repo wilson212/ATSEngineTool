@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -10,7 +9,6 @@ using System.Windows.Forms;
 using ATSEngineTool.Database;
 using ATSEngineTool.Properties;
 using BrightIdeasSoftware;
-using CrossLite;
 
 namespace ATSEngineTool
 {
@@ -98,7 +96,7 @@ namespace ATSEngineTool
                 }
             }
 
-            // Load database
+            // Fill form fields under 1 database connection
             using (AppDatabase db = new AppDatabase())
             {
                 FillTrucks(db);

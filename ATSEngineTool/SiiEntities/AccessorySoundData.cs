@@ -1,4 +1,5 @@
-﻿using Sii;
+﻿using ATSEngineTool.Database;
+using Sii;
 
 namespace ATSEngineTool.SiiEntities
 {
@@ -8,61 +9,61 @@ namespace ATSEngineTool.SiiEntities
         [SiiAttribute("name")]
         public string Name { get; private set; }
 
-        [SiiAttribute("start")]
+        [SiiAttribute("start"), SoundAttribute(SoundAttribute.Start)]
         public SoundData Start { get; private set; }
 
-        [SiiAttribute("stop")]
+        [SiiAttribute("stop"), SoundAttribute(SoundAttribute.Stop)]
         public SoundData Stop { get; private set; }
 
-        [SiiAttribute("start_no_fuel")]
+        [SiiAttribute("start_no_fuel"), SoundAttribute(SoundAttribute.StartNoFuel)]
         public SoundData StartNoFuel { get; private set; }
 
-        [SiiAttribute("engine")]
+        [SiiAttribute("engine"), SoundAttribute(SoundAttribute.Engine)]
         public SoundEngineData[] Engine { get; private set; }
 
-        [SiiAttribute("engine_load")]
+        [SiiAttribute("engine_load"), SoundAttribute(SoundAttribute.EngineLoad)]
         public SoundEngineData[] EngineLoad { get; private set; }
 
-        [SiiAttribute("engine_nofuel")]
+        [SiiAttribute("engine_nofuel"), SoundAttribute(SoundAttribute.EngineNoFuel)]
         public SoundEngineData[] EngineNoFuel { get; private set; }
 
-        [SiiAttribute("turbo")]
+        [SiiAttribute("turbo"), SoundAttribute(SoundAttribute.Turbo)]
         public SoundData Turbo { get; private set; }
 
-        [SiiAttribute("air_gear")]
+        [SiiAttribute("air_gear"), SoundAttribute(SoundAttribute.AirGears)]
         public SoundData[] AirGears { get; private set; }
 
-        [SiiAttribute("air_brake")]
+        [SiiAttribute("air_brake"), SoundAttribute(SoundAttribute.AirBrakes)]
         public SoundData[] AirBrakes { get; private set; }
 
-        [SiiAttribute("engine_exhaust")]
+        [SiiAttribute("engine_exhaust"), SoundAttribute(SoundAttribute.EngineExhaust)]
         public SoundEngineData[] EngineExhaust{ get; private set; }
 
-        [SiiAttribute("engine_brake")]
+        [SiiAttribute("engine_brake"), SoundAttribute(SoundAttribute.EngineBrake)]
         public SoundEngineData[] EngineBrake { get; private set; }
 
-        [SiiAttribute("horn")]
+        [SiiAttribute("horn"), SoundAttribute(SoundAttribute.Horn)]
         public SoundData Horn { get; private set; }
 
-        [SiiAttribute("air_horn")]
+        [SiiAttribute("air_horn"), SoundAttribute(SoundAttribute.AirHorn)]
         public SoundData AirHorn { get; private set; }
 
-        [SiiAttribute("reverse")]
+        [SiiAttribute("reverse"), SoundAttribute(SoundAttribute.Reverse)]
         public SoundData Reverse { get; private set; }
 
-        [SiiAttribute("change_gear")]
+        [SiiAttribute("change_gear"), SoundAttribute(SoundAttribute.ChangeGear)]
         public SoundData ChangeGear { get; private set; }
 
-        [SiiAttribute("blinker_on")]
+        [SiiAttribute("blinker_on"), SoundAttribute(SoundAttribute.BlinkerOn)]
         public SoundData BlinkerOn { get; private set; }
 
-        [SiiAttribute("blinker_off")]
+        [SiiAttribute("blinker_off"), SoundAttribute(SoundAttribute.BlinkerOff)]
         public SoundData BlinkerOff { get; private set; }
 
-        [SiiAttribute("wipers_up")]
+        [SiiAttribute("wipers_up"), SoundAttribute(SoundAttribute.WiperUp)]
         public SoundData WipersUp { get; private set; }
 
-        [SiiAttribute("wipers_down")]
+        [SiiAttribute("wipers_down"), SoundAttribute(SoundAttribute.WiperDown)]
         public SoundData WipersDown { get; private set; }
 
         [SiiAttribute("exterior_sound")]

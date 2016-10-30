@@ -6,9 +6,15 @@ namespace ATSEngineTool.Database
     [Table]
     public class AccessoryConflict
     {
+        /// <summary>
+        /// Gets or sets the Engine Id for this conflict
+        /// </summary>
         [Column, Required, PrimaryKey]
         public int EngineId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the Transmission Id for this conflict
+        /// </summary>
         [Column, Required, PrimaryKey]
         public int TransmissionId { get; set; }
 

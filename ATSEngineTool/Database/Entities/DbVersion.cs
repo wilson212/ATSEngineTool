@@ -35,10 +35,10 @@ namespace ATSEngineTool.Database
         [Default("(strftime('%s', 'now'))", Quote = false)]
         protected int AppliedOnEpoch { get; set; }
 
-        public DateTime AppliedOn
+        public DateTimeOffset AppliedOn
         {
-            get { return Epoch.FromUnix(AppliedOnEpoch); }
-            set { AppliedOnEpoch = Epoch.ToUnix(value); }
+            get { return Epoch.FromEpoch(AppliedOnEpoch); }
+            set { AppliedOnEpoch = (int)value.ToUnixTimeSeconds(); }
         }
     }
 }

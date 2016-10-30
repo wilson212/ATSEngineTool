@@ -845,7 +845,7 @@
             // columnHeader3
             // 
             this.columnHeader3.Text = "Engine Series";
-            this.columnHeader3.Width = 229;
+            this.columnHeader3.Width = 225;
             // 
             // engineListView
             // 

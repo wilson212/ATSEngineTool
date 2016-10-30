@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ATSEngineTool
@@ -12,7 +11,7 @@ namespace ATSEngineTool
         /// <summary>
         /// Gets or Sets whether the task is cancelable
         /// </summary>
-        protected bool Cancelable = true;
+        protected bool Cancelable { get; set; } = true;
 
         /// <summary>
         /// Returns whether the Task form is already open and running
@@ -31,7 +30,7 @@ namespace ATSEngineTool
         /// <summary>
         /// A progress object that is used to report progress to the TaskForm and update the GUI
         /// </summary>
-        public static IProgress<TaskProgressUpdate> Progress;
+        public static IProgress<TaskProgressUpdate> Progress { get; private set; }
 
         /// <summary>
         /// The event that is fired when the Cancel button is pressed

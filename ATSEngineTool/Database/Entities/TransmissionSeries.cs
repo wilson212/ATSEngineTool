@@ -7,6 +7,9 @@ namespace ATSEngineTool.Database
     [Table]
     public class TransmissionSeries
     {
+        /// <summary>
+        /// Gets or sets the unique row id for this object
+        /// </summary>
         [Column, PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 

@@ -2,7 +2,10 @@
 
 namespace System
 {
-    class DirectoryExt
+    /// <summary>
+    /// A simple class to provide improved directory operations.
+    /// </summary>
+    public static class DirectoryExt
     {
         /// <summary>
         /// Copies the contents of one folder, to another.

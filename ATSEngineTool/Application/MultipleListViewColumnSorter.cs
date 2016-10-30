@@ -5,16 +5,16 @@ namespace ATSEngineTool
 {
     public class MultipleListViewColumnSorter
     {
-        private List<ListViewColumnSorterExt> sorters;
+        private List<ListViewColumnSorter> sorters;
 
         public MultipleListViewColumnSorter()
         {
-            sorters = new List<ListViewColumnSorterExt>();
+            sorters = new List<ListViewColumnSorter>();
         }
 
         public void AddListView(ListView lv)
         {
-            sorters.Add(new ListViewColumnSorterExt(lv));
+            sorters.Add(new ListViewColumnSorter(lv));
         }
     }
 }

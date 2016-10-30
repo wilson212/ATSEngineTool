@@ -8,7 +8,7 @@ using CrossLite.CodeFirst;
 namespace ATSEngineTool.Database
 {
     /// <summary>
-    /// This object is used to interact with the SQLite database "EngineData.db"
+    /// This object is used to interact with the SQLite database "/data/AppData.db"
     /// which contains all the application data for this program
     /// </summary>
     public class AppDatabase : CrossLite.SQLiteContext

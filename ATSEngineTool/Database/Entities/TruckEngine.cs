@@ -9,13 +9,13 @@ namespace ATSEngineTool.Database
         #region Column Properties
 
         /// <summary>
-        /// The Unique item ID
+        /// Gets or sets the parent <see cref="Truck.Id"/>
         /// </summary>
         [Column, Required, PrimaryKey]
         public int TruckId { get; set; }
 
         /// <summary>
-        /// The Unique item ID
+        /// Gets or sets the parent <see cref="Engine.Id"/>
         /// </summary>
         [Column, Required, PrimaryKey]
         public int EngineId { get; set; }

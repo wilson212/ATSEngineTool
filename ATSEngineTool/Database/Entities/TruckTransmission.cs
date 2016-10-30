@@ -7,7 +7,7 @@ namespace ATSEngineTool.Database
     public class TruckTransmission
     {
         /// <summary>
-        /// The Unique item ID
+        /// Gets or sets the parent <see cref="Transmission.Id"/>
         /// </summary>
         [Column, Required, PrimaryKey]
         public int TransmissionId { get; set; }

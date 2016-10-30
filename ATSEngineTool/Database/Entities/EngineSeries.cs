@@ -6,7 +6,7 @@ using CrossLite.CodeFirst;
 namespace ATSEngineTool.Database
 {
     [Table]
-    [CompositeUnique("Manufacturer", "Name")]
+    [CompositeUnique(nameof(Manufacturer), nameof(Name))]
     public class EngineSeries
     {
         /// <summary>

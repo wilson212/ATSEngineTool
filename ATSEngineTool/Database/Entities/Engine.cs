@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using CrossLite;
 using CrossLite.CodeFirst;
 
@@ -22,7 +20,7 @@ namespace ATSEngineTool.Database
         public int Id { get; protected set; }
 
         /// <summary>
-        /// Gets or Sets the <see cref="ATSEngineTool.Database.EngineSeries"/> object
+        /// Gets or Sets the <see cref="EngineSeries"/> object
         /// ID that this entity references
         /// </summary>
         [Column, Required]
@@ -205,14 +203,7 @@ namespace ATSEngineTool.Database
             set
             {
                 // Ensure we have a file extension
-                if (!Path.HasExtension(value))
-                {
-                    fileName = String.Concat(value, ".sii");
-                }
-                else
-                {
-                    fileName = value;
-                }
+                fileName = (!Path.HasExtension(value)) ? String.Concat(value, ".sii") : value;
             }
         }
 

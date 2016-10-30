@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Reflection;
 using ATSEngineTool.Database;
 using ATSEngineTool.SiiEntities;
 using Sii;
@@ -100,86 +101,51 @@ namespace ATSEngineTool
         /// <param name="type">The sound type</param>
         public void ImportSounds(AppDatabase db, SoundPackage package, AccessorySoundData data, SoundType type)
         {
-            // === Add basic engine sounds
-            if (data.Start != null)
-                db.EngineSounds.Add(new EngineSound(data.Start, SoundAttribute.Start, type) { Package = package });
+            // Grab all properties that have the SoundAttribute attribute
+            List<PropertyInfo> result = typeof(AccessorySoundData).GetProperties()
+                .Where(prop => prop.IsDefined(typeof(SoundAttributeAttribute), false))
+                .ToList();
 
-            if (data.StartNoFuel != null)
-                db.EngineSounds.Add(new EngineSound(data.StartNoFuel, SoundAttribute.StartNoFuel, type) { Package = package });
-
-            if (data.Stop != null)
-                db.EngineSounds.Add(new EngineSound(data.Stop, SoundAttribute.Stop, type) { Package = package });
-
-            if (data.Turbo != null)
-                db.EngineSounds.Add(new EngineSound(data.Turbo, SoundAttribute.Turbo, type) { Package = package });
-
-            // === Add Engine Force Sounds
-            if (data.EngineNoFuel != null)
+            // Using reflection, we will now loop through each property
+            // with the SoundAttribute attribute, and create an EngineSound
+            // entity using that data.
+            foreach (var prop in result)
             {
-                foreach (var sound in data.EngineNoFuel)
-                    db.EngineSounds.Add(new EngineSound(sound, SoundAttribute.EngineNoFuel, type) { Package = package });
+                // Define local vars
+                SoundAttribute attr = prop.GetCustomAttribute<SoundAttributeAttribute>().Attribute;
+                SoundInfo info = SoundInfo.Attributes[attr];
+
+                if (info.IsArray)
+                {
+                    if (info.IsEngineSound)
+                    {
+                        var values = ((SoundEngineData[])prop.GetValue(data) ?? new SoundEngineData[] { });
+                        foreach (var sound in values)
+                            db.EngineSounds.Add(new EngineSound(sound, attr, type) { Package = package });
+                    }
+                    else
+                    {
+                        var values = ((SoundData[])prop.GetValue(data) ?? new SoundData[] { });
+                        foreach (var sound in values)
+                            db.EngineSounds.Add(new EngineSound(sound, attr, type) { Package = package });
+                    }
+                }
+                else
+                {
+                    if (info.IsEngineSound)
+                    {
+                        var sound = (SoundEngineData)prop.GetValue(data);
+                        if (sound != null)
+                            db.EngineSounds.Add(new EngineSound(sound, attr, type) { Package = package });
+                    }
+                    else
+                    {
+                        var sound = (SoundData)prop.GetValue(data);
+                        if (sound != null)
+                            db.EngineSounds.Add(new EngineSound(sound, attr, type) { Package = package });
+                    }
+                }
             }
-
-            if (data.Engine != null)
-            {
-                foreach (var sound in data.Engine)
-                    db.EngineSounds.Add(new EngineSound(sound, SoundAttribute.Engine, type) { Package = package });
-            }
-
-            if (data.EngineLoad != null)
-            {
-                foreach (var sound in data.EngineLoad)
-                    db.EngineSounds.Add(new EngineSound(sound, SoundAttribute.EngineLoad, type) { Package = package });
-            }
-
-            if (data.EngineExhaust != null)
-            {
-                foreach (var sound in data.EngineExhaust)
-                    db.EngineSounds.Add(new EngineSound(sound, SoundAttribute.EngineExhaust, type) { Package = package });
-            }
-
-            if (data.EngineBrake != null)
-            {
-                foreach (var sound in data.EngineBrake)
-                    db.EngineSounds.Add(new EngineSound(sound, SoundAttribute.EngineBrake, type) { Package = package });
-            }
-
-            // === Add Truck Sounds
-            if (data.Horn != null)
-                db.EngineSounds.Add(new EngineSound(data.Horn, SoundAttribute.Horn, type) { Package = package });
-
-            if (data.AirHorn != null)
-                db.EngineSounds.Add(new EngineSound(data.AirHorn, SoundAttribute.AirHorn, type) { Package = package });
-
-            if (data.Reverse != null)
-                db.EngineSounds.Add(new EngineSound(data.Reverse, SoundAttribute.Reverse, type) { Package = package });
-
-            if (data.ChangeGear != null)
-                db.EngineSounds.Add(new EngineSound(data.ChangeGear, SoundAttribute.ChangeGear, type) { Package = package });
-
-            if (data.AirBrakes != null)
-            {
-                foreach (var sound in data.AirBrakes)
-                    db.EngineSounds.Add(new EngineSound(sound, SoundAttribute.AirBrakes, type) { Package = package });
-            }
-
-            if (data.AirGears != null)
-            {
-                foreach (var sound in data.AirGears)
-                    db.EngineSounds.Add(new EngineSound(sound, SoundAttribute.AirGears, type) { Package = package });
-            }
-
-            if (data.BlinkerOn != null)
-                db.EngineSounds.Add(new EngineSound(data.BlinkerOn, SoundAttribute.BlinkerOn, type) { Package = package });
-
-            if (data.BlinkerOff != null)
-                db.EngineSounds.Add(new EngineSound(data.BlinkerOff, SoundAttribute.BlinkerOff, type) { Package = package });
-
-            if (data.WipersUp != null)
-                db.EngineSounds.Add(new EngineSound(data.WipersUp, SoundAttribute.WiperUp, type) { Package = package });
-
-            if (data.WipersDown != null)
-                db.EngineSounds.Add(new EngineSound(data.WipersDown, SoundAttribute.WiperDown, type) { Package = package });
         }
 
         /// <summary>

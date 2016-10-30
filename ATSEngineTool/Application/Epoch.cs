@@ -1,28 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ATSEngineTool
+﻿namespace System
 {
     public static class Epoch
     {
         /// <summary>
         /// The value for the Unix epoch (e.g. January 1, 1970 at midnight, in UTC).
         /// </summary>
-        private static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        private static readonly DateTimeOffset UnixEpoch = new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
 
-        public static int Now => (int)(DateTime.UtcNow - UnixEpoch).TotalSeconds;
+        /// <summary>
+        /// Returns the current Epoch timestamp
+        /// </summary>
+        public static long Now => DateTimeOffset.Now.ToUnixTimeSeconds();
 
-        public static DateTime FromUnix(int secondsSinceepoch)
+        /// <summary>
+        /// Converts the supplied Epoch timestamp to a <see cref="DateTime"/>
+        /// </summary>
+        /// <param name="secondsSinceepoch"></param>
+        /// <returns></returns>
+        public static DateTimeOffset FromEpoch(long secondsSinceepoch)
         {
             return UnixEpoch.AddSeconds(secondsSinceepoch);
         }
 
-        public static int ToUnix(DateTime dateTime)
+        /// <summary>
+        /// Converts the supplied <see cref="DateTime"/> to an Epoch timestamp.
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static long ToEpoch(DateTime dateTime)
         {
-            return (int)(dateTime - UnixEpoch).TotalSeconds;
+            var dto = (DateTimeOffset)dateTime.ToUniversalTime();
+            return dto.ToUnixTimeSeconds();
         }
     }
 }

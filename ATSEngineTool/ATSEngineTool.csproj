@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="Application\CompileOption.cs" />
     <Compile Include="Application\ExceptionHandler.cs" />
+    <Compile Include="Application\SoundAttributeAttribute.cs" />
     <Compile Include="Application\SoundPackageReader.cs" />
     <Compile Include="Application\UnitSystem.cs" />
     <Compile Include="Application\SiiFileBuilder.cs" />
@@ -109,7 +110,7 @@
     <Compile Include="Application\Metrics.cs" />
     <Compile Include="Application\SoundWrapper.cs" />
     <Compile Include="Extensions\StringBuilderExtensions.cs" />
-    <Compile Include="Application\ListViewColumnSorterExt.cs" />
+    <Compile Include="Application\ListViewColumnSorter.cs" />
     <Compile Include="Application\MultipleListViewColumnSorter.cs" />
     <Compile Include="UI\Sound\NewPackageForm.cs">
       <SubType>Form</SubType>

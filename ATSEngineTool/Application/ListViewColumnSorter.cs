@@ -3,36 +3,41 @@ using System.Windows.Forms;
 
 namespace ATSEngineTool
 {
-    public class ListViewColumnSorterExt : IComparer
+    /// <summary>
+    /// This class is used to perform sorting behavior on a ListView when a 
+    /// column header is clicked
+    /// </summary>
+    public class ListViewColumnSorter : IComparer
     {
-        /// <summary>
-        /// Specifies the column to be sorted
-        /// </summary>
-        private int ColumnToSort;
-        /// <summary>
-        /// Specifies the order in which to sort (i.e. 'Ascending').
-        /// </summary>
-        private SortOrder OrderOfSort;
         /// <summary>
         /// Case insensitive comparer object
         /// </summary>
         private CaseInsensitiveComparer ObjectCompare;
 
-        private ListView listView;
         /// <summary>
-        /// Class constructor.  Initializes various elements
+        /// Gets or sets the zero-based index of the column to apply the sorting operation on.
         /// </summary>
-        public ListViewColumnSorterExt(ListView lv)
+        public int SortColumn { get; set; } = 0;
+
+        /// <summary>
+        /// Gets or sets the order of sorting to apply (for example, 'Ascending' or 'Descending').
+        /// </summary>
+        public SortOrder Order { get; set; } = SortOrder.None;
+
+        /// <summary>
+        /// The listview we are sorting
+        /// </summary>
+        private ListView listView;
+
+        /// <summary>
+        /// Creates a new instance of <see cref="ListViewColumnSorter"/>
+        /// </summary>
+        public ListViewColumnSorter(ListView lv)
         {
+            // Setup the listview to use this sorter instance
             listView = lv;
             listView.ListViewItemSorter = this;
-            listView.ColumnClick += new ColumnClickEventHandler(listView_ColumnClick);
-
-            // Initialize the column to '0'
-            ColumnToSort = 0;
-
-            // Initialize the sort order to 'none'
-            OrderOfSort = SortOrder.None;
+            listView.ColumnClick += listView_ColumnClick;
 
             // Initialize the CaseInsensitiveComparer object
             ObjectCompare = new CaseInsensitiveComparer();
@@ -59,15 +64,15 @@ namespace ATSEngineTool
             listviewY = (ListViewItem)y;
 
             // Compare the two items
-            compareResult = ObjectCompare.Compare(listviewX.SubItems[ColumnToSort].Text, listviewY.SubItems[ColumnToSort].Text);
+            compareResult = ObjectCompare.Compare(listviewX.SubItems[SortColumn].Text, listviewY.SubItems[SortColumn].Text);
 
             // Calculate correct return value based on object comparison
-            if (OrderOfSort == SortOrder.Ascending)
+            if (Order == SortOrder.Ascending)
             {
                 // Ascending sort is selected, return normal result of compare operation
                 return compareResult;
             }
-            else if (OrderOfSort == SortOrder.Descending)
+            else if (Order == SortOrder.Descending)
             {
                 // Descending sort is selected, return negative result of compare operation
                 return (-compareResult);
@@ -79,56 +84,26 @@ namespace ATSEngineTool
             }
         }
 
-        /// <summary>
-        /// Gets or sets the number of the column to which to apply the sorting operation (Defaults to '0').
-        /// </summary>
-        private int SortColumn
-        {
-            set
-            {
-                ColumnToSort = value;
-            }
-            get
-            {
-                return ColumnToSort;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the order of sorting to apply (for example, 'Ascending' or 'Descending').
-        /// </summary>
-        private SortOrder Order
-        {
-            set
-            {
-                OrderOfSort = value;
-            }
-            get
-            {
-                return OrderOfSort;
-            }
-        }
-
         private void ReverseSortOrderAndSort(int column, ListView lv)
         {
             // Determine if clicked column is already the column that is being sorted.
             if (column == this.SortColumn)
             {
                 // Reverse the current sort direction for this column.
-                if (this.Order == SortOrder.Ascending)
+                if (Order == SortOrder.Ascending)
                 {
-                    this.Order = SortOrder.Descending;
+                    Order = SortOrder.Descending;
                 }
                 else
                 {
-                    this.Order = SortOrder.Ascending;
+                    Order = SortOrder.Ascending;
                 }
             }
             else
             {
                 // Set the column number that is to be sorted; default to ascending.
-                this.SortColumn = column;
-                this.Order = SortOrder.Ascending;
+                SortColumn = column;
+                Order = SortOrder.Ascending;
             }
 
             // Perform the sort with these new sort options.

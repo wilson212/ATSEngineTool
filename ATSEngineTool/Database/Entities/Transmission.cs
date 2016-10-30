@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using CrossLite;
 using CrossLite.CodeFirst;
 
@@ -20,7 +18,7 @@ namespace ATSEngineTool.Database
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or Sets the <see cref="ATSEngineTool.Database.TransmissionSeries"/> object
+        /// Gets or Sets the <see cref="TransmissionSeries"/> object
         /// ID that this entity references
         /// </summary>
         [Column, Required]
