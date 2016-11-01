@@ -24,7 +24,7 @@ namespace ATSEngineTool
         /// <summary>
         /// Program Version
         /// </summary>
-        public static Version Version { get; private set; } = new Version(2, 8, 7);
+        public static Version Version { get; private set; } = new Version(2, 8, 8);
 
         /// <summary>
         /// English number format info

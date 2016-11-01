@@ -447,6 +447,7 @@ namespace ATSEngineTool.Database
                         case 2: return (index == 0) ? "R1" : "R2";
                         case 3:
                         case 4:
+                        default:
                             i = (index + 2) / 2;
                             return $"R{i}{affix}";
                     }

@@ -53,10 +53,12 @@ namespace ATSEngineTool
                 }
             }
 
-            if (iconBox.SelectedIndex == -1)
+            // Select default icon index
+            if (iconBox.SelectedIndex == -1 && iconBox.Items.Count > 0)
                 iconBox.SelectedIndex = 0;
 
-            if (soundBox.SelectedIndex == -1)
+            // Select default sound package index
+            if (soundBox.SelectedIndex == -1 && soundBox.Items.Count > 0)
                 soundBox.SelectedIndex = 0;
 
             // Set texts

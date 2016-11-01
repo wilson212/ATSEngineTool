@@ -265,7 +265,7 @@ namespace ATSEngineTool
         /// <param name="index"></param>
         private void AddGear(TransmissionGear gear, int index)
         {
-            string name = GetGearNameAtIndex(index, gear);
+            string name = (showPlaceholdersBox.Checked) ? GetGearNameAtIndex(index, gear) : gear.Name;
 
             ListViewItem item = new ListViewItem((index + 1).ToString());
             item.SubItems.Add(name);
@@ -292,13 +292,6 @@ namespace ATSEngineTool
             {
                 if (newGear.IsReverse)
                 {
-                    if (ReverseGears.Count == 4)
-                    {
-                        MessageBox.Show("A transmission may only have up to 4 reverse gears!",
-                            "Edit Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning
-                        );
-                        return false;
-                    }
                     ReverseGears.Add(newGear);
                     ForwardGears.RemoveAt(index);
                 }
@@ -731,19 +724,8 @@ namespace ATSEngineTool
                     var gear = frm.GetGear();
 
                     // Add the gear to the correct list
-                    if (gear.IsReverse)
-                    {
-                        if (ReverseGears.Count == 4)
-                        {
-                            MessageBox.Show("A transmission may only have up to 4 reverse gears!",
-                                "Edit Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning
-                            );
-                            return;
-                        }
-                        ReverseGears.Add(gear);
-                    }
-                    else
-                        ForwardGears.Add(gear);
+                    var list = (gear.IsReverse) ? ReverseGears : ForwardGears;
+                    list.Add(gear);
 
                     // Force Points Redraw
                     PopulateGears();
@@ -1007,6 +989,11 @@ namespace ATSEngineTool
         private void truckListView_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             TrucksChanged = true;
+        }
+
+        private void showPlaceholdersBox_CheckedChanged(object sender, EventArgs e)
+        {
+            PopulateGears();
         }
     }
 }

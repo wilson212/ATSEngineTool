@@ -32,11 +32,11 @@
             this.confirmButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.gearName = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.ratioBox = new System.Windows.Forms.NumericUpDown();
             this.labelTorque = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.gearName = new System.Windows.Forms.TextBox();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ratioBox)).BeginInit();
@@ -86,6 +86,32 @@
             this.panel1.Size = new System.Drawing.Size(284, 142);
             this.panel1.TabIndex = 2;
             // 
+            // gearName
+            // 
+            this.gearName.Location = new System.Drawing.Point(148, 59);
+            this.gearName.MaxLength = 5;
+            this.gearName.Name = "gearName";
+            this.gearName.Size = new System.Drawing.Size(103, 20);
+            this.gearName.TabIndex = 22;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(35, 62);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(110, 13);
+            this.label2.TabIndex = 21;
+            this.label2.Text = "Gear Name (optional):";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(35, 26);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(205, 13);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "Enter a negative number for reverse gears";
+            // 
             // ratioBox
             // 
             this.ratioBox.DecimalPlaces = 2;
@@ -96,12 +122,12 @@
             0});
             this.ratioBox.Location = new System.Drawing.Point(148, 93);
             this.ratioBox.Maximum = new decimal(new int[] {
-            2500,
+            3000,
             0,
             0,
             131072});
             this.ratioBox.Minimum = new decimal(new int[] {
-            250,
+            300,
             0,
             0,
             -2147418112});
@@ -122,32 +148,6 @@
             this.labelTorque.Size = new System.Drawing.Size(61, 13);
             this.labelTorque.TabIndex = 18;
             this.labelTorque.Text = "Gear Ratio:";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(35, 26);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(205, 13);
-            this.label1.TabIndex = 20;
-            this.label1.Text = "Enter a negative number for reverse gears";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(35, 62);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(110, 13);
-            this.label2.TabIndex = 21;
-            this.label2.Text = "Gear Name (optional):";
-            // 
-            // gearName
-            // 
-            this.gearName.Location = new System.Drawing.Point(148, 59);
-            this.gearName.MaxLength = 5;
-            this.gearName.Name = "gearName";
-            this.gearName.Size = new System.Drawing.Size(103, 20);
-            this.gearName.TabIndex = 22;
             // 
             // EditGearForm
             // 

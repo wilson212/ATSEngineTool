@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TransmissionForm));
-            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Reverse", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Forward", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Reverse", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Forward", System.Windows.Forms.HorizontalAlignment.Left);
             this.label1 = new System.Windows.Forms.Label();
             this.unitNameBox = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -59,7 +59,6 @@
             this.diffRatio = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.removeGearButton = new System.Windows.Forms.Button();
             this.gearListView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -103,6 +102,11 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.label11 = new System.Windows.Forms.Label();
             this.suitablesTextBox = new System.Windows.Forms.TextBox();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.groupBox16 = new System.Windows.Forms.GroupBox();
+            this.truckListView = new System.Windows.Forms.ListView();
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label46 = new System.Windows.Forms.Label();
             this.contentPanel = new System.Windows.Forms.Panel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.footerPanel = new System.Windows.Forms.Panel();
@@ -110,12 +114,8 @@
             this.confirmButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.headerPanel = new System.Windows.Forms.Panel();
+            this.showPlaceholdersBox = new System.Windows.Forms.CheckBox();
             this.shadowLabel1 = new System.Windows.Forms.ShadowLabel();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.groupBox16 = new System.Windows.Forms.GroupBox();
-            this.truckListView = new System.Windows.Forms.ListView();
-            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.label46 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.seriesIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceBox)).BeginInit();
@@ -140,11 +140,11 @@
             this.tabPage5.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            this.tabPage6.SuspendLayout();
+            this.groupBox16.SuspendLayout();
             this.contentPanel.SuspendLayout();
             this.footerPanel.SuspendLayout();
             this.headerPanel.SuspendLayout();
-            this.tabPage6.SuspendLayout();
-            this.groupBox16.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -327,36 +327,36 @@
             // 
             // chart1
             // 
-            chartArea2.AxisX.IsMarginVisible = false;
-            chartArea2.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
-            chartArea2.AxisX.Title = "Speed (Mph)";
-            chartArea2.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
-            chartArea2.AxisY.Title = "Engine RPM";
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Enabled = false;
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            chartArea1.AxisX.IsMarginVisible = false;
+            chartArea1.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
+            chartArea1.AxisX.Title = "Speed (Mph)";
+            chartArea1.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
+            chartArea1.AxisY.Title = "Engine RPM";
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Enabled = false;
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(8, 14);
             this.chart1.Name = "chart1";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.MarkerBorderColor = System.Drawing.Color.Black;
-            series2.MarkerColor = System.Drawing.Color.DodgerBlue;
-            series2.MarkerSize = 7;
-            series2.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series2.Name = "Series1";
-            series2.SmartLabelStyle.AllowOutsidePlotArea = System.Windows.Forms.DataVisualization.Charting.LabelOutsidePlotAreaStyle.No;
-            series2.SmartLabelStyle.MaxMovingDistance = 40D;
-            series2.SmartLabelStyle.MinMovingDistance = 25D;
-            series2.SmartLabelStyle.MovingDirection = ((System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles)((((((System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.Top | System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.Bottom) 
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.MarkerBorderColor = System.Drawing.Color.Black;
+            series1.MarkerColor = System.Drawing.Color.DodgerBlue;
+            series1.MarkerSize = 7;
+            series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series1.Name = "Series1";
+            series1.SmartLabelStyle.AllowOutsidePlotArea = System.Windows.Forms.DataVisualization.Charting.LabelOutsidePlotAreaStyle.No;
+            series1.SmartLabelStyle.MaxMovingDistance = 40D;
+            series1.SmartLabelStyle.MinMovingDistance = 25D;
+            series1.SmartLabelStyle.MovingDirection = ((System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles)((((((System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.Top | System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.Bottom) 
             | System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.TopLeft) 
             | System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.TopRight) 
             | System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.BottomLeft) 
             | System.Windows.Forms.DataVisualization.Charting.LabelAlignmentStyles.BottomRight)));
-            series2.YValuesPerPoint = 6;
-            this.chart1.Series.Add(series2);
+            series1.YValuesPerPoint = 6;
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(844, 373);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -453,7 +453,7 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Controls.Add(this.showPlaceholdersBox);
             this.groupBox3.Controls.Add(this.removeGearButton);
             this.groupBox3.Controls.Add(this.gearListView);
             this.groupBox3.Controls.Add(this.addGearButton);
@@ -463,15 +463,6 @@
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Gears";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(15, 22);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(234, 13);
-            this.label5.TabIndex = 33;
-            this.label5.Text = "** Gear names are placeholders until changed **";
             // 
             // removeGearButton
             // 
@@ -493,13 +484,13 @@
             this.columnHeader4,
             this.columnHeader5});
             this.gearListView.FullRowSelect = true;
-            listViewGroup3.Header = "Reverse";
-            listViewGroup3.Name = "Reverse";
-            listViewGroup4.Header = "Forward";
-            listViewGroup4.Name = "Forward";
+            listViewGroup1.Header = "Reverse";
+            listViewGroup1.Name = "Reverse";
+            listViewGroup2.Header = "Forward";
+            listViewGroup2.Name = "Forward";
             this.gearListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup3,
-            listViewGroup4});
+            listViewGroup1,
+            listViewGroup2});
             this.gearListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.gearListView.HideSelection = false;
             this.gearListView.Location = new System.Drawing.Point(11, 41);
@@ -941,6 +932,60 @@
             this.suitablesTextBox.Size = new System.Drawing.Size(387, 293);
             this.suitablesTextBox.TabIndex = 0;
             // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.groupBox16);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(886, 426);
+            this.tabPage6.TabIndex = 6;
+            this.tabPage6.Text = "Truck List";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // groupBox16
+            // 
+            this.groupBox16.Controls.Add(this.truckListView);
+            this.groupBox16.Controls.Add(this.label46);
+            this.groupBox16.Location = new System.Drawing.Point(240, 31);
+            this.groupBox16.Name = "groupBox16";
+            this.groupBox16.Size = new System.Drawing.Size(407, 364);
+            this.groupBox16.TabIndex = 11;
+            this.groupBox16.TabStop = false;
+            this.groupBox16.Text = "Truck List";
+            // 
+            // truckListView
+            // 
+            this.truckListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.truckListView.AutoArrange = false;
+            this.truckListView.CheckBoxes = true;
+            this.truckListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader8});
+            this.truckListView.FullRowSelect = true;
+            this.truckListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.truckListView.Location = new System.Drawing.Point(11, 56);
+            this.truckListView.Name = "truckListView";
+            this.truckListView.Size = new System.Drawing.Size(385, 293);
+            this.truckListView.TabIndex = 21;
+            this.truckListView.UseCompatibleStateImageBehavior = false;
+            this.truckListView.View = System.Windows.Forms.View.Details;
+            this.truckListView.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.truckListView_ItemCheck);
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.Text = "Name";
+            this.columnHeader8.Width = 350;
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Location = new System.Drawing.Point(15, 23);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(377, 13);
+            this.label46.TabIndex = 20;
+            this.label46.Text = "Select the trucks that will have this transmission added to their transmission li" +
+    "st:";
+            // 
             // contentPanel
             // 
             this.contentPanel.Controls.Add(this.tabControl1);
@@ -1007,6 +1052,19 @@
             this.headerPanel.TabIndex = 28;
             this.headerPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.headerPanel_Paint);
             // 
+            // showPlaceholdersBox
+            // 
+            this.showPlaceholdersBox.AutoSize = true;
+            this.showPlaceholdersBox.Checked = true;
+            this.showPlaceholdersBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showPlaceholdersBox.Location = new System.Drawing.Point(45, 18);
+            this.showPlaceholdersBox.Name = "showPlaceholdersBox";
+            this.showPlaceholdersBox.Size = new System.Drawing.Size(174, 17);
+            this.showPlaceholdersBox.TabIndex = 31;
+            this.showPlaceholdersBox.Text = "Show Gear Name Placeholders";
+            this.showPlaceholdersBox.UseVisualStyleBackColor = true;
+            this.showPlaceholdersBox.CheckedChanged += new System.EventHandler(this.showPlaceholdersBox_CheckedChanged);
+            // 
             // shadowLabel1
             // 
             this.shadowLabel1.BackColor = System.Drawing.Color.Transparent;
@@ -1020,60 +1078,6 @@
             this.shadowLabel1.Size = new System.Drawing.Size(297, 39);
             this.shadowLabel1.TabIndex = 0;
             this.shadowLabel1.Text = "Transmission Editor";
-            // 
-            // tabPage6
-            // 
-            this.tabPage6.Controls.Add(this.groupBox16);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(886, 426);
-            this.tabPage6.TabIndex = 6;
-            this.tabPage6.Text = "Truck List";
-            this.tabPage6.UseVisualStyleBackColor = true;
-            // 
-            // groupBox16
-            // 
-            this.groupBox16.Controls.Add(this.truckListView);
-            this.groupBox16.Controls.Add(this.label46);
-            this.groupBox16.Location = new System.Drawing.Point(240, 31);
-            this.groupBox16.Name = "groupBox16";
-            this.groupBox16.Size = new System.Drawing.Size(407, 364);
-            this.groupBox16.TabIndex = 11;
-            this.groupBox16.TabStop = false;
-            this.groupBox16.Text = "Truck List";
-            // 
-            // truckListView
-            // 
-            this.truckListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
-            this.truckListView.AutoArrange = false;
-            this.truckListView.CheckBoxes = true;
-            this.truckListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader8});
-            this.truckListView.FullRowSelect = true;
-            this.truckListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.truckListView.Location = new System.Drawing.Point(11, 56);
-            this.truckListView.Name = "truckListView";
-            this.truckListView.Size = new System.Drawing.Size(385, 293);
-            this.truckListView.TabIndex = 21;
-            this.truckListView.UseCompatibleStateImageBehavior = false;
-            this.truckListView.View = System.Windows.Forms.View.Details;
-            this.truckListView.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.truckListView_ItemCheck);
-            // 
-            // columnHeader8
-            // 
-            this.columnHeader8.Text = "Name";
-            this.columnHeader8.Width = 350;
-            // 
-            // label46
-            // 
-            this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(15, 23);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(377, 13);
-            this.label46.TabIndex = 20;
-            this.label46.Text = "Select the trucks that will have this transmission added to their transmission li" +
-    "st:";
             // 
             // TransmissionForm
             // 
@@ -1127,12 +1131,12 @@
             this.groupBox8.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
-            this.contentPanel.ResumeLayout(false);
-            this.footerPanel.ResumeLayout(false);
-            this.headerPanel.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
             this.groupBox16.ResumeLayout(false);
             this.groupBox16.PerformLayout();
+            this.contentPanel.ResumeLayout(false);
+            this.footerPanel.ResumeLayout(false);
+            this.headerPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1195,7 +1199,6 @@
         private System.Windows.Forms.NumericUpDown diffRatio;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.GroupBox groupBox6;
@@ -1220,5 +1223,6 @@
         private System.Windows.Forms.ListView truckListView;
         private System.Windows.Forms.ColumnHeader columnHeader8;
         private System.Windows.Forms.Label label46;
+        private System.Windows.Forms.CheckBox showPlaceholdersBox;
     }
 }
