@@ -96,7 +96,7 @@ namespace ATSEngineTool
             attributes.Add(new SoundInfo(SoundAttribute.WiperDown, "wipers_down", ".wipers_down", space: true));
 
             // A common sound, shouldnt be here but has to be...
-            attributes.Add(new SoundInfo(SoundAttribute.ChangeGear, "gear_noise", "gnoise", true, false, true));
+            attributes.Add(new SoundInfo(SoundAttribute.ChangeGear, "change_gear", ".changeg", space: true));
 
             // Set to readonly
             Attributes = new ReadOnlyDictionary<SoundAttribute, SoundInfo>(

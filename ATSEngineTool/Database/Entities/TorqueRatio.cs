@@ -27,7 +27,10 @@ namespace ATSEngineTool.Database
         #region Foreign Keys
 
         [InverseKey("Id")]
-        [ForeignKey("EngineId", OnDelete = ReferentialIntegrity.Cascade)]
+        [ForeignKey("EngineId",
+            OnDelete = ReferentialIntegrity.Cascade,
+            OnUpdate = ReferentialIntegrity.Cascade
+        )]
         protected virtual ForeignKey<Engine> FK_Engine { get; set; }
 
         /// <summary>

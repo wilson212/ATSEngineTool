@@ -12,7 +12,7 @@ namespace ATSEngineTool.Database
         /// <summary>
         /// Gets or Sets the Unique ID for this entity
         /// </summary>
-        [Column, PrimaryKey, AutoIncrement]
+        [Column, PrimaryKey]
         public int Id { get; set; }
 
         /// <summary>
@@ -78,7 +78,10 @@ namespace ATSEngineTool.Database
         #region Virtual Foreign Keys
 
         [InverseKey("Id")]
-        [ForeignKey("SoundId", OnDelete = ReferentialIntegrity.Cascade)]
+        [ForeignKey("SoundId",
+            OnDelete = ReferentialIntegrity.Cascade,
+            OnUpdate = ReferentialIntegrity.Cascade
+        )]
         protected virtual ForeignKey<SoundPackage> FK_EngineSound { get; set; }
 
         #endregion

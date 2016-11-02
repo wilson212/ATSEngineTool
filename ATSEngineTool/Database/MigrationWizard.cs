@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using CrossLite;
 using CrossLite.CodeFirst;
 
 namespace ATSEngineTool.Database
@@ -49,12 +51,76 @@ namespace ATSEngineTool.Database
                         case "1.3":
                             MigrateTo_1_4();
                             break;
+                        case "1.4":
+                            MigrateTo_1_5();
+                            break;
                         default:
                             throw new Exception($"Unexpected database version: {AppDatabase.DatabaseVersion}");
                     }
 
                     // Fetch version
                     Database.GetVersion();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Migrates to 1.5, which added new Foreign key restraints on most tables.
+        /// </summary>
+        private void MigrateTo_1_5()
+        {
+            // === Turn off foreign keys
+            Database.Execute("PRAGMA foreign_keys = OFF;");
+
+            // === Recreate tables to enforce data integrity
+            // Run the update in a transaction
+            using (var trans = Database.BeginTransaction())
+            {
+                try
+                {
+                    // Recreate tables that don't have the ON UPDATE
+                    // integrity check on foreign keys
+                    RecreateTable<Engine>();
+                    RecreateTable<EngineSeries>();
+                    RecreateTable<EngineSound>();
+                    RecreateTable<AccessoryConflict>();
+                    RecreateTable<SuitableAccessory>();
+                    RecreateTable<TorqueRatio>();
+                    RecreateTable<Transmission>();
+                    RecreateTable<TransmissionSeries>();
+
+                    // === Turn off foreign keys
+                    Database.Execute("PRAGMA foreign_keys = ON;");
+
+                    // == foreign key check
+                    var results = Database.Query($"PRAGMA foreign_key_check;").ToList();
+                    if (results.Count > 0)
+                    {
+                        // Houston, we have a problem!
+                        LogErrors(results, "ForeignKeyErrors.log");
+                        throw new Exception("Foreign key check failed!");
+                    }
+
+                    // Update database version
+                    string sql = "INSERT INTO `DbVersion`(`Version`, `AppliedOn`) VALUES({0}, {1});";
+                    Database.Execute(String.Format(sql, Version.Parse("1.5"), Epoch.Now));
+
+                    // Commit changes
+                    trans.Commit();
+                }
+                catch
+                {
+                    trans.Rollback();
+                    throw;
+                }
+                finally
+                {
+                    // Log any integrity errors in the database
+                    var results = Database.Query("PRAGMA integrity_check;").ToList();
+                    if (results.Count > 0 && results[0]["integrity_check"].ToString() != "ok")
+                    {
+                        LogErrors(results, "IntegrityErrors.log");
+                    }
                 }
             }
         }
@@ -216,6 +282,32 @@ namespace ATSEngineTool.Database
         }
 
         /// <summary>
+        /// Migrates to 1.2, which added transmissions to the program
+        /// </summary>
+        private void MigrateTo_1_2()
+        {
+            // Run the update in a transaction
+            using (var trans = Database.BeginTransaction())
+            {
+                // Create Tables
+                Database.CreateTable<TransmissionSeries>();
+                Database.CreateTable<Transmission>();
+                Database.CreateTable<TransmissionGear>();
+                Database.CreateTable<TruckTransmission>();
+
+                // == Add Transmission Data
+                AddTransmissionData();
+
+                // Update database version
+                string sql = "INSERT INTO `DbVersion`(`Version`, `AppliedOn`) VALUES({0}, {1});";
+                Database.Execute(String.Format(sql, Version.Parse("1.2"), Epoch.Now));
+
+                // Commit
+                trans.Commit();
+            }
+        }
+
+        /// <summary>
         /// Migrates to 1.1, which added more field options to Engines
         /// </summary>
         private void MigrateTo_1_1()
@@ -249,31 +341,70 @@ namespace ATSEngineTool.Database
         }
 
         /// <summary>
-        /// Migrates to 1.2, which added transmissions to the program
+        /// Logs the results of a foreign_key_check or integrity_check
         /// </summary>
-        private void MigrateTo_1_2()
+        /// <param name="results"></param>
+        /// <param name="fileName"></param>
+        private void LogErrors(List<Dictionary<string, object>> results, string fileName)
         {
-            // Run the update in a transaction
-            using (var trans = Database.BeginTransaction())
+            // Ensure our directory exists
+            string directory = Path.Combine(Program.RootPath, "errors");
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+
+            // Create the log file
+            string path = Path.Combine(Program.RootPath, "errors", fileName);
+            using (FileStream stream = new FileStream(path, FileMode.Create, FileAccess.Write))
+            using (StreamWriter writer = new StreamWriter(stream))
             {
-                // Create Tables
-                Database.CreateTable<TransmissionSeries>();
-                Database.CreateTable<Transmission>();
-                Database.CreateTable<TransmissionGear>();
-                Database.CreateTable<TruckTransmission>();
-
-                // == Add Transmission Data
-                AddTransmissionData();
-
-                // Update database version
-                string sql = "INSERT INTO `DbVersion`(`Version`, `AppliedOn`) VALUES({0}, {1});";
-                Database.Execute(String.Format(sql, Version.Parse("1.2"), Epoch.Now));
-
-                // Commit
-                trans.Commit();
+                int i = 1;
+                foreach (var item in results)
+                {
+                    writer.WriteLine("Error #" + i++);
+                    foreach (string key in item.Keys)
+                    {
+                        string value = item[key].ToString();
+                        writer.WriteLine($"\t{key} = {value}");
+                    }
+                    writer.WriteLine();
+                }
             }
         }
 
+        /// <summary>
+        /// This method is used to perform a mass-migration on a table in the database.
+        /// Essentially, this method renames the table, creates a new table using the same
+        /// name, and copies all the data from the old table to the new.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        private void RecreateTable<T>() where T : class
+        {
+            // Get the in-memory table mapping
+            TableMapping table = EntityCache.GetTableMap(typeof(T));
+
+            // Rename table
+            var newName = table.TableName + "_old";
+            Database.Execute($"ALTER TABLE `{table.TableName}` RENAME TO `{newName}`");
+
+            // Create new table
+            Database.CreateTable<T>();
+
+            // Select from old table, and import to the new table
+
+            // NOTE: had to do this the slow way because LowRpmRange_EngineBrake kept
+            // throwing a constraing failure (not null).
+            var items = Database.Query<T>($"SELECT * FROM `{newName}`");
+            var set = new DbSet<T>(Database);
+            set.AddRange(items);
+            //Database.Execute($"INSERT INTO `{table.TableName}` SELECT * FROM `{newName}`");
+
+            // Drop old table
+            Database.Execute($"DROP TABLE `{newName}`");
+        }
+
+        /// <summary>
+        /// This method adds the default SCS Transmissions to the database
+        /// </summary>
         private void AddTransmissionData()
         {
             // == Add Transmission Series

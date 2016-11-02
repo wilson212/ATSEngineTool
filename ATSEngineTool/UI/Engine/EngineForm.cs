@@ -172,7 +172,9 @@ namespace ATSEngineTool
             if (NewEngine)
             {
                 // Force change to update graph
-                torqueBox.Value = (Program.Config.UnitSystem == UnitSystem.Imperial) ? 1650 : Engine.TorqueToNm(1650);
+                torqueBox.Value = (Program.Config.UnitSystem == UnitSystem.Imperial) 
+                    ? 1650 : 
+                    (int)Metrics.TorqueToNewtonMetres(1650m);
             }
         }
 
@@ -475,6 +477,10 @@ namespace ATSEngineTool
             if (!path.EndsWith(".dds"))
                 path += ".dds";
 
+            // Set data's for engine series
+            displacementBox.Value = series.Displacement;
+            soundTextBox.Text = series.SoundPackage.Name;
+
             // Perform cleanup
             if (engineIcon.Image != null)
             {
@@ -492,17 +498,14 @@ namespace ATSEngineTool
             {
                 engineIcon.Image = new Bitmap(MapImage, 64, 64);
             }
-
-            displacementBox.Value = series.Displacement;
-            soundTextBox.Text = series.SoundPackage.Name;
         }
 
         private void torqueBox_ValueChanged(object sender, EventArgs e)
         {
             // Update label
             labelNM.Text = (Program.Config.UnitSystem == UnitSystem.Imperial)
-                ? String.Concat(Engine.TorqueToNm(torqueBox.Value), " (Nm)")
-                : String.Concat(Engine.NmToTorque(torqueBox.Value), " (Trq)");
+                ? String.Concat(Metrics.TorqueToNewtonMetres(torqueBox.Value), " (Nm)")
+                : String.Concat(Metrics.NewtonMetresToTorque(torqueBox.Value), " (Trq)");
 
             // disable buttons
             addPointButton.Enabled = false;
@@ -533,7 +536,7 @@ namespace ATSEngineTool
                 else
                 {
                     point.ToolTip = $"{torque} Nm @ {ratio.RpmLevel} RPM";
-                    torque = Engine.NmToTorque((int)torque);
+                    torque = Metrics.NewtonMetresToTorque(torque);
                 }
 
                 // Set the highest and earliest ratio
@@ -553,8 +556,8 @@ namespace ATSEngineTool
                     // Convert Nm to Torque if using the Metric System
                     if (Program.Config.UnitSystem == UnitSystem.Metric)
                     {
-                        deltaY = Engine.NmToTorque((int)deltaY);
-                        torqueAtPoint = Engine.NmToTorque((int)torqueAtPoint);
+                        deltaY = Metrics.NewtonMetresToTorque(deltaY);
+                        torqueAtPoint = Metrics.NewtonMetresToTorque(torqueAtPoint);
                     }
 
                     // Calculate slope angle (rpm distance * (torque rise per rpm)),
@@ -612,7 +615,7 @@ namespace ATSEngineTool
         private void horsepowerBox_ValueChanged_1(object sender, EventArgs e)
         {
             KwLabel.Text = String.Concat(
-                Engine.HorsepowerToKilowatts(horsepowerBox.Value), " (Kw)"
+                Metrics.HorsepowerToKilowatts(horsepowerBox.Value), " (Kw)"
             );
         }
 
@@ -877,7 +880,7 @@ namespace ATSEngineTool
 
                         // Fill ratio view
                         PopulateTorqueRatios();
-                        torqueBox.Value = Engine.NmToTorque(engine.Torque);
+                        torqueBox.Value = Metrics.NewtonMetresToTorque((decimal)engine.Torque, torqueBox.DecimalPlaces);
 
                         // Defaults (skip sounds)
                         if (engine.Defaults != null)

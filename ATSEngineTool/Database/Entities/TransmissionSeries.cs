@@ -10,7 +10,7 @@ namespace ATSEngineTool.Database
         /// <summary>
         /// Gets or sets the unique row id for this object
         /// </summary>
-        [Column, PrimaryKey, AutoIncrement]
+        [Column, PrimaryKey]
         public int Id { get; set; }
 
         /// <summary>

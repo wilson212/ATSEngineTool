@@ -16,7 +16,7 @@ namespace ATSEngineTool.Database
         /// <summary>
         /// The Unique Engine ID
         /// </summary>
-        [Column, PrimaryKey, AutoIncrement]
+        [Column, PrimaryKey]
         public int Id { get; protected set; }
 
         /// <summary>
@@ -207,6 +207,79 @@ namespace ATSEngineTool.Database
             }
         }
 
+        #endregion Columns
+
+        #region Foreign Keys
+
+        /// <summary>
+        /// Gets the <see cref="Database.EngineSeries"/> entity that this engine references.
+        /// </summary>
+        /// <remarks>Eager loaded because it should never be changed!</remarks>
+        [InverseKey("Id")]
+        [ForeignKey("SeriesId", 
+            OnDelete = ReferentialIntegrity.Cascade,
+            OnUpdate = ReferentialIntegrity.Cascade
+        )]
+        public virtual EngineSeries Series { get; private set; }
+
+        #endregion
+
+
+        #region Child Database Sets
+
+        /// <summary>
+        /// Gets a list of <see cref="TorqueRatio"/> entities that reference this 
+        /// <see cref="Engine"/>
+        /// </summary>
+        /// <remarks>
+        /// A lazy loaded enumeration that fetches all Torque Ratios
+        /// that are bound by the foreign key and this Engine.Id.
+        /// </remarks>
+        public virtual IEnumerable<TorqueRatio> TorqueRatios { get; set; }
+
+        /// <summary>
+        /// Gets a list of <see cref="TruckEngine"/> entities that reference this 
+        /// <see cref="Engine"/>
+        /// </summary>
+        public virtual IEnumerable<TruckEngine> ItemOf { get; set; }
+
+        /// <summary>
+        /// Gets a list of <see cref="AccessoryConflict"/> entities that reference this 
+        /// <see cref="Engine"/>
+        /// </summary>
+        public virtual IEnumerable<AccessoryConflict> TransmissionConflicts { get; set; }
+
+        /// <summary>
+        /// Gets a list of <see cref="AccessoryConflict"/> entities that reference this 
+        /// <see cref="Engine"/>
+        /// </summary>
+        public virtual IEnumerable<SuitableAccessory> SuitableTransmissions { get; set; }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or Sets the Newton Metre rating for this engine. Changing this value
+        /// will also change the <see cref="Engine.Torque"/> value
+        /// </summary>
+        public int NewtonMetres
+        {
+            get { return Metrics.TorqueToNewtonMetres(Torque); }
+            set { Torque = Metrics.NewtonMetresToTorque(value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the Kilowatt rating for this engine's horsepower rating.
+        /// Changing this value will also change the <see cref="Engine.Horsepower"/> 
+        /// value
+        /// </summary>
+        public int Kilowatts
+        {
+            get { return Metrics.HorsepowerToKilowatts(Horsepower); }
+            set { Horsepower = Metrics.KilowattsToHorsepower(value); }
+        }
+
         /// <summary>
         /// Contains an array of Defaults for the truck to load
         /// </summary>
@@ -291,73 +364,6 @@ namespace ATSEngineTool.Database
             }
         }
 
-        #endregion Columns
-
-        #region Foreign Keys
-
-        /// <summary>
-        /// Gets the <see cref="Database.EngineSeries"/> entity that this engine references.
-        /// </summary>
-        /// <remarks>Eager loaded because it should never be changed!</remarks>
-        [InverseKey("Id")]
-        [ForeignKey("SeriesId", OnDelete = ReferentialIntegrity.Cascade)]
-        public virtual EngineSeries Series { get; protected set; }
-
-        #endregion
-
-
-        #region Child Database Sets
-
-        /// <summary>
-        /// Gets a list of <see cref="TorqueRatio"/> entities that reference this 
-        /// <see cref="Engine"/>
-        /// </summary>
-        /// <remarks>
-        /// A lazy loaded enumeration that fetches all Torque Ratios
-        /// that are bound by the foreign key and this Engine.Id.
-        /// </remarks>
-        public virtual IEnumerable<TorqueRatio> TorqueRatios { get; set; }
-
-        /// <summary>
-        /// Gets a list of <see cref="TruckEngine"/> entities that reference this 
-        /// <see cref="Engine"/>
-        /// </summary>
-        public virtual IEnumerable<TruckEngine> ItemOf { get; set; }
-
-        /// <summary>
-        /// Gets a list of <see cref="AccessoryConflict"/> entities that reference this 
-        /// <see cref="Engine"/>
-        /// </summary>
-        public virtual IEnumerable<AccessoryConflict> TransmissionConflicts { get; set; }
-
-        /// <summary>
-        /// Gets a list of <see cref="AccessoryConflict"/> entities that reference this 
-        /// <see cref="Engine"/>
-        /// </summary>
-        public virtual IEnumerable<SuitableAccessory> SuitableTransmissions { get; set; }
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Gets or Sets the NewtonMetre value for this engine. Changing this value
-        /// will also change the <see cref="Torque"/> setting
-        /// </summary>
-        public int NewtonMetres
-        {
-            get
-            {
-                decimal div = 1.35582m;
-                return (int)Math.Round(Torque * div, 0);
-            }
-            set
-            {
-                decimal div = 0.7376m;
-                Torque = (int)Math.Round(value * div, 0);
-            }
-        }
-
         #endregion Properties
 
         public override string ToString() => Name;
@@ -395,7 +401,7 @@ namespace ATSEngineTool.Database
 
             // Horsepower line
             builder.WriteLine("# Engine display info");
-            builder.WriteAttribute("info[]", $"{Digitize(this.Horsepower)} @@hp@@ ({Digitize(HorsepowerToKilowatts(this.Horsepower))}@@kw@@)");
+            builder.WriteAttribute("info[]", $"{Digitize(this.Horsepower)} @@hp@@ ({Digitize(this.Kilowatts)}@@kw@@)");
 
             // Torque line
             builder.Write("info[]: \"");
@@ -535,8 +541,7 @@ namespace ATSEngineTool.Database
         /// <returns></returns>
         private string Digitize(decimal value)
         {
-            int val = (int)value;
-            return val.ToString("N0", Program.NumberFormat).Replace(",", "@@dg@@");
+            return ((int)value).ToString("N0", Program.NumberFormat).Replace(",", "@@dg@@");
         }
 
         public override bool Equals(object obj)
@@ -552,39 +557,6 @@ namespace ATSEngineTool.Database
         public override int GetHashCode()
         {
             return this.Id.GetHashCode();
-        }
-
-        /// <summary>
-        /// Converts a hosepower value into Kilowatts
-        /// </summary>
-        /// <param name="horsepower"></param>
-        /// <returns></returns>
-        public static int HorsepowerToKilowatts(decimal horsepower)
-        {
-            decimal div = 0.7457m;
-            return (int)Math.Round(horsepower * div, 0);
-        }
-
-        /// <summary>
-        /// Converts a torque value into Newton-Metres
-        /// </summary>
-        /// <param name="Torque"></param>
-        /// <returns></returns>
-        public static int TorqueToNm(decimal torque)
-        {
-            decimal div = 1.35582m;
-            return (int)Math.Round(torque * div, 0);
-        }
-
-        /// <summary>
-        /// Converts a Newton-Metres value into Torque
-        /// </summary>
-        /// <param name="Nm"></param>
-        /// <returns></returns>
-        public static int NmToTorque(decimal Nm)
-        {
-            decimal div = 0.7376m;
-            return (int)Math.Round(Nm * div, 0);
         }
     }
 }

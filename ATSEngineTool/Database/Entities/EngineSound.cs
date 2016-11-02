@@ -15,7 +15,7 @@ namespace ATSEngineTool.Database
         /// <summary>
         /// Gets the Row ID for this <see cref="EngineSound"/>
         /// </summary>
-        [Column, PrimaryKey, AutoIncrement]
+        [Column, PrimaryKey]
         public int Id { get; set; }
 
         /// <summary>
@@ -89,7 +89,10 @@ namespace ATSEngineTool.Database
         #region Foreign Keys
 
         [InverseKey("Id")]
-        [ForeignKey("PackageId", OnDelete = ReferentialIntegrity.Cascade)]
+        [ForeignKey("PackageId",
+            OnDelete = ReferentialIntegrity.Cascade,
+            OnUpdate = ReferentialIntegrity.Cascade
+        )]
         protected virtual ForeignKey<SoundPackage> FK_Package { get; set; }
 
         /// <summary>

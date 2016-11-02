@@ -22,7 +22,7 @@ namespace ATSEngineTool.Database
         /// <summary>
         /// Gets the latest database version
         /// </summary>
-        public static Version CurrentVersion { get; protected set; } = new Version(1, 4);
+        public static Version CurrentVersion { get; protected set; } = new Version(1, 5);
 
         /// <summary>
         /// Gets the current database tables version

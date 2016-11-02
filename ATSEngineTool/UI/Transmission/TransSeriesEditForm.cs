@@ -48,7 +48,7 @@ namespace ATSEngineTool
                     iconBox.SelectedIndex = iconBox.Items.Count - 1;
             }
 
-            if (iconBox.SelectedIndex == -1)
+            if (iconBox.SelectedIndex == -1 && iconBox.Items.Count > 0)
                 iconBox.SelectedIndex = 0;
 
             // Set texts

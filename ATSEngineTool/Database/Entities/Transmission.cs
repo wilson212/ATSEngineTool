@@ -14,7 +14,7 @@ namespace ATSEngineTool.Database
         /// <summary>
         /// The Unique Transmission ID
         /// </summary>
-        [Column, PrimaryKey, AutoIncrement]
+        [Column, PrimaryKey]
         public int Id { get; set; }
 
         /// <summary>
@@ -445,8 +445,6 @@ namespace ATSEngineTool.Database
                     {
                         case 1: return "R";
                         case 2: return (index == 0) ? "R1" : "R2";
-                        case 3:
-                        case 4:
                         default:
                             i = (index + 2) / 2;
                             return $"R{i}{affix}";

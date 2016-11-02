@@ -13,7 +13,7 @@ namespace ATSEngineTool.Database
         /// <summary>
         /// Gets or Sets the Unique id for this entity
         /// </summary>
-        [Column, PrimaryKey, AutoIncrement]
+        [Column, PrimaryKey]
         public int Id { get; protected set; }
 
         /// <summary>
