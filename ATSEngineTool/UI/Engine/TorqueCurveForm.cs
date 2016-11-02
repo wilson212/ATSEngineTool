@@ -23,7 +23,7 @@ namespace ATSEngineTool
             if (ratio != null)
             {
                 rpmLevelBox.Value = ratio.RpmLevel;
-                torqueLevelBox.Value = (ratio.Ratio * 100);
+                torqueLevelBox.Value = (decimal)(ratio.Ratio * 100);
             }
 
             // Setup label
@@ -39,8 +39,8 @@ namespace ATSEngineTool
         public TorqueRatio GetRatio()
         {
             var val = (!radioButton1.Checked)
-                ? Math.Round(torqueLevelBox.Value / PeakTorque, 2)
-                : Math.Round(torqueLevelBox.Value / 100, 2);
+                ? Math.Round((double)torqueLevelBox.Value / PeakTorque, 4)
+                : Math.Round((double)torqueLevelBox.Value / 100, 4);
 
             return new TorqueRatio()
             {
@@ -71,14 +71,14 @@ namespace ATSEngineTool
             if (radioButton1.Checked)
             {
                 torqueLevelBox.Maximum = 100;
-                var newValue = Math.Round((current / PeakTorque) * 100, 0);
+                var newValue = Math.Round((current / PeakTorque) * 100, 2);
                 torqueLevelBox.Value = newValue;
                 labelTorque.Text = prefix + "Percent:";
             }
             else
             {
                 torqueLevelBox.Maximum = PeakTorque;
-                var newValue = Math.Round((current / 100) * PeakTorque, 0);
+                var newValue = Math.Round((current / 100) * PeakTorque, 2);
                 torqueLevelBox.Value = newValue;
                 labelTorque.Text = prefix + "Value:";
             }

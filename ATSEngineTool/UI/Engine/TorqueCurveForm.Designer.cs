@@ -80,6 +80,7 @@
             // 
             // torqueLevelBox
             // 
+            this.torqueLevelBox.DecimalPlaces = 2;
             this.torqueLevelBox.Increment = new decimal(new int[] {
             50,
             0,

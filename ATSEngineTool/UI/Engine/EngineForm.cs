@@ -98,13 +98,13 @@ namespace ATSEngineTool
                 }
                 else
                 {
-                    Ratios.Add(new TorqueRatio() { Ratio = 0m, RpmLevel = 300 });
-                    Ratios.Add(new TorqueRatio() { Ratio = 0.5m, RpmLevel = 440 });
-                    Ratios.Add(new TorqueRatio() { Ratio = 1m, RpmLevel = 1100 });
-                    Ratios.Add(new TorqueRatio() { Ratio = 1m, RpmLevel = 1400 });
-                    Ratios.Add(new TorqueRatio() { Ratio = 0.77m, RpmLevel = 1900 });
-                    Ratios.Add(new TorqueRatio() { Ratio = 0.5m, RpmLevel = 2400 });
-                    Ratios.Add(new TorqueRatio() { Ratio = 0m, RpmLevel = 2600 });
+                    Ratios.Add(new TorqueRatio() { Ratio = 0, RpmLevel = 300 });
+                    Ratios.Add(new TorqueRatio() { Ratio = 0.5, RpmLevel = 440 });
+                    Ratios.Add(new TorqueRatio() { Ratio = 1, RpmLevel = 1100 });
+                    Ratios.Add(new TorqueRatio() { Ratio = 1, RpmLevel = 1400 });
+                    Ratios.Add(new TorqueRatio() { Ratio = 0.77, RpmLevel = 1900 });
+                    Ratios.Add(new TorqueRatio() { Ratio = 0.5, RpmLevel = 2400 });
+                    Ratios.Add(new TorqueRatio() { Ratio = 0, RpmLevel = 2600 });
                 }
 
                 // Grab a list of trucks that use this engine
@@ -174,7 +174,7 @@ namespace ATSEngineTool
                 // Force change to update graph
                 torqueBox.Value = (Program.Config.UnitSystem == UnitSystem.Imperial) 
                     ? 1650 : 
-                    (int)Metrics.TorqueToNewtonMetres(1650m);
+                    Metrics.TorqueToNewtonMetres(1650m);
             }
         }
 
@@ -239,7 +239,7 @@ namespace ATSEngineTool
             {
                 ListViewItem item = new ListViewItem(i.ToString());
                 item.SubItems.Add(ratio.RpmLevel.ToString());
-                item.SubItems.Add(Math.Round(ratio.Ratio * 100, 0).ToString());
+                item.SubItems.Add(Math.Round(ratio.Ratio * 100, 2).ToString(Program.NumberFormat));
                 item.Tag = Ratios.IndexOf(ratio);
                 ratioListView.Items.Add(item);
                 i++;
@@ -524,7 +524,7 @@ namespace ATSEngineTool
             foreach (TorqueRatio ratio in Ratios.OrderBy(x => x.RpmLevel))
             {
                 // Plot the torque point
-                torque = (double)Math.Round(torqueBox.Value * ratio.Ratio, 0);
+                torque = Math.Round((double)torqueBox.Value * ratio.Ratio, 2);
                 int index = chart1.Series[0].Points.AddXY(ratio.RpmLevel, torque);
                 DataPoint point = chart1.Series[0].Points[index];
 
@@ -536,7 +536,7 @@ namespace ATSEngineTool
                 else
                 {
                     point.ToolTip = $"{torque} Nm @ {ratio.RpmLevel} RPM";
-                    torque = Metrics.NewtonMetresToTorque(torque);
+                    torque = Metrics.NewtonMetresToTorque(torque, 2);
                 }
 
                 // Set the highest and earliest ratio
@@ -556,8 +556,8 @@ namespace ATSEngineTool
                     // Convert Nm to Torque if using the Metric System
                     if (Program.Config.UnitSystem == UnitSystem.Metric)
                     {
-                        deltaY = Metrics.NewtonMetresToTorque(deltaY);
-                        torqueAtPoint = Metrics.NewtonMetresToTorque(torqueAtPoint);
+                        deltaY = Metrics.NewtonMetresToTorque(deltaY, 2);
+                        torqueAtPoint = Metrics.NewtonMetresToTorque(torqueAtPoint, 2);
                     }
 
                     // Calculate slope angle (rpm distance * (torque rise per rpm)),
@@ -595,7 +595,7 @@ namespace ATSEngineTool
             {
                 DataPoint pnt = chart1.Series[1].Points.FindMaxByValue("Y");
                 maxHpLabel.Text = $"{pnt.YValues[0]} @ {pnt.XValue} RPM";
-                torque = (double)Math.Round(torqueBox.Value * highest.Ratio, 0);
+                torque = Math.Round((double)torqueBox.Value * highest.Ratio, 0);
                 maxTrqLabel.Text = $"{torque} @ {highest.RpmLevel} RPM";
                 peakRPMBox.Value = highest?.RpmLevel ?? 1200;
                 peakRPMBox.Enabled = false; // no user edit
@@ -874,7 +874,7 @@ namespace ATSEngineTool
                         {
                             TorqueRatio ratio = new TorqueRatio();
                             ratio.RpmLevel = (int)vector.X;
-                            ratio.Ratio = (decimal)vector.Y;
+                            ratio.Ratio = vector.Y;
                             Ratios.Add(ratio);
                         }
 

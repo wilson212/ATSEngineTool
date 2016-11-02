@@ -22,7 +22,7 @@ namespace ATSEngineTool.Database
         /// 
         /// </summary>
         [Column, Required]
-        public decimal Ratio { get; set; }
+        public double Ratio { get; set; }
 
         #region Foreign Keys
 
