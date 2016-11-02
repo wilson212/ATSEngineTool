@@ -3,6 +3,10 @@ using CrossLite.CodeFirst;
 
 namespace ATSEngineTool.Database
 {
+    /// <summary>
+    /// This entity represents a conflict between an <see cref="Database.Engine"/>
+    /// and a <see cref="Database.Transmission"/>
+    /// </summary>
     [Table]
     public class AccessoryConflict
     {
@@ -21,7 +25,7 @@ namespace ATSEngineTool.Database
         #region Foreign Key Properties
 
         /// <summary>
-        /// Gets or Sets the <see cref="ATSEngineTool.Database.Engine"/> that 
+        /// Gets or Sets the <see cref="Database.Engine"/> that 
         /// this truck will use in game.
         /// </summary>
         public Engine Engine
@@ -38,7 +42,7 @@ namespace ATSEngineTool.Database
         }
 
         /// <summary>
-        /// Gets or Sets the <see cref="ATSEngineTool.Database.Transmission"/> that 
+        /// Gets or Sets the <see cref="Database.Transmission"/> that 
         /// this truck will use in game.
         /// </summary>
         public Transmission Transmission

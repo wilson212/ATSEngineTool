@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -40,6 +41,8 @@ namespace ATSEngineTool
         /// </summary>
         public static string CompilePath => Path.Combine(Program.RootPath, "__compile__");
 
+        private static bool Cancelled { get; set; } = false;
+
         /// <summary>
         /// Removes all temporary compiled files from the Compile directory
         /// </summary>
@@ -73,6 +76,10 @@ namespace ATSEngineTool
         /// </param>
         public static void Sync(SoundPackage[] packages, bool cleanEngines, bool cleanSounds, IProgress<TaskProgressUpdate> progress)
         {
+            // Set up cancellation
+            TaskForm.Cancelled += TaskForm_Cancelled;
+            Cancelled = false;
+
             // Get our folder type name
             string fname = (Program.Config.IntegrateWithMod) ? "mod" : "compile";
 
@@ -128,6 +135,9 @@ namespace ATSEngineTool
             // Sync engine sounds
             foreach (SoundPackage sound in packages)
             {
+                // Check for cancellation
+                if (Cancelled) throw new OperationCanceledException();
+
                 // Mod folder path to the sounds
                 path = Path.Combine(ModPath, "sound", "truck", "engine", sound.FolderName);
                 if (cleanSounds && Directory.Exists(path))
@@ -158,6 +168,11 @@ namespace ATSEngineTool
             }
         }
 
+        private static void TaskForm_Cancelled(object sender, CancelEventArgs e)
+        {
+            Cancelled = true;
+        }
+
         private static void ProgressUpdate(IProgress<TaskProgressUpdate> progress, string v)
         {
             // Show Update
@@ -176,6 +191,14 @@ namespace ATSEngineTool
         /// <returns>Returns an array of sound packages that are used</returns>
         public static SoundPackage[] Compile(IEnumerable<Truck> trucks, IProgress<TaskProgressUpdate> progress)
         {
+            // Set up cancellation
+            TaskForm.Cancelled += TaskForm_Cancelled;
+            Cancelled = false;
+
+            // Define our progress counter variables
+            int index = 1;
+            int count = 0;
+
             // Local variables
             string truckpath, soundPath, enginePath;
             // SoundPackage => Engines who use it
@@ -195,6 +218,9 @@ namespace ATSEngineTool
                     // Clear old junk
                     soundData.Clear();
 
+                    // Check for cancellation
+                    if (Cancelled) throw new OperationCanceledException();
+
                     // Define paths we will use
                     truckpath = Path.Combine(DefCompilePath, "vehicle", "truck", truck.UnitName);
                     soundPath = Path.Combine(truckpath, "sound");
@@ -212,8 +238,17 @@ namespace ATSEngineTool
 
                     // ==============================
                     // Create engine files
+                    index = 1;
+                    count = truck.TruckEngines.Count();
                     foreach (Engine engine in truck.TruckEngines.Select(x => x.Engine))
                     {
+                        // Update progress
+                        ProgressUpdate(progress, $"Generating engine def files for \"{truck.Name}\" ({index++}/{count})");
+
+                        // Check for cancellation
+                        if (Cancelled) throw new OperationCanceledException();
+
+                        // Convert engine to sii format
                         string contents = engine.ToSiiFormat(truck.UnitName);
                         SoundPackage sound = engine.Series.SoundPackage;
 
@@ -234,9 +269,16 @@ namespace ATSEngineTool
 
                     // ==============================
                     // Create sound files
-                    ProgressUpdate(progress, "Generating sound def files");
+                    index = 1;
+                    count = soundData.Count;
                     foreach (var soundPair in soundData)
                     {
+                        // Update progress
+                        ProgressUpdate(progress, $"Generating sound def files for \"{truck.Name}\" ({index++}/{count})");
+
+                        // Check for cancellation
+                        if (Cancelled) throw new OperationCanceledException();
+
                         SoundPackage sound = soundPair.Key;
                         List<Engine> engines = soundPair.Value;
                         suitableFor.Clear();
@@ -295,8 +337,15 @@ namespace ATSEngineTool
                         if (!Directory.Exists(transPath))
                             Directory.CreateDirectory(transPath);
 
+                        index = 1;
+                        count = list.Count;
                         foreach (var transmission in list.Select(x => x.Transmission))
                         {
+                            // Check for cancellation
+                            if (Cancelled) throw new OperationCanceledException();
+
+                            // Update progress
+                            ProgressUpdate(progress, $"Generating transmission def files for \"{truck.Name}\" ({index++}/{count})");
                             string contents = transmission.ToSiiFormat(truck.UnitName);
 
                             // Create/Open the engine.sii file, and write the new contents

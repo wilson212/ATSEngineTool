@@ -905,7 +905,7 @@ namespace ATSEngineTool
             }
 
             // Show loading form and lock this one
-            TaskForm.Show(this, "Compiling Def Files", "Compiling Mod Files", false);
+            TaskForm.Show(this, "Compiling Def Files", "Compiling Mod Files", true);
             TaskProgressUpdate update;
             this.Enabled = false;
             try
@@ -939,6 +939,10 @@ namespace ATSEngineTool
                     }
                 });
             }
+            catch (OperationCanceledException)
+            {
+                // Do nothing
+            }
             catch (Exception ex)
             {
                 TaskForm.CloseForm();
@@ -948,7 +952,9 @@ namespace ATSEngineTool
             {
                 this.Enabled = true;
                 if (TaskForm.IsOpen)
+                {
                     TaskForm.CloseForm();
+                }
             }
         }
 

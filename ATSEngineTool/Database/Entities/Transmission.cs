@@ -58,7 +58,7 @@ namespace ATSEngineTool.Database
         /// <summary>
         /// Gets or Sets the Stall torque Ratio
         /// </summary>
-        [Column, Required, Default(0.0)]
+        [Column, Required, Default("0.0", Quote = false)]
         public decimal StallTorqueRatio { get; set; } = 0.0m;
 
         /// <summary>

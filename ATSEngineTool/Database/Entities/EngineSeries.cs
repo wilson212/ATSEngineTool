@@ -30,7 +30,7 @@ namespace ATSEngineTool.Database
         /// <summary>
         /// Gets or Sets the Displacement (in liters)
         /// </summary>
-        [Column, Required, Default(12.9)]
+        [Column, Required, Default("12.9", Quote = false)]
         public decimal Displacement { get; set; } = 12.9m;
 
         /// <summary>

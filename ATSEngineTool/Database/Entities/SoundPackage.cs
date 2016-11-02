@@ -57,7 +57,7 @@ namespace ATSEngineTool.Database
         /// <summary>
         /// Gets or Sets the package version number
         /// </summary>
-        [Column, Required, Default(1.0)]
+        [Column, Required, Default("1.0", Quote = false)]
         public decimal Version { get; set; }
 
         /// <summary>

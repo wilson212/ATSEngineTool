@@ -94,6 +94,9 @@
     <Compile Include="Application\UnitSystem.cs" />
     <Compile Include="Application\SiiFileBuilder.cs" />
     <Compile Include="Application\SoundInfo.cs" />
+    <Compile Include="Controls\ListViewExtended.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\PageControl.cs">
       <SubType>Component</SubType>
     </Compile>

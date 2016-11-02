@@ -3,6 +3,10 @@ using CrossLite.CodeFirst;
 
 namespace ATSEngineTool.Database
 {
+    /// <summary>
+    /// This entity represents a suitability between an <see cref="Database.Engine"/>
+    /// and a <see cref="Database.Transmission"/>
+    /// </summary>
     [Table]
     public class SuitableAccessory
     {

@@ -90,7 +90,7 @@ namespace ATSEngineTool.Database
         /// <summary>
         /// Gets or Sets the engine brake strength
         /// </summary>
-        [Column, Required, Default(1.0)]
+        [Column, Required, Default("1.0", Quote = false)]
         public decimal BrakeStrength { get; set; } = 1.0m;
 
         /// <summary>

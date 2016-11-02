@@ -31,6 +31,7 @@ namespace ATSEngineTool
         /// A progress object that is used to report progress to the TaskForm and update the GUI
         /// </summary>
         public static IProgress<TaskProgressUpdate> Progress { get; private set; }
+        public bool Cancelling { get; private set; }
 
         /// <summary>
         /// The event that is fired when the Cancel button is pressed
@@ -63,7 +64,7 @@ namespace ATSEngineTool
                 labelInstructionText.Text = e.HeaderText;
 
             // Update message
-            if (e.MessageText.Length > 0)
+            if (e.MessageText.Length > 0 && !Cancelling)
                 labelContent.Text = e.MessageText;
 
             // Update window title
@@ -223,9 +224,12 @@ namespace ATSEngineTool
 
         private void CancelBtn_Click(object sender, EventArgs e)
         {
+            // Set some property values
+            Cancelling = true;
+            labelContent.Text = "Aborting operation...";
+
             // Call cancel event
-            if (Cancelled != null)
-                Cancelled(this, null);
+            Cancelled?.Invoke(this, null);
         }
 
         private void TaskForm_FormClosed(object sender, FormClosedEventArgs e)

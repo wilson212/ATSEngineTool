@@ -59,7 +59,7 @@ namespace ATSEngineTool.Database
         /// <summary>
         /// Gets or Sets the sounds volume in game
         /// </summary>
-        [Column, Required, Default(1.0)]
+        [Column, Required, Default("1.0", Quote = false)]
         public double Volume { get; set; } = 1.0;
 
         /// <summary>
