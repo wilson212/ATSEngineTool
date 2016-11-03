@@ -143,6 +143,16 @@ namespace ATSEngineTool.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] Default_389 {
+            get {
+                object obj = ResourceManager.GetObject("Default_389", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] Default_w900 {
             get {
                 object obj = ResourceManager.GetObject("Default_w900", resourceCulture);

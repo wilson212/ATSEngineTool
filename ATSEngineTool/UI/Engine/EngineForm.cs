@@ -174,7 +174,7 @@ namespace ATSEngineTool
                 // Force change to update graph
                 torqueBox.Value = (Program.Config.UnitSystem == UnitSystem.Imperial) 
                     ? 1650 : 
-                    Metrics.TorqueToNewtonMetres(1650m);
+                    Metrics.TorqueToNewtonMeters(1650m);
             }
         }
 
@@ -504,8 +504,8 @@ namespace ATSEngineTool
         {
             // Update label
             labelNM.Text = (Program.Config.UnitSystem == UnitSystem.Imperial)
-                ? String.Concat(Metrics.TorqueToNewtonMetres(torqueBox.Value), " (Nm)")
-                : String.Concat(Metrics.NewtonMetresToTorque(torqueBox.Value), " (Trq)");
+                ? String.Concat(Metrics.TorqueToNewtonMeters(torqueBox.Value), " (Nm)")
+                : String.Concat(Metrics.NewtonMetersToTorque(torqueBox.Value), " (Trq)");
 
             // disable buttons
             addPointButton.Enabled = false;
@@ -536,7 +536,7 @@ namespace ATSEngineTool
                 else
                 {
                     point.ToolTip = $"{torque} Nm @ {ratio.RpmLevel} RPM";
-                    torque = Metrics.NewtonMetresToTorque(torque, 2);
+                    torque = Metrics.NewtonMetersToTorque(torque, 2);
                 }
 
                 // Set the highest and earliest ratio
@@ -556,8 +556,8 @@ namespace ATSEngineTool
                     // Convert Nm to Torque if using the Metric System
                     if (Program.Config.UnitSystem == UnitSystem.Metric)
                     {
-                        deltaY = Metrics.NewtonMetresToTorque(deltaY, 2);
-                        torqueAtPoint = Metrics.NewtonMetresToTorque(torqueAtPoint, 2);
+                        deltaY = Metrics.NewtonMetersToTorque(deltaY, 2);
+                        torqueAtPoint = Metrics.NewtonMetersToTorque(torqueAtPoint, 2);
                     }
 
                     // Calculate slope angle (rpm distance * (torque rise per rpm)),
@@ -573,14 +573,14 @@ namespace ATSEngineTool
                         torqueAtPoint += slope;
 
                         // Plot the horsepower point
-                        horsepower = Math.Round((torqueAtPoint * rpm) / 5252, 0);
+                        horsepower = Metrics.TorqueToHorsepower(torqueAtPoint, rpm, 0);
                         index = chart1.Series[1].Points.AddXY(rpm, horsepower);
                         chart1.Series[1].Points[index].ToolTip = $"#VALY HP @ {rpm} RPM";
                     }
-                }  
+                }
 
                 // Plot the Horsepower plots
-                horsepower = Math.Round((torque * ratio.RpmLevel) / 5252, 0);
+                horsepower = Metrics.TorqueToHorsepower(torque, ratio.RpmLevel, 0);
                 index = chart1.Series[1].Points.AddXY(ratio.RpmLevel, horsepower);
                 chart1.Series[1].Points[index].ToolTip = $"#VALY HP @ {ratio.RpmLevel} RPM";
                 chart1.Series[1].Points[index].MarkerStyle = MarkerStyle.Circle;
@@ -823,9 +823,9 @@ namespace ATSEngineTool
                         filenameTextBox.Text = Path.GetFileName(Dialog.FileName);
                         unlockBox.Value = engine.UnlockLevel;
                         priceBox.Value = engine.Price;
-                        neutralRpmBox.Value = engine.RpmLimitNeutral;
+                        neutralRpmBox.Value = engine?.RpmLimitNeutral ?? 2200;
                         rpmLimitBox.Value = engine.RpmLimit;
-                        idleRpmBox.Value = engine.IdleRpm;
+                        idleRpmBox.Value = engine?.IdleRpm ?? 650;
                         brakeStrengthBox.Value = (decimal)engine.BrakeStrength;
                         brakePositionsBox.Value = engine.BrakePositions;
                         automaticDSCheckBox.Checked = engine.BrakeDownshift == 1;
@@ -838,7 +838,7 @@ namespace ATSEngineTool
                         }
                         adBlueConsumption.Value = (decimal)engine.AdblueConsumption;
                         adBlueNoPowerLimit.Value = (decimal)engine.NoAdbluePowerLimit;
-                        conflictsTextBox.Lines = engine.Conflicts;
+                        conflictsTextBox.Lines = engine?.Conflicts ?? new string[] { };
 
                         // Tab 3
                         if (engine.RpmRange_LowGear.X > 0f)
@@ -864,23 +864,26 @@ namespace ATSEngineTool
                             horsepowerBox.Value = Int32.Parse(reg.Match(engine.Info[0]).Groups["hp"].Value);
                         }
 
-                        // Clear torque curves
-                        chart1.Series[0].Points.Clear();
-                        ratioListView.Items.Clear();
-                        Ratios.Clear();
-
-                        // Set new torque curves
-                        foreach (Vector2 vector in engine.TorqueCurves)
+                        if (engine.TorqueCurves?.Length > 0)
                         {
-                            TorqueRatio ratio = new TorqueRatio();
-                            ratio.RpmLevel = (int)vector.X;
-                            ratio.Ratio = vector.Y;
-                            Ratios.Add(ratio);
+                            // Clear torque curves
+                            chart1.Series[0].Points.Clear();
+                            ratioListView.Items.Clear();
+                            Ratios.Clear();
+
+                            // Set new torque curves
+                            foreach (Vector2 vector in engine.TorqueCurves)
+                            {
+                                TorqueRatio ratio = new TorqueRatio();
+                                ratio.RpmLevel = (int)vector.X;
+                                ratio.Ratio = vector.Y;
+                                Ratios.Add(ratio);
+                            }
                         }
 
                         // Fill ratio view
                         PopulateTorqueRatios();
-                        torqueBox.Value = Metrics.NewtonMetresToTorque((decimal)engine.Torque, torqueBox.DecimalPlaces);
+                        torqueBox.Value = Metrics.NewtonMetersToTorque((decimal)engine.Torque, torqueBox.DecimalPlaces);
 
                         // Defaults (skip sounds)
                         if (engine.Defaults != null)

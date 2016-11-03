@@ -224,7 +224,6 @@ namespace ATSEngineTool.Database
 
         #endregion
 
-
         #region Child Database Sets
 
         /// <summary>
@@ -265,8 +264,8 @@ namespace ATSEngineTool.Database
         /// </summary>
         public int NewtonMetres
         {
-            get { return Metrics.TorqueToNewtonMetres(Torque); }
-            set { Torque = Metrics.NewtonMetresToTorque(value); }
+            get { return Metrics.TorqueToNewtonMeters(Torque); }
+            set { Torque = Metrics.NewtonMetersToTorque(value); }
         }
 
         /// <summary>

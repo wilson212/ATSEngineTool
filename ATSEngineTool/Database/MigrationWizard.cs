@@ -54,12 +54,192 @@ namespace ATSEngineTool.Database
                         case "1.4":
                             MigrateTo_1_5();
                             break;
+                        case "1.5":
+                            MigrateTo_1_6();
+                            break;
                         default:
                             throw new Exception($"Unexpected database version: {AppDatabase.DatabaseVersion}");
                     }
 
                     // Fetch version
                     Database.GetVersion();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Migrates to 1.6, which added the new Peterbilt 389 data.
+        /// </summary>
+        private void MigrateTo_1_6()
+        {
+            // Run the update in a transaction
+            using (var trans = Database.BeginTransaction())
+            {
+                try
+                {
+                    // Import sound package
+                    var package = new SoundPackage()
+                    {
+                        Author = "SCS",
+                        Version = 1.4m,
+                        Name = "Default Engine Sounds (389)",
+                        UnitName = "std",
+                        FolderName = "default.389",
+                        InteriorFileName = "interior.sii",
+                        ExteriorFileName = "exterior.sii"
+                    };
+                    Database.SoundPackages.Add(package);
+
+                    // Set variables
+                    string folderPath = Path.Combine(Program.RootPath, "sounds", "engine", "default.389");
+
+                    //Insert package 1 stuff
+                    using (Stream stream = Program.GetResource("ATSEngineTool.Resources.Default.389.espack"))
+                    using (var reader = new SoundPackageReader(stream))
+                    {
+                        // Parse sii files
+                        var interior = reader.GetSoundFile(SoundType.Interior);
+                        var exterior = reader.GetSoundFile(SoundType.Exterior);
+
+                        // Extract data
+                        reader.ExtractToDirectory(folderPath, true);
+
+                        // Save sounds in the database
+                        reader.ImportSounds(Database, package, interior, SoundType.Interior);
+                        reader.ImportSounds(Database, package, exterior, SoundType.Exterior);
+                    }
+
+                    // Create the truck itself
+                    var truck = new Truck()
+                    {
+                        Name = "Peterbilt 389",
+                        UnitName = "peterbilt.389",
+                        IsScsTruck = true
+                    };
+                    Database.Trucks.Add(truck);
+
+                    // ==== ISX 12
+                    // Create new engines series
+                    var series = new EngineSeries()
+                    {
+                        Manufacturer = "SCS",
+                        Name = "Cummins ISX12 (389)",
+                        Displacement = 12,
+                        EngineIcon = "engine_01",
+                        SoundPackage = package
+                    };
+                    Database.EngineSeries.Add(series);
+
+                    // Create the ISX12 for the 389
+                    var engine = new Engine()
+                    {
+                        SeriesId = series.Id,
+                        UnitName = "isx12",
+                        Name = "Cummins ISX 12 (SCS)",
+                        Price = 44650,
+                        Torque = 1350,
+                        Horsepower = 370,
+                        IdleRpm = 650,
+                        PeakRpm = 1100,
+                        BrakeStrength = 2.0m,
+                    };
+                    Database.Engines.Add(engine);
+                    Database.TruckEngines.Add(new TruckEngine() { Truck = truck, Engine = engine });
+
+                    // ==== ISX 15
+                    // Create new engines series
+                    series = new EngineSeries()
+                    {
+                        Manufacturer = "SCS",
+                        Name = "Cummins ISX15 (389)",
+                        Displacement = 15,
+                        EngineIcon = "engine_01",
+                        SoundPackage = package
+                    };
+                    Database.EngineSeries.Add(series);
+
+                    // Create the ISX15 for the 389
+                    engine = new Engine()
+                    {
+                        SeriesId = series.Id,
+                        UnitName = "isx15",
+                        Name = "Cummins ISX 15 (SCS)",
+                        Price = 49510,
+                        Unlock = 18,
+                        Torque = 1850,
+                        Horsepower = 550,
+                        IdleRpm = 650,
+                        PeakRpm = 1100,
+                        BrakeStrength = 2.0m,
+                    };
+                    Database.Engines.Add(engine);
+                    Database.TruckEngines.Add(new TruckEngine() { Truck = truck, Engine = engine });
+
+                    // ==== MX-13
+                    // Create new engines series
+                    series = new EngineSeries()
+                    {
+                        Manufacturer = "SCS",
+                        Name = "Paccar MX-13 (389)",
+                        Displacement = 12.9m,
+                        EngineIcon = "engine_01",
+                        SoundPackage = package
+                    };
+                    Database.EngineSeries.Add(series);
+
+                    // Create the MX-13 450 for the 389
+                    engine = new Engine()
+                    {
+                        SeriesId = series.Id,
+                        UnitName = "mx",
+                        Name = "Paccar MX-13 (SCS)",
+                        Price = 47150,
+                        Unlock = 6,
+                        Torque = 1650,
+                        Horsepower = 450,
+                        IdleRpm = 650,
+                        PeakRpm = 1100,
+                        BrakeStrength = 2.0m,
+                    };
+                    Database.Engines.Add(engine);
+                    Database.TruckEngines.Add(new TruckEngine() { Truck = truck, Engine = engine });
+
+                    // Create the MX-13 500 for the 389
+                    engine = new Engine()
+                    {
+                        SeriesId = series.Id,
+                        UnitName = "mx_500",
+                        Name = "Paccar MX-13 (SCS)",
+                        Price = 48870,
+                        Unlock = 12,
+                        Torque = 1850,
+                        Horsepower = 500,
+                        IdleRpm = 650,
+                        PeakRpm = 1100,
+                        BrakeStrength = 2.0m,
+                    };
+                    Database.Engines.Add(engine);
+                    Database.TruckEngines.Add(new TruckEngine() { Truck = truck, Engine = engine });
+
+                    // Update database version
+                    string sql = "INSERT INTO `DbVersion`(`Version`, `AppliedOn`) VALUES({0}, {1});";
+                    Database.Execute(String.Format(sql, Version.Parse("1.6"), Epoch.Now));
+
+                    trans.Commit();
+                }
+                catch
+                {
+                    trans.Rollback();
+                    throw;
+                }
+                finally
+                {
+                    // Log any integrity errors in the database
+                    var results = Database.Query("PRAGMA integrity_check;").ToList();
+                    if (results.Count > 0 && results[0]["integrity_check"].ToString() != "ok")
+                    {
+                        LogErrors(results, "IntegrityErrors.log");
+                    }
                 }
             }
         }

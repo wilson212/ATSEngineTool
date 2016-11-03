@@ -424,6 +424,7 @@
     </Compile>
     <EmbeddedResource Include="Resources\Default.espack" />
     <EmbeddedResource Include="Resources\Default.w900.espack" />
+    <EmbeddedResource Include="Resources\Default.389.espack" />
     <None Include="sounds\common\ext\air_brake1.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -715,6 +716,9 @@
     <None Include="sounds\engine\C15\manifest.sii">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="sounds\engine\default.389\exterior.sii" />
+    <None Include="sounds\engine\default.389\interior.sii" />
+    <None Include="sounds\engine\default.389\manifest.sii" />
     <None Include="sounds\engine\default.w900\exterior.sii">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -6,82 +6,177 @@ namespace ATSEngineTool
 {
     public partial class TorqueCurveForm : Form
     {
-        protected int PeakTorque;
+        /// <summary>
+        /// The max power rating as defined by the constructor
+        /// </summary>
+        protected double MaxNewtonMeters { get; set; }
 
-        public bool UsePercentage
-        {
-            get { return radioButton1.Checked; }
-        }
+        /// <summary>
+        /// The current power rating in NM
+        /// </summary>
+        protected double CurrentNewtonMeters { get; set; }
 
-        public TorqueCurveForm(int maxTorque, TorqueRatio ratio = null)
+        /// <summary>
+        /// Creates a new instance of <see cref="TorqueCurveForm"/>
+        /// </summary>
+        /// <param name="maxTorque">The maximum torque rating as defined by the engine</param>
+        /// <param name="ratio">If editing a torque ratio, specify it here.</param>
+        public TorqueCurveForm(double maxTorque, TorqueRatio ratio = null)
         {
+            // Create form controls and set default dialog result
             InitializeComponent();
-            this.DialogResult = DialogResult.No;
-            PeakTorque = maxTorque;
+            DialogResult = DialogResult.No;
+
+            // Set the max power in newton meters
+            MaxNewtonMeters = (Program.Config.UnitSystem == UnitSystem.Imperial)
+                ? Metrics.TorqueToNewtonMeters(maxTorque, 2)
+                : maxTorque;
 
             // If this is an existing ratio, set form values
             if (ratio != null)
             {
+                CurrentNewtonMeters = MaxNewtonMeters * ratio.Ratio;
                 rpmLevelBox.Value = ratio.RpmLevel;
-                torqueLevelBox.Value = (decimal)(ratio.Ratio * 100);
             }
 
-            // Setup label
-            if (Program.Config.UnitSystem == UnitSystem.Metric)
-            {
-                labelTorque.Text = "N·m Percentage:";
-            }
-
+            // Fire the checked event to get things rolling
             radioButton1.Checked = true;
-            radioButton1.CheckedChanged += radioButton1_CheckedChanged;
         }
 
+        /// <summary>
+        /// Returns a new <see cref="TorqueRatio"/> entity with the values
+        /// defined in this form.
+        /// </summary>
+        /// <returns></returns>
         public TorqueRatio GetRatio()
         {
-            var val = (!radioButton1.Checked)
-                ? Math.Round((double)torqueLevelBox.Value / PeakTorque, 4)
-                : Math.Round((double)torqueLevelBox.Value / 100, 4);
-
             return new TorqueRatio()
             {
-                Ratio = val,
+                Ratio = Math.Round(CurrentNewtonMeters / MaxNewtonMeters, 4),
                 RpmLevel = (int)rpmLevelBox.Value
             };
         }
 
+        /// <summary>
+        /// Precentage radio checked event
+        /// </summary>
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            // Only process if we are selected
+            if (!radioButton1.Checked) return;
+            torqueLevelBox.ValueChanged -= torqueLevelBox_ValueChanged;
+
+            // Set value
+            torqueLevelBox.Value = 0;
+            torqueLevelBox.Maximum = 100;
+            torqueLevelBox.Value = (decimal)Math.Round((CurrentNewtonMeters / MaxNewtonMeters) * 100, 2);
+            torqueLevelBox.ValueChanged += torqueLevelBox_ValueChanged;
+        }
+
+        /// <summary>
+        /// Newton Metres radio checked event
+        /// </summary>
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            // Only process if we are selected
+            if (!radioButton2.Checked) return;
+            torqueLevelBox.ValueChanged -= torqueLevelBox_ValueChanged;
+
+            // Set value
+            torqueLevelBox.Value = 0;
+            torqueLevelBox.Maximum = (decimal)MaxNewtonMeters;
+            torqueLevelBox.Value = (decimal)Math.Round(CurrentNewtonMeters, 2);
+            torqueLevelBox.ValueChanged += torqueLevelBox_ValueChanged;
+        }
+
+        /// <summary>
+        /// Torque radio checked event
+        /// </summary>
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            // Only process if we are selected
+            if (!radioButton3.Checked) return;
+            torqueLevelBox.ValueChanged -= torqueLevelBox_ValueChanged;
+
+            // Set value
+            torqueLevelBox.Value = 0;
+            torqueLevelBox.Maximum = (decimal)Metrics.NewtonMetersToTorque(MaxNewtonMeters, 2);
+            torqueLevelBox.Value = (decimal)Metrics.NewtonMetersToTorque(CurrentNewtonMeters, 2);
+            torqueLevelBox.ValueChanged += torqueLevelBox_ValueChanged;
+        }
+
+        /// <summary>
+        /// Horsepower radio checked event
+        /// </summary>
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+            // Only process if we are selected
+            if (!radioButton4.Checked) return;
+            torqueLevelBox.ValueChanged -= torqueLevelBox_ValueChanged;
+
+            var torque = Metrics.NewtonMetersToTorque(CurrentNewtonMeters, 8);
+            var maxTorque = Metrics.NewtonMetersToTorque(MaxNewtonMeters, 8);
+
+            // Set value
+            torqueLevelBox.Value = 0;
+            torqueLevelBox.Maximum = (decimal)Metrics.TorqueToHorsepower(maxTorque, (int)rpmLevelBox.Value, 2);
+            torqueLevelBox.Value = (decimal)Metrics.TorqueToHorsepower(torque, (int)rpmLevelBox.Value, 2);
+            torqueLevelBox.ValueChanged += torqueLevelBox_ValueChanged;
+        }
+
+        /// <summary>
+        /// Power value input box value changed event
+        /// </summary>
+        private void torqueLevelBox_ValueChanged(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+                CurrentNewtonMeters = MaxNewtonMeters * ((double)torqueLevelBox.Value / 100);
+            }
+            else if (radioButton2.Checked)
+            {
+                // NM
+                CurrentNewtonMeters = (double)torqueLevelBox.Value;
+            }
+            else if (radioButton3.Checked)
+            {
+                // Torque
+                CurrentNewtonMeters = (double)Metrics.TorqueToNewtonMeters(torqueLevelBox.Value, 8);
+            }
+            else
+            {
+                // Horsepower
+                var torque = Metrics.HorsepowerToTorque((double)torqueLevelBox.Value, 8);
+                CurrentNewtonMeters = (double)Metrics.TorqueToNewtonMeters(torque, 8);
+            }
+        }
+
+        /// <summary>
+        /// Engine RPM box value change event... Forces max horsepower based
+        /// on the entered RPM
+        /// </summary>
+        private void rpmLevelBox_ValueChanged(object sender, EventArgs e)
+        {
+            if (radioButton4.Checked)
+                radioButton4_CheckedChanged(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Confirm button click event
+        /// </summary>
         private void confirmButton_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Yes;
             this.Close();
         }
 
+        /// <summary>
+        /// Cancel button click event
+        /// </summary>
         private void cancelButton_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.No;
             this.Close();
-        }
-
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            var current = torqueLevelBox.Value;
-            string prefix = (Program.Config.UnitSystem == UnitSystem.Imperial)
-                ? "Torque "
-                : "N·m ";
-
-            if (radioButton1.Checked)
-            {
-                torqueLevelBox.Maximum = 100;
-                var newValue = Math.Round((current / PeakTorque) * 100, 2);
-                torqueLevelBox.Value = newValue;
-                labelTorque.Text = prefix + "Percent:";
-            }
-            else
-            {
-                torqueLevelBox.Maximum = PeakTorque;
-                var newValue = Math.Round((current / 100) * PeakTorque, 2);
-                torqueLevelBox.Value = newValue;
-                labelTorque.Text = prefix + "Value:";
-            }
         }
     }
 }

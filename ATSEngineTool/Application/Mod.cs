@@ -180,7 +180,7 @@ namespace ATSEngineTool
             {
                 var update = new TaskProgressUpdate();
                 update.MessageText = v;
-                TaskForm.Progress.Report(update);
+                progress.Report(update);
             }
         }
 

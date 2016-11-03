@@ -22,7 +22,7 @@ namespace ATSEngineTool
         const int SHIFTING_RPM = 1500;
 
         /// <summary>
-        /// Internal testing points to 39.5 inches
+        /// Internal testing points to 39.5 inches tires in game
         /// </summary>
         const decimal TIRE_DIAMETER = 39.5m;
 
