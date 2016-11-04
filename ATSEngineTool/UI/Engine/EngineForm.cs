@@ -876,7 +876,7 @@ namespace ATSEngineTool
                             {
                                 TorqueRatio ratio = new TorqueRatio();
                                 ratio.RpmLevel = (int)vector.X;
-                                ratio.Ratio = vector.Y;
+                                ratio.Ratio = Math.Round(vector.Y, 4);
                                 Ratios.Add(ratio);
                             }
                         }

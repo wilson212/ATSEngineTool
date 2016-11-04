@@ -50,9 +50,21 @@ namespace ATSEngineTool
         /// <returns></returns>
         public TorqueRatio GetRatio()
         {
+            // Ensure we aren't over max value. This can happen
+            // due to the value changed event not firing properly
+            if (CurrentNewtonMeters > MaxNewtonMeters)
+                CurrentNewtonMeters = MaxNewtonMeters;
+
+            // Sometimes rounding can bite you in the ass... lets
+            // prevent this, and thus causing problems
+            var ratio = Math.Round(CurrentNewtonMeters / MaxNewtonMeters, 4);
+            if (ratio > 1.0000)
+                ratio = 1;
+
+            // Return the ratio
             return new TorqueRatio()
             {
-                Ratio = Math.Round(CurrentNewtonMeters / MaxNewtonMeters, 4),
+                Ratio = ratio,
                 RpmLevel = (int)rpmLevelBox.Value
             };
         }
@@ -129,25 +141,31 @@ namespace ATSEngineTool
         /// </summary>
         private void torqueLevelBox_ValueChanged(object sender, EventArgs e)
         {
+            // Dont go over maximum
+            var value = (torqueLevelBox.Value > torqueLevelBox.Maximum)
+                ? (double)torqueLevelBox.Maximum
+                : (double)torqueLevelBox.Value;
+
+
             if (radioButton1.Checked)
             {
-                CurrentNewtonMeters = MaxNewtonMeters * ((double)torqueLevelBox.Value / 100);
+                CurrentNewtonMeters = MaxNewtonMeters * (value / 100);
             }
             else if (radioButton2.Checked)
             {
                 // NM
-                CurrentNewtonMeters = (double)torqueLevelBox.Value;
+                CurrentNewtonMeters = value;
             }
             else if (radioButton3.Checked)
             {
                 // Torque
-                CurrentNewtonMeters = (double)Metrics.TorqueToNewtonMeters(torqueLevelBox.Value, 8);
+                CurrentNewtonMeters = (double)Metrics.TorqueToNewtonMeters(value, 4);
             }
             else
             {
                 // Horsepower
-                var torque = Metrics.HorsepowerToTorque((double)torqueLevelBox.Value, 8);
-                CurrentNewtonMeters = (double)Metrics.TorqueToNewtonMeters(torque, 8);
+                var torque = Metrics.HorsepowerToTorque(value, (int)rpmLevelBox.Value, 4);
+                CurrentNewtonMeters = Metrics.TorqueToNewtonMeters(torque, 4);
             }
         }
 

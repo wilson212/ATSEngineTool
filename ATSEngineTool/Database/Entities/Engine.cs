@@ -426,6 +426,7 @@ namespace ATSEngineTool.Database
             builder.WriteLine("# Torque Curves");
             foreach (TorqueRatio ratio in TorqueRatios.OrderBy(x => x.RpmLevel))
             {
+                //decvalue = Math.Round(ratio.Ratio, 4, MidpointRounding.AwayFromZero).ToString(Program.NumberFormat);
                 decvalue = ratio.Ratio.ToString(Program.NumberFormat);
                 builder.WriteAttribute($"torque_curve[]", $"({ratio.RpmLevel}, {decvalue})", false);
             }
