@@ -99,6 +99,7 @@ namespace ATSEngineTool
             // Fill form fields under 1 database connection
             using (AppDatabase db = new AppDatabase())
             {
+                // Fill trucks
                 FillTrucks(db);
 
                 // Fill Engines
@@ -996,6 +997,121 @@ namespace ATSEngineTool
             using (AboutForm frm = new AboutForm())
             {
                 frm.ShowDialog();
+            }
+        }
+
+        private void integrityMenuItem_Click(object sender, EventArgs e)
+        {
+            using (AppDatabase db = new AppDatabase())
+            {
+                // Perform integrity check
+                var wizard = new MigrationWizard(db);
+                int issues = wizard.PerformIntegrityCheck();
+
+                // Alert the user
+                if (issues == 0)
+                {
+                    MessageBox.Show("No database integrity issues were found!", 
+                        "Integrity Check", MessageBoxButtons.OK, MessageBoxIcon.Information
+                    );
+                }
+                else
+                {
+                    MessageBox.Show($"There are {issues} integrity errors in the database! "
+                        + "Review the \"/errors/IntegrityErrors.log\" file for more information.", 
+                        "Integrity Check", MessageBoxButtons.OK, MessageBoxIcon.Warning
+                    );
+                }
+            }
+        }
+
+        private void vacuumMenuItem_Click(object sender, EventArgs e)
+        {
+            using (AppDatabase db = new AppDatabase())
+            {
+                // Perform integrity check
+                var wizard = new MigrationWizard(db);
+                wizard.VacuumDatabase();
+
+                // Alert the user
+                MessageBox.Show("Successfully vacuumed the database!",
+                    "Success", MessageBoxButtons.OK, MessageBoxIcon.Information
+                );
+            }
+        }
+
+        private async void clearMenuItem_Click(object sender, EventArgs e)
+        {
+            // Verify that this is what the user wants to do!
+            var result = MessageBox.Show(
+                "Are you sure you want to clear the database of all data? This process cannot be reversed!",
+                "Clear Database", MessageBoxButtons.YesNo, MessageBoxIcon.Warning
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                // Show task form
+                TaskForm.Show(this, "Clearing Database", "Clearing Database", "please wait...", false);
+                this.Enabled = false;
+
+                // Open database and clear
+                using (AppDatabase db = new AppDatabase())
+                using (var trans = db.BeginTransaction())
+                {
+                    try
+                    {
+                        // Run in a new thread
+                        await Task.Run(() =>
+                        {
+                            // Clear tables, in order to prevent a foreignkey exception
+                            db.TruckEngines.Clear();
+                            db.TruckTransmissions.Clear();
+                            db.TransmissionGears.Clear();
+                            db.AccessoryConflicts.Clear();
+                            db.SuitableAccessories.Clear();
+                            db.Transmissions.Clear();
+                            db.TransmissionSeries.Clear();
+                            db.TorqueRatios.Clear();
+                            db.Engines.Clear();
+                            db.EngineSeries.Clear();
+                            db.EngineSounds.Clear();
+                            db.SoundPackages.Clear();
+                            db.Trucks.Clear();
+
+                            // Apply changes
+                            trans.Commit();
+
+                            // Compress database
+                            db.Execute("VACUUM;");
+                        });
+
+                        // Clear form
+                        truckListView1.Items.Clear();
+                        truckListView2.Items.Clear();
+                        seriesListView.Items.Clear();
+                        engineListView.Items.Clear();
+                        transSeriesListView.Items.Clear();
+                        transmissionListView.Items.Clear();
+                        packageListView.Items.Clear();
+                        soundListView.Items.Clear();
+
+                        // Close task form
+                        TaskForm.CloseForm();
+                        this.Enabled = true;
+
+                        // Alert the user
+                        MessageBox.Show("Successfully cleared the database of all data!",
+                            "Success", MessageBoxButtons.OK, MessageBoxIcon.Information
+                        );
+                    }
+                    catch
+                    {
+                        this.Enabled = true;
+                        TaskForm.CloseForm();
+                        trans.Rollback();
+                        throw;
+                    }
+                }
             }
         }
 

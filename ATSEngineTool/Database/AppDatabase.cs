@@ -152,8 +152,8 @@ namespace ATSEngineTool.Database
                 CodeFirstSQLite.DropTable<TorqueRatio>(this);
                 CodeFirstSQLite.DropTable<Engine>(this);
                 CodeFirstSQLite.DropTable<EngineSeries>(this);
-                CodeFirstSQLite.DropTable<SoundPackage>(this);
                 CodeFirstSQLite.DropTable<EngineSound>(this);
+                CodeFirstSQLite.DropTable<SoundPackage>(this);
                 CodeFirstSQLite.DropTable<Truck>(this);
                 CodeFirstSQLite.DropTable<DbVersion>(this);
 

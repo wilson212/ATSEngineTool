@@ -560,9 +560,9 @@ namespace ATSEngineTool
                         torqueAtPoint = Metrics.NewtonMetersToTorque(torqueAtPoint, 2);
                     }
 
-                    // Calculate slope angle (rpm distance * (torque rise per rpm)),
+                    // Calculate torque rise (rpm distance * (torque rise per rpm)),
                     // Then walk from the last point, to right before the current one
-                    double slope = HP_POINT_DIST * (deltaY / deltaX);
+                    double torqueRise = HP_POINT_DIST * (deltaY / deltaX);
                     double rpm = lastPoint.XValue + HP_POINT_DIST;
                     double stop = point.XValue;
 
@@ -570,7 +570,7 @@ namespace ATSEngineTool
                     for (; rpm < stop; rpm += HP_POINT_DIST)
                     {
                         // increment torque rating by our dermined curve rise
-                        torqueAtPoint += slope;
+                        torqueAtPoint += torqueRise;
 
                         // Plot the horsepower point
                         horsepower = Metrics.TorqueToHorsepower(torqueAtPoint, rpm, 0);

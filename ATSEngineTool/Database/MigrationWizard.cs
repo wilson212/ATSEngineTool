@@ -64,7 +64,37 @@ namespace ATSEngineTool.Database
                     // Fetch version
                     Database.GetVersion();
                 }
+
+                // Always perform a vacuum to optimize the database
+                Database.Execute("VACUUM;");
             }
+        }
+
+        /// <summary>
+        /// Performs an integrity check on the database, and returns the
+        /// number of issues found.
+        /// </summary>
+        /// <returns></returns>
+        internal int PerformIntegrityCheck()
+        {
+            // Log any integrity errors in the database
+            var results = Database.Query("PRAGMA integrity_check;").ToList();
+            if (results.Count > 0 && results[0]["integrity_check"].ToString() != "ok")
+            {
+                LogErrors(results, "IntegrityErrors.log");
+                return results.Count;
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// Performs a VACUUM on the database
+        /// </summary>
+        /// <seealso cref="https://sqlite.org/lang_vacuum.html"/>
+        internal void VacuumDatabase()
+        {
+            Database.Execute("VACUUM;");
         }
 
         /// <summary>
@@ -235,11 +265,7 @@ namespace ATSEngineTool.Database
                 finally
                 {
                     // Log any integrity errors in the database
-                    var results = Database.Query("PRAGMA integrity_check;").ToList();
-                    if (results.Count > 0 && results[0]["integrity_check"].ToString() != "ok")
-                    {
-                        LogErrors(results, "IntegrityErrors.log");
-                    }
+                    PerformIntegrityCheck();
                 }
             }
         }
@@ -296,11 +322,7 @@ namespace ATSEngineTool.Database
                 finally
                 {
                     // Log any integrity errors in the database
-                    var results = Database.Query("PRAGMA integrity_check;").ToList();
-                    if (results.Count > 0 && results[0]["integrity_check"].ToString() != "ok")
-                    {
-                        LogErrors(results, "IntegrityErrors.log");
-                    }
+                    PerformIntegrityCheck();
                 }
             }
         }
