@@ -13,23 +13,9 @@ namespace ATSEngineTool
         /// <summary>
         /// Gets the Full Mod directory path
         /// </summary>
-        public static string ModPath
-        {
-            get
-            {
-                if (Program.Config.IntegrateWithMod)
-                {
-                    return Path.Combine(
-                        Program.Config.SteamPath, "SteamApps", "workshop",
-                        "content", "270880", "650050267", "latest"
-                    );
-                }
-                else
-                {
-                    return CompilePath;
-                }
-            }
-        }
+        public static string ModPath => (Program.Config.IntegrateWithMod) 
+            ? Path.Combine(Program.Config.SteamPath, "SteamApps", "workshop", "content", "270880", "650050267", "latest")
+            : CompilePath;
 
         /// <summary>
         /// Gets the directory path where def files are compiled
@@ -41,6 +27,9 @@ namespace ATSEngineTool
         /// </summary>
         public static string CompilePath => Path.Combine(Program.RootPath, "__compile__");
 
+        /// <summary>
+        /// Gets or sets whether the task is cancelled
+        /// </summary>
         private static bool Cancelled { get; set; } = false;
 
         /// <summary>
@@ -201,8 +190,8 @@ namespace ATSEngineTool
 
             // Local variables
             string truckpath, soundPath, enginePath;
-            // SoundPackage => Engines who use it
-            var soundData = new Dictionary<SoundPackage, List<Engine>>();
+            // filename => Tuple<SoundPackage, List<Engine>>
+            var soundData = new Dictionary<string, Tuple<SoundPackage, List<Engine>>>();
             // Pre-Compiled sound files
             var soundFiles = new Dictionary<SoundPackage, string[]>();
             var suitableFor = new StringBuilder();
@@ -226,15 +215,28 @@ namespace ATSEngineTool
                     soundPath = Path.Combine(truckpath, "sound");
                     enginePath = Path.Combine(truckpath, "engine");
 
-                    // Create file directories
-                    if (!Directory.Exists(truckpath))
-                        Directory.CreateDirectory(truckpath);
+                    // === Create file directories
+                    if (!Directory.Exists(truckpath)) Directory.CreateDirectory(truckpath);
+                    if (!Directory.Exists(soundPath)) Directory.CreateDirectory(soundPath);
+                    if (!Directory.Exists(enginePath)) Directory.CreateDirectory(enginePath);
+                    // ===
 
-                    if (!Directory.Exists(soundPath))
-                        Directory.CreateDirectory(soundPath);
+                    // ==============================
+                    // Add truck default sound package to the sound list (if one exists)
+                    if (truck.DefaultSoundPackageId > 0)
+                    {
+                        // Try and fetch the default package for the truck
+                        var package = db.Query<SoundPackage>(
+                                "SELECT * FROM `SoundPackage` WHERE `Id`=@P0", truck.DefaultSoundPackageId
+                            ).FirstOrDefault();
 
-                    if (!Directory.Exists(enginePath))
-                        Directory.CreateDirectory(enginePath);
+                        // Manually set interior and exterior sound lists
+                        if (package != null)
+                        {
+                            soundData["interior.sii"] = new Tuple<SoundPackage, List<Engine>>(package, new List<Engine>());
+                            soundData["exterior.sii"] = new Tuple<SoundPackage, List<Engine>>(package, new List<Engine>());
+                        }
+                    }
 
                     // ==============================
                     // Create engine files
@@ -252,15 +254,20 @@ namespace ATSEngineTool
                         string contents = engine.ToSiiFormat(truck.UnitName);
                         SoundPackage sound = engine.Series.SoundPackage;
 
-                        // === Add engine to sound list
-                        if (!soundData.ContainsKey(sound))
-                            soundData[sound] = new List<Engine>() { engine };
+                        // === Add engine to interior sound list
+                        if (!soundData.ContainsKey(sound.InteriorFileName))
+                            soundData[sound.InteriorFileName] = new Tuple<SoundPackage, List<Engine>>(sound, new List<Engine>() { engine });
                         else
-                            soundData[sound].Add(engine);
+                            soundData[sound.InteriorFileName].Item2.Add(engine);
+
+                        // === Add engine to exterior sound list
+                        if (!soundData.ContainsKey(sound.ExteriorFileName))
+                            soundData[sound.ExteriorFileName] = new Tuple<SoundPackage, List<Engine>>(sound, new List<Engine>() { engine });
+                        else
+                            soundData[sound.ExteriorFileName].Item2.Add(engine);
 
                         // Create/Open the engine.sii file, and write the new contents
-                        string path = Path.Combine(enginePath, engine.FileName);
-                        using (FileStream str = File.Open(path, FileMode.Create))
+                        using (FileStream str = File.Open(Path.Combine(enginePath, engine.FileName), FileMode.Create))
                         using (StreamWriter writer = new StreamWriter(str))
                         {
                             writer.Write(contents);
@@ -268,61 +275,44 @@ namespace ATSEngineTool
                     }
 
                     // ==============================
-                    // Create sound files
+                    // Create sound files for this truck
                     index = 1;
                     count = soundData.Count;
                     foreach (var soundPair in soundData)
                     {
-                        // Update progress
-                        ProgressUpdate(progress, $"Generating sound def files for \"{truck.Name}\" ({index++}/{count})");
-
                         // Check for cancellation
                         if (Cancelled) throw new OperationCanceledException();
 
-                        SoundPackage sound = soundPair.Key;
-                        List<Engine> engines = soundPair.Value;
+                        // Update progress
+                        ProgressUpdate(progress, $"Generating sound def files for \"{truck.Name}\" ({index++}/{count})");
+
+                        // Clean out old junk
                         suitableFor.Clear();
 
+                        // Define local vars
+                        SoundPackage sound = soundPair.Value.Item1;
+                        List<Engine> engines = soundPair.Value.Item2;
                         string root = Path.Combine(Program.RootPath, "sounds", "engine", sound.FolderName);
-                        string filePath = Path.Combine(root, "interior.sii");
 
-                        // Add engines
+                        // === Add engines to the suitable_for array
                         foreach (Engine engine in engines)
                         {
-                            // Indent
-                            if (suitableFor.Length > 0)
-                                suitableFor.Append("\t");
-
+                            suitableFor.AppendIf(suitableFor.Length > 0, "\t");
                             suitableFor.AppendLine($"suitable_for[]: \"{engine.UnitName}.{truck.UnitName}.engine\"");
                         }
 
-                        // === Interior
+                        // === Compile sound files if not previously compiled
                         if (!soundFiles.ContainsKey(sound))
                             soundFiles.Add(sound, sound.ToSiiFormat());
-                        
-                        // Add truck name
-                        string contents = soundFiles[sound][0]
+
+                        // Parse the sound file adding the truck name, and suitable_for items
+                        int j = soundPair.Key == sound.InteriorFileName ? 0 : 1;
+                        string contents = soundFiles[sound][j]
                             .Replace("{{{NAME}}}", truck.UnitName)
                             .Replace("{{{SUITABLE}}}", suitableFor.ToString().TrimEnd(Environment.NewLine.ToCharArray()));
 
-                        // Create new file
-                        string path = Path.Combine(soundPath, sound.InteriorFileName);
-                        using (FileStream str = File.Open(path, FileMode.Create))
-                        using (StreamWriter writer = new StreamWriter(str))
-                        {
-                            writer.Write(contents);
-                        }
-
-                        // === Exterior
-
-                        // Add truck name
-                        contents = soundFiles[sound][1]
-                            .Replace("{{{NAME}}}", truck.UnitName)
-                            .Replace("{{{SUITABLE}}}", suitableFor.ToString().TrimEnd(Environment.NewLine.ToCharArray()));
-
-                        // Create new file
-                        path = Path.Combine(soundPath, sound.ExteriorFileName);
-                        using (FileStream str = File.Open(path, FileMode.Create))
+                        // Write the sound file
+                        using (FileStream str = File.Open(Path.Combine(soundPath, soundPair.Key), FileMode.Create))
                         using (StreamWriter writer = new StreamWriter(str))
                         {
                             writer.Write(contents);
@@ -363,7 +353,7 @@ namespace ATSEngineTool
                 // thoughts??
             }
 
-            return soundData.Keys.ToArray();
+            return soundFiles.Keys.ToArray();
         }
     }
 }

@@ -42,6 +42,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.confirmButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.maxLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -57,7 +58,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(347, 189);
+            this.panel1.Size = new System.Drawing.Size(364, 195);
             this.panel1.TabIndex = 0;
             // 
             // groupBox1
@@ -68,7 +69,7 @@
             this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(319, 76);
+            this.groupBox1.Size = new System.Drawing.Size(340, 76);
             this.groupBox1.TabIndex = 22;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Choose input mode";
@@ -111,28 +112,29 @@
             this.radioButton1.AutoSize = true;
             this.radioButton1.Location = new System.Drawing.Point(177, 24);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(115, 17);
+            this.radioButton1.Size = new System.Drawing.Size(148, 17);
             this.radioButton1.TabIndex = 20;
-            this.radioButton1.Text = "Percentage of Max";
+            this.radioButton1.Text = "Percentage of Max Power";
             this.radioButton1.UseVisualStyleBackColor = true;
             this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.maxLabel);
             this.groupBox2.Controls.Add(this.labelTorque);
             this.groupBox2.Controls.Add(this.torqueLevelBox);
             this.groupBox2.Controls.Add(this.rpmLevelBox);
             this.groupBox2.Controls.Add(this.label33);
             this.groupBox2.Location = new System.Drawing.Point(12, 93);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(318, 84);
+            this.groupBox2.Size = new System.Drawing.Size(340, 84);
             this.groupBox2.TabIndex = 23;
             this.groupBox2.TabStop = false;
             // 
             // labelTorque
             // 
             this.labelTorque.AutoSize = true;
-            this.labelTorque.Location = new System.Drawing.Point(51, 50);
+            this.labelTorque.Location = new System.Drawing.Point(32, 56);
             this.labelTorque.Name = "labelTorque";
             this.labelTorque.Size = new System.Drawing.Size(70, 13);
             this.labelTorque.TabIndex = 18;
@@ -146,7 +148,7 @@
             0,
             0,
             0});
-            this.torqueLevelBox.Location = new System.Drawing.Point(165, 48);
+            this.torqueLevelBox.Location = new System.Drawing.Point(146, 54);
             this.torqueLevelBox.Name = "torqueLevelBox";
             this.torqueLevelBox.Size = new System.Drawing.Size(103, 20);
             this.torqueLevelBox.TabIndex = 19;
@@ -164,7 +166,7 @@
             0,
             0,
             0});
-            this.rpmLevelBox.Location = new System.Drawing.Point(165, 17);
+            this.rpmLevelBox.Location = new System.Drawing.Point(146, 23);
             this.rpmLevelBox.Maximum = new decimal(new int[] {
             5000,
             0,
@@ -188,7 +190,7 @@
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(50, 19);
+            this.label33.Location = new System.Drawing.Point(31, 25);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(70, 13);
             this.label33.TabIndex = 16;
@@ -200,14 +202,14 @@
             this.panel2.Controls.Add(this.confirmButton);
             this.panel2.Controls.Add(this.cancelButton);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 189);
+            this.panel2.Location = new System.Drawing.Point(0, 195);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(347, 42);
+            this.panel2.Size = new System.Drawing.Size(364, 42);
             this.panel2.TabIndex = 1;
             // 
             // confirmButton
             // 
-            this.confirmButton.Location = new System.Drawing.Point(192, 9);
+            this.confirmButton.Location = new System.Drawing.Point(201, 9);
             this.confirmButton.Name = "confirmButton";
             this.confirmButton.Size = new System.Drawing.Size(100, 25);
             this.confirmButton.TabIndex = 26;
@@ -217,7 +219,7 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(55, 9);
+            this.cancelButton.Location = new System.Drawing.Point(64, 9);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(100, 25);
             this.cancelButton.TabIndex = 25;
@@ -225,12 +227,21 @@
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
+            // maxLabel
+            // 
+            this.maxLabel.AutoSize = true;
+            this.maxLabel.Location = new System.Drawing.Point(255, 56);
+            this.maxLabel.Name = "maxLabel";
+            this.maxLabel.Size = new System.Drawing.Size(48, 13);
+            this.maxLabel.TabIndex = 20;
+            this.maxLabel.Text = "/ 100.00";
+            // 
             // TorqueCurveForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(347, 231);
+            this.ClientSize = new System.Drawing.Size(364, 237);
             this.ControlBox = false;
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -269,5 +280,6 @@
         private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.RadioButton radioButton4;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label maxLabel;
     }
 }

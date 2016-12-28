@@ -59,6 +59,7 @@
             this.diffRatio = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.showPlaceholdersBox = new System.Windows.Forms.CheckBox();
             this.removeGearButton = new System.Windows.Forms.Button();
             this.gearListView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -114,7 +115,6 @@
             this.confirmButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.headerPanel = new System.Windows.Forms.Panel();
-            this.showPlaceholdersBox = new System.Windows.Forms.CheckBox();
             this.shadowLabel1 = new System.Windows.Forms.ShadowLabel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.seriesIcon)).BeginInit();
@@ -323,7 +323,7 @@
             this.groupBox5.Size = new System.Drawing.Size(858, 393);
             this.groupBox5.TabIndex = 26;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Torque Curves";
+            this.groupBox5.Text = "Road Speed and Gearing";
             // 
             // chart1
             // 
@@ -463,6 +463,19 @@
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Gears";
+            // 
+            // showPlaceholdersBox
+            // 
+            this.showPlaceholdersBox.AutoSize = true;
+            this.showPlaceholdersBox.Checked = true;
+            this.showPlaceholdersBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showPlaceholdersBox.Location = new System.Drawing.Point(45, 18);
+            this.showPlaceholdersBox.Name = "showPlaceholdersBox";
+            this.showPlaceholdersBox.Size = new System.Drawing.Size(174, 17);
+            this.showPlaceholdersBox.TabIndex = 31;
+            this.showPlaceholdersBox.Text = "Show Gear Name Placeholders";
+            this.showPlaceholdersBox.UseVisualStyleBackColor = true;
+            this.showPlaceholdersBox.CheckedChanged += new System.EventHandler(this.showPlaceholdersBox_CheckedChanged);
             // 
             // removeGearButton
             // 
@@ -1051,19 +1064,6 @@
             this.headerPanel.Size = new System.Drawing.Size(884, 80);
             this.headerPanel.TabIndex = 28;
             this.headerPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.headerPanel_Paint);
-            // 
-            // showPlaceholdersBox
-            // 
-            this.showPlaceholdersBox.AutoSize = true;
-            this.showPlaceholdersBox.Checked = true;
-            this.showPlaceholdersBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showPlaceholdersBox.Location = new System.Drawing.Point(45, 18);
-            this.showPlaceholdersBox.Name = "showPlaceholdersBox";
-            this.showPlaceholdersBox.Size = new System.Drawing.Size(174, 17);
-            this.showPlaceholdersBox.TabIndex = 31;
-            this.showPlaceholdersBox.Text = "Show Gear Name Placeholders";
-            this.showPlaceholdersBox.UseVisualStyleBackColor = true;
-            this.showPlaceholdersBox.CheckedChanged += new System.EventHandler(this.showPlaceholdersBox_CheckedChanged);
             // 
             // shadowLabel1
             // 

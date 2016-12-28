@@ -26,6 +26,16 @@ namespace ATSEngineTool.Database
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or Sets the Default sound package ID for this truck, or 0 for none
+        /// </summary>
+        /// <remarks>
+        /// This is not a foreign key because we dont want to delete trucks when sound
+        /// packages are removed
+        /// </remarks>
+        [Column, Required, Default(0)]
+        public int DefaultSoundPackageId { get; set; } = 0;
+
+        /// <summary>
         /// Gets or Sets whether this is an SCS truck, or a Modded truck
         /// </summary>
         [Column, Required, Default(false)]

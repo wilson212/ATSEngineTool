@@ -70,11 +70,18 @@ namespace ATSEngineTool
                 extFilenameBox.Text = Package.ExteriorFileName;
                 folderNameBox.Text = Package.FolderName;
 
+                // Change Import button text and size
+                importButton.Size = new Size(125, 25);
+                importButton.Text = "Import Update";
+
                 // Enable buttons
                 confirmButton.Enabled = true;
             }
         }
 
+        /// <summary>
+        /// Import Button Click Event
+        /// </summary>
         private void importButton_Click(object sender, EventArgs e)
         {
             // Request the user supply the sound package path
@@ -139,13 +146,16 @@ namespace ATSEngineTool
                     }
 
                     // Set form values
-                    int index = name.IndexOf('.');
                     labelAuthor.Text = manifest.Author;
                     labelVersion.Text = manifest.Version;
-                    unitNameBox.Text = name.Substring(0, (index == -1) ? name.Length : index);
-                    packageNameBox.Text = manifest.Name;
-                    intFilenameBox.Text = manifest.InteriorName;
-                    extFilenameBox.Text = manifest.ExteriorName;
+                    if (NewPackage)
+                    {
+                        int index = name.IndexOf('.');
+                        unitNameBox.Text = name.Substring(0, (index == -1) ? name.Length : index);
+                        packageNameBox.Text = manifest.Name;
+                        intFilenameBox.Text = manifest.InteriorName;
+                        extFilenameBox.Text = manifest.ExteriorName;
+                    }
 
                     // Set internal
                     Imported = true;
@@ -162,9 +172,12 @@ namespace ATSEngineTool
             }
         }
 
+        /// <summary>
+        /// Confirm Button Click Event
+        /// </summary>
         private async void confirmButton_Click(object sender, System.EventArgs e)
         {
-            // Validate!
+            // Validate user input!
             if (!PassesValidaion()) return;
 
             // Add or update the package details
@@ -227,21 +240,20 @@ namespace ATSEngineTool
             // Delete old data
             if (!NewPackage)
             {
+                // Force the driver to 
                 foreach (var sound in Package.EngineSounds)
                     db.EngineSounds.Remove(sound);
             }
 
             // Delete existing data if it is there.
-            if (Directory.Exists(folderPath) && NewPackage)
+            if (Directory.Exists(folderPath))
             {
                 // Fetch existing sound from database
-                var existing = db.Query<SoundPackage>(
-                    "SELECT * FROM `SoundPackage` WHERE `FolderName` = @P0",
-                    folderNameBox.Text
-                ).FirstOrDefault();
+                string query = "SELECT * FROM `SoundPackage` WHERE `FolderName` = @P0";
+                var existing = db.Query<SoundPackage>(query, folderNameBox.Text).FirstOrDefault();
 
-                // Ask the user
-                if (existing != null)
+                // If the folder name is already in use, and (is new package OR the existing package ID does not match the current)
+                if (existing != null && (NewPackage || Package.Id != existing.Id))
                 {
                     var result = MessageBox.Show(
                         $"The sound folder chosen belongs to the sound package \"{existing?.Name}\"! "

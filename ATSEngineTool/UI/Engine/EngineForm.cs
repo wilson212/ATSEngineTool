@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -603,8 +602,8 @@ namespace ATSEngineTool
             else
             {
                 peakRPMBox.Enabled = true;
-                maxHpLabel.Text = $"";
-                maxTrqLabel.Text = $"";
+                maxHpLabel.Text = "";
+                maxTrqLabel.Text = "";
             }
 
             // Enable buttons
@@ -716,6 +715,66 @@ namespace ATSEngineTool
             }
         }
 
+        private void resetPointsButton_Click(object sender, EventArgs e)
+        {
+            if (Ratios.Count > 0)
+            {
+                var result = MessageBox.Show(
+                    "Are you sure you want to reset the torque curve points to the default values? "
+                    + "Any changes made to the current power curves will be undone.",
+                    "Reset Torque Curve", MessageBoxButtons.YesNo, MessageBoxIcon.Warning
+                );
+
+                // If yes is not selected, get outta here!
+                if (result != DialogResult.Yes) return;
+
+                // Remove all ratios
+                Ratios.Clear();
+            }
+
+            // Lock button
+            resetPointsButton.Enabled = false;
+
+            // Add default ratios
+            Ratios.Add(new TorqueRatio() { Ratio = 0, RpmLevel = 300 });
+            Ratios.Add(new TorqueRatio() { Ratio = 0.5, RpmLevel = 440 });
+            Ratios.Add(new TorqueRatio() { Ratio = 1, RpmLevel = 1100 });
+            Ratios.Add(new TorqueRatio() { Ratio = 1, RpmLevel = 1400 });
+            Ratios.Add(new TorqueRatio() { Ratio = 0.77, RpmLevel = 1900 });
+            Ratios.Add(new TorqueRatio() { Ratio = 0.5, RpmLevel = 2400 });
+            Ratios.Add(new TorqueRatio() { Ratio = 0, RpmLevel = 2600 });
+
+            // Force Points Redraw
+            PopulateTorqueRatios();
+
+            // Force a chart redraw
+            torqueBox_ValueChanged(this, EventArgs.Empty);
+
+            // Enable Button
+            resetPointsButton.Enabled = true;
+        }
+
+        private void removeAllButton_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show(
+                    "Are you sure you want to reset the torque curve points to the default values? "
+                    + "Any changes made to the current power curves will be undone.",
+                    "Reset Torque Curve", MessageBoxButtons.YesNo, MessageBoxIcon.Warning
+                );
+
+            // If yes is not selected, get outta here!
+            if (result != DialogResult.Yes) return;
+
+            // Remove all ratios
+            Ratios.Clear();
+
+            // Clear out any old items
+            ratioListView.Items.Clear();
+
+            // Force a chart redraw
+            torqueBox_ValueChanged(this, EventArgs.Empty);
+        }
+
         private void ratioListView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             ListViewItem item = ratioListView.HitTest(e.Location).Item;
@@ -787,16 +846,16 @@ namespace ATSEngineTool
         private void importButton_Click(object sender, EventArgs e)
         {
             // Request the user supply the steam library path
-            OpenFileDialog Dialog = new OpenFileDialog();
-            Dialog.Title = "Engine SII File Import";
-            Dialog.Filter = "SiiNunit|*.sii";
-            if (Dialog.ShowDialog() == DialogResult.OK)
+            var dialog = new OpenFileDialog();
+            dialog.Title = "Engine SII File Import";
+            dialog.Filter = "SiiNunit|*.sii";
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
                     var document = new SiiDocument(typeof(AccessoryEngineData));
 
-                    using (FileStream stream = File.OpenRead(Dialog.FileName))
+                    using (FileStream stream = File.OpenRead(dialog.FileName))
                     using (StreamReader reader = new StreamReader(stream))
                     {
                         // Read the file contents
@@ -820,7 +879,7 @@ namespace ATSEngineTool
                         int len = objects[0].IndexOf('.');
                         unitNameBox.Text = objects[0].Substring(0, len);
                         engineNameBox.Text = engine.Name;
-                        filenameTextBox.Text = Path.GetFileName(Dialog.FileName);
+                        filenameTextBox.Text = Path.GetFileName(dialog.FileName);
                         unlockBox.Value = engine.UnlockLevel;
                         priceBox.Value = engine.Price;
                         neutralRpmBox.Value = engine?.RpmLimitNeutral ?? 2200;
@@ -879,20 +938,20 @@ namespace ATSEngineTool
                                 ratio.Ratio = Math.Round(vector.Y, 4);
                                 Ratios.Add(ratio);
                             }
+
+                            // Fill ratio view
+                            PopulateTorqueRatios();
                         }
 
-                        // Fill ratio view
-                        PopulateTorqueRatios();
-                        torqueBox.Value = Metrics.NewtonMetersToTorque((decimal)engine.Torque, torqueBox.DecimalPlaces);
+                        // Set torque value 
+                        torqueBox.Value = (Program.Config.UnitSystem == UnitSystem.Imperial)
+                            ? Metrics.NewtonMetersToTorque((decimal)engine.Torque, torqueBox.DecimalPlaces)
+                            : Math.Round((decimal)engine.Torque, torqueBox.DecimalPlaces);
 
                         // Defaults (skip sounds)
                         if (engine.Defaults != null)
                         {
-                            fileDefaultsTextBox.Lines = (
-                                    from x in engine.Defaults
-                                    where !x.Contains("/sound/")
-                                    select x
-                                ).ToArray();
+                            fileDefaultsTextBox.Lines = (from x in engine.Defaults where !x.Contains("/sound/") select x).ToArray();
                         }
 
                         // Alert the user

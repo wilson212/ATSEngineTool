@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -96,6 +97,13 @@ namespace ATSEngineTool
                 }
             }
 
+            // Enable sorting behavior on certain listviews
+            ListViewSorter = new MultipleListViewColumnSorter();
+            ListViewSorter.AddListView(truckListView2, SortOrder.Ascending);
+            ListViewSorter.AddListView(seriesListView, SortOrder.Ascending);
+            ListViewSorter.AddListView(transSeriesListView, SortOrder.Ascending);
+            ListViewSorter.AddListView(packageListView, SortOrder.Ascending);
+
             // Fill form fields under 1 database connection
             using (AppDatabase db = new AppDatabase())
             {
@@ -130,13 +138,6 @@ namespace ATSEngineTool
                 ProgramUpdater.CheckCompleted += Updater_CheckCompleted;
                 ProgramUpdater.CheckForUpdateAsync();
             }
-
-            // Enable sorting behavior on certain listviews
-            ListViewSorter = new MultipleListViewColumnSorter();
-            ListViewSorter.AddListView(truckListView2);
-            ListViewSorter.AddListView(seriesListView);
-            ListViewSorter.AddListView(transSeriesListView);
-            ListViewSorter.AddListView(packageListView);
         }
 
         #region Functions
@@ -155,6 +156,9 @@ namespace ATSEngineTool
                 item.Text = package.ToString();
                 packageListView.Items.Add(item);
             }
+
+            // Sorting
+            packageListView.Sort();
         }
 
         private void FillTransmissionSeries(AppDatabase db)
@@ -170,6 +174,9 @@ namespace ATSEngineTool
                 item.Text = series.ToString();
                 transSeriesListView.Items.Add(item);
             }
+
+            // Sorting
+            transSeriesListView.Sort();
 
             // Disable engine buttons
             removeTransButton.Enabled = false;
@@ -190,6 +197,9 @@ namespace ATSEngineTool
                 seriesListView.Items.Add(item);
             }
 
+            // Sorting
+            seriesListView.Sort();
+
             // Disable engine buttons
             deleteEngineButton.Enabled = false;
             editEngineButton.Enabled = false;
@@ -201,7 +211,7 @@ namespace ATSEngineTool
             truckListView1.Items.Clear();
 
             // Fill in trucks
-            foreach (Truck truck in db.Trucks.OrderBy(x => x.Name))
+            foreach (Truck truck in db.Trucks)
             {
                 ListViewItem item = new ListViewItem();
                 item.Tag = truck;

@@ -134,16 +134,16 @@
             this.closeMenuItem = new System.Windows.Forms.MenuItem();
             this.menuItem3 = new System.Windows.Forms.MenuItem();
             this.settingsMenuItem = new System.Windows.Forms.MenuItem();
+            this.databaseMenuItem = new System.Windows.Forms.MenuItem();
+            this.integrityMenuItem = new System.Windows.Forms.MenuItem();
+            this.vacuumMenuItem = new System.Windows.Forms.MenuItem();
+            this.menuItem2 = new System.Windows.Forms.MenuItem();
+            this.clearMenuItem = new System.Windows.Forms.MenuItem();
             this.aboutMenuItem = new System.Windows.Forms.MenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.headerPanel = new System.Windows.Forms.Panel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.databaseMenuItem = new System.Windows.Forms.MenuItem();
-            this.vacuumMenuItem = new System.Windows.Forms.MenuItem();
-            this.integrityMenuItem = new System.Windows.Forms.MenuItem();
-            this.clearMenuItem = new System.Windows.Forms.MenuItem();
-            this.menuItem2 = new System.Windows.Forms.MenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -1297,6 +1297,39 @@
             this.settingsMenuItem.Text = "Settings";
             this.settingsMenuItem.Click += new System.EventHandler(this.settingsMenuItem_Click);
             // 
+            // databaseMenuItem
+            // 
+            this.databaseMenuItem.Index = 2;
+            this.databaseMenuItem.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.integrityMenuItem,
+            this.vacuumMenuItem,
+            this.menuItem2,
+            this.clearMenuItem});
+            this.databaseMenuItem.Text = "Database";
+            // 
+            // integrityMenuItem
+            // 
+            this.integrityMenuItem.Index = 0;
+            this.integrityMenuItem.Text = "Integrity Check";
+            this.integrityMenuItem.Click += new System.EventHandler(this.integrityMenuItem_Click);
+            // 
+            // vacuumMenuItem
+            // 
+            this.vacuumMenuItem.Index = 1;
+            this.vacuumMenuItem.Text = "Optimize Database";
+            this.vacuumMenuItem.Click += new System.EventHandler(this.vacuumMenuItem_Click);
+            // 
+            // menuItem2
+            // 
+            this.menuItem2.Index = 2;
+            this.menuItem2.Text = "-";
+            // 
+            // clearMenuItem
+            // 
+            this.clearMenuItem.Index = 3;
+            this.clearMenuItem.Text = "Clear All Data";
+            this.clearMenuItem.Click += new System.EventHandler(this.clearMenuItem_Click);
+            // 
             // aboutMenuItem
             // 
             this.aboutMenuItem.Index = 3;
@@ -1333,39 +1366,6 @@
             this.pictureBox2.Size = new System.Drawing.Size(663, 75);
             this.pictureBox2.TabIndex = 8;
             this.pictureBox2.TabStop = false;
-            // 
-            // databaseMenuItem
-            // 
-            this.databaseMenuItem.Index = 2;
-            this.databaseMenuItem.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.integrityMenuItem,
-            this.vacuumMenuItem,
-            this.menuItem2,
-            this.clearMenuItem});
-            this.databaseMenuItem.Text = "Database";
-            // 
-            // vacuumMenuItem
-            // 
-            this.vacuumMenuItem.Index = 1;
-            this.vacuumMenuItem.Text = "Vacuum";
-            this.vacuumMenuItem.Click += new System.EventHandler(this.vacuumMenuItem_Click);
-            // 
-            // integrityMenuItem
-            // 
-            this.integrityMenuItem.Index = 0;
-            this.integrityMenuItem.Text = "Integrity Check";
-            this.integrityMenuItem.Click += new System.EventHandler(this.integrityMenuItem_Click);
-            // 
-            // clearMenuItem
-            // 
-            this.clearMenuItem.Index = 3;
-            this.clearMenuItem.Text = "Clear All Data";
-            this.clearMenuItem.Click += new System.EventHandler(this.clearMenuItem_Click);
-            // 
-            // menuItem2
-            // 
-            this.menuItem2.Index = 2;
-            this.menuItem2.Text = "-";
             // 
             // MainForm
             // 

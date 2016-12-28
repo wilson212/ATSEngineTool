@@ -417,34 +417,42 @@ namespace ATSEngineTool.Database
             builder.WriteLine();
 
             // Performance
+            decvalue = series.Displacement.ToString("0.0", Program.NumberFormat);
             builder.WriteLine("# Engine Specs");
             builder.WriteAttribute("torque", this.NewtonMetres, "Engine power in Newton-metres");
-            builder.WriteAttribute("volume", series.Displacement, "Engine size in liters. Used for Realistic Fuel Consumption settings");
+            builder.WriteAttribute("volume", decvalue, false, "Engine size in liters. Used for Realistic Fuel Consumption settings");
             builder.WriteLine();
 
             // Torque Curves
-            builder.WriteLine("# Torque Curves");
-            foreach (TorqueRatio ratio in TorqueRatios.OrderBy(x => x.RpmLevel))
+            var ratios = TorqueRatios.OrderBy(x => x.RpmLevel).ToArray();
+            if (ratios.Length > 0)
             {
-                //decvalue = Math.Round(ratio.Ratio, 4, MidpointRounding.AwayFromZero).ToString(Program.NumberFormat);
-                decvalue = ratio.Ratio.ToString(Program.NumberFormat);
-                builder.WriteAttribute($"torque_curve[]", $"({ratio.RpmLevel}, {decvalue})", false);
+                builder.WriteLine("# Torque Curves");
+                foreach (TorqueRatio ratio in ratios)
+                {
+                    decvalue = ratio.Ratio.ToString(Program.NumberFormat);
+                    builder.WriteAttribute($"torque_curve[]", $"({ratio.RpmLevel}, {decvalue})", false);
+                }
+                builder.WriteLine();
             }
-            builder.WriteLine();
 
             // RPM datas
             builder.WriteLine("# RPM Data");
             builder.WriteAttribute("rpm_idle", this.IdleRpm, "RPM at idle", 3);
             builder.WriteAttribute("rpm_limit", this.RpmLimit, "Governed RPM limit", 3);
             builder.WriteAttribute("rpm_limit_neutral", this.RpmLimitNeutral, "RPM limit in neutral gear");
-            builder.WriteAttribute("rpm_range_low_gear", $"({this.MinRpmRange_LowGear}, {this.MaxRpmRange_LowGear})", false);
-            builder.WriteAttribute("rpm_range_high_gear", $"({this.MinRpmRange_HighGear}, {this.MaxRpmRange_HighGear})", false);
-            builder.WriteAttribute("rpm_range_power_boost", $"({this.LowRpmRange_PowerBoost}, {this.HighRpmRange_PowerBoost})", false);
+
+            if (this.MaxRpmRange_LowGear > 0)
+                builder.WriteAttribute("rpm_range_low_gear", $"({this.MinRpmRange_LowGear}, {this.MaxRpmRange_LowGear})", false);
+
+            if (this.MaxRpmRange_HighGear > 0)
+                builder.WriteAttribute("rpm_range_high_gear", $"({this.MinRpmRange_HighGear}, {this.MaxRpmRange_HighGear})", false);
+
+            if (this.HighRpmRange_PowerBoost > 0 || this.LowRpmRange_PowerBoost > 0)
+                builder.WriteAttribute("rpm_range_power_boost", $"({this.LowRpmRange_PowerBoost}, {this.HighRpmRange_PowerBoost})", false);
 
             if (HighRpmRange_EngineBrake > 0)
-            {
                 builder.WriteAttribute("rpm_range_engine_brake", $"({this.LowRpmRange_EngineBrake}, {this.HighRpmRange_EngineBrake})", false);
-            }
 
             // Engine Brake
             string val = this.BrakeDownshift ? "1" : "0";
@@ -459,7 +467,7 @@ namespace ATSEngineTool.Database
             // AdBlue
             if (this.AdblueConsumption > 0.00m || this.NoAdbluePowerLimit > 0.00m)
             {
-                builder.WriteLine("\t\t# Adblue Settings");
+                builder.WriteLine("# Adblue Settings");
                 if (this.AdblueConsumption > 0.00m)
                     builder.WriteAttribute("adblue_consumption", this.AdblueConsumption);
 

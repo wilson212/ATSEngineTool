@@ -15,11 +15,11 @@
         /// <summary>
         /// Converts the supplied Epoch timestamp to a <see cref="DateTime"/>
         /// </summary>
-        /// <param name="secondsSinceepoch"></param>
+        /// <param name="secondsSinceEpoch"></param>
         /// <returns></returns>
-        public static DateTimeOffset FromEpoch(long secondsSinceepoch)
+        public static DateTimeOffset FromEpoch(long secondsSinceEpoch)
         {
-            return UnixEpoch.AddSeconds(secondsSinceepoch);
+            return UnixEpoch.AddSeconds(secondsSinceEpoch);
         }
 
         /// <summary>

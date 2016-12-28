@@ -57,6 +57,9 @@ namespace ATSEngineTool.Database
                         case "1.5":
                             MigrateTo_1_6();
                             break;
+                        case "1.6":
+                            MigrateTo_1_7();
+                            break;
                         default:
                             throw new Exception($"Unexpected database version: {AppDatabase.DatabaseVersion}");
                     }
@@ -98,8 +101,70 @@ namespace ATSEngineTool.Database
         }
 
         /// <summary>
+        /// Migrates to 1.7, which added the default sound package field for the Truck table.
+        /// </summary>
+        private void MigrateTo_1_7()
+        {
+            // Run the update in a transaction
+            using (var trans = Database.BeginTransaction())
+            {
+                try
+                {
+                    // === Add new field to the Truck table
+                    Database.Execute("ALTER TABLE `Truck` ADD COLUMN `DefaultSoundPackageId` INTEGER NOT NULL DEFAULT 0;");
+
+                    //
+                    // ================= Update the 389 =================
+                    //
+                    // === Grab the default sound package for the 389
+                    var package = Database.Query<SoundPackage>(
+                            "SELECT * FROM `SoundPackage` WHERE `FolderName`=@P0", "default.389"
+                        ).FirstOrDefault();
+
+                    // === Update the 389
+                    var truck = Database.Query<Truck>("SELECT * FROM `Truck` WHERE `UnitName`=@P0", "peterbilt.389").FirstOrDefault();
+                    if (package != null && truck != null)
+                        Database.Execute("UPDATE `Truck` SET `DefaultSoundPackageId`=@P0 WHERE `Id`=@P1;", package.Id, truck.Id);
+
+                    //
+                    // ================= Update the w900 =================
+                    //
+                    // === Grab the default sound package for the 389
+                    package = Database.Query<SoundPackage>(
+                            "SELECT * FROM `SoundPackage` WHERE `FolderName`=@P0", "default.w900"
+                        ).FirstOrDefault();
+
+                    // === Update the w900 default sound package
+                    truck = Database.Query<Truck>("SELECT * FROM `Truck` WHERE `UnitName`=@P0", "kenworth.w900").FirstOrDefault();
+                    if (package != null && truck != null)
+                        Database.Execute("UPDATE `Truck` SET `DefaultSoundPackageId`=@P0 WHERE `Id`=@P1;", package.Id, truck.Id);
+
+                    //
+                    // ==== Update database version
+                    //
+                    string sql = "INSERT INTO `DbVersion`(`Version`, `AppliedOn`) VALUES({0}, {1});";
+                    Database.Execute(String.Format(sql, Version.Parse("1.7"), Epoch.Now));
+
+                    // Commit changes
+                    trans.Commit();
+                }
+                catch
+                {
+                    trans.Rollback();
+                    throw;
+                }
+                finally
+                {
+                    // Log any integrity errors in the database
+                    PerformIntegrityCheck();
+                }
+            }
+        }
+
+        /// <summary>
         /// Migrates to 1.6, which added the new Peterbilt 389 data.
         /// </summary>
+        /// <remarks>This method has been revised to include the 1.7 update as well.</remarks>
         private void MigrateTo_1_6()
         {
             // Run the update in a transaction
@@ -107,7 +172,10 @@ namespace ATSEngineTool.Database
             {
                 try
                 {
-                    // Import sound package
+                    // === Add field for 1.7 update.. we need it here
+                    Database.Execute("ALTER TABLE `Truck` ADD COLUMN `DefaultSoundPackageId` INTEGER NOT NULL DEFAULT 0;");
+
+                    // === Import sound package
                     var package = new SoundPackage()
                     {
                         Author = "SCS",
@@ -123,7 +191,7 @@ namespace ATSEngineTool.Database
                     // Set variables
                     string folderPath = Path.Combine(Program.RootPath, "sounds", "engine", "default.389");
 
-                    //Insert package 1 stuff
+                    // === Import sound package data
                     using (Stream stream = Program.GetResource("ATSEngineTool.Resources.Default.389.espack"))
                     using (var reader = new SoundPackageReader(stream))
                     {
@@ -139,122 +207,44 @@ namespace ATSEngineTool.Database
                         reader.ImportSounds(Database, package, exterior, SoundType.Exterior);
                     }
 
-                    // Create the truck itself
+                    // ==== Add truck to the database
                     var truck = new Truck()
                     {
                         Name = "Peterbilt 389",
                         UnitName = "peterbilt.389",
+                        DefaultSoundPackageId = package.Id,
                         IsScsTruck = true
                     };
                     Database.Trucks.Add(truck);
 
-                    // ==== ISX 12
-                    // Create new engines series
-                    var series = new EngineSeries()
+                    // === Import existing SCS engines to the 389
+                    string[] units = { "isx12", "isx15", "mx", "mx_500" }; 
+                    foreach (string e in units)
                     {
-                        Manufacturer = "SCS",
-                        Name = "Cummins ISX12 (389)",
-                        Displacement = 12,
-                        EngineIcon = "engine_01",
-                        SoundPackage = package
-                    };
-                    Database.EngineSeries.Add(series);
+                        var eng = Database.Query<Engine>("SELECT * FROM `Engine` WHERE `UnitName`=@P0", e).FirstOrDefault();
+                        if (eng != null)
+                        {
+                            Database.TruckEngines.Add(new TruckEngine() { Truck = truck, Engine = eng });
+                        }
+                    }
 
-                    // Create the ISX12 for the 389
-                    var engine = new Engine()
-                    {
-                        SeriesId = series.Id,
-                        UnitName = "isx12",
-                        Name = "Cummins ISX 12 (SCS)",
-                        Price = 44650,
-                        Torque = 1350,
-                        Horsepower = 370,
-                        IdleRpm = 650,
-                        PeakRpm = 1100,
-                        BrakeStrength = 2.0m,
-                    };
-                    Database.Engines.Add(engine);
-                    Database.TruckEngines.Add(new TruckEngine() { Truck = truck, Engine = engine });
+                    // ================= Update the w900 (1.7) =================
+                    //
+                    // === Grab the default sound package for the 389
+                    package = Database.Query<SoundPackage>(
+                            "SELECT * FROM `SoundPackage` WHERE `FolderName`=@P0", "default.w900"
+                        ).FirstOrDefault();
 
-                    // ==== ISX 15
-                    // Create new engines series
-                    series = new EngineSeries()
-                    {
-                        Manufacturer = "SCS",
-                        Name = "Cummins ISX15 (389)",
-                        Displacement = 15,
-                        EngineIcon = "engine_01",
-                        SoundPackage = package
-                    };
-                    Database.EngineSeries.Add(series);
+                    // === Update the w900 default sound package
+                    truck = Database.Query<Truck>("SELECT * FROM `Truck` WHERE `UnitName`=@P0", "kenworth.w900").FirstOrDefault();
+                    if (package != null && truck != null)
+                        Database.Execute("UPDATE `Truck` SET `DefaultSoundPackageId`=@P0 WHERE `Id`=@P1;", package.Id, truck.Id);
+                    // ================= End w900 Update =================
 
-                    // Create the ISX15 for the 389
-                    engine = new Engine()
-                    {
-                        SeriesId = series.Id,
-                        UnitName = "isx15",
-                        Name = "Cummins ISX 15 (SCS)",
-                        Price = 49510,
-                        Unlock = 18,
-                        Torque = 1850,
-                        Horsepower = 550,
-                        IdleRpm = 650,
-                        PeakRpm = 1100,
-                        BrakeStrength = 2.0m,
-                    };
-                    Database.Engines.Add(engine);
-                    Database.TruckEngines.Add(new TruckEngine() { Truck = truck, Engine = engine });
-
-                    // ==== MX-13
-                    // Create new engines series
-                    series = new EngineSeries()
-                    {
-                        Manufacturer = "SCS",
-                        Name = "Paccar MX-13 (389)",
-                        Displacement = 12.9m,
-                        EngineIcon = "engine_01",
-                        SoundPackage = package
-                    };
-                    Database.EngineSeries.Add(series);
-
-                    // Create the MX-13 450 for the 389
-                    engine = new Engine()
-                    {
-                        SeriesId = series.Id,
-                        UnitName = "mx",
-                        Name = "Paccar MX-13 (SCS)",
-                        Price = 47150,
-                        Unlock = 6,
-                        Torque = 1650,
-                        Horsepower = 450,
-                        IdleRpm = 650,
-                        PeakRpm = 1100,
-                        BrakeStrength = 2.0m,
-                    };
-                    Database.Engines.Add(engine);
-                    Database.TruckEngines.Add(new TruckEngine() { Truck = truck, Engine = engine });
-
-                    // Create the MX-13 500 for the 389
-                    engine = new Engine()
-                    {
-                        SeriesId = series.Id,
-                        UnitName = "mx_500",
-                        Name = "Paccar MX-13 (SCS)",
-                        Price = 48870,
-                        Unlock = 12,
-                        Torque = 1850,
-                        Horsepower = 500,
-                        IdleRpm = 650,
-                        PeakRpm = 1100,
-                        BrakeStrength = 2.0m,
-                    };
-                    Database.Engines.Add(engine);
-                    Database.TruckEngines.Add(new TruckEngine() { Truck = truck, Engine = engine });
-
-                    // Update database version
+                    // === Update database version
                     string sql = "INSERT INTO `DbVersion`(`Version`, `AppliedOn`) VALUES({0}, {1});";
                     Database.Execute(String.Format(sql, Version.Parse("1.6"), Epoch.Now));
-
+                    Database.Execute(String.Format(sql, Version.Parse("1.7"), Epoch.Now));
                     trans.Commit();
                 }
                 catch

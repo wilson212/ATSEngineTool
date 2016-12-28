@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EngineForm));
             this.label1 = new System.Windows.Forms.Label();
             this.unitNameBox = new System.Windows.Forms.TextBox();
@@ -168,6 +168,8 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.headerPanel = new System.Windows.Forms.Panel();
             this.shadowLabel1 = new System.Windows.Forms.ShadowLabel();
+            this.resetPointsButton = new System.Windows.Forms.Button();
+            this.removeAllButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.engineIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceBox)).BeginInit();
@@ -390,6 +392,8 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.removeAllButton);
+            this.groupBox5.Controls.Add(this.resetPointsButton);
             this.groupBox5.Controls.Add(this.label45);
             this.groupBox5.Controls.Add(this.radioButton2);
             this.groupBox5.Controls.Add(this.radioButton1);
@@ -487,47 +491,47 @@
             // 
             // chart1
             // 
-            chartArea1.AxisX.IsMarginVisible = false;
-            chartArea1.AxisX.Title = "Rpm";
-            chartArea1.AxisY.Title = "Torque";
-            chartArea1.AxisY2.Interval = 100D;
-            chartArea1.AxisY2.MajorGrid.Enabled = false;
-            chartArea1.AxisY2.Title = "Horsepower";
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.AutoFitMinFontSize = 8;
-            legend1.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row;
-            legend1.Name = "Legend1";
-            legend1.Position.Auto = false;
-            legend1.Position.Height = 6F;
-            legend1.Position.Width = 32F;
-            legend1.Position.X = 35F;
-            legend1.Position.Y = 75F;
-            this.chart1.Legends.Add(legend1);
+            chartArea3.AxisX.IsMarginVisible = false;
+            chartArea3.AxisX.Title = "Rpm";
+            chartArea3.AxisY.Title = "Torque";
+            chartArea3.AxisY2.Interval = 100D;
+            chartArea3.AxisY2.MajorGrid.Enabled = false;
+            chartArea3.AxisY2.Title = "Horsepower";
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
+            legend3.AutoFitMinFontSize = 8;
+            legend3.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row;
+            legend3.Name = "Legend1";
+            legend3.Position.Auto = false;
+            legend3.Position.Height = 6F;
+            legend3.Position.Width = 32F;
+            legend3.Position.X = 35F;
+            legend3.Position.Y = 75F;
+            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(1, 11);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Legend = "Legend1";
-            series1.MarkerBorderColor = System.Drawing.Color.Black;
-            series1.MarkerColor = System.Drawing.Color.DodgerBlue;
-            series1.MarkerSize = 7;
-            series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series1.Name = "Torque";
-            series1.SmartLabelStyle.AllowOutsidePlotArea = System.Windows.Forms.DataVisualization.Charting.LabelOutsidePlotAreaStyle.No;
-            series1.SmartLabelStyle.MinMovingDistance = 10D;
-            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series2.Legend = "Legend1";
-            series2.MarkerColor = System.Drawing.Color.Black;
-            series2.Name = "Horsepower";
-            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series2.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            this.chart1.Series.Add(series1);
-            this.chart1.Series.Add(series2);
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series5.Legend = "Legend1";
+            series5.MarkerBorderColor = System.Drawing.Color.Black;
+            series5.MarkerColor = System.Drawing.Color.DodgerBlue;
+            series5.MarkerSize = 7;
+            series5.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series5.Name = "Torque";
+            series5.SmartLabelStyle.AllowOutsidePlotArea = System.Windows.Forms.DataVisualization.Charting.LabelOutsidePlotAreaStyle.No;
+            series5.SmartLabelStyle.MinMovingDistance = 10D;
+            series5.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series5.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series6.Legend = "Legend1";
+            series6.MarkerColor = System.Drawing.Color.Black;
+            series6.Name = "Horsepower";
+            series6.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series6.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            series6.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            this.chart1.Series.Add(series5);
+            this.chart1.Series.Add(series6);
             this.chart1.Size = new System.Drawing.Size(623, 361);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -559,10 +563,9 @@
             this.label28.AutoSize = true;
             this.label28.Location = new System.Drawing.Point(16, 25);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(397, 26);
+            this.label28.Size = new System.Drawing.Size(399, 39);
             this.label28.TabIndex = 32;
-            this.label28.Text = "Defines the optimal RPM range for an automatic transmission. If outside this rang" +
-    "e, \r\nthe transmission will shift to a lower / higher gear";
+            this.label28.Text = resources.GetString("label28.Text");
             // 
             // label23
             // 
@@ -605,11 +608,6 @@
             0,
             0,
             0});
-            this.rpmRangeBox4.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
             this.rpmRangeBox4.Name = "rpmRangeBox4";
             this.rpmRangeBox4.Size = new System.Drawing.Size(103, 20);
             this.rpmRangeBox4.TabIndex = 28;
@@ -630,11 +628,6 @@
             this.rpmRangeBox3.Location = new System.Drawing.Point(147, 126);
             this.rpmRangeBox3.Maximum = new decimal(new int[] {
             5000,
-            0,
-            0,
-            0});
-            this.rpmRangeBox3.Minimum = new decimal(new int[] {
-            100,
             0,
             0,
             0});
@@ -688,11 +681,6 @@
             0,
             0,
             0});
-            this.rpmRangeBox2.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
             this.rpmRangeBox2.Name = "rpmRangeBox2";
             this.rpmRangeBox2.Size = new System.Drawing.Size(103, 20);
             this.rpmRangeBox2.TabIndex = 16;
@@ -722,11 +710,6 @@
             this.rpmRangeBox1.Location = new System.Drawing.Point(147, 84);
             this.rpmRangeBox1.Maximum = new decimal(new int[] {
             5000,
-            0,
-            0,
-            0});
-            this.rpmRangeBox1.Minimum = new decimal(new int[] {
-            100,
             0,
             0,
             0});
@@ -1281,7 +1264,7 @@
             this.groupBox11.Size = new System.Drawing.Size(425, 168);
             this.groupBox11.TabIndex = 30;
             this.groupBox11.TabStop = false;
-            this.groupBox11.Text = "AdBlue";
+            this.groupBox11.Text = "AdBlue Settings";
             // 
             // label32
             // 
@@ -1478,9 +1461,7 @@
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(383, 39);
             this.label27.TabIndex = 16;
-            this.label27.Text = "Transmission shifting range will get adjusted by these amounts based on throttle " +
-    "\r\ninput. The more throttle is given to the truck, the more the optimal shifting " +
-    "range \r\nis adjusted.";
+            this.label27.Text = resources.GetString("label27.Text");
             // 
             // rpmRangeBox6
             // 
@@ -1493,11 +1474,6 @@
             this.rpmRangeBox6.Location = new System.Drawing.Point(204, 122);
             this.rpmRangeBox6.Maximum = new decimal(new int[] {
             5000,
-            0,
-            0,
-            0});
-            this.rpmRangeBox6.Minimum = new decimal(new int[] {
-            100,
             0,
             0,
             0});
@@ -1530,11 +1506,6 @@
             this.rpmRangeBox5.Location = new System.Drawing.Point(204, 84);
             this.rpmRangeBox5.Maximum = new decimal(new int[] {
             5000,
-            0,
-            0,
-            0});
-            this.rpmRangeBox5.Minimum = new decimal(new int[] {
-            100,
             0,
             0,
             0});
@@ -1960,6 +1931,26 @@
             this.shadowLabel1.TabIndex = 0;
             this.shadowLabel1.Text = "Engine Editor";
             // 
+            // resetPointsButton
+            // 
+            this.resetPointsButton.Location = new System.Drawing.Point(629, 370);
+            this.resetPointsButton.Name = "resetPointsButton";
+            this.resetPointsButton.Size = new System.Drawing.Size(100, 25);
+            this.resetPointsButton.TabIndex = 37;
+            this.resetPointsButton.Text = "Reset to Default";
+            this.resetPointsButton.UseVisualStyleBackColor = true;
+            this.resetPointsButton.Click += new System.EventHandler(this.resetPointsButton_Click);
+            // 
+            // removeAllButton
+            // 
+            this.removeAllButton.Location = new System.Drawing.Point(739, 370);
+            this.removeAllButton.Name = "removeAllButton";
+            this.removeAllButton.Size = new System.Drawing.Size(100, 25);
+            this.removeAllButton.TabIndex = 38;
+            this.removeAllButton.Text = "Remove All";
+            this.removeAllButton.UseVisualStyleBackColor = true;
+            this.removeAllButton.Click += new System.EventHandler(this.removeAllButton_Click);
+            // 
             // EngineForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2184,5 +2175,7 @@
         private System.Windows.Forms.ListView truckListView;
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.Label label46;
+        private System.Windows.Forms.Button removeAllButton;
+        private System.Windows.Forms.Button resetPointsButton;
     }
 }

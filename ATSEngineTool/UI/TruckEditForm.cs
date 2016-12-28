@@ -8,13 +8,33 @@ namespace ATSEngineTool
 {
     public partial class TruckEditForm : Form
     {
+        /// <summary>
+        /// Internal variable to contain the truck being edited
+        /// </summary>
         protected Truck Truck { get; set; }
 
         public TruckEditForm(Truck truck = null)
         {
+            // Create controls and add back color to header
             InitializeComponent();
             headerPanel.BackColor = Color.FromArgb(51, 53, 53);
 
+            // Add sound packages to the drop down box
+            using (AppDatabase db = new AppDatabase())
+            {
+                foreach (var package in db.SoundPackages)
+                {
+                    soundPackageBox.Items.Add(package);
+                    if (truck?.DefaultSoundPackageId == package.Id)
+                        soundPackageBox.SelectedIndex = soundPackageBox.Items.Count - 1;
+                }
+            }
+
+            // Ensure an option is selected
+            if (soundPackageBox.SelectedIndex == -1)
+                soundPackageBox.SelectedIndex = 0;
+
+            // Fill data fields
             if (truck == null)
             {
                 shadowLabel1.Text = "Add New Truck";
@@ -26,9 +46,13 @@ namespace ATSEngineTool
                 UnitNameBox.Text = truck.UnitName;
             }
 
+            // Set internal
             Truck = truck;
         }
 
+        /// <summary>
+        /// Confirm button click callback
+        /// </summary>
         private void confirmButton_Click(object sender, EventArgs e)
         {
             // Check for a valid identifier string
@@ -54,6 +78,11 @@ namespace ATSEngineTool
                 return;
             }
 
+            // Grab sound package selected
+            SoundPackage package = null;
+            if (soundPackageBox.SelectedIndex > 0)
+                package = (SoundPackage)soundPackageBox.SelectedItem;
+
             try
             {
                 // Add or update the truck in the database
@@ -64,7 +93,8 @@ namespace ATSEngineTool
                         Truck = new Truck()
                         {
                             Name = EngineNameBox.Text.Trim(),
-                            UnitName = UnitNameBox.Text.Trim()
+                            UnitName = UnitNameBox.Text.Trim(),
+                            DefaultSoundPackageId = package?.Id ?? 0
                         };
                         db.Trucks.Add(Truck);
                     }
@@ -72,6 +102,7 @@ namespace ATSEngineTool
                     {
                         Truck.Name = EngineNameBox.Text.Trim();
                         Truck.UnitName = UnitNameBox.Text.Trim();
+                        Truck.DefaultSoundPackageId = package?.Id ?? 0;
                         db.Trucks.Update(Truck);
                     }
                 }

@@ -39,6 +39,8 @@
             this.UnitNameBox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.EngineNameBox = new System.Windows.Forms.TextBox();
+            this.soundPackageBox = new System.Windows.Forms.ComboBox();
+            this.label15 = new System.Windows.Forms.Label();
             this.headerPanel.SuspendLayout();
             this.footerPanel.SuspendLayout();
             this.contentPanel.SuspendLayout();
@@ -104,6 +106,8 @@
             // 
             // contentPanel
             // 
+            this.contentPanel.Controls.Add(this.soundPackageBox);
+            this.contentPanel.Controls.Add(this.label15);
             this.contentPanel.Controls.Add(this.label1);
             this.contentPanel.Controls.Add(this.UnitNameBox);
             this.contentPanel.Controls.Add(this.label7);
@@ -117,7 +121,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(46, 72);
+            this.label1.Location = new System.Drawing.Point(46, 67);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(86, 13);
             this.label1.TabIndex = 28;
@@ -125,7 +129,7 @@
             // 
             // UnitNameBox
             // 
-            this.UnitNameBox.Location = new System.Drawing.Point(135, 69);
+            this.UnitNameBox.Location = new System.Drawing.Point(135, 64);
             this.UnitNameBox.Name = "UnitNameBox";
             this.UnitNameBox.Size = new System.Drawing.Size(203, 20);
             this.UnitNameBox.TabIndex = 29;
@@ -133,7 +137,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(55, 36);
+            this.label7.Location = new System.Drawing.Point(55, 31);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(69, 13);
             this.label7.TabIndex = 27;
@@ -141,10 +145,31 @@
             // 
             // EngineNameBox
             // 
-            this.EngineNameBox.Location = new System.Drawing.Point(135, 33);
+            this.EngineNameBox.Location = new System.Drawing.Point(135, 28);
             this.EngineNameBox.Name = "EngineNameBox";
             this.EngineNameBox.Size = new System.Drawing.Size(203, 20);
             this.EngineNameBox.TabIndex = 25;
+            // 
+            // soundPackageBox
+            // 
+            this.soundPackageBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.soundPackageBox.FormattingEnabled = true;
+            this.soundPackageBox.ItemHeight = 13;
+            this.soundPackageBox.Items.AddRange(new object[] {
+            "Default (None)"});
+            this.soundPackageBox.Location = new System.Drawing.Point(135, 97);
+            this.soundPackageBox.Name = "soundPackageBox";
+            this.soundPackageBox.Size = new System.Drawing.Size(203, 21);
+            this.soundPackageBox.TabIndex = 30;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(37, 100);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(87, 13);
+            this.label15.TabIndex = 31;
+            this.label15.Text = "Sound Package:";
             // 
             // TruckEditForm
             // 
@@ -182,5 +207,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox EngineNameBox;
         private System.Windows.Forms.TextBox UnitNameBox;
+        private System.Windows.Forms.ComboBox soundPackageBox;
+        private System.Windows.Forms.Label label15;
     }
 }

@@ -1,6 +1,6 @@
 SiiNunit
 {
-accessory_sound_data : isx.package.isound
+accessory_sound_data : isx.package.esound
 {
 	exterior_sound: false
 
@@ -13,11 +13,13 @@ accessory_sound_data : isx.package.isound
 	engine[]: .e2
 	engine[]: .e3
 	engine[]: .e4
+	engine[]: .e5
 
 	engine_load[]: .el0
 	engine_load[]: .el1
 	engine_load[]: .el2
 	engine_load[]: .el3
+	engine_load[]: .el4
 
 	engine_nofuel[]: .enf0
 	engine_nofuel[]: .enf1
@@ -31,7 +33,7 @@ accessory_sound_data : isx.package.isound
 		
 	air_brake[0]: .airbrake0
 	air_brake[1]: .airbrake1
-	air_brake[2]: .airbrake2
+     	air_brake[2]: .airbrake2
 
 	engine_brake[]: .eb
 	horn: .horn
@@ -66,41 +68,39 @@ sound_data: .stop
 
 sound_engine_data: .e0
 {
+	name: "@EP/int/dryer.ogg"
+
+	looped: true
+	is_2d: true
+	min_rpm: 300.0
+	max_rpm: 3000.0
+	volume: 0.52
+}
+
+sound_engine_data: .e1
+{
 	name: "@EP/int/500rpm-int-mono.ogg"
 
 	looped: true
 
-	pitch_reference: 600
+	pitch_reference: 650
 
-	min_rpm: 300.0
-	max_rpm: 870.0
-	volume: 0.4
+	min_rpm: 350.0
+	max_rpm: 880.0
+	volume: 0.75
 }
 
-sound_engine_data: .e1
+sound_engine_data: .e2
 {
 	name: "@EP/int/1000rpm-int-mono.ogg"
 
 	looped: true
 
-	pitch_reference: 940
+	pitch_reference: 970
 
-	min_rpm: 710.0
-	max_rpm: 1300.0
-	volume: 0.8
-}
-
-sound_engine_data: .e2
-{
-	name: "@EP/int/1500rpm.ogg"
-
-	looped: true
-
-	pitch_reference: 1390
-
-	min_rpm: 620.0
-	max_rpm: 2200.0
-	volume: 0.09
+	min_rpm: 700.0
+	max_rpm: 1280.0
+	volume: 0.84
 }
 
 sound_engine_data: .e3
@@ -109,23 +109,37 @@ sound_engine_data: .e3
 
 	looped: true
 
-	min_rpm: 830.0
-	max_rpm: 2900.0
-	pitch_reference:  1430
-	volume: 0.8
+	pitch_reference: 1350
+
+	min_rpm: 880.0
+	max_rpm: 2200.0
+	volume: 0.64
 }
 
 sound_engine_data: .e4
 {
-	name: "@EP/int/turbo_idle.ogg"
+	name: "@EP/int/2000rpm-int-mono.ogg"
 
 	looped: true
 
-	pitch_reference: 1420
+	pitch_reference: 1560
 
-	min_rpm: 620.0
-	max_rpm: 2800.0
-	volume: 0.06
+	min_rpm: 1400.0
+	max_rpm: 2850.0
+	volume: 0.65
+}
+
+sound_engine_data: .e5
+{
+	name: "@EP/int/turbo_idle_isx.ogg"
+
+	looped: true
+
+	pitch_reference: 650
+
+	min_rpm: 300.0
+	max_rpm: 3500.0
+	volume: 0.2
 }
 
 sound_engine_data: .el0
@@ -134,11 +148,11 @@ sound_engine_data: .el0
 
 	looped: true
 
-	pitch_reference: 700
+	pitch_reference: 680
 
-	min_rpm: 400.0
+	min_rpm: 350.0
 	max_rpm: 1010.0
-	volume: 1.77
+	volume: 1.35
 }
 
 sound_engine_data: .el1
@@ -147,37 +161,50 @@ sound_engine_data: .el1
 
 	looped: true
 
-	pitch_reference: 1220
+	pitch_reference: 1260
 
-	min_rpm: 750.0
-	max_rpm: 1360.0
-	volume: 1.0
+	min_rpm: 760.0
+	max_rpm: 1395.0
+	volume: 1.18
 }
 
 sound_engine_data: .el2
+{
+	name: "@EP/int/1500rpm-int-mono.ogg"
+
+	looped: true
+
+	pitch_reference: 1350
+
+	min_rpm: 900.0
+	max_rpm: 1840.0
+	volume: 0.57
+}
+
+sound_engine_data: .el3
 {
 	name: "@EP/int/1500rpm-int-exhaust.ogg"
 
 	looped: true
 
-	pitch_reference: 1430
+	pitch_reference: 1480
 
-	min_rpm: 1180.0
-	max_rpm: 1920.0
-	volume: 1.85
+	min_rpm: 1120.0
+	max_rpm: 2350.0
+	volume: 1.92
 }
 
-sound_engine_data: .el3
+sound_engine_data: .el4
 {
 	name: "@EP/int/2000rpm-int-exhaust.ogg"
 
 	looped: true
 
-	pitch_reference: 1810
+	pitch_reference: 1890
 
-	min_rpm: 1580.0
-	max_rpm: 2900.0
-	volume: 1.7
+	min_rpm: 1640.0
+	max_rpm: 2880.0
+	volume: 1.58
 }
 
 sound_engine_data: .enf0
@@ -186,10 +213,10 @@ sound_engine_data: .enf0
 
 	looped: true
 
-	pitch_reference: 940
+	pitch_reference: 970
 
-	min_rpm: 300.0
-	max_rpm: 1240.0
+	min_rpm: 350.0
+	max_rpm: 1230.0
 	volume: 0.75
 }
 
@@ -200,29 +227,29 @@ sound_engine_data: .enf1
 	looped: true
 
 	min_rpm: 830.0
-	max_rpm: 2900.0
-	pitch_reference:  1530
-	volume: 1.0
+	max_rpm: 2950.0
+	pitch_reference:  1560
+	volume: 0.65
 }
 
 sound_engine_data: .enf2
 {
-	name: "@EP/int/turbo_idle.ogg"
+	name: "@EP/int/turbo_idle_isx.ogg"
 
 	looped: true
 
-	pitch_reference: 1420
+	pitch_reference: 650
 
-	min_rpm: 300.0
-	max_rpm: 2800.0
-	volume: 0.06
+	min_rpm: 350.0
+	max_rpm: 3600.0
+	volume: 0.28
 }
 
 sound_data: .t
 {
 	name: "@EP/int/turbo_int.ogg"
 	looped: true
-	volume: 0.19
+	volume: 0.14
 }
 
 sound_data: .airgear0
@@ -262,10 +289,12 @@ sound_engine_data: .eb
 {
 	name: "@EP/int/engine_brake_int.ogg"
 	looped: true
-	is_2d: true
-	pitch_reference: 1555
+
+	pitch_reference: 1490
 	min_rpm: 750.0
-	max_rpm: 3000.0
+	max_rpm: 2900.0
+
+	volume: 1.4
 }
 
 sound_data: .horn
@@ -317,6 +346,4 @@ sound_data: .wipers_down
 @include "/def/vehicle/truck/common_sound_int_data.sui"
 
 }
-
-
 

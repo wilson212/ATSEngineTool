@@ -22,7 +22,7 @@ namespace ATSEngineTool.Database
         /// <summary>
         /// Gets the latest database version
         /// </summary>
-        public static Version CurrentVersion { get; protected set; } = new Version(1, 6);
+        public static Version CurrentVersion { get; protected set; } = new Version(1, 7);
 
         /// <summary>
         /// Gets the current database tables version
@@ -70,6 +70,7 @@ namespace ATSEngineTool.Database
             Builder = new SQLiteConnectionStringBuilder();
             Builder.DataSource = database;
             Builder.ForeignKeys = true;
+            Builder.JournalMode = SQLiteJournalModeEnum.Wal;
         }
 
         /// <summary>
@@ -90,7 +91,7 @@ namespace ATSEngineTool.Database
                 catch (SQLiteException e) when (e.Message.Contains("no such table"))
                 {
                     // Rebuild database tables
-                    RebuildTables();
+                    BuildTables();
 
                     // Try 1 last time to get the Version
                     GetVersion();
@@ -136,7 +137,7 @@ namespace ATSEngineTool.Database
         /// Drops all tables from the database, and the creates new
         /// tables.
         /// </summary>
-        protected void RebuildTables()
+        protected void BuildTables()
         {            
             // Wrap in a transaction
             using (SQLiteTransaction tr = base.BeginTransaction())

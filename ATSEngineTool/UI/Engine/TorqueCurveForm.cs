@@ -78,11 +78,18 @@ namespace ATSEngineTool
             if (!radioButton1.Checked) return;
             torqueLevelBox.ValueChanged -= torqueLevelBox_ValueChanged;
 
+            // Ensure the value doesnt exceed the maximum
+            var val = Math.Round(CurrentNewtonMeters, 2);
+            if (val > MaxNewtonMeters) val = MaxNewtonMeters;
+
             // Set value
             torqueLevelBox.Value = 0;
             torqueLevelBox.Maximum = 100;
-            torqueLevelBox.Value = (decimal)Math.Round((CurrentNewtonMeters / MaxNewtonMeters) * 100, 2);
+            torqueLevelBox.Value = (decimal)Math.Round((val / MaxNewtonMeters) * 100, 2);
             torqueLevelBox.ValueChanged += torqueLevelBox_ValueChanged;
+
+            // Update label
+            maxLabel.Text = $"/ {torqueLevelBox.Maximum}";
         }
 
         /// <summary>
@@ -94,11 +101,18 @@ namespace ATSEngineTool
             if (!radioButton2.Checked) return;
             torqueLevelBox.ValueChanged -= torqueLevelBox_ValueChanged;
 
+            // Ensure the value doesnt exceed the maximum
+            var val = Math.Round(CurrentNewtonMeters, 2);
+            if (val > MaxNewtonMeters) val = MaxNewtonMeters;
+
             // Set value
             torqueLevelBox.Value = 0;
             torqueLevelBox.Maximum = (decimal)MaxNewtonMeters;
-            torqueLevelBox.Value = (decimal)Math.Round(CurrentNewtonMeters, 2);
+            torqueLevelBox.Value = (decimal)val;
             torqueLevelBox.ValueChanged += torqueLevelBox_ValueChanged;
+
+            // Update label
+            maxLabel.Text = $"/ {torqueLevelBox.Maximum}";
         }
 
         /// <summary>
@@ -110,11 +124,18 @@ namespace ATSEngineTool
             if (!radioButton3.Checked) return;
             torqueLevelBox.ValueChanged -= torqueLevelBox_ValueChanged;
 
+            // Ensure the value doesnt exceed the maximum
+            var val = Math.Round(CurrentNewtonMeters, 2);
+            if (val > MaxNewtonMeters) val = MaxNewtonMeters;
+
             // Set value
             torqueLevelBox.Value = 0;
             torqueLevelBox.Maximum = (decimal)Metrics.NewtonMetersToTorque(MaxNewtonMeters, 2);
-            torqueLevelBox.Value = (decimal)Metrics.NewtonMetersToTorque(CurrentNewtonMeters, 2);
+            torqueLevelBox.Value = (decimal)Metrics.NewtonMetersToTorque(val, 2);
             torqueLevelBox.ValueChanged += torqueLevelBox_ValueChanged;
+
+            // Update label
+            maxLabel.Text = $"/ {torqueLevelBox.Maximum}";
         }
 
         /// <summary>
@@ -126,14 +147,23 @@ namespace ATSEngineTool
             if (!radioButton4.Checked) return;
             torqueLevelBox.ValueChanged -= torqueLevelBox_ValueChanged;
 
+            // Convert newton metres to torque
             var torque = Metrics.NewtonMetersToTorque(CurrentNewtonMeters, 8);
             var maxTorque = Metrics.NewtonMetersToTorque(MaxNewtonMeters, 8);
 
-            // Set value
+            // Convert torque to Horsepower
+            var maxHp = (decimal)Metrics.TorqueToHorsepower(maxTorque, (int)rpmLevelBox.Value, 2);
+            var horse = (decimal)Metrics.TorqueToHorsepower(torque, (int)rpmLevelBox.Value, 2);
+            if (horse > maxHp) horse = maxHp;
+
+            // Set values
             torqueLevelBox.Value = 0;
-            torqueLevelBox.Maximum = (decimal)Metrics.TorqueToHorsepower(maxTorque, (int)rpmLevelBox.Value, 2);
-            torqueLevelBox.Value = (decimal)Metrics.TorqueToHorsepower(torque, (int)rpmLevelBox.Value, 2);
+            torqueLevelBox.Maximum = maxHp;
+            torqueLevelBox.Value = horse;
             torqueLevelBox.ValueChanged += torqueLevelBox_ValueChanged;
+
+            // Update label
+            maxLabel.Text = $"/ {maxHp}";
         }
 
         /// <summary>
@@ -159,7 +189,7 @@ namespace ATSEngineTool
             else if (radioButton3.Checked)
             {
                 // Torque
-                CurrentNewtonMeters = (double)Metrics.TorqueToNewtonMeters(value, 4);
+                CurrentNewtonMeters = Metrics.TorqueToNewtonMeters(value, 4);
             }
             else
             {
