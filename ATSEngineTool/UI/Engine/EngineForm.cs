@@ -249,10 +249,12 @@ namespace ATSEngineTool
         {
             // Check UnitName
             // Check for a valid identifier string
-            if (!Regex.Match(unitNameBox.Text, @"^[a-z0-9_]{1,12}$", RegexOptions.IgnoreCase).Success)
+            if (!SiiFileBuilder.IsValidUnitName(unitNameBox.Text))
             {
                 // Tell the user this isnt allowed
-                MessageBox.Show("Invalid Engine Sii Unit Name. Length must be 1 to 12 characters, alpha-numeric or underscores only",
+                MessageBox.Show(
+                    "Invalid Engine Sii Unit Name. Tokens must be 1 to 12 characters in length, seperated by a dot, "
+                        + "and contain alpha-numeric or underscores only",
                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning
                 );
 
@@ -264,7 +266,7 @@ namespace ATSEngineTool
             {
                 // Tell the user this isnt allowed
                 MessageBox.Show(
-                    "Invalid Engine Name string. Name must be at least 2 characters long and no quotes allowed",
+                    "Invalid Engine Name string. The name must be at least 2 characters long and contain no quotes",
                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning
                 );
 

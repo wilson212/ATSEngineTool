@@ -1016,6 +1016,9 @@
     <None Include="sounds\engine\N14c\ext\exhaust_idle.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="sounds\engine\N14c\ext\gear_air.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="sounds\engine\N14c\ext\lever_le_pied_ext.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -1065,6 +1068,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="sounds\engine\N14c\int\exhaust_idle.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="sounds\engine\N14c\int\gear_air.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="sounds\engine\N14c\int\lever_le_pied.ogg">

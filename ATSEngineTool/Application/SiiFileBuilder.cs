@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ATSEngineTool
 {
@@ -181,6 +182,17 @@ namespace ATSEngineTool
             // Ensure the document is open
             if (!DocumentOpen)
                 throw new Exception("Cannot write a struct outside of the document");
+
+            /*
+            // Ensure the unit name is valid
+            if (!IsValidUnitName(name))
+            {
+                // Tell the user this isnt allowed
+                throw new Exception(
+                    "Invalid unit name! Unit name tokens must be 1 to 12 characters in length, seperated by a dot, "
+                        + "and contain alpha-numeric or underscores only");
+            }
+            */
 
             // Write the type and name line
             Builder.AppendIf(NewLine, IndentLineChars, Indent)
@@ -425,5 +437,39 @@ namespace ATSEngineTool
         }
 
         public override string ToString() => Builder.ToString();
+
+        /// <summary>
+        /// Takes an Accessory name string and returns whether the name
+        /// is a valid unit name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static bool IsValidUnitName(string name)
+        {
+            int counter = 0;
+            foreach (char c in name)
+            {
+                // Increment couter
+                counter++;
+
+                // Unit names are divided into components which are 12-char tokens separated by dot.
+                // If we are over 12, then this name is not valid
+                if (counter > 12)
+                    return false;
+
+                // Reset the counter on a period
+                if (c == '.')
+                {
+                    counter = 0;
+                    continue;
+                }
+
+                // Ensure its a valid character
+                if (!Regex.Match(c.ToString(), "^[a-z0-9_]+$", RegexOptions.IgnoreCase).Success)
+                    return false;
+            }
+
+            return true;
+        }
     }
 }

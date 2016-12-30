@@ -380,14 +380,14 @@ sound_data: .reverse
 
 sound_data: .blinker_on
 {
-	name: "@CP/int/blinker_1.ogg"
+	name: "@CP/int/blinker_on.ogg"
 	is_2d: true
 	volume: 0.2
 }
 
 sound_data: .blinker_off
 {
-	name: "@CP/int/blinker_2.ogg"
+	name: "@CP/int/blinker_off.ogg"
 	is_2d: true
 	volume: 0.2
 }

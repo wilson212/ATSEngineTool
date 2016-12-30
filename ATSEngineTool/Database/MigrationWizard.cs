@@ -341,10 +341,9 @@ namespace ATSEngineTool.Database
                 Database.CreateTable<EngineSound>();
 
                 // Fix cummins ISX12 litre size
-                bool found = Database.ExecuteScalar<int>("SELECT COUNT(Id) FROM `EngineSeries` WHERE Name='ISX12'") == 1;
-                if (found)
+                var series = Database.Query<EngineSeries>("SELECT * FROM `EngineSeries` WHERE Name='ISX12'").FirstOrDefault();
+                if (series != null)
                 {
-                    var series = Database.Query<EngineSeries>("SELECT * FROM `EngineSeries` WHERE Name='ISX12'").First();
                     series.Displacement = 11.9m;
                     Database.EngineSeries.Update(series);
                 }
@@ -415,10 +414,10 @@ namespace ATSEngineTool.Database
                     }
 
                     // Reset engine series sounds before turning foreign keys back on
-                    foreach (var series in Database.EngineSeries)
+                    foreach (var s in Database.EngineSeries)
                     {
-                        series.SoundId = (series.SoundId == 2) ? package2.Id : package1.Id;
-                        Database.EngineSeries.Update(series);
+                        s.SoundId = (s.SoundId == 2) ? package2.Id : package1.Id;
+                        Database.EngineSeries.Update(s);
                     }
                 }
 
@@ -582,13 +581,11 @@ namespace ATSEngineTool.Database
             Database.CreateTable<T>();
 
             // Select from old table, and import to the new table
-
             // NOTE: had to do this the slow way because LowRpmRange_EngineBrake kept
             // throwing a constraing failure (not null).
             var items = Database.Query<T>($"SELECT * FROM `{newName}`");
             var set = new DbSet<T>(Database);
             set.AddRange(items);
-            //Database.Execute($"INSERT INTO `{table.TableName}` SELECT * FROM `{newName}`");
 
             // Drop old table
             Database.Execute($"DROP TABLE `{newName}`");

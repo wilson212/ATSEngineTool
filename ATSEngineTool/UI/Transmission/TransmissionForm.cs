@@ -62,11 +62,25 @@ namespace ATSEngineTool
         /// </summary>
         protected List<TransmissionGear> ForwardGears { get; set; } = new List<TransmissionGear>();
 
+        /// <summary>
+        /// Indicates whether the selected items on the Conflicts tab have changed
+        /// </summary>
         protected bool ConflictsChanged { get; set; } = false;
 
+        /// <summary>
+        /// Indicates whether the selected items on the Suitables tab have changed
+        /// </summary>
         protected bool SuitablesChanged { get; set; } = false;
 
+        /// <summary>
+        /// Indicates whether the selected items on the Trucks tab have changed
+        /// </summary>
         protected bool TrucksChanged { get; set; } = false;
+
+        /// <summary>
+        /// Indicates whether the any gearing data has changed
+        /// </summary>
+        protected bool GearsChanged { get; set; } = false;
 
         /// <summary>
         /// Icon file path
@@ -365,10 +379,12 @@ namespace ATSEngineTool
         {
             // Check UnitName
             // Check for a valid identifier string
-            if (!Regex.Match(unitNameBox.Text, @"^[a-z0-9_]{1,12}$", RegexOptions.IgnoreCase).Success)
+            if (!SiiFileBuilder.IsValidUnitName(unitNameBox.Text))
             {
                 // Tell the user this isnt allowed
-                MessageBox.Show("Invalid Engine Sii Unit Name. Length must be 1 to 12 characters, alpha-numeric or underscores only",
+                MessageBox.Show(
+                    "Invalid Transmission Sii Unit Name. Tokens must be 1 to 12 characters in length, seperated by a dot, "
+                        + "and contain alpha-numeric or underscores only",
                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning
                 );
 
@@ -380,7 +396,7 @@ namespace ATSEngineTool
             {
                 // Tell the user this isnt allowed
                 MessageBox.Show(
-                    "Invalid Engine Name string. Please use alpha-numeric, period, underscores, dashes or spaces only",
+                    "Invalid Transmission Name string! The name must be at least 2 characters long and contain no quotes",
                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning
                 );
 
@@ -436,11 +452,10 @@ namespace ATSEngineTool
                         // Update the current engine
                         db.Transmissions.Update(Transmission);
 
-                        // Delete any and all TorueRatios from thed database
-                        var gears = new List<TransmissionGear>(Transmission.Gears);
-                        if (gears.Count > 0)
+                        // Delete any and all TorueRatios from the database
+                        if (GearsChanged)
                         {
-                            foreach (var gear in gears)
+                            foreach (var gear in Transmission.Gears)
                                 db.TransmissionGears.Remove(gear);
                         }
 
@@ -509,18 +524,21 @@ namespace ATSEngineTool
                     }
 
                     // Add the new torque ratios
-                    int i = 0;
-                    foreach (var gear in ReverseGears.OrderBy(x => x.Ratio))
+                    if (NewTransmission || GearsChanged)
                     {
-                        gear.TransmissionId = Transmission.Id;
-                        gear.GearIndex = i++;
-                        db.TransmissionGears.Add(gear);
-                    }
-                    foreach (var gear in ForwardGears.OrderByDescending(x => x.Ratio))
-                    {
-                        gear.TransmissionId = Transmission.Id;
-                        gear.GearIndex = i++;
-                        db.TransmissionGears.Add(gear);
+                        int i = 0;
+                        foreach (var gear in ReverseGears.OrderBy(x => x.Ratio))
+                        {
+                            gear.TransmissionId = Transmission.Id;
+                            gear.GearIndex = i++;
+                            db.TransmissionGears.Add(gear);
+                        }
+                        foreach (var gear in ForwardGears.OrderByDescending(x => x.Ratio))
+                        {
+                            gear.TransmissionId = Transmission.Id;
+                            gear.GearIndex = i++;
+                            db.TransmissionGears.Add(gear);
+                        }
                     }
 
                     trans.Commit();
@@ -661,6 +679,9 @@ namespace ATSEngineTool
             // Force Points Redraw
             PopulateGears();
 
+            // Flag 
+            GearsChanged = true;
+
             // Force a chart redraw
             diffRatio_ValueChanged(this, EventArgs.Empty);
         }
@@ -683,6 +704,9 @@ namespace ATSEngineTool
                 // Force Points Redraw
                 PopulateGears();
 
+                // Flag 
+                GearsChanged = true;
+
                 // Force a chart redraw
                 diffRatio_ValueChanged(this, EventArgs.Empty);
 
@@ -702,6 +726,9 @@ namespace ATSEngineTool
                         {
                             // Force Points Redraw
                             PopulateGears();
+
+                            // Flag 
+                            GearsChanged = true;
 
                             // Force a chart redraw
                             diffRatio_ValueChanged(this, EventArgs.Empty);
@@ -726,6 +753,9 @@ namespace ATSEngineTool
                     // Add the gear to the correct list
                     var list = (gear.IsReverse) ? ReverseGears : ForwardGears;
                     list.Add(gear);
+
+                    // Flag 
+                    GearsChanged = true;
 
                     // Force Points Redraw
                     PopulateGears();
@@ -756,6 +786,9 @@ namespace ATSEngineTool
                         {
                             // Force Points Redraw
                             PopulateGears();
+
+                            // Flag 
+                            GearsChanged = true;
 
                             // Force a chart redraw
                             diffRatio_ValueChanged(this, EventArgs.Empty);
@@ -896,6 +929,9 @@ namespace ATSEngineTool
 
                         // Fill ratio view
                         PopulateGears();
+
+                        // Flag 
+                        GearsChanged = true;
 
                         // Defaults (skip sounds)
                         if (transmission.Defaults != null)
