@@ -109,7 +109,7 @@ namespace ATSEngineTool
             // Add each sound to the lists
             using (AppDatabase db = new AppDatabase())
             {
-                foreach (var model in db.TransmissionSeries)
+                foreach (var model in db.TransmissionSeries.OrderBy(x => x.ToString()))
                 {
                     seriesModelBox.Items.Add(model);
                     if (!NewTransmission && model.Id == Transmission.SeriesId)
@@ -154,10 +154,6 @@ namespace ATSEngineTool
             // Are we editing an engine?
             if (!NewTransmission)
             {
-                // Lock the identify box!
-                unitNameBox.Enabled = false;
-                seriesModelBox.Enabled = false;
-
                 // Set form values
                 unitNameBox.Text = transmission.UnitName;
                 transNameBox.Text = transmission.Name;
@@ -419,39 +415,36 @@ namespace ATSEngineTool
 
             // Figure out the filename
             if (!String.IsNullOrWhiteSpace(filenameTextBox.Text))
-            {
                 Transmission.FileName = filenameTextBox.Text.Trim();
-            }
 
             // Validate and Save
             using (AppDatabase db = new AppDatabase())
             using (SQLiteTransaction trans = db.BeginTransaction())
             {
+                // Verify that the series.Id and engine.UnitName are unique
+                string query = "SELECT * FROM `Transmission` WHERE `SeriesId`=@P0 AND `UnitName`=@P1";
+                var eTrans = db.Query<Transmission>(query, Transmission.SeriesId, Transmission.UnitName).FirstOrDefault();
+                if (eTrans != null && (NewTransmission || eTrans.Id != Transmission.Id))
+                {
+                    // Tell the user this isnt allowed
+                    MessageBox.Show(
+                        $"The selected Transmission Series already contains a transmission with the Sii Unit Name of \""
+                        + Transmission.UnitName + "\"! Please select a different Transmission Series or change the Sii "
+                        + "Unit Name to something unique.",
+                        "Unique Constraint Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning
+                    );
+                    return;
+                }
+
+                // Wrap database changes in a try-catch block so we can Rollback on error
                 try
                 {
-                    if (NewTransmission)
+                    // Update the current engine
+                    db.Transmissions.AddOrUpdate(Transmission);
+
+                    // If pre-existing transmission, delete all changed data
+                    if (!NewTransmission)
                     {
-                        // Ensure this transmission doesnt exist already!
-                        if (db.Transmissions.Contains(Transmission))
-                        {
-                            trans.Dispose();
-
-                            // Tell the user this isnt allowed
-                            MessageBox.Show("The unique transmission identifier already exists!",
-                                "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning
-                            );
-
-                            return;
-                        }
-
-                        // Add the transmission
-                        db.Transmissions.Add(Transmission);
-                    }
-                    else
-                    {
-                        // Update the current engine
-                        db.Transmissions.Update(Transmission);
-
                         // Delete any and all TorueRatios from the database
                         if (GearsChanged)
                         {

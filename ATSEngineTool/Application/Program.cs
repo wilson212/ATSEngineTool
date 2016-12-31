@@ -24,7 +24,7 @@ namespace ATSEngineTool
         /// <summary>
         /// Program Version
         /// </summary>
-        public static Version Version { get; private set; } = new Version(2, 11, 0);
+        public static Version Version { get; private set; } = new Version(2, 11, 2);
 
         /// <summary>
         /// English number format info
@@ -69,8 +69,7 @@ namespace ATSEngineTool
             string steamPath = Settings.Default.SteamPath;
             if (String.IsNullOrWhiteSpace(steamPath) || !Directory.Exists(steamPath))
             {
-                RegistryKey regKey = Registry.CurrentUser;
-                regKey = regKey.OpenSubKey(@"Software\Valve\Steam");
+                RegistryKey regKey = Registry.CurrentUser.OpenSubKey(@"Software\Valve\Steam");
                 if (regKey != null)
                 {
                     steamPath = regKey.GetValue("SteamPath")?.ToString();

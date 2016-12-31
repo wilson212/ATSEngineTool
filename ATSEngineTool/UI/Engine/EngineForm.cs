@@ -41,21 +41,24 @@ namespace ATSEngineTool
         protected List<TorqueRatio> Ratios { get; set; } = new List<TorqueRatio>();
 
         /// <summary>
-        /// Indictes whether the conflicting transmissions box had a check change
+        /// Indicates whether the conflicting transmissions box had a check change
         /// </summary>
         protected bool ConflictsChanged { get; set; } = false;
 
         /// <summary>
-        /// Indictes whether the suitable transmissions box had a check change
+        /// Indicates whether the suitable transmissions box had a check change
         /// </summary>
         protected bool SuitablesChanged { get; set; } = false;
 
         /// <summary>
-        /// /// <summary>
-        /// Indictes whether the trucks box had a check change
-        /// </summary>
+        /// Indicates whether the trucks box had a check change
         /// </summary>
         protected bool TrucksChanged { get; set; } = false;
+
+        /// <summary>
+        /// Indicates whether the Torque Ratios changed on this engine
+        /// </summary>
+        protected bool RatiosChanged { get; set; } = false;
 
         /// <summary>
         /// Icon file path
@@ -84,7 +87,7 @@ namespace ATSEngineTool
             // Add each sound to the lists
             using (AppDatabase db = new AppDatabase())
             {
-                foreach (EngineSeries model in db.EngineSeries)
+                foreach (EngineSeries model in db.EngineSeries.OrderBy(x => x.ToString()))
                 {
                     engineModelBox.Items.Add(model);
                     if (!NewEngine && model.Id == Engine.SeriesId)
@@ -124,10 +127,6 @@ namespace ATSEngineTool
             // Are we editing an engine?
             if (!NewEngine)
             {
-                // Lock the identify box!
-                unitNameBox.Enabled = false;
-                engineModelBox.Enabled = false;
-
                 // Set form values
                 unitNameBox.Text = engine.UnitName;
                 engineNameBox.Text = engine.Name;
@@ -309,44 +308,40 @@ namespace ATSEngineTool
 
             // Figure out the filename
             if (!String.IsNullOrWhiteSpace(filenameTextBox.Text))
-            {
                 Engine.FileName = filenameTextBox.Text.Trim();
-            }
 
             // Validate and Save
             using (AppDatabase db = new AppDatabase())
             using (SQLiteTransaction trans = db.BeginTransaction())
             {
+                // Verify that the series.Id and engine.UnitName are unique
+                string query = "SELECT * FROM `Engine` WHERE `SeriesId`=@P0 AND `UnitName`=@P1";
+                var engine = db.Query<Engine>(query, Engine.SeriesId, Engine.UnitName).FirstOrDefault();
+                if (engine != null && (NewEngine || engine.Id != Engine.Id))
+                {
+                    // Tell the user this isnt allowed
+                    MessageBox.Show(
+                        $"The selected Engine Series already contains an engine with the Sii Unit Name of \""
+                        + Engine.UnitName + "\"! Please select a different Engine Series or change the Sii "
+                        + "Unit Name to something unique.",
+                        "Unique Constraint Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning
+                    );
+                    return;
+                }
+
+                // Wrap database changes in a try-catch block so we can Rollback on error
                 try
                 {
-                    if (NewEngine)
+                    // Update or Add engine
+                    db.Engines.AddOrUpdate(Engine);
+
+                    // If pre-existing engine, delete all changed data
+                    if (!NewEngine)
                     {
-                        // Ensure this engine doesnt exist already!
-                        if (db.Engines.Contains(Engine))
-                        {
-                            trans.Dispose();
-
-                            // Tell the user this isnt allowed
-                            MessageBox.Show("The unique engine identifier already exists!",
-                                "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning
-                            );
-
-                            return;
-                        }
-
-                        // Add the engine
-                        db.Engines.Add(Engine);
-                    }
-                    else
-                    {
-                        // Update the current engine
-                        db.Engines.Update(Engine);
-
                         // Delete any and all TorueRatios from thed database
-                        List<TorqueRatio> ratios = new List<TorqueRatio>(Engine.TorqueRatios);
-                        if (ratios.Count > 0)
+                        if (RatiosChanged)
                         {
-                            foreach (TorqueRatio ratio in ratios)
+                            foreach (TorqueRatio ratio in Engine.TorqueRatios)
                                 db.TorqueRatios.Remove(ratio);
                         }
 
@@ -362,7 +357,6 @@ namespace ATSEngineTool
                         // Set Suitables
                         if (SuitablesChanged)
                         {
-                            // Remove old
                             foreach (var item in Engine.SuitableTransmissions)
                                 db.SuitableAccessories.Remove(item);
 
@@ -371,7 +365,6 @@ namespace ATSEngineTool
                         // Set compatible trucks
                         if (TrucksChanged)
                         {
-                            // Remove old
                             foreach (var item in Engine.ItemOf)
                                 db.TruckEngines.Remove(item);
 
@@ -421,10 +414,13 @@ namespace ATSEngineTool
                     }
 
                     // Add the new torque ratios
-                    foreach (TorqueRatio ratio in Ratios.OrderBy(x => x.RpmLevel))
+                    if (NewEngine || RatiosChanged)
                     {
-                        ratio.EngineId = Engine.Id;
-                        db.TorqueRatios.AddOrUpdate(ratio);
+                        foreach (TorqueRatio ratio in Ratios.OrderBy(x => x.RpmLevel))
+                        {
+                            ratio.EngineId = Engine.Id;
+                            db.TorqueRatios.AddOrUpdate(ratio);
+                        }
                     }
 
                     trans.Commit();
@@ -622,7 +618,7 @@ namespace ATSEngineTool
 
         private void unitNameBox_TextChanged(object sender, EventArgs e)
         {
-            if (unitNameBox.Text.Length == 0) return;
+            if (!NewEngine || unitNameBox.Text.Length == 0) return;
 
             string text = unitNameBox.Text.MakeFileNameSafe();
             filenameTextBox.Text = text + ".sii";
@@ -643,6 +639,9 @@ namespace ATSEngineTool
             int index = (int)item.Tag;
             Ratios.RemoveAt(index);
 
+            // Flag change
+            RatiosChanged = true;
+
             // Force Points Redraw
             PopulateTorqueRatios();
 
@@ -660,6 +659,9 @@ namespace ATSEngineTool
             {
                 // Remove torque ratio
                 Ratios.RemoveAt(index);
+
+                // Flag change
+                RatiosChanged = true;
 
                 // Force Points Redraw
                 PopulateTorqueRatios();
@@ -685,6 +687,9 @@ namespace ATSEngineTool
                         ratio.RpmLevel = values.RpmLevel;
                         ratio.Ratio = values.Ratio;
 
+                        // Flag change
+                        RatiosChanged = true;
+
                         // Force Points Redraw
                         PopulateTorqueRatios();
 
@@ -707,6 +712,9 @@ namespace ATSEngineTool
                     // Create the new Ratio
                     TorqueRatio ratio = frm.GetRatio();
                     Ratios.Add(ratio);
+
+                    // Flag change
+                    RatiosChanged = true;
 
                     // Force Points Redraw
                     PopulateTorqueRatios();
@@ -732,6 +740,9 @@ namespace ATSEngineTool
 
                 // Remove all ratios
                 Ratios.Clear();
+
+                // Flag change
+                RatiosChanged = true;
             }
 
             // Lock button
@@ -770,6 +781,9 @@ namespace ATSEngineTool
             // Remove all ratios
             Ratios.Clear();
 
+            // Flag change
+            RatiosChanged = true;
+
             // Clear out any old items
             ratioListView.Items.Clear();
 
@@ -792,6 +806,9 @@ namespace ATSEngineTool
                     if (result == DialogResult.Yes)
                     {
                         Ratios[index] = frm.GetRatio();
+
+                        // Flag change
+                        RatiosChanged = true;
 
                         // Force Points Redraw
                         PopulateTorqueRatios();
