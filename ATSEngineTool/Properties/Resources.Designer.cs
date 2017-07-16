@@ -131,36 +131,6 @@ namespace ATSEngineTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] Default {
-            get {
-                object obj = ResourceManager.GetObject("Default", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] Default_389 {
-            get {
-                object obj = ResourceManager.GetObject("Default_389", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] Default_w900 {
-            get {
-                object obj = ResourceManager.GetObject("Default_w900", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap DeleteRed {
@@ -386,6 +356,16 @@ namespace ATSEngineTool.Properties {
         internal static System.Drawing.Bitmap world_link1 {
             get {
                 object obj = ResourceManager.GetObject("world_link1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap youtube_icon {
+            get {
+                object obj = ResourceManager.GetObject("youtube_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

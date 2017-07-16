@@ -51,6 +51,9 @@ namespace ATSEngineTool.SiiEntities
         [SiiAttribute("conflict_with")]
         public string[] Conflicts { get; private set; }
 
+        [SiiAttribute("overrides")]
+        public string[] Overrides { get; private set; }
+
         [SiiAttribute("torque_curve")]
         public Vector2[] TorqueCurves { get; private set; }
 
@@ -65,6 +68,9 @@ namespace ATSEngineTool.SiiEntities
 
         [SiiAttribute("rpm_range_engine_brake")]
         public Vector2 RpmRangeEngineBrake { get; set; } = new Vector2(0, 0);
+
+        [SiiAttribute("consumption_coef")]
+        public float FuelConsumption { get; set; } = 1f;
 
         [SiiAttribute("adblue_consumption")]
         public float AdblueConsumption { get; set; } = 0f;

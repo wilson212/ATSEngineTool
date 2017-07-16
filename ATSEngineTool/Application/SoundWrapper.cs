@@ -12,7 +12,7 @@ namespace ATSEngineTool
 
         public string SoundName { get; set; } = string.Empty;
 
-        public SoundType Catagory => Sound.Type;
+        public SoundLocation Catagory => Sound.Location;
 
         public string Filename
         {
@@ -32,7 +32,7 @@ namespace ATSEngineTool
 
         public SoundWrapper Parent { get; set; }
 
-        public EngineSound Sound { get; set; }
+        public Sound Sound { get; set; }
 
         public override bool Equals(object obj)
         {

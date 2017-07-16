@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -44,39 +45,86 @@ namespace ATSEngineTool
         /// </summary>
         protected string PackageFilePath { get; set; }
 
-        public SoundPackageEditor(SoundPackage package = null)
+        public SoundPackageEditor(SoundType type) : this()
         {
-            // Create controls and style the header
-            InitializeComponent();
-            headerPanel.BackColor = Color.FromArgb(51, 53, 53);
+            NewPackage = true;
+            switch (type)
+            {
+                case SoundType.Engine:
+                    Package = new EngineSoundPackage();
+                    shadowLabel1.Text = "Engine Sound Package Editor";
+                    break;
+                case SoundType.Truck:
+                    Package = new TruckSoundPackage();
+                    shadowLabel1.Text = "Truck Sound Package Editor";
+                    intFilenameBox.Enabled = false;
+                    extFilenameBox.Enabled = false;
+                    break;
+                default:
+                    throw new Exception("Invalid sound type");
+            }
+            youtubeLinkLabel.Enabled = false;
+            youtubeLinkLabel.Visible = false;
+            youtubeIcon.Visible = false;
+        }
 
+        public SoundPackageEditor(SoundPackage package) : this()
+        {
             // Set internals
-            NewPackage = package == null;
-            Package = package ?? new SoundPackage();
+            NewPackage = false;
+            Package = package;
+
+            // Set title label text
+            switch (Package.SoundType)
+            {
+                case SoundType.Engine:
+                    shadowLabel1.Text = "Engine Sound Package Editor";
+                    break;
+                case SoundType.Truck:
+                    shadowLabel1.Text = "Truck Sound Package Editor";
+                    break;
+                default:
+                    throw new Exception("Invalid sound type");
+            }
 
             // Set form input field values if existing package
-            if (!NewPackage)
+            labelAuthor.Text = Package.Author;
+            labelVersion.Text = Package.Version.ToString();
+            packageNameBox.Enabled = true;
+            packageNameBox.Text = Package.Name;
+            packageNameBox.SelectionStart = packageNameBox.Text.Length;
+            unitNameBox.Enabled = true;
+            unitNameBox.Text = Package.UnitName;
+            folderNameBox.Enabled = true;
+            folderNameBox.Text = Package.FolderName;
+            if (package.SoundType == SoundType.Engine)
             {
-                labelAuthor.Text = Package.Author;
-                labelVersion.Text = Package.Version.ToString();
-                packageNameBox.Enabled = true;
-                packageNameBox.Text = Package.Name;
-                packageNameBox.SelectionStart = packageNameBox.Text.Length;
-                unitNameBox.Enabled = true;
-                unitNameBox.Text = Package.UnitName;
                 intFilenameBox.Enabled = true;
                 intFilenameBox.Text = Package.InteriorFileName;
                 extFilenameBox.Enabled = true;
                 extFilenameBox.Text = Package.ExteriorFileName;
-                folderNameBox.Text = Package.FolderName;
-
-                // Change Import button text and size
-                importButton.Size = new Size(125, 25);
-                importButton.Text = "Import Update";
-
-                // Enable buttons
-                confirmButton.Enabled = true;
             }
+
+            if (String.IsNullOrWhiteSpace(Package.YoutubeVideoId))
+            {
+                youtubeLinkLabel.Enabled = false;
+                youtubeLinkLabel.Visible = false;
+                youtubeIcon.Visible = false;
+            }
+
+            // Change Import button text and size
+            importButton.Size = new Size(125, 25);
+            importButton.Text = "Import Update";
+
+            // Enable buttons
+            confirmButton.Enabled = true;
+        }
+
+        private SoundPackageEditor()
+        {
+            // Create controls and style the header
+            InitializeComponent();
+            headerPanel.BackColor = Color.FromArgb(51, 53, 53);
         }
 
         /// <summary>
@@ -86,12 +134,25 @@ namespace ATSEngineTool
         {
             // Request the user supply the sound package path
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Title = "Sound Package Import";
-            dialog.Filter = "Sound Package|*.espack";
+            switch (Package.SoundType)
+            {
+                case SoundType.Engine:
+                    dialog.Title = "Engine Sound Package Import";
+                    dialog.Filter = "Engine Sound Pack|*.espack";
+                    break;
+                case SoundType.Truck:
+                    dialog.Title = "Truck Sound Package Import";
+                    dialog.Filter = "Truck Sound Pack|*.tspack";
+                    break;
+                default:
+                    throw new Exception("Invalid sound type");
+            }
+
+            // If the user selects a file
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 // Try and mount the sound package
-                using (var reader = new SoundPackageReader(dialog.FileName))
+                using (var reader = new SoundPackageReader(dialog.FileName, Package.SoundType))
                 {
                     // Load the manifest, interior and exterior files
                     string name = string.Empty;
@@ -103,8 +164,8 @@ namespace ATSEngineTool
                     try
                     {
                         manifest = reader.GetManifest(out name);
-                        Interior = reader.GetSoundFile(SoundType.Interior);
-                        Exterior = reader.GetSoundFile(SoundType.Exterior);
+                        Interior = reader.GetSoundFile(SoundLocation.Interior);
+                        Exterior = reader.GetSoundFile(SoundLocation.Exterior);
                     }
                     catch (Exception ex)
                     {
@@ -164,10 +225,27 @@ namespace ATSEngineTool
                     // Enable controls
                     packageNameBox.Enabled = true;
                     unitNameBox.Enabled = true;
-                    intFilenameBox.Enabled = true;
-                    extFilenameBox.Enabled = true;
                     folderNameBox.Enabled = true;
                     confirmButton.Enabled = true;
+                    if (Package.SoundType == SoundType.Engine)
+                    {
+                        intFilenameBox.Enabled = true;
+                        extFilenameBox.Enabled = true;
+                    }
+
+                    if (String.IsNullOrWhiteSpace(manifest.YoutubeVideoId))
+                    {
+                        youtubeLinkLabel.Enabled = false;
+                        youtubeLinkLabel.Visible = false;
+                        youtubeIcon.Visible = false;
+                    }
+                    else
+                    {
+                        Package.YoutubeVideoId = manifest.YoutubeVideoId;
+                        youtubeLinkLabel.Enabled = true;
+                        youtubeLinkLabel.Visible = true;
+                        youtubeIcon.Visible = true;
+                    }
                 }
             }
         }
@@ -183,7 +261,7 @@ namespace ATSEngineTool
             // Add or update the package details
             Package.Name = packageNameBox.Text;
             Package.Author = labelAuthor.Text;
-            Package.Version = Decimal.Parse(labelVersion.Text, CultureInfo.InvariantCulture);
+            Package.Version = labelVersion.Text;
             Package.UnitName = unitNameBox.Text;
             Package.FolderName = folderNameBox.Text;
             Package.InteriorFileName = intFilenameBox.Text;
@@ -195,8 +273,16 @@ namespace ATSEngineTool
                 // Did we import new data?
                 if (!Imported)
                 {
-                    // Add or update the existing package
-                    db.SoundPackages.AddOrUpdate(Package);
+                    switch (Package.SoundType)
+                    {
+                        // Add or update the existing package
+                        case SoundType.Engine:
+                            db.EngineSoundPackages.AddOrUpdate((EngineSoundPackage)Package);
+                            break;
+                        case SoundType.Truck:
+                            db.TruckSoundPackages.AddOrUpdate((TruckSoundPackage)Package);
+                            break;
+                    }
                 }
                 else
                 {
@@ -235,22 +321,50 @@ namespace ATSEngineTool
         {
             // Define folder path
             string folderName = folderNameBox.Text.MakeFileNameSafe();
-            string folderPath = Path.Combine(Program.RootPath, "sounds", "engine", folderName);
+            string folderPath = Path.Combine(Program.RootPath, "sounds", Package.PackageTypeFolderName, folderName);
 
             // Delete old data
             if (!NewPackage)
             {
-                // Force the driver to 
-                foreach (var sound in Package.EngineSounds)
-                    db.EngineSounds.Remove(sound);
+                // Delete the old sounds
+                switch (Package.SoundType)
+                {
+                    case SoundType.Engine:
+                        var ep = (EngineSoundPackage)Package;
+                        foreach (var sound in ep.EngineSounds)
+                            db.EngineSounds.Remove(sound);
+                        break;
+                    case SoundType.Truck:
+                        var tp = (TruckSoundPackage)Package;
+                        foreach (var sound in tp.TruckSounds)
+                            db.TruckSounds.Remove(sound);
+                        break;
+                    default:
+                        throw new Exception("Invalid sound type");
+                }
             }
 
             // Delete existing data if it is there.
             if (Directory.Exists(folderPath))
             {
+                string query = String.Empty;
+                SoundPackage existing;
+
                 // Fetch existing sound from database
-                string query = "SELECT * FROM `SoundPackage` WHERE `FolderName` = @P0";
-                var existing = db.Query<SoundPackage>(query, folderNameBox.Text).FirstOrDefault();
+                switch (Package.SoundType)
+                {
+                    // Add or update the existing package
+                    case SoundType.Engine:
+                        query = "SELECT * FROM `EngineSoundPackage` WHERE `FolderName` = @P0";
+                        existing = db.Query<EngineSoundPackage>(query, folderNameBox.Text).FirstOrDefault();
+                        break;
+                    case SoundType.Truck:
+                        query = "SELECT * FROM `TruckSoundPackage` WHERE `FolderName` = @P0";
+                        existing = db.Query<TruckSoundPackage>(query, folderNameBox.Text).FirstOrDefault();
+                        break;
+                    default:
+                        throw new Exception("Invalid sound type");
+                }
 
                 // If the folder name is already in use, and (is new package OR the existing package ID does not match the current)
                 if (existing != null && (NewPackage || Package.Id != existing.Id))
@@ -266,7 +380,18 @@ namespace ATSEngineTool
                         return false;
 
                     // Delete the old sound
-                    db.SoundPackages.Remove(existing);
+                    switch (Package.SoundType)
+                    {
+                        // Add or update the existing package
+                        case SoundType.Engine:
+                            db.EngineSoundPackages.Remove((EngineSoundPackage)existing);
+                            break;
+                        case SoundType.Truck:
+                            db.TruckSoundPackages.Remove((TruckSoundPackage)existing);
+                            break;
+                        default:
+                            throw new Exception("Invalid sound type");
+                    }
                 }
             }
 
@@ -276,17 +401,24 @@ namespace ATSEngineTool
                 try
                 {
                     // Add or update the existing package
-                    db.SoundPackages.AddOrUpdate(Package);
+                    switch (Package.SoundType)
+                    {
+                        // Add or update the existing package
+                        case SoundType.Engine:
+                            db.EngineSoundPackages.AddOrUpdate((EngineSoundPackage)Package);
+                            break;
+                        case SoundType.Truck:
+                            db.TruckSoundPackages.AddOrUpdate((TruckSoundPackage)Package);
+                            break;
+                        default:
+                            throw new Exception("Invalid sound type");
+                    }
 
                     // Re-open the Sound package ZipFile
-                    using (var reader = new SoundPackageReader(PackageFilePath))
+                    using (var reader = new SoundPackageReader(PackageFilePath, Package.SoundType))
                     {
-                        // Extract data
-                        reader.ExtractToDirectory(folderPath, true);
-
                         // Save sounds in the database
-                        reader.ImportSounds(db, Package, Interior, SoundType.Interior);
-                        reader.ImportSounds(db, Package, Exterior, SoundType.Exterior);
+                        reader.InstallPackage(db, Package, folderPath, true);
                     }
 
                     // Commit and return
@@ -309,16 +441,19 @@ namespace ATSEngineTool
             string extF = extFilenameBox.Text.MakeFileNameSafe();
             string folder = folderNameBox.Text.MakeFileNameSafe();
 
-            // Check for empty strings
-            if (String.IsNullOrWhiteSpace(intF) || String.IsNullOrWhiteSpace(extF))
+            if (Package.SoundType == SoundType.Engine)
             {
-                // Tell the user this isnt allowed
-                MessageBox.Show(
-                    "One or both filename inputs failed to pass validation. Please Try again",
-                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning
-                );
+                // Check for empty strings
+                if (String.IsNullOrWhiteSpace(intF) || String.IsNullOrWhiteSpace(extF))
+                {
+                    // Tell the user this isnt allowed
+                    MessageBox.Show(
+                        "One or both filename inputs failed to pass validation. Please Try again",
+                        "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning
+                    );
 
-                return false;
+                    return false;
+                }
             }
 
             // Check for empty strings
@@ -396,6 +531,11 @@ namespace ATSEngineTool
             Point point1 = new Point(0, 0);
             Point point2 = new Point(footerPanel.Width, 0);
             e.Graphics.DrawLine(greyPen, point1, point2);
+        }
+
+        private void YoutubeLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start($"https://www.youtube.com/watch?v={Package.YoutubeVideoId}");
         }
     }
 }

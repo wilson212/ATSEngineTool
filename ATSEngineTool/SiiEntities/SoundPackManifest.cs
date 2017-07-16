@@ -25,5 +25,8 @@ namespace ATSEngineTool.SiiEntities
 
         [SiiAttribute("use_common_sound_sui")]
         public bool UseDirectives { get; private set; } = true;
+
+        [SiiAttribute("youtube_video_id")]
+        public string YoutubeVideoId { get; private set; }
     }
 }

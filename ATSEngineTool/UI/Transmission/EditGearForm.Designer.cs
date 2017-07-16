@@ -122,12 +122,12 @@
             0});
             this.ratioBox.Location = new System.Drawing.Point(148, 93);
             this.ratioBox.Maximum = new decimal(new int[] {
-            3000,
+            4000,
             0,
             0,
             131072});
             this.ratioBox.Minimum = new decimal(new int[] {
-            300,
+            400,
             0,
             0,
             -2147418112});

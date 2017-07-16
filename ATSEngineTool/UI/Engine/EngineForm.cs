@@ -147,11 +147,14 @@ namespace ATSEngineTool
                 rpmRangeBox5.Value = engine.LowRpmRange_PowerBoost;
                 rpmRangeBox6.Value = engine.HighRpmRange_PowerBoost;
                 fileDefaultsTextBox.Lines = engine.Defaults;
+                fileOverridesTextBox.Lines = engine.Overrides;
                 fileCommentTextBox.Lines = engine.Comment;
                 filenameTextBox.Text = engine.FileName;
                 conflictsTextBox.Lines = engine.Conflicts;
                 engineBrakeLow.Value = engine.LowRpmRange_EngineBrake;
                 engineBrakeHigh.Value = engine.HighRpmRange_EngineBrake;
+                resistanceBox.Value = engine.ResistanceTorque;
+                consumptionBox.Value = engine.FuelConsumption * 100;
                 adBlueConsumption.Value = engine.AdblueConsumption;
                 adBlueNoPowerLimit.Value = engine.NoAdbluePowerLimit;
 
@@ -292,11 +295,14 @@ namespace ATSEngineTool
             Engine.MaxRpmRange_HighGear = (int)rpmRangeBox4.Value;
             Engine.LowRpmRange_PowerBoost = (int)rpmRangeBox5.Value;
             Engine.HighRpmRange_PowerBoost = (int)rpmRangeBox6.Value;
+            Engine.ResistanceTorque = (int)resistanceBox.Value;
+            Engine.FuelConsumption = Math.Round(consumptionBox.Value / 100, 2);
             Engine.NoAdbluePowerLimit = adBlueNoPowerLimit.Value;
             Engine.AdblueConsumption = adBlueConsumption.Value;
             Engine.LowRpmRange_EngineBrake = (int)engineBrakeLow.Value;
             Engine.HighRpmRange_EngineBrake = (int)engineBrakeHigh.Value;
             Engine.Defaults = fileDefaultsTextBox.Lines;
+            Engine.Overrides = fileOverridesTextBox.Lines;
             Engine.Comment = fileCommentTextBox.Lines;
             Engine.Conflicts = conflictsTextBox.Lines;
 
@@ -467,6 +473,8 @@ namespace ATSEngineTool
                 adBlueNoPowerLimit.Enabled = true;
                 engineBrakeHigh.Enabled = true;
                 engineBrakeLow.Enabled = true;
+                resistanceBox.Enabled = true;
+                consumptionBox.Enabled = true;
             }
 
             EngineSeries series = (EngineSeries)engineModelBox.SelectedItem;
@@ -770,9 +778,9 @@ namespace ATSEngineTool
         private void removeAllButton_Click(object sender, EventArgs e)
         {
             var result = MessageBox.Show(
-                    "Are you sure you want to reset the torque curve points to the default values? "
+                    "Are you sure you want to remove all torque curve points? "
                     + "Any changes made to the current power curves will be undone.",
-                    "Reset Torque Curve", MessageBoxButtons.YesNo, MessageBoxIcon.Warning
+                    "Remove All Torque Curves", MessageBoxButtons.YesNo, MessageBoxIcon.Warning
                 );
 
             // If yes is not selected, get outta here!
@@ -899,47 +907,48 @@ namespace ATSEngineTool
                         unitNameBox.Text = objects[0].Substring(0, len);
                         engineNameBox.Text = engine.Name;
                         filenameTextBox.Text = Path.GetFileName(dialog.FileName);
-                        unlockBox.Value = engine.UnlockLevel;
-                        priceBox.Value = engine.Price;
-                        neutralRpmBox.Value = engine?.RpmLimitNeutral ?? 2200;
-                        rpmLimitBox.Value = engine.RpmLimit;
-                        idleRpmBox.Value = engine?.IdleRpm ?? 650;
-                        brakeStrengthBox.Value = (decimal)engine.BrakeStrength;
-                        brakePositionsBox.Value = engine.BrakePositions;
+                        unlockBox.SetValueInRange(engine.UnlockLevel);
+                        priceBox.SetValueInRange(engine.Price);
+                        neutralRpmBox.SetValueInRange(engine?.RpmLimitNeutral ?? 2200);
+                        rpmLimitBox.SetValueInRange(engine.RpmLimit);
+                        idleRpmBox.SetValueInRange(engine?.IdleRpm ?? 650);
+                        brakeStrengthBox.SetValueInRange((decimal)engine.BrakeStrength);
+                        brakePositionsBox.SetValueInRange(engine.BrakePositions);
                         automaticDSCheckBox.Checked = engine.BrakeDownshift == 1;
 
                         // Misc
                         if (engine.RpmRangeEngineBrake.X > 0f)
                         {
-                            engineBrakeLow.Value = (int)engine.RpmRangeEngineBrake.X;
-                            engineBrakeHigh.Value = (int)engine.RpmRangeEngineBrake.Y;
+                            engineBrakeLow.SetValueInRange((int)engine.RpmRangeEngineBrake.X);
+                            engineBrakeHigh.SetValueInRange((int)engine.RpmRangeEngineBrake.Y);
                         }
-                        adBlueConsumption.Value = (decimal)engine.AdblueConsumption;
-                        adBlueNoPowerLimit.Value = (decimal)engine.NoAdbluePowerLimit;
+                        consumptionBox.SetValueInRange((decimal)engine.FuelConsumption * 100);
+                        adBlueConsumption.SetValueInRange((decimal)engine.AdblueConsumption);
+                        adBlueNoPowerLimit.SetValueInRange((decimal)engine.NoAdbluePowerLimit);
                         conflictsTextBox.Lines = engine?.Conflicts ?? new string[] { };
 
                         // Tab 3
                         if (engine.RpmRange_LowGear.X > 0f)
                         {
-                            rpmRangeBox1.Value = (int)engine.RpmRange_LowGear.X;
-                            rpmRangeBox2.Value = (int)engine.RpmRange_LowGear.Y;
+                            rpmRangeBox1.SetValueInRange((int)engine.RpmRange_LowGear.X);
+                            rpmRangeBox2.SetValueInRange((int)engine.RpmRange_LowGear.Y);
                         }
                         if (engine.RpmRange_HighGear.X > 0f)
                         {
-                            rpmRangeBox3.Value = (int)engine.RpmRange_HighGear.X;
-                            rpmRangeBox4.Value = (int)engine.RpmRange_HighGear.Y;
+                            rpmRangeBox3.SetValueInRange((int)engine.RpmRange_HighGear.X);
+                            rpmRangeBox4.SetValueInRange((int)engine.RpmRange_HighGear.Y);
                         }
                         if (engine.RpmRange_PowerBoost.X > 0f)
                         {
-                            rpmRangeBox5.Value = (int)engine.RpmRange_PowerBoost.X;
-                            rpmRangeBox6.Value = (int)engine.RpmRange_PowerBoost.Y;
+                            rpmRangeBox5.SetValueInRange((int)engine.RpmRange_PowerBoost.X);
+                            rpmRangeBox6.SetValueInRange((int)engine.RpmRange_PowerBoost.Y);
                         }
 
                         // Parse Horsepower
                         Regex reg = new Regex("^(?<hp>[0-9]+)", RegexOptions.Multiline);
                         if (reg.IsMatch(engine.Info[0]))
                         {
-                            horsepowerBox.Value = Int32.Parse(reg.Match(engine.Info[0]).Groups["hp"].Value);
+                            horsepowerBox.SetValueInRange(Int32.Parse(reg.Match(engine.Info[0]).Groups["hp"].Value));
                         }
 
                         if (engine.TorqueCurves?.Length > 0)
@@ -963,14 +972,21 @@ namespace ATSEngineTool
                         }
 
                         // Set torque value 
-                        torqueBox.Value = (Program.Config.UnitSystem == UnitSystem.Imperial)
+                        torqueBox.SetValueInRange((Program.Config.UnitSystem == UnitSystem.Imperial)
                             ? Metrics.NewtonMetersToTorque((decimal)engine.Torque, torqueBox.DecimalPlaces)
-                            : Math.Round((decimal)engine.Torque, torqueBox.DecimalPlaces);
+                            : Math.Round((decimal)engine.Torque, torqueBox.DecimalPlaces)
+                        );
 
                         // Defaults (skip sounds)
                         if (engine.Defaults != null)
                         {
                             fileDefaultsTextBox.Lines = (from x in engine.Defaults where !x.Contains("/sound/") select x).ToArray();
+                        }
+
+                        // Overrides (skip sounds)
+                        if (engine.Overrides != null)
+                        {
+                            fileOverridesTextBox.Lines = (from x in engine.Overrides where !x.Contains("/sound/") select x).ToArray();
                         }
 
                         // Alert the user

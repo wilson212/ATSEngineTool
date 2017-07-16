@@ -1,0 +1,5 @@
+ATSTool ToDo List:
+ - Select/deselect all transmissions on the Transmission editor
+ - Select/deselect all trucks on the Engine editor
+ - Transmissions:
+	- Add crawl gears

@@ -75,7 +75,7 @@
             this.soundBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.soundBox.FormattingEnabled = true;
             this.soundBox.ItemHeight = 13;
-            this.soundBox.Location = new System.Drawing.Point(194, 191);
+            this.soundBox.Location = new System.Drawing.Point(187, 191);
             this.soundBox.Name = "soundBox";
             this.soundBox.Size = new System.Drawing.Size(203, 21);
             this.soundBox.TabIndex = 5;
@@ -83,11 +83,11 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(38, 193);
+            this.label3.Location = new System.Drawing.Point(45, 194);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(118, 13);
+            this.label3.Size = new System.Drawing.Size(123, 13);
             this.label3.TabIndex = 37;
-            this.label3.Text = "Truck Sound Package:";
+            this.label3.Text = "Engine Sound Package:";
             // 
             // displacementBox
             // 
@@ -97,7 +97,7 @@
             0,
             0,
             65536});
-            this.displacementBox.Location = new System.Drawing.Point(194, 152);
+            this.displacementBox.Location = new System.Drawing.Point(187, 152);
             this.displacementBox.Maximum = new decimal(new int[] {
             200,
             0,
@@ -120,7 +120,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(48, 153);
+            this.label4.Location = new System.Drawing.Point(45, 154);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(108, 13);
             this.label4.TabIndex = 35;
@@ -129,15 +129,15 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(74, 114);
+            this.label2.Location = new System.Drawing.Point(45, 116);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 13);
+            this.label2.Size = new System.Drawing.Size(70, 13);
             this.label2.TabIndex = 33;
-            this.label2.Text = "Series Name:    ";
+            this.label2.Text = "Series Name:";
             // 
             // seriesNameBox
             // 
-            this.seriesNameBox.Location = new System.Drawing.Point(194, 113);
+            this.seriesNameBox.Location = new System.Drawing.Point(187, 113);
             this.seriesNameBox.Name = "seriesNameBox";
             this.seriesNameBox.Size = new System.Drawing.Size(203, 20);
             this.seriesNameBox.TabIndex = 3;
@@ -147,7 +147,7 @@
             this.iconBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.iconBox.FormattingEnabled = true;
             this.iconBox.ItemHeight = 13;
-            this.iconBox.Location = new System.Drawing.Point(194, 34);
+            this.iconBox.Location = new System.Drawing.Point(187, 34);
             this.iconBox.Name = "iconBox";
             this.iconBox.Size = new System.Drawing.Size(203, 21);
             this.iconBox.TabIndex = 1;
@@ -156,7 +156,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(89, 36);
+            this.label10.Location = new System.Drawing.Point(45, 37);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(67, 13);
             this.label10.TabIndex = 31;
@@ -165,15 +165,15 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(71, 75);
+            this.label1.Location = new System.Drawing.Point(45, 77);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(85, 13);
+            this.label1.Size = new System.Drawing.Size(73, 13);
             this.label1.TabIndex = 28;
-            this.label1.Text = "Manufacturer:    ";
+            this.label1.Text = "Manufacturer:";
             // 
             // manuNameBox
             // 
-            this.manuNameBox.Location = new System.Drawing.Point(194, 74);
+            this.manuNameBox.Location = new System.Drawing.Point(187, 74);
             this.manuNameBox.Name = "manuNameBox";
             this.manuNameBox.Size = new System.Drawing.Size(203, 20);
             this.manuNameBox.TabIndex = 2;

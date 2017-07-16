@@ -123,9 +123,7 @@
   <data name="pictureBox1.ToolTip" xml:space="preserve">
     <value>Use the following directives in your filepaths:
 
-@EP = Engine Path: Declares the path to the Sound packages sound folder
-
-@CP = Common Path: Declares the path to the common sounds folder.
+@SP = Sound Package Path: Declares the path to the Sound package's sound folder
 
 @DP = Default Path: Declares the default truck path (/sound/truck/default/)</value>
   </data>

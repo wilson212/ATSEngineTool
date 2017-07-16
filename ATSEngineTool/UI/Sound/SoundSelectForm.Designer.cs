@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.contentPanel = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.importSoundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -37,7 +38,6 @@
             this.deleteSoundFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.headerPanel = new System.Windows.Forms.Panel();
             this.shadowLabel1 = new System.Windows.Forms.ShadowLabel();
-            this.label11 = new System.Windows.Forms.Label();
             this.contentPanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.headerPanel.SuspendLayout();
@@ -53,6 +53,16 @@
             this.contentPanel.Size = new System.Drawing.Size(412, 412);
             this.contentPanel.TabIndex = 38;
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(28, 374);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(153, 13);
+            this.label11.TabIndex = 31;
+            this.label11.Text = "* Double Click to Select Sound";
+            // 
             // treeView1
             // 
             this.treeView1.ContextMenuStrip = this.contextMenuStrip1;
@@ -63,6 +73,7 @@
             this.treeView1.TabIndex = 0;
             this.treeView1.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeCollapse);
             this.treeView1.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeExpand);
+            this.treeView1.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.treeView1_DrawNode);
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
             // 
@@ -120,17 +131,7 @@
             this.shadowLabel1.TabIndex = 0;
             this.shadowLabel1.Text = "Select A Sound File";
             // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(28, 374);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(153, 13);
-            this.label11.TabIndex = 31;
-            this.label11.Text = "* Double Click to Select Sound";
-            // 
-            // SoundFileManager
+            // SoundSelectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -141,7 +142,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "SoundFileManager";
+            this.Name = "SoundSelectForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Choose Sound File";
             this.contentPanel.ResumeLayout(false);

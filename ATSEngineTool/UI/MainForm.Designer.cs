@@ -114,21 +114,38 @@
             this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.soundListView = new BrightIdeasSoftware.TreeListView();
+            this.engineSoundListView = new BrightIdeasSoftware.TreeListView();
             this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.toolStrip7 = new System.Windows.Forms.ToolStrip();
-            this.newSoundButton = new System.Windows.Forms.ToolStripButton();
-            this.removeSoundButton = new System.Windows.Forms.ToolStripButton();
-            this.editSoundButton = new System.Windows.Forms.ToolStripButton();
+            this.newEngineSoundButton = new System.Windows.Forms.ToolStripButton();
+            this.removeEngineSoundButton = new System.Windows.Forms.ToolStripButton();
+            this.editEngineSoundButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip8 = new System.Windows.Forms.ToolStrip();
-            this.newPackageButton = new System.Windows.Forms.ToolStripButton();
-            this.removePackageButton = new System.Windows.Forms.ToolStripButton();
-            this.packageListView = new System.Windows.Forms.ListView();
+            this.newEnginePackageButton = new System.Windows.Forms.ToolStripButton();
+            this.removeEnginePackageButton = new System.Windows.Forms.ToolStripButton();
+            this.enginePackageListView = new System.Windows.Forms.ListView();
             this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.pictureBox8 = new System.Windows.Forms.PictureBox();
+            this.truckSoundListView = new BrightIdeasSoftware.TreeListView();
+            this.olvColumn4 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn5 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn6 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.toolStrip9 = new System.Windows.Forms.ToolStrip();
+            this.newTruckSoundButton = new System.Windows.Forms.ToolStripButton();
+            this.removeTruckSoundButton = new System.Windows.Forms.ToolStripButton();
+            this.editTruckSoundButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip10 = new System.Windows.Forms.ToolStrip();
+            this.newTruckPackageButton = new System.Windows.Forms.ToolStripButton();
+            this.removeTruckPackageButton = new System.Windows.Forms.ToolStripButton();
+            this.truckPackageListView = new System.Windows.Forms.ListView();
+            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
             this.menuItem1 = new System.Windows.Forms.MenuItem();
             this.closeMenuItem = new System.Windows.Forms.MenuItem();
@@ -144,6 +161,10 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.headerPanel = new System.Windows.Forms.Panel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -173,12 +194,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.soundListView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.engineSoundListView)).BeginInit();
             this.toolStrip7.SuspendLayout();
             this.toolStrip8.SuspendLayout();
+            this.tabPage6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.truckSoundListView)).BeginInit();
+            this.toolStrip9.SuspendLayout();
+            this.toolStrip10.SuspendLayout();
             this.panel1.SuspendLayout();
             this.headerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -188,6 +215,7 @@
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
+            this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Location = new System.Drawing.Point(-1, 7);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
@@ -310,8 +338,8 @@
             this.truckListView1.CheckBoxes = true;
             this.truckListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader4});
+            this.truckListView1.ContextMenuStrip = this.contextMenuStrip1;
             this.truckListView1.FullRowSelect = true;
-            this.truckListView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.truckListView1.HideSelection = false;
             this.truckListView1.Location = new System.Drawing.Point(17, 25);
             this.truckListView1.MultiSelect = false;
@@ -1075,18 +1103,18 @@
             // tabPage5
             // 
             this.tabPage5.Controls.Add(this.pictureBox6);
-            this.tabPage5.Controls.Add(this.soundListView);
+            this.tabPage5.Controls.Add(this.engineSoundListView);
             this.tabPage5.Controls.Add(this.label10);
             this.tabPage5.Controls.Add(this.label11);
             this.tabPage5.Controls.Add(this.toolStrip7);
             this.tabPage5.Controls.Add(this.toolStrip8);
-            this.tabPage5.Controls.Add(this.packageListView);
+            this.tabPage5.Controls.Add(this.enginePackageListView);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage5.Size = new System.Drawing.Size(808, 408);
             this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "Sound Management";
+            this.tabPage5.Text = "Engine Sound Management";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
             // pictureBox6
@@ -1100,33 +1128,33 @@
             this.pictureBox6.TabIndex = 33;
             this.pictureBox6.TabStop = false;
             // 
-            // soundListView
+            // engineSoundListView
             // 
-            this.soundListView.AllColumns.Add(this.olvColumn1);
-            this.soundListView.AllColumns.Add(this.olvColumn2);
-            this.soundListView.AllColumns.Add(this.olvColumn3);
-            this.soundListView.CellEditUseWholeCell = false;
-            this.soundListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.engineSoundListView.AllColumns.Add(this.olvColumn1);
+            this.engineSoundListView.AllColumns.Add(this.olvColumn2);
+            this.engineSoundListView.AllColumns.Add(this.olvColumn3);
+            this.engineSoundListView.CellEditUseWholeCell = false;
+            this.engineSoundListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumn1,
             this.olvColumn2,
             this.olvColumn3});
-            this.soundListView.Cursor = System.Windows.Forms.Cursors.Default;
-            this.soundListView.FullRowSelect = true;
-            this.soundListView.HeaderMaximumHeight = 24;
-            this.soundListView.HeaderMinimumHeight = 24;
-            this.soundListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.soundListView.Location = new System.Drawing.Point(391, 49);
-            this.soundListView.MultiSelect = false;
-            this.soundListView.Name = "soundListView";
-            this.soundListView.SelectAllOnControlA = false;
-            this.soundListView.ShowGroups = false;
-            this.soundListView.Size = new System.Drawing.Size(388, 309);
-            this.soundListView.TabIndex = 32;
-            this.soundListView.UseCompatibleStateImageBehavior = false;
-            this.soundListView.View = System.Windows.Forms.View.Details;
-            this.soundListView.VirtualMode = true;
-            this.soundListView.SelectedIndexChanged += new System.EventHandler(this.soundListView_SelectedIndexChanged);
-            this.soundListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.soundListView_MouseDoubleClick);
+            this.engineSoundListView.Cursor = System.Windows.Forms.Cursors.Default;
+            this.engineSoundListView.FullRowSelect = true;
+            this.engineSoundListView.HeaderMaximumHeight = 24;
+            this.engineSoundListView.HeaderMinimumHeight = 24;
+            this.engineSoundListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.engineSoundListView.Location = new System.Drawing.Point(391, 49);
+            this.engineSoundListView.MultiSelect = false;
+            this.engineSoundListView.Name = "engineSoundListView";
+            this.engineSoundListView.SelectAllOnControlA = false;
+            this.engineSoundListView.ShowGroups = false;
+            this.engineSoundListView.Size = new System.Drawing.Size(388, 309);
+            this.engineSoundListView.TabIndex = 32;
+            this.engineSoundListView.UseCompatibleStateImageBehavior = false;
+            this.engineSoundListView.View = System.Windows.Forms.View.Details;
+            this.engineSoundListView.VirtualMode = true;
+            this.engineSoundListView.SelectedIndexChanged += new System.EventHandler(this.engineSoundListView_SelectedIndexChanged);
+            this.engineSoundListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.engineSoundListView_MouseDoubleClick);
             // 
             // olvColumn1
             // 
@@ -1170,98 +1198,289 @@
             this.toolStrip7.AutoSize = false;
             this.toolStrip7.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip7.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newSoundButton,
-            this.removeSoundButton,
-            this.editSoundButton});
+            this.newEngineSoundButton,
+            this.removeEngineSoundButton,
+            this.editEngineSoundButton});
             this.toolStrip7.Location = new System.Drawing.Point(391, 23);
             this.toolStrip7.Name = "toolStrip7";
             this.toolStrip7.Size = new System.Drawing.Size(388, 25);
             this.toolStrip7.TabIndex = 29;
             this.toolStrip7.Text = "toolStrip7";
             // 
-            // newSoundButton
+            // newEngineSoundButton
             // 
-            this.newSoundButton.Enabled = false;
-            this.newSoundButton.Image = global::ATSEngineTool.Properties.Resources.add;
-            this.newSoundButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.newSoundButton.Name = "newSoundButton";
-            this.newSoundButton.Size = new System.Drawing.Size(76, 22);
-            this.newSoundButton.Text = "Add New";
-            this.newSoundButton.Click += new System.EventHandler(this.newSoundButton_Click);
+            this.newEngineSoundButton.Enabled = false;
+            this.newEngineSoundButton.Image = global::ATSEngineTool.Properties.Resources.add;
+            this.newEngineSoundButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.newEngineSoundButton.Name = "newEngineSoundButton";
+            this.newEngineSoundButton.Size = new System.Drawing.Size(76, 22);
+            this.newEngineSoundButton.Text = "Add New";
+            this.newEngineSoundButton.Click += new System.EventHandler(this.newEngineSoundButton_Click);
             // 
-            // removeSoundButton
+            // removeEngineSoundButton
             // 
-            this.removeSoundButton.Enabled = false;
-            this.removeSoundButton.Image = global::ATSEngineTool.Properties.Resources.DeleteRed;
-            this.removeSoundButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.removeSoundButton.Name = "removeSoundButton";
-            this.removeSoundButton.Size = new System.Drawing.Size(70, 22);
-            this.removeSoundButton.Text = "Remove";
-            this.removeSoundButton.Click += new System.EventHandler(this.removeSoundButton_Click);
+            this.removeEngineSoundButton.Enabled = false;
+            this.removeEngineSoundButton.Image = global::ATSEngineTool.Properties.Resources.DeleteRed;
+            this.removeEngineSoundButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.removeEngineSoundButton.Name = "removeEngineSoundButton";
+            this.removeEngineSoundButton.Size = new System.Drawing.Size(70, 22);
+            this.removeEngineSoundButton.Text = "Remove";
+            this.removeEngineSoundButton.Click += new System.EventHandler(this.removeEngineSoundButton_Click);
             // 
-            // editSoundButton
+            // editEngineSoundButton
             // 
-            this.editSoundButton.Enabled = false;
-            this.editSoundButton.Image = global::ATSEngineTool.Properties.Resources.edit;
-            this.editSoundButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.editSoundButton.Name = "editSoundButton";
-            this.editSoundButton.Size = new System.Drawing.Size(84, 22);
-            this.editSoundButton.Text = "Edit Sound";
-            this.editSoundButton.Click += new System.EventHandler(this.editSoundButton_Click);
+            this.editEngineSoundButton.Enabled = false;
+            this.editEngineSoundButton.Image = global::ATSEngineTool.Properties.Resources.edit;
+            this.editEngineSoundButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.editEngineSoundButton.Name = "editEngineSoundButton";
+            this.editEngineSoundButton.Size = new System.Drawing.Size(84, 22);
+            this.editEngineSoundButton.Text = "Edit Sound";
+            this.editEngineSoundButton.Click += new System.EventHandler(this.editEngineSoundButton_Click);
             // 
             // toolStrip8
             // 
             this.toolStrip8.AutoSize = false;
             this.toolStrip8.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip8.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newPackageButton,
-            this.removePackageButton});
+            this.newEnginePackageButton,
+            this.removeEnginePackageButton});
             this.toolStrip8.Location = new System.Drawing.Point(32, 23);
             this.toolStrip8.Name = "toolStrip8";
             this.toolStrip8.Size = new System.Drawing.Size(246, 25);
             this.toolStrip8.TabIndex = 28;
             this.toolStrip8.Text = "toolStrip8";
             // 
-            // newPackageButton
+            // newEnginePackageButton
             // 
-            this.newPackageButton.Image = global::ATSEngineTool.Properties.Resources.add;
-            this.newPackageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.newPackageButton.Name = "newPackageButton";
-            this.newPackageButton.Size = new System.Drawing.Size(76, 22);
-            this.newPackageButton.Text = "Add New";
-            this.newPackageButton.Click += new System.EventHandler(this.newPackageButton_Click);
+            this.newEnginePackageButton.Image = global::ATSEngineTool.Properties.Resources.add;
+            this.newEnginePackageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.newEnginePackageButton.Name = "newEnginePackageButton";
+            this.newEnginePackageButton.Size = new System.Drawing.Size(76, 22);
+            this.newEnginePackageButton.Text = "Add New";
+            this.newEnginePackageButton.Click += new System.EventHandler(this.newEnginePackageButton_Click);
             // 
-            // removePackageButton
+            // removeEnginePackageButton
             // 
-            this.removePackageButton.Image = global::ATSEngineTool.Properties.Resources.DeleteRed;
-            this.removePackageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.removePackageButton.Name = "removePackageButton";
-            this.removePackageButton.Size = new System.Drawing.Size(70, 22);
-            this.removePackageButton.Text = "Remove";
-            this.removePackageButton.Click += new System.EventHandler(this.removePackageButton_Click);
+            this.removeEnginePackageButton.Image = global::ATSEngineTool.Properties.Resources.DeleteRed;
+            this.removeEnginePackageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.removeEnginePackageButton.Name = "removeEnginePackageButton";
+            this.removeEnginePackageButton.Size = new System.Drawing.Size(70, 22);
+            this.removeEnginePackageButton.Text = "Remove";
+            this.removeEnginePackageButton.Click += new System.EventHandler(this.removeEnginePackageButton_Click);
             // 
-            // packageListView
+            // enginePackageListView
             // 
-            this.packageListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
-            this.packageListView.AutoArrange = false;
-            this.packageListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.enginePackageListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.enginePackageListView.AutoArrange = false;
+            this.enginePackageListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader14});
-            this.packageListView.FullRowSelect = true;
-            this.packageListView.HideSelection = false;
-            this.packageListView.Location = new System.Drawing.Point(32, 49);
-            this.packageListView.MultiSelect = false;
-            this.packageListView.Name = "packageListView";
-            this.packageListView.Size = new System.Drawing.Size(246, 310);
-            this.packageListView.TabIndex = 26;
-            this.packageListView.UseCompatibleStateImageBehavior = false;
-            this.packageListView.View = System.Windows.Forms.View.Details;
-            this.packageListView.SelectedIndexChanged += new System.EventHandler(this.packageListView_SelectedIndexChanged);
-            this.packageListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.packageListView_MouseDoubleClick);
+            this.enginePackageListView.FullRowSelect = true;
+            this.enginePackageListView.HideSelection = false;
+            this.enginePackageListView.Location = new System.Drawing.Point(32, 49);
+            this.enginePackageListView.MultiSelect = false;
+            this.enginePackageListView.Name = "enginePackageListView";
+            this.enginePackageListView.Size = new System.Drawing.Size(246, 310);
+            this.enginePackageListView.TabIndex = 26;
+            this.enginePackageListView.UseCompatibleStateImageBehavior = false;
+            this.enginePackageListView.View = System.Windows.Forms.View.Details;
+            this.enginePackageListView.SelectedIndexChanged += new System.EventHandler(this.enginePackageListView_SelectedIndexChanged);
+            this.enginePackageListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.enginePackageListView_MouseDoubleClick);
             // 
             // columnHeader14
             // 
             this.columnHeader14.Text = "Sound Package";
             this.columnHeader14.Width = 229;
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.pictureBox8);
+            this.tabPage6.Controls.Add(this.truckSoundListView);
+            this.tabPage6.Controls.Add(this.label12);
+            this.tabPage6.Controls.Add(this.label13);
+            this.tabPage6.Controls.Add(this.toolStrip9);
+            this.tabPage6.Controls.Add(this.toolStrip10);
+            this.tabPage6.Controls.Add(this.truckPackageListView);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(808, 408);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "Truck Sound Management";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox8
+            // 
+            this.pictureBox8.Image = global::ATSEngineTool.Properties.Resources.go_next;
+            this.pictureBox8.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox8.InitialImage")));
+            this.pictureBox8.Location = new System.Drawing.Point(286, 172);
+            this.pictureBox8.Name = "pictureBox8";
+            this.pictureBox8.Size = new System.Drawing.Size(99, 50);
+            this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox8.TabIndex = 40;
+            this.pictureBox8.TabStop = false;
+            // 
+            // truckSoundListView
+            // 
+            this.truckSoundListView.AllColumns.Add(this.olvColumn4);
+            this.truckSoundListView.AllColumns.Add(this.olvColumn5);
+            this.truckSoundListView.AllColumns.Add(this.olvColumn6);
+            this.truckSoundListView.CellEditUseWholeCell = false;
+            this.truckSoundListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvColumn4,
+            this.olvColumn5,
+            this.olvColumn6});
+            this.truckSoundListView.Cursor = System.Windows.Forms.Cursors.Default;
+            this.truckSoundListView.FullRowSelect = true;
+            this.truckSoundListView.HeaderMaximumHeight = 24;
+            this.truckSoundListView.HeaderMinimumHeight = 24;
+            this.truckSoundListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.truckSoundListView.Location = new System.Drawing.Point(391, 49);
+            this.truckSoundListView.MultiSelect = false;
+            this.truckSoundListView.Name = "truckSoundListView";
+            this.truckSoundListView.SelectAllOnControlA = false;
+            this.truckSoundListView.ShowGroups = false;
+            this.truckSoundListView.Size = new System.Drawing.Size(388, 309);
+            this.truckSoundListView.TabIndex = 39;
+            this.truckSoundListView.UseCompatibleStateImageBehavior = false;
+            this.truckSoundListView.View = System.Windows.Forms.View.Details;
+            this.truckSoundListView.VirtualMode = true;
+            this.truckSoundListView.SelectedIndexChanged += new System.EventHandler(this.truckSoundListView_SelectedIndexChanged);
+            this.truckSoundListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.truckSoundListView_MouseDoubleClick);
+            // 
+            // olvColumn4
+            // 
+            this.olvColumn4.AspectName = "SoundName";
+            this.olvColumn4.Text = "Sound Name";
+            this.olvColumn4.Width = 155;
+            // 
+            // olvColumn5
+            // 
+            this.olvColumn5.AspectName = "Filename";
+            this.olvColumn5.Text = "Filename";
+            this.olvColumn5.Width = 150;
+            // 
+            // olvColumn6
+            // 
+            this.olvColumn6.AspectName = "Volume";
+            this.olvColumn6.Text = "Volume";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(29, 362);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(107, 13);
+            this.label12.TabIndex = 38;
+            this.label12.Text = "* Double Click to Edit";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(388, 362);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(107, 13);
+            this.label13.TabIndex = 37;
+            this.label13.Text = "* Double Click to Edit";
+            // 
+            // toolStrip9
+            // 
+            this.toolStrip9.AutoSize = false;
+            this.toolStrip9.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip9.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newTruckSoundButton,
+            this.removeTruckSoundButton,
+            this.editTruckSoundButton});
+            this.toolStrip9.Location = new System.Drawing.Point(391, 23);
+            this.toolStrip9.Name = "toolStrip9";
+            this.toolStrip9.Size = new System.Drawing.Size(388, 25);
+            this.toolStrip9.TabIndex = 36;
+            this.toolStrip9.Text = "toolStrip9";
+            // 
+            // newTruckSoundButton
+            // 
+            this.newTruckSoundButton.Enabled = false;
+            this.newTruckSoundButton.Image = global::ATSEngineTool.Properties.Resources.add;
+            this.newTruckSoundButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.newTruckSoundButton.Name = "newTruckSoundButton";
+            this.newTruckSoundButton.Size = new System.Drawing.Size(76, 22);
+            this.newTruckSoundButton.Text = "Add New";
+            this.newTruckSoundButton.Click += new System.EventHandler(this.newTruckSoundButton_Click);
+            // 
+            // removeTruckSoundButton
+            // 
+            this.removeTruckSoundButton.Enabled = false;
+            this.removeTruckSoundButton.Image = global::ATSEngineTool.Properties.Resources.DeleteRed;
+            this.removeTruckSoundButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.removeTruckSoundButton.Name = "removeTruckSoundButton";
+            this.removeTruckSoundButton.Size = new System.Drawing.Size(70, 22);
+            this.removeTruckSoundButton.Text = "Remove";
+            this.removeTruckSoundButton.Click += new System.EventHandler(this.removeTruckSoundButton_Click);
+            // 
+            // editTruckSoundButton
+            // 
+            this.editTruckSoundButton.Enabled = false;
+            this.editTruckSoundButton.Image = global::ATSEngineTool.Properties.Resources.edit;
+            this.editTruckSoundButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.editTruckSoundButton.Name = "editTruckSoundButton";
+            this.editTruckSoundButton.Size = new System.Drawing.Size(84, 22);
+            this.editTruckSoundButton.Text = "Edit Sound";
+            this.editTruckSoundButton.Click += new System.EventHandler(this.editTruckSoundButton_Click);
+            // 
+            // toolStrip10
+            // 
+            this.toolStrip10.AutoSize = false;
+            this.toolStrip10.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip10.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newTruckPackageButton,
+            this.removeTruckPackageButton});
+            this.toolStrip10.Location = new System.Drawing.Point(32, 23);
+            this.toolStrip10.Name = "toolStrip10";
+            this.toolStrip10.Size = new System.Drawing.Size(246, 25);
+            this.toolStrip10.TabIndex = 35;
+            this.toolStrip10.Text = "toolStrip10";
+            // 
+            // newTruckPackageButton
+            // 
+            this.newTruckPackageButton.Image = global::ATSEngineTool.Properties.Resources.add;
+            this.newTruckPackageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.newTruckPackageButton.Name = "newTruckPackageButton";
+            this.newTruckPackageButton.Size = new System.Drawing.Size(76, 22);
+            this.newTruckPackageButton.Text = "Add New";
+            this.newTruckPackageButton.Click += new System.EventHandler(this.newTruckPackageButton_Click);
+            // 
+            // removeTruckPackageButton
+            // 
+            this.removeTruckPackageButton.Image = global::ATSEngineTool.Properties.Resources.DeleteRed;
+            this.removeTruckPackageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.removeTruckPackageButton.Name = "removeTruckPackageButton";
+            this.removeTruckPackageButton.Size = new System.Drawing.Size(70, 22);
+            this.removeTruckPackageButton.Text = "Remove";
+            this.removeTruckPackageButton.Click += new System.EventHandler(this.removeTruckPackageButton_Click);
+            // 
+            // truckPackageListView
+            // 
+            this.truckPackageListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.truckPackageListView.AutoArrange = false;
+            this.truckPackageListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader15});
+            this.truckPackageListView.FullRowSelect = true;
+            this.truckPackageListView.HideSelection = false;
+            this.truckPackageListView.Location = new System.Drawing.Point(32, 49);
+            this.truckPackageListView.MultiSelect = false;
+            this.truckPackageListView.Name = "truckPackageListView";
+            this.truckPackageListView.Size = new System.Drawing.Size(246, 310);
+            this.truckPackageListView.TabIndex = 34;
+            this.truckPackageListView.UseCompatibleStateImageBehavior = false;
+            this.truckPackageListView.View = System.Windows.Forms.View.Details;
+            this.truckPackageListView.SelectedIndexChanged += new System.EventHandler(this.truckPackageListView_SelectedIndexChanged);
+            this.truckPackageListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.truckPackageListView_MouseDoubleClick);
+            // 
+            // columnHeader15
+            // 
+            this.columnHeader15.Text = "Sound Package";
+            this.columnHeader15.Width = 229;
             // 
             // mainMenu1
             // 
@@ -1367,6 +1586,34 @@
             this.pictureBox2.TabIndex = 8;
             this.pictureBox2.TabStop = false;
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.selectAllToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.selectNoneToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(138, 54);
+            // 
+            // selectAllToolStripMenuItem
+            // 
+            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.selectAllToolStripMenuItem.Text = "Select All";
+            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
+            // 
+            // selectNoneToolStripMenuItem
+            // 
+            this.selectNoneToolStripMenuItem.Name = "selectNoneToolStripMenuItem";
+            this.selectNoneToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.selectNoneToolStripMenuItem.Text = "Select None";
+            this.selectNoneToolStripMenuItem.Click += new System.EventHandler(this.selectNoneToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(134, 6);
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1423,14 +1670,23 @@
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.soundListView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.engineSoundListView)).EndInit();
             this.toolStrip7.ResumeLayout(false);
             this.toolStrip7.PerformLayout();
             this.toolStrip8.ResumeLayout(false);
             this.toolStrip8.PerformLayout();
+            this.tabPage6.ResumeLayout(false);
+            this.tabPage6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.truckSoundListView)).EndInit();
+            this.toolStrip9.ResumeLayout(false);
+            this.toolStrip9.PerformLayout();
+            this.toolStrip10.ResumeLayout(false);
+            this.toolStrip10.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.headerPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1533,15 +1789,15 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ToolStrip toolStrip7;
-        private System.Windows.Forms.ToolStripButton newSoundButton;
-        private System.Windows.Forms.ToolStripButton removeSoundButton;
-        private System.Windows.Forms.ToolStripButton editSoundButton;
+        private System.Windows.Forms.ToolStripButton newEngineSoundButton;
+        private System.Windows.Forms.ToolStripButton removeEngineSoundButton;
+        private System.Windows.Forms.ToolStripButton editEngineSoundButton;
         private System.Windows.Forms.ToolStrip toolStrip8;
-        private System.Windows.Forms.ToolStripButton newPackageButton;
-        private System.Windows.Forms.ToolStripButton removePackageButton;
-        private System.Windows.Forms.ListView packageListView;
+        private System.Windows.Forms.ToolStripButton newEnginePackageButton;
+        private System.Windows.Forms.ToolStripButton removeEnginePackageButton;
+        private System.Windows.Forms.ListView enginePackageListView;
         private System.Windows.Forms.ColumnHeader columnHeader14;
-        private BrightIdeasSoftware.TreeListView soundListView;
+        private BrightIdeasSoftware.TreeListView engineSoundListView;
         private BrightIdeasSoftware.OLVColumn olvColumn1;
         private BrightIdeasSoftware.OLVColumn olvColumn2;
         private BrightIdeasSoftware.OLVColumn olvColumn3;
@@ -1551,6 +1807,27 @@
         private System.Windows.Forms.MenuItem vacuumMenuItem;
         private System.Windows.Forms.MenuItem clearMenuItem;
         private System.Windows.Forms.MenuItem menuItem2;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.PictureBox pictureBox8;
+        private BrightIdeasSoftware.TreeListView truckSoundListView;
+        private BrightIdeasSoftware.OLVColumn olvColumn4;
+        private BrightIdeasSoftware.OLVColumn olvColumn5;
+        private BrightIdeasSoftware.OLVColumn olvColumn6;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ToolStrip toolStrip9;
+        private System.Windows.Forms.ToolStripButton newTruckSoundButton;
+        private System.Windows.Forms.ToolStripButton removeTruckSoundButton;
+        private System.Windows.Forms.ToolStripButton editTruckSoundButton;
+        private System.Windows.Forms.ToolStrip toolStrip10;
+        private System.Windows.Forms.ToolStripButton newTruckPackageButton;
+        private System.Windows.Forms.ToolStripButton removeTruckPackageButton;
+        private System.Windows.Forms.ListView truckPackageListView;
+        private System.Windows.Forms.ColumnHeader columnHeader15;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem selectNoneToolStripMenuItem;
     }
 }
 

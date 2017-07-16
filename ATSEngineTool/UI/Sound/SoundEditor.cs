@@ -16,34 +16,50 @@ namespace ATSEngineTool
     {
         protected bool NewSound { get; set; }
 
-        protected SoundType Type { get; set; }
+        protected Sound Sound { get; set; }
 
-        protected EngineSound Sound { get; set; }
+        protected SoundLocation Type { get; set; }
 
         protected SoundPackage Package { get; set; }
 
-        public SoundEditor(SoundPackage package, SoundType type)
+        public SoundEditor(SoundPackage package, SoundLocation type)
         {
+            // Create controls and style the header
             InitializeComponent();
             headerPanel.BackColor = Color.FromArgb(51, 53, 53);
 
+            // Set internals
             NewSound = true;
-            Sound = new EngineSound();
             Package = package;
             Type = type;
+
+            // Create new sound
+            switch (package.SoundType)
+            {
+                case SoundType.Engine:
+                    Sound = new EngineSound();
+                    break;
+                case SoundType.Truck:
+                    Sound = new TruckSound();
+                    break;
+                default:
+                    throw new Exception("Invalid sound type");
+            }
 
             InitializeForm();
         }
 
-        public SoundEditor(EngineSound sound)
+        public SoundEditor(Sound sound, SoundPackage package)
         {
+            // Create controls and style the header
             InitializeComponent();
             headerPanel.BackColor = Color.FromArgb(51, 53, 53);
 
-            NewSound = sound == null;
+            // Set internals
+            NewSound = false;
             Sound = sound;
-            Package = sound.Package;
-            Type = sound.Type;
+            Package = package;
+            Type = sound.Location;
 
             InitializeForm();
         }
@@ -51,29 +67,47 @@ namespace ATSEngineTool
         private void InitializeForm()
         {
             // Set title
-            if (Type == SoundType.Interior)
-                this.Text = "Interior Sound Editor";
-            else
-                this.Text = "Exterior Sound Editor";
+            this.Text = (Type == SoundLocation.Interior) ? "Interior Sound Editor" : "Exterior Sound Editor";
 
+            // Get a list of existing sound attributes already in the sound package
             var existing = new List<SoundAttribute>();
             if (NewSound)
-                existing.AddRange(Package.EngineSounds.Where(x => x.Type == Type).Select(x => x.Attribute));
+            {
+                switch (Package.SoundType)
+                {
+                    case SoundType.Engine:
+                        var ep = (EngineSoundPackage)Package;
+                        existing.AddRange(ep.EngineSounds.Where(x => x.Location == Type).Select(x => x.Attribute));
+                        break;
+                    case SoundType.Truck:
+                        var tp = (TruckSoundPackage)Package;
+                        existing.AddRange(tp.TruckSounds.Where(x => x.Location == Type).Select(x => x.Attribute));
+                        break;
+                    default:
+                        throw new Exception("Invalid sound type");
+                }
+            }
 
             // Fill selection box
             foreach (var name in Enum.GetNames(typeof(SoundAttribute)))
             {
-                // Skip existing sounds for this package that are not array sounds
+                // Fetch sound info for this attribute
                 var val = (SoundAttribute)Enum.Parse(typeof(SoundAttribute), name);
-                if (existing.Contains(val) && !SoundInfo.Attributes[val].IsArray)
+                SoundInfo si = SoundInfo.Attributes[val];
+
+                // Skip existing sounds for this package that are not array sounds
+                if (si.SoundType != Package.SoundType || (existing.Contains(val) && !si.IsArray))
+                {
                     continue;
+                }
 
                 // Add item
                 attrType.Items.Add(val);
-                if (Sound != null && name == Sound.Attribute.ToString())
+                if (Sound != null && val == Sound.Attribute)
                     attrType.SelectedIndex = attrType.Items.Count - 1;
             }
 
+            // If not a new sound, fill form data
             if (!NewSound)
             {
                 attrType.Enabled = false;
@@ -81,14 +115,23 @@ namespace ATSEngineTool
                 volumeBox.Value = (decimal)(Sound.Volume * 100);
                 checkBox2D.Checked = Sound.Is2D;
                 checkBoxLooped.Checked = Sound.Looped;
-                if (Sound.IsEngineSound)
+                if (Package.SoundType == SoundType.Engine)
                 {
-                    pitchBox.Value = Sound.PitchReference;
-                    maxRpmBox.Value = Sound.MaxRpm;
-                    minRpmBox.Value = Sound.MinRpm;
+                    var es = (EngineSound)Sound;
+                    pitchBox.Value = es.PitchReference;
+                    maxRpmBox.Value = es.MaxRpm;
+                    minRpmBox.Value = es.MinRpm;
                 }
             }
-            
+
+            // Enable or Disable engine specific inputs
+            bool enabled = Package.SoundType == SoundType.Engine;
+            groupBox1.Enabled = enabled;
+            pitchBox.Enabled = enabled;
+            maxRpmBox.Enabled = enabled;
+            minRpmBox.Enabled = enabled;
+
+            // Set default attribute index
             if (attrType.SelectedIndex == -1)
                 attrType.SelectedIndex = 0;
         }
@@ -99,22 +142,32 @@ namespace ATSEngineTool
 
             // Set new values
             Sound.Attribute = (SoundAttribute)attrType.SelectedItem;
-            Sound.Type = Type;
-            Sound.Package = Package;
+            Sound.Location = Type;
+            Sound.PackageId = Package.Id;
             Sound.FileName = fileNameBox.Text;
             Sound.Volume = (double)(volumeBox.Value / 100);
             Sound.Is2D = checkBox2D.Checked;
             Sound.Looped = checkBoxLooped.Checked;
-            if (Sound.IsEngineSound)
-            {
-                Sound.PitchReference = (int)pitchBox.Value;
-                Sound.MaxRpm = (int)maxRpmBox.Value;
-                Sound.MinRpm = (int)minRpmBox.Value;
-            }
 
+            // Save sound to database
             using (AppDatabase db = new AppDatabase())
             {
-                db.EngineSounds.AddOrUpdate(Sound);
+                switch (Package.SoundType)
+                {
+                    case SoundType.Engine:
+                        var es = (EngineSound)Sound;
+                        es.PitchReference = (int)pitchBox.Value;
+                        es.MaxRpm = (int)maxRpmBox.Value;
+                        es.MinRpm = (int)minRpmBox.Value;
+                        db.EngineSounds.AddOrUpdate(es);
+                        break;
+                    case SoundType.Truck:
+                        var ts = (TruckSound)Sound;
+                        db.TruckSounds.AddOrUpdate(ts);
+                        break;
+                    default:
+                        throw new Exception("Invalid sound type");
+                }
             }
 
             // Close form
@@ -123,12 +176,7 @@ namespace ATSEngineTool
 
         private void attrType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var attr = (SoundAttribute)Enum.Parse(typeof(SoundAttribute), attrType.SelectedItem.ToString());
-            groupBox1.Enabled = SoundInfo.Attributes[attr].IsEngineSound;
 
-            pitchBox.Enabled = groupBox1.Enabled;
-            maxRpmBox.Enabled = groupBox1.Enabled;
-            minRpmBox.Enabled = groupBox1.Enabled;
         }
 
         private bool PassesValidaion()
@@ -165,7 +213,7 @@ namespace ATSEngineTool
         
         private void searchButton_Click(object sender, EventArgs e)
         {
-            using (SoundSelectForm frm = new SoundSelectForm(Package))
+            using (SoundSelectForm frm = new SoundSelectForm(Package, Sound))
             {
                 var result = frm.ShowDialog();
                 if (result == DialogResult.OK)
@@ -175,10 +223,10 @@ namespace ATSEngineTool
             }
         }
 
-        private DialogResult AskUserAboutSwitch(SoundType type)
+        private DialogResult AskUserAboutSwitch(SoundLocation type)
         {
-            string prefix = (Type == SoundType.Exterior) ? "interior" : "exterior";
-            string suffix = (Type == SoundType.Exterior) ? "exterior" : "interior";
+            string prefix = (Type == SoundLocation.Exterior) ? "interior" : "exterior";
+            string suffix = (Type == SoundLocation.Exterior) ? "exterior" : "interior";
             return MessageBox.Show(
                $"The selected sound file is an {prefix} sound file. Would you like to create a copy in the {suffix} folder?", 
                 "Verification", 

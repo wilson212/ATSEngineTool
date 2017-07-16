@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ATSEngineTool.Database;
@@ -99,10 +100,12 @@ namespace ATSEngineTool
 
             // Enable sorting behavior on certain listviews
             ListViewSorter = new MultipleListViewColumnSorter();
+            ListViewSorter.AddListView(truckListView1, SortOrder.Ascending);
             ListViewSorter.AddListView(truckListView2, SortOrder.Ascending);
             ListViewSorter.AddListView(seriesListView, SortOrder.Ascending);
             ListViewSorter.AddListView(transSeriesListView, SortOrder.Ascending);
-            ListViewSorter.AddListView(packageListView, SortOrder.Ascending);
+            ListViewSorter.AddListView(enginePackageListView, SortOrder.Ascending);
+            ListViewSorter.AddListView(truckPackageListView, SortOrder.Ascending);
 
             // Fill form fields under 1 database connection
             using (AppDatabase db = new AppDatabase())
@@ -117,7 +120,10 @@ namespace ATSEngineTool
                 FillTransmissionSeries(db);
 
                 // Fill Sound Packages
-                FillSoundPackages(db);
+                FillEngineSoundPackages(db);
+
+                // Fill Sound Packages
+                FillTruckSoundPackages(db);
 
                 // Set label text
                 dbVersionLabel.Text = AppDatabase.DatabaseVersion.ToString();
@@ -129,8 +135,10 @@ namespace ATSEngineTool
             engineListView.Columns[3].Text = (imp) ? "Torque" : "N·m";
 
             // Setup the TreeListView (sounds)
-            soundListView.CanExpandGetter = model => ((SoundWrapper)model).ChildCount > 0;
-            soundListView.ChildrenGetter = model => ((SoundWrapper)model).Children;
+            engineSoundListView.CanExpandGetter = model => ((SoundWrapper)model).ChildCount > 0;
+            engineSoundListView.ChildrenGetter = model => ((SoundWrapper)model).Children;
+            truckSoundListView.CanExpandGetter = model => ((SoundWrapper)model).ChildCount > 0;
+            truckSoundListView.ChildrenGetter = model => ((SoundWrapper)model).Children;
 
             // Check for updates?
             if (Program.Config.UpdateCheck)
@@ -142,23 +150,42 @@ namespace ATSEngineTool
 
         #region Functions
 
-        private void FillSoundPackages(AppDatabase db)
+        private void FillEngineSoundPackages(AppDatabase db)
         {
             // Clear old junk
-            packageListView.Items.Clear();
-            soundListView.Items.Clear();
+            enginePackageListView.Items.Clear();
+            engineSoundListView.Roots = new List<SoundWrapper>();
 
             // Fill in packages
-            foreach (var package in db.SoundPackages)
+            foreach (var package in db.EngineSoundPackages)
             {
                 ListViewItem item = new ListViewItem();
                 item.Tag = package;
                 item.Text = package.ToString();
-                packageListView.Items.Add(item);
+                enginePackageListView.Items.Add(item);
             }
 
             // Sorting
-            packageListView.Sort();
+            enginePackageListView.Sort();
+        }
+
+        private void FillTruckSoundPackages(AppDatabase db)
+        {
+            // Clear old junk
+            truckPackageListView.Items.Clear();
+            truckSoundListView.Roots = new List<SoundWrapper>();
+
+            // Fill in packages
+            foreach (var package in db.TruckSoundPackages)
+            {
+                ListViewItem item = new ListViewItem();
+                item.Tag = package;
+                item.Text = package.ToString();
+                truckPackageListView.Items.Add(item);
+            }
+
+            // Sorting
+            truckPackageListView.Sort();
         }
 
         private void FillTransmissionSeries(AppDatabase db)
@@ -776,7 +803,7 @@ namespace ATSEngineTool
         private void workshopModFolder_Click(object sender, EventArgs e)
         {
             // Ensure the folder exists before trying to open
-            if (!Directory.Exists(Mod.ModPath))
+            if (!Directory.Exists(ModBuilder.ModPath))
             {
                 MessageBox.Show(
                     "The mod folder appears to be missing! Make sure you are subscribed to the mod.",
@@ -785,7 +812,7 @@ namespace ATSEngineTool
             }
             else
             {
-                Process.Start(Mod.ModPath);
+                Process.Start(ModBuilder.ModPath);
             }
         }
 
@@ -894,6 +921,24 @@ namespace ATSEngineTool
             Process.Start("https://github.com/wilson212/ATSEngineTool/releases/latest");
         }
 
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Check all items
+            foreach (var item in truckListView1.Items.Cast<ListViewItem>())
+            {
+                item.Checked = true;
+            }
+        }
+
+        private void selectNoneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Un-Check all items
+            foreach (var item in truckListView1.Items.Cast<ListViewItem>())
+            {
+                item.Checked = false;
+            }
+        }
+
         private async void syncButton_Click(object sender, EventArgs e)
         {
             // Grab Trucks
@@ -927,7 +972,7 @@ namespace ATSEngineTool
                     // Clean out old compiled files
                     if (cleanCompCheckBox.Checked)
                     {
-                        Mod.CleanCompileDirectory(TaskForm.Progress);
+                        ModBuilder.CleanCompileDirectory(TaskForm.Progress);
                     }
 
                     // Show Update
@@ -936,17 +981,21 @@ namespace ATSEngineTool
                     TaskForm.Progress.Report(update);
 
                     // Compile Mod
-                    var usedSounds = Mod.Compile(trucks, TaskForm.Progress);
+                    var usedSounds = ModBuilder.Compile(trucks, TaskForm.Progress);
 
                     // Are we sync'ing the Compiled and Mod folders?
                     if (syncCheckBox.Checked)
                     {
-                        Mod.Sync(
+                        ModBuilder.Sync(
                             usedSounds,
                             Program.Config.IntegrateWithMod && cleanModCheckBox.Checked,
                             Program.Config.IntegrateWithMod && cleanSoundsCheckBox.Checked,
                             TaskForm.Progress
                         );
+                    }
+                    else
+                    {
+
                     }
                 });
             }
@@ -1015,8 +1064,7 @@ namespace ATSEngineTool
             using (AppDatabase db = new AppDatabase())
             {
                 // Perform integrity check
-                var wizard = new MigrationWizard(db);
-                int issues = wizard.PerformIntegrityCheck();
+                int issues = db.PerformIntegrityCheck();
 
                 // Alert the user
                 if (issues == 0)
@@ -1040,8 +1088,7 @@ namespace ATSEngineTool
             using (AppDatabase db = new AppDatabase())
             {
                 // Perform integrity check
-                var wizard = new MigrationWizard(db);
-                wizard.VacuumDatabase();
+                db.VacuumDatabase();
 
                 // Alert the user
                 MessageBox.Show("Successfully vacuumed the database!",
@@ -1085,7 +1132,7 @@ namespace ATSEngineTool
                             db.Engines.Clear();
                             db.EngineSeries.Clear();
                             db.EngineSounds.Clear();
-                            db.SoundPackages.Clear();
+                            db.EngineSoundPackages.Clear();
                             db.Trucks.Clear();
 
                             // Apply changes
@@ -1102,8 +1149,8 @@ namespace ATSEngineTool
                         engineListView.Items.Clear();
                         transSeriesListView.Items.Clear();
                         transmissionListView.Items.Clear();
-                        packageListView.Items.Clear();
-                        soundListView.Items.Clear();
+                        enginePackageListView.Items.Clear();
+                        engineSoundListView.Items.Clear();
 
                         // Close task form
                         TaskForm.CloseForm();
@@ -1311,40 +1358,475 @@ namespace ATSEngineTool
 
         #endregion Transmission Management
 
-        private void packageListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (packageListView.SelectedItems.Count == 0) return;
+        #region Engine Sound Management
 
-            // Always verify that this isnt a mistake
-            var package = (SoundPackage)packageListView.SelectedItems[0].Tag;
+        private void enginePackageListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (enginePackageListView.SelectedItems.Count == 0) return;
+
+            // Fetch sound package and list of sounds under it
+            var package = (EngineSoundPackage)enginePackageListView.SelectedItems[0].Tag;
             var soundList = new List<EngineSound>(package.EngineSounds.OrderBy(x => x.Attribute));
             SoundWrapper wrapper = null;
 
             // Create tree Roots
             var objectList = new List<SoundWrapper>()
             {
-                new SoundWrapper() { SoundName = "Interior", Sound = new EngineSound() { Type = SoundType.Interior } },
-                new SoundWrapper() { SoundName = "Exterior", Sound = new EngineSound() { Type = SoundType.Exterior }},
+                new SoundWrapper() { SoundName = "Interior", Sound = new EngineSound() { Location = SoundLocation.Interior } },
+                new SoundWrapper() { SoundName = "Exterior", Sound = new EngineSound() { Location = SoundLocation.Exterior }},
             };
 
             // Add sounds to the tree roots
             wrapper = objectList[0];
-            foreach (var sound in soundList.Where(x => x.Type == SoundType.Interior))
+            foreach (var sound in soundList.Where(x => x.Location == SoundLocation.Interior))
             {
                 wrapper = AddSoundToList(sound, wrapper, objectList[0]);
             }
 
             wrapper = objectList[1];
-            foreach (var sound in soundList.Where(x => x.Type == SoundType.Exterior))
+            foreach (var sound in soundList.Where(x => x.Location == SoundLocation.Exterior))
             {
                 wrapper = AddSoundToList(sound, wrapper, objectList[1]);
             }
 
-            soundListView.Roots = objectList;
+            engineSoundListView.Roots = objectList;
             //soundListView.Expand(objectList[0]);
         }
 
-        private SoundWrapper AddSoundToList(EngineSound sound, SoundWrapper parent, SoundWrapper top)
+        private void enginePackageListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (enginePackageListView.SelectedItems.Count == 0) return;
+            SoundPackage package = enginePackageListView.SelectedItems[0].Tag as SoundPackage;
+
+            using (SoundPackageEditor frm = new SoundPackageEditor(package))
+            {
+                frm.ShowDialog();
+            }
+        }
+
+        private void newEnginePackageButton_Click(object sender, EventArgs e)
+        {
+            using (SoundPackageEditor frm = new SoundPackageEditor(SoundType.Engine))
+            {
+                var result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    using (AppDatabase db = new AppDatabase())
+                    {
+                        FillEngineSoundPackages(db);
+                    }
+                }
+            }
+        }
+
+        private void removeEnginePackageButton_Click(object sender, EventArgs e)
+        {
+            // If we have no selected packages, skimp out here
+            if (enginePackageListView.SelectedItems.Count == 0) return;
+
+            ListViewItem selected = enginePackageListView.SelectedItems[0];
+            var package = selected.Tag as EngineSoundPackage;
+            var items = package.Series.ToList();
+            var trucks = package.TruckSettings.ToList();
+
+            // If this sound package is being used by certain trucks, alert the user
+            if (items.Count > 0)
+            {
+                StringBuilder message = new StringBuilder();
+                message.AppendLine($"This sound package is being used by the following engine series(s):");
+                message.AppendLine();
+                foreach (var series in items)
+                {
+                    message.Append("    \u2022 ");
+                    message.AppendLine(series.Name);
+                }
+                message.AppendLine();
+                message.Append("Please update all engine series to use a different Sound Package before proceeding.");
+
+                // Tell the use they are making a mistake!
+                MessageBox.Show(message.ToString(), "Delete Sound Package Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else if (trucks.Count > 0)
+            {
+                StringBuilder message = new StringBuilder();
+                message.AppendLine($"This sound package is being used by the following truck(s):");
+                message.AppendLine();
+                foreach (var truck in trucks)
+                {
+                    message.Append("    \u2022 ");
+                    message.AppendLine(truck.Truck.Name);
+                }
+                message.AppendLine();
+                message.Append("Please update all trucks to use a different Sound Package before proceeding.");
+
+                // Tell the use they are making a mistake!
+                MessageBox.Show(message.ToString(), "Delete Sound Package Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else
+            {
+                // Tell the use they are making a mistake!
+                var result = MessageBox.Show("Are you sure you want to remove this sound pack?",
+                    "Verification", MessageBoxButtons.YesNo, MessageBoxIcon.Question
+                );
+
+                // phew... /wipesSweatOffBrow
+                if (result != DialogResult.Yes) return;
+            }
+
+            // ReLoad engine series from the database
+            using (AppDatabase db = new AppDatabase())
+            {
+                db.EngineSoundPackages.Remove(package);
+
+                FillEngineSoundPackages(db);
+            }
+
+            // Finally delete sound folder
+            DirectoryExt.Delete(Path.Combine(Program.RootPath, "sounds", package.RelativeSystemPath));
+        }
+
+        private void engineSoundListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            // If we have no selected packages, skimp out here
+            if (enginePackageListView.SelectedItems.Count == 0) return;
+
+            var selected = (OLVListItem)engineSoundListView.HitTest(e.Location).Item;
+            if (selected != null)
+            {
+                var wrapper = selected.RowObject as SoundWrapper;
+                if (wrapper.ChildCount > 0)
+                {
+                    if (engineSoundListView.IsExpanded(wrapper))
+                        engineSoundListView.Collapse(wrapper);
+                    else
+                        engineSoundListView.Expand(wrapper);
+                    return;
+                }
+
+                var sound = (EngineSound)wrapper.Sound;
+                var package = sound.Package;
+                using (SoundEditor frm = new SoundEditor(sound, package))
+                {
+                    var result = frm.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        int index = engineSoundListView.IndexOf(wrapper);
+                        engineSoundListView.RedrawItems(index, index, false);
+                    }
+                }
+            }
+        }
+
+        private void engineSoundListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            editEngineSoundButton.Enabled = (
+                engineSoundListView.SelectedItem != null
+                && ((SoundWrapper)engineSoundListView.SelectedItem.RowObject).ChildCount == 0
+            );
+            removeEngineSoundButton.Enabled = editEngineSoundButton.Enabled;
+            newEngineSoundButton.Enabled = engineSoundListView.SelectedItem != null;
+        }
+
+        private void editEngineSoundButton_Click(object sender, EventArgs e)
+        {
+            var selected = engineSoundListView.SelectedItem;
+            if (selected == null) return;
+
+            var wrapper = selected.RowObject as SoundWrapper;
+            if (wrapper.ChildCount > 0) return;
+
+            var sound = (EngineSound)wrapper.Sound;
+            var package = sound.Package;
+            using (SoundEditor frm = new SoundEditor(sound, package))
+            {
+                var result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    int index = engineSoundListView.IndexOf(wrapper);
+                    engineSoundListView.RedrawItems(index, index, false);
+                }
+            }
+
+        }
+
+        private void removeEngineSoundButton_Click(object sender, EventArgs e)
+        {
+            var selected = engineSoundListView.SelectedItem;
+            if (selected == null) return;
+
+            var wrapper = selected.RowObject as SoundWrapper;
+            if (wrapper.ChildCount > 0) return;
+
+            // Tell the use they are making a mistake!
+            var result = MessageBox.Show($"Are you sure you want to remove the sound \"{wrapper.SoundName}\"?",
+                "Validation", MessageBoxButtons.YesNo, MessageBoxIcon.Question
+            );
+
+            // phew... /wipesSweatOffBrow
+            if (result != DialogResult.Yes) return;
+
+            // Open database
+            using (AppDatabase db = new AppDatabase())
+            {
+                // Remove
+                db.EngineSounds.Remove((EngineSound)wrapper.Sound);
+
+                // Refill Sounds
+                enginePackageListView_SelectedIndexChanged(sender, e);
+            }
+        }
+
+        private void newEngineSoundButton_Click(object sender, EventArgs e)
+        {
+            // If we have no selected packages, skimp out here
+            var item = engineSoundListView.SelectedItem;
+            if (item == null) return;
+
+            var wrapper = item.RowObject as SoundWrapper;
+            ListViewItem selected = enginePackageListView.SelectedItems[0];
+            var package = selected.Tag as SoundPackage;
+
+            using (SoundEditor frm = new SoundEditor(package, wrapper.Catagory))
+            {
+                var result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    // Refill Sounds
+                    enginePackageListView_SelectedIndexChanged(sender, e);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Truck Sound Management
+
+        private void truckPackageListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (truckPackageListView.SelectedItems.Count == 0) return;
+
+            // Fetch sound package and list of sounds under it
+            var package = (TruckSoundPackage)truckPackageListView.SelectedItems[0].Tag;
+            var soundList = new List<TruckSound>(package.TruckSounds.OrderBy(x => x.Attribute));
+            SoundWrapper wrapper = null;
+
+            // Create tree Roots
+            var objectList = new List<SoundWrapper>()
+            {
+                new SoundWrapper() { SoundName = "Interior", Sound = new TruckSound() { Location = SoundLocation.Interior } },
+                new SoundWrapper() { SoundName = "Exterior", Sound = new TruckSound() { Location = SoundLocation.Exterior }},
+            };
+
+            // Add sounds to the tree roots
+            wrapper = objectList[0];
+            foreach (var sound in soundList.Where(x => x.Location == SoundLocation.Interior))
+            {
+                wrapper = AddSoundToList(sound, wrapper, objectList[0]);
+            }
+
+            wrapper = objectList[1];
+            foreach (var sound in soundList.Where(x => x.Location == SoundLocation.Exterior))
+            {
+                wrapper = AddSoundToList(sound, wrapper, objectList[1]);
+            }
+
+            truckSoundListView.Roots = objectList;
+            //soundListView.Expand(objectList[0]);
+        }
+
+        private void truckPackageListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (truckPackageListView.SelectedItems.Count == 0) return;
+            SoundPackage package = truckPackageListView.SelectedItems[0].Tag as SoundPackage;
+
+            using (SoundPackageEditor frm = new SoundPackageEditor(package))
+            {
+                frm.ShowDialog();
+            }
+        }
+
+        private void newTruckPackageButton_Click(object sender, EventArgs e)
+        {
+            using (SoundPackageEditor frm = new SoundPackageEditor(SoundType.Truck))
+            {
+                var result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    using (AppDatabase db = new AppDatabase())
+                    {
+                        FillTruckSoundPackages(db);
+                    }
+                }
+            }
+        }
+
+        private void removeTruckPackageButton_Click(object sender, EventArgs e)
+        {
+            // If we have no selected packages, skimp out here
+            if (truckPackageListView.SelectedItems.Count == 0) return;
+
+            ListViewItem selected = truckPackageListView.SelectedItems[0];
+            var package = selected.Tag as TruckSoundPackage;
+            var items = package.Trucks.ToList();
+
+            // If this sound package is being used by certain trucks, alert the user
+            if (items.Count > 0)
+            {
+                StringBuilder message = new StringBuilder();
+                message.AppendLine($"This sound package is being used by the following truck(s):");
+                message.AppendLine();
+                foreach (var truck in items)
+                {
+                    message.Append("    \u2022 ");
+                    message.AppendLine(truck.Name);
+                }
+                message.AppendLine();
+                message.Append("Please update all trucks to use a different Sound Package before proceeding.");
+
+                // Tell the use they are making a mistake!
+                MessageBox.Show(message.ToString(), "Delete Sound Package Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else
+            {
+                // Tell the use they are making a mistake!
+                var result = MessageBox.Show("Are you sure you want to remove this sound pack?",
+                    "Verification", MessageBoxButtons.YesNo, MessageBoxIcon.Question
+                );
+
+                // phew... /wipesSweatOffBrow
+                if (result != DialogResult.Yes) return;
+            }
+
+            // ReLoad engine series from the database
+            using (AppDatabase db = new AppDatabase())
+            {
+                db.TruckSoundPackages.Remove(package);
+
+                FillTruckSoundPackages(db);
+            }
+
+            // Finally delete sound folder
+            DirectoryExt.Delete(Path.Combine(Program.RootPath, "sounds", package.RelativeSystemPath));
+        }
+
+        private void truckSoundListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            // If we have no selected packages, skimp out here
+            if (truckPackageListView.SelectedItems.Count == 0) return;
+
+            var selected = (OLVListItem)truckSoundListView.HitTest(e.Location).Item;
+            if (selected != null)
+            {
+                var wrapper = selected.RowObject as SoundWrapper;
+                if (wrapper.ChildCount > 0)
+                {
+                    if (truckSoundListView.IsExpanded(wrapper))
+                        truckSoundListView.Collapse(wrapper);
+                    else
+                        truckSoundListView.Expand(wrapper);
+                    return;
+                }
+
+                var sound = (TruckSound)wrapper.Sound;
+                var package = sound.Package;
+                using (SoundEditor frm = new SoundEditor(sound, package))
+                {
+                    var result = frm.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        int index = truckSoundListView.IndexOf(wrapper);
+                        truckSoundListView.RedrawItems(index, index, false);
+                    }
+                }
+            }
+        }
+
+        private void truckSoundListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            editTruckSoundButton.Enabled = (
+                truckSoundListView.SelectedItem != null
+                && ((SoundWrapper)truckSoundListView.SelectedItem.RowObject).ChildCount == 0
+            );
+            removeTruckSoundButton.Enabled = editTruckSoundButton.Enabled;
+            newTruckSoundButton.Enabled = truckSoundListView.SelectedItem != null;
+        }
+
+        private void editTruckSoundButton_Click(object sender, EventArgs e)
+        {
+            var selected = truckSoundListView.SelectedItem;
+            if (selected == null) return;
+
+            var wrapper = selected.RowObject as SoundWrapper;
+            if (wrapper.ChildCount > 0) return;
+
+            var sound = (TruckSound)wrapper.Sound;
+            var package = sound.Package;
+            using (SoundEditor frm = new SoundEditor(sound, package))
+            {
+                var result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    int index = truckSoundListView.IndexOf(wrapper);
+                    truckSoundListView.RedrawItems(index, index, false);
+                }
+            }
+
+        }
+
+        private void removeTruckSoundButton_Click(object sender, EventArgs e)
+        {
+            var selected = truckSoundListView.SelectedItem;
+            if (selected == null) return;
+
+            var wrapper = selected.RowObject as SoundWrapper;
+            if (wrapper.ChildCount > 0) return;
+
+            // Tell the use they are making a mistake!
+            var result = MessageBox.Show($"Are you sure you want to remove the sound \"{wrapper.SoundName}\"?",
+                "Validation", MessageBoxButtons.YesNo, MessageBoxIcon.Question
+            );
+
+            // phew... /wipesSweatOffBrow
+            if (result != DialogResult.Yes) return;
+
+            // Open database
+            using (AppDatabase db = new AppDatabase())
+            {
+                // Remove
+                db.TruckSounds.Remove((TruckSound)wrapper.Sound);
+
+                // Refill Sounds
+                truckPackageListView_SelectedIndexChanged(sender, e);
+            }
+        }
+
+        private void newTruckSoundButton_Click(object sender, EventArgs e)
+        {
+            // If we have no selected packages, skimp out here
+            var item = truckSoundListView.SelectedItem;
+            if (item == null) return;
+
+            var wrapper = item.RowObject as SoundWrapper;
+            ListViewItem selected = truckPackageListView.SelectedItems[0];
+            var package = selected.Tag as SoundPackage;
+
+            using (SoundEditor frm = new SoundEditor(package, wrapper.Catagory))
+            {
+                var result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    // Refill Sounds
+                    truckPackageListView_SelectedIndexChanged(sender, e);
+                }
+            }
+        }
+
+        #endregion
+
+        private SoundWrapper AddSoundToList(Sound sound, SoundWrapper parent, SoundWrapper top)
         {
             SoundWrapper wrapper = parent;
             // If changine sound type or attribute
@@ -1383,183 +1865,6 @@ namespace ATSEngineTool
             }
 
             return wrapper;
-        }
-
-        private void packageListView_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (packageListView.SelectedItems.Count == 0) return;
-            SoundPackage package = packageListView.SelectedItems[0].Tag as SoundPackage;
-
-            using (SoundPackageEditor frm = new SoundPackageEditor(package))
-            {
-                frm.ShowDialog();
-            }
-        }
-
-        private void newPackageButton_Click(object sender, EventArgs e)
-        {
-            using (SoundPackageEditor frm = new SoundPackageEditor())
-            {
-                var result = frm.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    using (AppDatabase db = new AppDatabase())
-                    {
-                        FillSoundPackages(db);
-                    }
-                }
-            }
-        }
-
-        private void removePackageButton_Click(object sender, EventArgs e)
-        {
-            // If we have no selected packages, skimp out here
-            if (packageListView.SelectedItems.Count == 0) return;
-
-            ListViewItem selected = packageListView.SelectedItems[0];
-            var package = selected.Tag as SoundPackage;
-            var items = package.Series.ToList();
-
-            if (items.Count > 0)
-            {
-                // Tell the use they are making a mistake!
-                var result = MessageBox.Show($"This sound package is being use by \"{items[0]}\". If you proceed, all "
-                    + "engines that use this sound package will also be deleted. Are you sure you want to do this?",
-                    "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning
-                );
-
-                // phew... /wipesSweatOffBrow
-                if (result != DialogResult.Yes) return;
-            }
-            else
-            {
-                // Tell the use they are making a mistake!
-                var result = MessageBox.Show("Are you sure you want to remove this sound pack?",
-                    "Verification", MessageBoxButtons.YesNo, MessageBoxIcon.Question
-                );
-
-                // phew... /wipesSweatOffBrow
-                if (result != DialogResult.Yes) return;
-            }
-
-            // ReLoad engine series from the database
-            using (AppDatabase db = new AppDatabase())
-            {
-                db.SoundPackages.Remove(package);
-
-                FillSoundPackages(db);
-            }
-
-            // Finally delete sound folder
-            DirectoryExt.Delete(Path.Combine(Program.RootPath, "sounds", "engine", package.FolderName));
-        }
-
-        private void soundListView_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            // If we have no selected packages, skimp out here
-            if (packageListView.SelectedItems.Count == 0) return;
-
-            var selected = (OLVListItem)soundListView.HitTest(e.Location).Item;
-            if (selected != null)
-            {
-                var wrapper = selected.RowObject as SoundWrapper;
-                if (wrapper.ChildCount > 0)
-                {
-                    if (soundListView.IsExpanded(wrapper))
-                        soundListView.Collapse(wrapper);
-                    else
-                        soundListView.Expand(wrapper);
-                    return;
-                }
-
-                using (SoundEditor frm = new SoundEditor(wrapper.Sound))
-                {
-                    var result = frm.ShowDialog();
-                    if (result == DialogResult.OK)
-                    {
-                        int index = soundListView.IndexOf(wrapper);
-                        soundListView.RedrawItems(index, index, false);
-                    }
-                }
-            }
-        }
-
-        private void soundListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            editSoundButton.Enabled = (
-                soundListView.SelectedItem != null
-                && ((SoundWrapper)soundListView.SelectedItem.RowObject).ChildCount == 0
-            );
-            removeSoundButton.Enabled = editSoundButton.Enabled;
-            newSoundButton.Enabled = soundListView.SelectedItem != null;
-        }
-
-        private void editSoundButton_Click(object sender, EventArgs e)
-        {
-            var selected = soundListView.SelectedItem;
-            if (selected == null) return;
-
-            var wrapper = selected.RowObject as SoundWrapper;
-            if (wrapper.ChildCount > 0) return;
-
-            using (SoundEditor frm = new SoundEditor(wrapper.Sound))
-            {
-                var result = frm.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    int index = soundListView.IndexOf(wrapper);
-                    soundListView.RedrawItems(index, index, false);
-                }
-            }
-
-        }
-
-        private void removeSoundButton_Click(object sender, EventArgs e)
-        {
-            var selected = soundListView.SelectedItem;
-            if (selected == null) return;
-
-            var wrapper = selected.RowObject as SoundWrapper;
-            if (wrapper.ChildCount > 0) return;
-
-            // Tell the use they are making a mistake!
-            var result = MessageBox.Show($"Are you sure you want to remove the sound \"{wrapper.SoundName}\"?",
-                "Validation", MessageBoxButtons.YesNo, MessageBoxIcon.Question
-            );
-
-            // phew... /wipesSweatOffBrow
-            if (result != DialogResult.Yes) return;
-
-            // Open database
-            using (AppDatabase db = new AppDatabase())
-            {
-                // Remove
-                db.EngineSounds.Remove(wrapper.Sound);
-
-                // Refill Sounds
-                packageListView_SelectedIndexChanged(sender, e);
-            }
-        }
-
-        private void newSoundButton_Click(object sender, EventArgs e)
-        {
-            // If we have no selected packages, skimp out here
-            var item = soundListView.SelectedItem;
-            if (item == null) return;
-
-            var wrapper = item.RowObject as SoundWrapper;
-            ListViewItem selected = packageListView.SelectedItems[0];
-            var package = selected.Tag as SoundPackage;
-
-            using (SoundEditor frm = new SoundEditor(package, wrapper.Catagory))
-            {
-                var result = frm.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    // Refill Sounds
-                    packageListView_SelectedIndexChanged(sender, e);
-                }
-            }
         }
     }
 }

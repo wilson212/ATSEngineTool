@@ -1,4 +1,5 @@
-﻿using Sii;
+﻿using System;
+using Sii;
 
 namespace ATSEngineTool.SiiEntities
 {

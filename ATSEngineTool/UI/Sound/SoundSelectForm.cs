@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
-using ATSEngineTool.Properties;
 using ATSEngineTool.Database;
+using ATSEngineTool.Properties;
 
 namespace ATSEngineTool
 {
@@ -17,9 +12,13 @@ namespace ATSEngineTool
     {
         protected SoundPackage Package { get; set; }
 
+        protected Sound StartingSound { get; set; }
+
+        protected TreeNode StartingSoundNode { get; set; }
+
         public string SoundPath { get; private set; }
 
-        public SoundSelectForm(SoundPackage package)
+        public SoundSelectForm(SoundPackage package, Sound currentSound = null)
         {
             // Create controls and style the header
             InitializeComponent();
@@ -33,6 +32,8 @@ namespace ATSEngineTool
 
             // Fill the tree
             Package = package;
+            StartingSound = currentSound;
+
             FillTree();
         }
 
@@ -41,29 +42,23 @@ namespace ATSEngineTool
             // Always Clear Nodes first!
             treeView1.Nodes.Clear();
 
-            // Define paths
-            string commonPath = Path.Combine(Program.RootPath, "sounds", "common");
-            var directory = new DirectoryInfo(commonPath);
+            // Define variables
+            string path = Path.Combine(Program.RootPath, "sounds", Package.RelativeSystemPath);
+            DirectoryInfo directory = new DirectoryInfo(path);
 
-            // Add common sounds
+            // Recusivly load the TreeNodes
             TreeNode node = RecursiveTreeNodes(directory);
-            node.Tag = "@CP";
+            node.Tag = "@SP";
+
+            // Add node to tree
             treeView1.Nodes.Add(node);
 
-            // Create engine node
-            TreeNode engineNode = new TreeNode("engine");
-            engineNode.Tag = "@EP";
-
-            // Engines for this package only
-            string enginePath = Path.Combine(Program.RootPath, "sounds", "engine", Package.FolderName);
-            directory = new DirectoryInfo(enginePath);
-            node = RecursiveTreeNodes(directory);
-            node.Text = node.Text;
-            node.Tag = directory.FullName;
-
-            // Add nodes
-            engineNode.Nodes.Add(node);
-            treeView1.Nodes.Add(engineNode);
+            // Select starting sound node if we have one
+            if (StartingSoundNode != null)
+            {
+                ExpandTreeNode(StartingSoundNode);
+                treeView1.SelectedNode = StartingSoundNode;
+            }
         }
 
         /// <summary>
@@ -85,6 +80,11 @@ namespace ATSEngineTool
                 node.Nodes.Add(subNode);
             }
 
+            var location = (directory.Name.Equals("ext") || directory.FullName.Contains("\\ext\\")) 
+                ? SoundLocation.Exterior 
+                : SoundLocation.Interior;
+            string fn = (StartingSound != null) ? Path.GetFileName(StartingSound.FileName.Replace("@", "")) : "";
+
             // Add files in this directory
             foreach (var file in directory.GetFiles("*.ogg"))
             {
@@ -93,9 +93,29 @@ namespace ATSEngineTool
                 subNode.SelectedImageIndex = 2;
                 subNode.ImageIndex = 2;
                 node.Nodes.Add(subNode);
+
+                if (StartingSound != null && location == StartingSound.Location)
+                {
+                    if (file.Name.Equals(fn))
+                    {
+                        StartingSoundNode = subNode;
+                    }
+                }
             }
 
             return node;
+        }
+
+        private void ExpandTreeNode(TreeNode node)
+        {
+            if (node.Nodes.Count > 0)
+                node.Expand();
+
+            while (node.Parent != null)
+            {
+                node = node.Parent;
+                node.Expand();
+            }
         }
 
         /// <summary>
@@ -138,8 +158,8 @@ namespace ATSEngineTool
             var parent = GetRootNode(selected);
 
             // Grab the sound path with the prefix
-            string path = (selected.FullPath.StartsWith("engine/")) ? selected.FullPath.Substring(7) : selected.FullPath;
-            int index = path.IndexOf('/'); // skip "engine/"
+            string path = selected.FullPath;
+            int index = path.IndexOf('/'); // skip "packageFoldName/"
             SoundPath = parent.Tag.ToString() + path.Substring(index);
 
             // Close form
@@ -247,6 +267,24 @@ namespace ATSEngineTool
             if (e.Button == MouseButtons.Right)
             {
                 treeView1.SelectedNode = e.Node;
+            }
+        }
+
+        private void treeView1_DrawNode(object sender, DrawTreeNodeEventArgs e)
+        {
+            // first, let .NET draw the Node with its defaults
+            e.DrawDefault = true;
+
+            // Now update the highlighting or not
+            if (e.State == TreeNodeStates.Selected)
+            {
+                e.Node.BackColor = SystemColors.Highlight;
+                e.Node.ForeColor = SystemColors.HighlightText;
+            }
+            else
+            {
+                e.Node.BackColor = ((TreeView)sender).BackColor;
+                e.Node.ForeColor = ((TreeView)sender).ForeColor;
             }
         }
     }

@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EngineForm));
             this.label1 = new System.Windows.Forms.Label();
             this.unitNameBox = new System.Windows.Forms.TextBox();
@@ -50,6 +50,8 @@
             this.label7 = new System.Windows.Forms.Label();
             this.engineNameBox = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.removeAllButton = new System.Windows.Forms.Button();
+            this.resetPointsButton = new System.Windows.Forms.Button();
             this.label45 = new System.Windows.Forms.Label();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
@@ -133,8 +135,6 @@
             this.label29 = new System.Windows.Forms.Label();
             this.fileDefaultsTextBox = new System.Windows.Forms.TextBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.fileCommentTextBox = new System.Windows.Forms.TextBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.label41 = new System.Windows.Forms.Label();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
@@ -168,8 +168,17 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.headerPanel = new System.Windows.Forms.Panel();
             this.shadowLabel1 = new System.Windows.Forms.ShadowLabel();
-            this.resetPointsButton = new System.Windows.Forms.Button();
-            this.removeAllButton = new System.Windows.Forms.Button();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.groupBox17 = new System.Windows.Forms.GroupBox();
+            this.label47 = new System.Windows.Forms.Label();
+            this.fileCommentTextBox = new System.Windows.Forms.TextBox();
+            this.fileOverridesTextBox = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label48 = new System.Windows.Forms.Label();
+            this.resistanceBox = new System.Windows.Forms.NumericUpDown();
+            this.consumptionBox = new System.Windows.Forms.NumericUpDown();
+            this.label49 = new System.Windows.Forms.Label();
+            this.label50 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.engineIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceBox)).BeginInit();
@@ -220,6 +229,10 @@
             this.contentPanel.SuspendLayout();
             this.footerPanel.SuspendLayout();
             this.headerPanel.SuspendLayout();
+            this.tabPage8.SuspendLayout();
+            this.groupBox17.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.resistanceBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.consumptionBox)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -410,6 +423,26 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Torque Curves";
             // 
+            // removeAllButton
+            // 
+            this.removeAllButton.Location = new System.Drawing.Point(739, 370);
+            this.removeAllButton.Name = "removeAllButton";
+            this.removeAllButton.Size = new System.Drawing.Size(100, 25);
+            this.removeAllButton.TabIndex = 38;
+            this.removeAllButton.Text = "Remove All";
+            this.removeAllButton.UseVisualStyleBackColor = true;
+            this.removeAllButton.Click += new System.EventHandler(this.removeAllButton_Click);
+            // 
+            // resetPointsButton
+            // 
+            this.resetPointsButton.Location = new System.Drawing.Point(629, 370);
+            this.resetPointsButton.Name = "resetPointsButton";
+            this.resetPointsButton.Size = new System.Drawing.Size(100, 25);
+            this.resetPointsButton.TabIndex = 37;
+            this.resetPointsButton.Text = "Reset to Default";
+            this.resetPointsButton.UseVisualStyleBackColor = true;
+            this.resetPointsButton.Click += new System.EventHandler(this.resetPointsButton_Click);
+            // 
             // label45
             // 
             this.label45.AutoSize = true;
@@ -491,47 +524,47 @@
             // 
             // chart1
             // 
-            chartArea3.AxisX.IsMarginVisible = false;
-            chartArea3.AxisX.Title = "Rpm";
-            chartArea3.AxisY.Title = "Torque";
-            chartArea3.AxisY2.Interval = 100D;
-            chartArea3.AxisY2.MajorGrid.Enabled = false;
-            chartArea3.AxisY2.Title = "Horsepower";
-            chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
-            legend3.AutoFitMinFontSize = 8;
-            legend3.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row;
-            legend3.Name = "Legend1";
-            legend3.Position.Auto = false;
-            legend3.Position.Height = 6F;
-            legend3.Position.Width = 32F;
-            legend3.Position.X = 35F;
-            legend3.Position.Y = 75F;
-            this.chart1.Legends.Add(legend3);
+            chartArea1.AxisX.IsMarginVisible = false;
+            chartArea1.AxisX.Title = "Rpm";
+            chartArea1.AxisY.Title = "Torque";
+            chartArea1.AxisY2.Interval = 100D;
+            chartArea1.AxisY2.MajorGrid.Enabled = false;
+            chartArea1.AxisY2.Title = "Horsepower";
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.AutoFitMinFontSize = 8;
+            legend1.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row;
+            legend1.Name = "Legend1";
+            legend1.Position.Auto = false;
+            legend1.Position.Height = 6F;
+            legend1.Position.Width = 32F;
+            legend1.Position.X = 35F;
+            legend1.Position.Y = 75F;
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(1, 11);
             this.chart1.Name = "chart1";
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series5.Legend = "Legend1";
-            series5.MarkerBorderColor = System.Drawing.Color.Black;
-            series5.MarkerColor = System.Drawing.Color.DodgerBlue;
-            series5.MarkerSize = 7;
-            series5.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series5.Name = "Torque";
-            series5.SmartLabelStyle.AllowOutsidePlotArea = System.Windows.Forms.DataVisualization.Charting.LabelOutsidePlotAreaStyle.No;
-            series5.SmartLabelStyle.MinMovingDistance = 10D;
-            series5.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series5.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series6.Legend = "Legend1";
-            series6.MarkerColor = System.Drawing.Color.Black;
-            series6.Name = "Horsepower";
-            series6.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series6.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            series6.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            this.chart1.Series.Add(series5);
-            this.chart1.Series.Add(series6);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Legend = "Legend1";
+            series1.MarkerBorderColor = System.Drawing.Color.Black;
+            series1.MarkerColor = System.Drawing.Color.DodgerBlue;
+            series1.MarkerSize = 7;
+            series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series1.Name = "Torque";
+            series1.SmartLabelStyle.AllowOutsidePlotArea = System.Windows.Forms.DataVisualization.Charting.LabelOutsidePlotAreaStyle.No;
+            series1.SmartLabelStyle.MinMovingDistance = 10D;
+            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series2.Legend = "Legend1";
+            series2.MarkerColor = System.Drawing.Color.Black;
+            series2.Name = "Horsepower";
+            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series2.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            this.chart1.Series.Add(series1);
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(623, 361);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -612,7 +645,7 @@
             this.rpmRangeBox4.Size = new System.Drawing.Size(103, 20);
             this.rpmRangeBox4.TabIndex = 28;
             this.rpmRangeBox4.Value = new decimal(new int[] {
-            1600,
+            1500,
             0,
             0,
             0});
@@ -635,7 +668,7 @@
             this.rpmRangeBox3.Size = new System.Drawing.Size(103, 20);
             this.rpmRangeBox3.TabIndex = 27;
             this.rpmRangeBox3.Value = new decimal(new int[] {
-            1100,
+            1000,
             0,
             0,
             0});
@@ -685,7 +718,7 @@
             this.rpmRangeBox2.Size = new System.Drawing.Size(103, 20);
             this.rpmRangeBox2.TabIndex = 16;
             this.rpmRangeBox2.Value = new decimal(new int[] {
-            1600,
+            1500,
             0,
             0,
             0});
@@ -717,7 +750,7 @@
             this.rpmRangeBox1.Size = new System.Drawing.Size(103, 20);
             this.rpmRangeBox1.TabIndex = 13;
             this.rpmRangeBox1.Value = new decimal(new int[] {
-            800,
+            700,
             0,
             0,
             0});
@@ -740,6 +773,7 @@
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Controls.Add(this.tabPage7);
+            this.tabControl1.Controls.Add(this.tabPage8);
             this.tabControl1.Location = new System.Drawing.Point(-1, 21);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -786,9 +820,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(11, 92);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(118, 13);
+            this.label3.Size = new System.Drawing.Size(123, 13);
             this.label3.TabIndex = 39;
-            this.label3.Text = "Truck Sound Package:";
+            this.label3.Text = "Engine Sound Package:";
             // 
             // displacementBox
             // 
@@ -837,7 +871,7 @@
             this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Location = new System.Drawing.Point(610, 209);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(259, 148);
+            this.groupBox3.Size = new System.Drawing.Size(259, 195);
             this.groupBox3.TabIndex = 10;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Engine Brake";
@@ -925,6 +959,11 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label50);
+            this.groupBox2.Controls.Add(this.consumptionBox);
+            this.groupBox2.Controls.Add(this.label49);
+            this.groupBox2.Controls.Add(this.resistanceBox);
+            this.groupBox2.Controls.Add(this.label48);
             this.groupBox2.Controls.Add(this.neutralRpmBox);
             this.groupBox2.Controls.Add(this.label17);
             this.groupBox2.Controls.Add(this.idleRpmBox);
@@ -941,7 +980,7 @@
             this.groupBox2.Controls.Add(this.labelPeakTorque);
             this.groupBox2.Location = new System.Drawing.Point(12, 209);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(582, 148);
+            this.groupBox2.Size = new System.Drawing.Size(582, 195);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Performance";
@@ -1481,7 +1520,7 @@
             this.rpmRangeBox6.Size = new System.Drawing.Size(103, 20);
             this.rpmRangeBox6.TabIndex = 15;
             this.rpmRangeBox6.Value = new decimal(new int[] {
-            350,
+            450,
             0,
             0,
             0});
@@ -1513,7 +1552,7 @@
             this.rpmRangeBox5.Size = new System.Drawing.Size(103, 20);
             this.rpmRangeBox5.TabIndex = 13;
             this.rpmRangeBox5.Value = new decimal(new int[] {
-            450,
+            550,
             0,
             0,
             0});
@@ -1536,14 +1575,14 @@
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage4.Size = new System.Drawing.Size(886, 426);
             this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Engine Accessories and Comments";
+            this.tabPage4.Text = "Engine Accessories";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // groupBox9
             // 
             this.groupBox9.Controls.Add(this.label29);
             this.groupBox9.Controls.Add(this.fileDefaultsTextBox);
-            this.groupBox9.Location = new System.Drawing.Point(461, 31);
+            this.groupBox9.Location = new System.Drawing.Point(455, 45);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(407, 364);
             this.groupBox9.TabIndex = 1;
@@ -1572,31 +1611,13 @@
             // groupBox7
             // 
             this.groupBox7.Controls.Add(this.label10);
-            this.groupBox7.Controls.Add(this.fileCommentTextBox);
-            this.groupBox7.Location = new System.Drawing.Point(19, 31);
+            this.groupBox7.Controls.Add(this.fileOverridesTextBox);
+            this.groupBox7.Location = new System.Drawing.Point(24, 45);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(407, 364);
             this.groupBox7.TabIndex = 0;
             this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "File Comment";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(22, 27);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(288, 13);
-            this.label10.TabIndex = 1;
-            this.label10.Text = "This text will be included as a comment in the engines sii file";
-            // 
-            // fileCommentTextBox
-            // 
-            this.fileCommentTextBox.Location = new System.Drawing.Point(10, 56);
-            this.fileCommentTextBox.Multiline = true;
-            this.fileCommentTextBox.Name = "fileCommentTextBox";
-            this.fileCommentTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.fileCommentTextBox.Size = new System.Drawing.Size(387, 293);
-            this.fileCommentTextBox.TabIndex = 0;
+            this.groupBox7.Text = "Engine Overrides (overrides[])";
             // 
             // tabPage5
             // 
@@ -1931,25 +1952,142 @@
             this.shadowLabel1.TabIndex = 0;
             this.shadowLabel1.Text = "Engine Editor";
             // 
-            // resetPointsButton
+            // tabPage8
             // 
-            this.resetPointsButton.Location = new System.Drawing.Point(629, 370);
-            this.resetPointsButton.Name = "resetPointsButton";
-            this.resetPointsButton.Size = new System.Drawing.Size(100, 25);
-            this.resetPointsButton.TabIndex = 37;
-            this.resetPointsButton.Text = "Reset to Default";
-            this.resetPointsButton.UseVisualStyleBackColor = true;
-            this.resetPointsButton.Click += new System.EventHandler(this.resetPointsButton_Click);
+            this.tabPage8.Controls.Add(this.groupBox17);
+            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage8.Size = new System.Drawing.Size(886, 426);
+            this.tabPage8.TabIndex = 7;
+            this.tabPage8.Text = "Comments";
+            this.tabPage8.UseVisualStyleBackColor = true;
             // 
-            // removeAllButton
+            // groupBox17
             // 
-            this.removeAllButton.Location = new System.Drawing.Point(739, 370);
-            this.removeAllButton.Name = "removeAllButton";
-            this.removeAllButton.Size = new System.Drawing.Size(100, 25);
-            this.removeAllButton.TabIndex = 38;
-            this.removeAllButton.Text = "Remove All";
-            this.removeAllButton.UseVisualStyleBackColor = true;
-            this.removeAllButton.Click += new System.EventHandler(this.removeAllButton_Click);
+            this.groupBox17.Controls.Add(this.fileCommentTextBox);
+            this.groupBox17.Controls.Add(this.label47);
+            this.groupBox17.Location = new System.Drawing.Point(19, 31);
+            this.groupBox17.Name = "groupBox17";
+            this.groupBox17.Size = new System.Drawing.Size(845, 364);
+            this.groupBox17.TabIndex = 1;
+            this.groupBox17.TabStop = false;
+            this.groupBox17.Text = "File Comment";
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(22, 27);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(288, 13);
+            this.label47.TabIndex = 1;
+            this.label47.Text = "This text will be included as a comment in the engines sii file";
+            // 
+            // fileCommentTextBox
+            // 
+            this.fileCommentTextBox.Location = new System.Drawing.Point(10, 52);
+            this.fileCommentTextBox.Multiline = true;
+            this.fileCommentTextBox.Name = "fileCommentTextBox";
+            this.fileCommentTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.fileCommentTextBox.Size = new System.Drawing.Size(826, 300);
+            this.fileCommentTextBox.TabIndex = 2;
+            // 
+            // fileOverridesTextBox
+            // 
+            this.fileOverridesTextBox.Location = new System.Drawing.Point(10, 56);
+            this.fileOverridesTextBox.Multiline = true;
+            this.fileOverridesTextBox.Name = "fileOverridesTextBox";
+            this.fileOverridesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.fileOverridesTextBox.Size = new System.Drawing.Size(387, 293);
+            this.fileOverridesTextBox.TabIndex = 2;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(18, 22);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(324, 26);
+            this.label10.TabIndex = 3;
+            this.label10.Text = "Only put 1 item per line. The items listed here will be included in the \r\n\"overri" +
+    "des\" array. Use \"{{{NAME}}}\" to subsitute the truck name.";
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.Location = new System.Drawing.Point(10, 162);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(100, 13);
+            this.label48.TabIndex = 28;
+            this.label48.Text = "Resistance Torque:";
+            // 
+            // resistanceBox
+            // 
+            this.resistanceBox.Enabled = false;
+            this.resistanceBox.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.resistanceBox.Location = new System.Drawing.Point(125, 160);
+            this.resistanceBox.Maximum = new decimal(new int[] {
+            3000,
+            0,
+            0,
+            0});
+            this.resistanceBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.resistanceBox.Name = "resistanceBox";
+            this.resistanceBox.Size = new System.Drawing.Size(103, 20);
+            this.resistanceBox.TabIndex = 29;
+            this.resistanceBox.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            // 
+            // consumptionBox
+            // 
+            this.consumptionBox.Enabled = false;
+            this.consumptionBox.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.consumptionBox.Location = new System.Drawing.Point(441, 155);
+            this.consumptionBox.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.consumptionBox.Name = "consumptionBox";
+            this.consumptionBox.Size = new System.Drawing.Size(103, 20);
+            this.consumptionBox.TabIndex = 30;
+            this.consumptionBox.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(326, 157);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(94, 13);
+            this.label49.TabIndex = 31;
+            this.label49.Text = "Fuel Consumption:";
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Location = new System.Drawing.Point(548, 159);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(15, 13);
+            this.label50.TabIndex = 32;
+            this.label50.Text = "%";
             // 
             // EngineForm
             // 
@@ -2035,6 +2173,11 @@
             this.contentPanel.ResumeLayout(false);
             this.footerPanel.ResumeLayout(false);
             this.headerPanel.ResumeLayout(false);
+            this.tabPage8.ResumeLayout(false);
+            this.groupBox17.ResumeLayout(false);
+            this.groupBox17.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.resistanceBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.consumptionBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2123,9 +2266,7 @@
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.TextBox fileDefaultsTextBox;
-        private System.Windows.Forms.TextBox fileCommentTextBox;
         private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.TextBox filenameTextBox;
         private System.Windows.Forms.Button importButton;
@@ -2177,5 +2318,16 @@
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.Button removeAllButton;
         private System.Windows.Forms.Button resetPointsButton;
+        private System.Windows.Forms.TabPage tabPage8;
+        private System.Windows.Forms.GroupBox groupBox17;
+        private System.Windows.Forms.Label label47;
+        private System.Windows.Forms.TextBox fileCommentTextBox;
+        private System.Windows.Forms.TextBox fileOverridesTextBox;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown resistanceBox;
+        private System.Windows.Forms.Label label48;
+        private System.Windows.Forms.NumericUpDown consumptionBox;
+        private System.Windows.Forms.Label label49;
+        private System.Windows.Forms.Label label50;
     }
 }

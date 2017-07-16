@@ -100,21 +100,36 @@
     <Compile Include="Controls\PageControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Database\Entities\Sounds\EngineSoundPackage.cs" />
+    <Compile Include="Database\Entities\Sounds\TruckSoundOverride.cs" />
+    <Compile Include="Database\Entities\Sounds\TruckSoundPackage.cs" />
+    <Compile Include="Database\Entities\Sounds\TruckSoundSetting.cs" />
     <Compile Include="Database\SoundAttribute.cs" />
-    <Compile Include="Database\Entities\TransmissionGear.cs" />
-    <Compile Include="Database\Entities\TransmissionSeries.cs" />
-    <Compile Include="Database\Entities\Transmission.cs" />
-    <Compile Include="Database\Entities\TruckTransmission.cs" />
-    <Compile Include="Database\Entities\EngineSound.cs" />
+    <Compile Include="Database\Entities\Transmissions\TransmissionGear.cs" />
+    <Compile Include="Database\Entities\Transmissions\TransmissionSeries.cs" />
+    <Compile Include="Database\Entities\Transmissions\Transmission.cs" />
+    <Compile Include="Database\Entities\Trucks\TruckTransmission.cs" />
+    <Compile Include="Database\Entities\Sounds\EngineSound.cs" />
+    <Compile Include="Database\Entities\Sounds\Sound.cs" />
+    <Compile Include="Database\SoundPackageWrapper.cs" />
     <Compile Include="Database\SoundPath.cs" />
-    <Compile Include="Database\SoundType.cs" />
+    <Compile Include="Database\SoundLocation.cs" />
     <Compile Include="Database\Entities\AccessoryConflict.cs" />
     <Compile Include="Database\Entities\SuitableAccessory.cs" />
     <Compile Include="Application\Metrics.cs" />
     <Compile Include="Application\SoundWrapper.cs" />
+    <Compile Include="Database\Entities\Sounds\TruckSound.cs" />
+    <Compile Include="Database\SoundType.cs" />
+    <Compile Include="Extensions\Range.cs" />
     <Compile Include="Extensions\StringBuilderExtensions.cs" />
     <Compile Include="Application\ListViewColumnSorter.cs" />
     <Compile Include="Application\MultipleListViewColumnSorter.cs" />
+    <Compile Include="Extensions\NumericUpDownExtensions.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="UI\Sound\NewPackageForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -192,7 +207,7 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\DirectoryExt.cs" />
-    <Compile Include="Application\Mod.cs" />
+    <Compile Include="Application\ModBuilder.cs" />
     <Compile Include="UI\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -218,13 +233,13 @@
     </Compile>
     <Compile Include="Database\AppDatabase.cs" />
     <Compile Include="Database\Entities\DbVersion.cs" />
-    <Compile Include="Database\Entities\Engine.cs" />
-    <Compile Include="Database\Entities\EngineSeries.cs" />
-    <Compile Include="Database\Entities\TruckEngine.cs" />
-    <Compile Include="Database\Entities\SoundPackage.cs" />
+    <Compile Include="Database\Entities\Engines\Engine.cs" />
+    <Compile Include="Database\Entities\Engines\EngineSeries.cs" />
+    <Compile Include="Database\Entities\Trucks\TruckEngine.cs" />
+    <Compile Include="Database\Entities\Sounds\SoundPackage.cs" />
     <Compile Include="Application\Epoch.cs" />
-    <Compile Include="Database\Entities\TorqueRatio.cs" />
-    <Compile Include="Database\Entities\Truck.cs" />
+    <Compile Include="Database\Entities\Transmissions\TorqueRatio.cs" />
+    <Compile Include="Database\Entities\Trucks\Truck.cs" />
     <Compile Include="Database\MigrationWizard.cs" />
     <Compile Include="UI\Engine\EngineListEditor.cs">
       <SubType>Form</SubType>
@@ -299,14 +314,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="UI\Engine\TorqueCurveForm.resx">
       <DependentUpon>TorqueCurveForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -316,12 +326,6 @@
     <EmbeddedResource Include="UI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="data\Default.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="data\Migration_14.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="graphics\cat__3406.dds">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -431,780 +435,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Resources\Default.espack" />
-    <EmbeddedResource Include="Resources\Default.w900.espack" />
-    <EmbeddedResource Include="Resources\Default.389.espack" />
-    <None Include="sounds\common\ext\air_brake1.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\ext\air_brake2.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\ext\air_brake3.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\ext\air_brake4.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\ext\air_horn.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\ext\gear_air_1.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\ext\gear_air_2.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\ext\gear_air_3.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\ext\horn.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\ext\reverse.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\int\air_brake1.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\int\air_brake2.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\int\air_brake3.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\int\air_brake4.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\int\air_horn.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\int\blinker_off.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\int\blinker_on.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\int\horn.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\int\int_gear_air_1.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\int\int_gear_air_2.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\int\int_gear_air_3.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\int\reverse.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\int\wiper_down.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\common\int\wiper_up.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\exterior.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\ext\1000rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\ext\1000rpm_exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\ext\1500rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\ext\1500rpm_exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\ext\2000rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\ext\2000rpm_exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\ext\2200rpm_exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\ext\500rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\ext\engine_brake_ext.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\ext\engine_off.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\ext\engine_on.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\ext\engine_on_bad.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\ext\exhaust_idle.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\ext\lever_le_pied.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\ext\lever_le_pied_2.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\ext\turbo_ext.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\ext\turbo_idle.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\interior.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\int\1000rpm-int-exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\int\1000rpm-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\int\1500rpm-int-exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\int\1500rpm-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\int\2000rpm-int-exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\int\2000rpm-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\int\2200rpm-int-exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\int\500rpm-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\int\engine_brake_int.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\int\engine_on_bad.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\int\exhaust_idle.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\int\gear_change.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\int\lever_le_pied.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\int\lever_le_pied_2.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\int\start-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\int\stop-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\int\turbo_idle.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\int\turbo_int.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\3406E\manifest.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\exterior.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\ext\1000rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\ext\1000rpm_exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\ext\1500rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\ext\1500rpm_exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\ext\2000rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\ext\2200rpm_exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\ext\500rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\ext\engine_brake_ext.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\ext\engine_off.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\ext\engine_on.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\ext\engine_on_bad.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\ext\exhaust_idle.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\ext\lever_le_pied.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\ext\lever_le_pied_2.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\ext\turbo_ext.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\ext\turbo_idle.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\interior.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\int\1000rpm-int-exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\int\1000rpm-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\int\1500rpm-int-exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\int\1500rpm-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\int\2000rpm-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\int\2200rpm-int-exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\int\500rpm-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\int\engine_brake_int.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\int\engine_on_bad.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\int\exhaust_idle.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\int\lever_le_pied.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\int\lever_le_pied_2.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\int\start-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\int\stop-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\int\turbo_idle.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\int\turbo_int.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\C15\manifest.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\default.389\exterior.sii" />
-    <None Include="sounds\engine\default.389\interior.sii" />
-    <None Include="sounds\engine\default.389\manifest.sii" />
-    <None Include="sounds\engine\default.w900\exterior.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\default.w900\interior.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\default.w900\manifest.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\default\exterior.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\default\interior.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\default\manifest.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\exterior.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\1000rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\1200rpm_exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\1500rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\1600rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\1600rpm_exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\2000rpm_exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\2200rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\2200rpm_exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\500rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\800rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\dryer.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\engine_brake_ext.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\engine_off.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\engine_on.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\engine_on_bad.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\exhaust_idle.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\lever_le_pied.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\reverse.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\turbo_ext.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\turbo_idle_isx.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\ext\ventilo.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\interior.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\int\1000rpm-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\int\1200rpm-int-exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\int\1500rpm-int-exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\int\1500rpm-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\int\2000rpm-int-exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\int\2000rpm-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\int\500rpm-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\int\dryer.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\int\engine_brake_int.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\int\engine_on_bad.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\int\exhaust_idle.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\int\lever_le_pied.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\int\start-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\int\stop-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\int\turbo_idle_isx.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\int\turbo_int.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\ISX\manifest.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\exterior.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\ext\engine_1.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\ext\engine_2.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\ext\engine_3.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\ext\engine_5.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\ext\engine_6.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\ext\engine_brake_ext.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\ext\exhaust_1.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\ext\exhaust_2.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\ext\exhaust_4.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\ext\exhaust_5.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\ext\lever_le_pied_ext.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\ext\start.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\ext\start_bad.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\ext\stop.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\ext\turbo_ext.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\ext\ventilo.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\interior.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\int\engine_1.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\int\engine_2.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\int\engine_brake.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\int\exhaust_1.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\int\exhaust_2.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\int\exhaust_4.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\int\exhaust_5.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\int\int_gear_air_1.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\int\int_gear_air_2.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\int\int_gear_air_3.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\int\lever_le_pied.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\int\start_bad.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\int\start_pet.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\int\stop.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\int\turbo_int.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\int\ventilo.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\MX13\manifest.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\exterior.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\ext\1000rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\ext\1100rpm_exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\ext\1200rpm_exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\ext\1500rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\ext\1600rpm_exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\ext\2000rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\ext\2200rpm_exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\ext\500rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\ext\dryer.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\ext\engine_brake_ext.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\ext\engine_off.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\ext\engine_on.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\ext\engine_on_bad.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\ext\exhaust_idle.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\ext\gear_air.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\ext\lever_le_pied_ext.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\ext\turbo_ext.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\ext\turbo_idle.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\ext\turbo_idle2.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\interior.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\int\1000rpm-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\int\1100rpm-int-exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\int\1200rpm-int-exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\int\1500rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\int\1600rpm-int-exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\int\2000rpm-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\int\2200rpm-int-exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\int\500rpm-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\int\dryer.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\int\engine_brake_int.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\int\engine_on_bad.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\int\exhaust_idle.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\int\gear_air.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\int\lever_le_pied.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\int\start-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\int\stop-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\int\turbo_idle.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\int\turbo_idle2.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\int\turbo_int.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14c\manifest.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\exterior.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\ext\1000rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\ext\1000rpm_exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\ext\1500rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\ext\1500rpm_exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\ext\2000rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\ext\2000rpm_exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\ext\2200rpm_exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\ext\500rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\ext\engine_brake_ext.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\ext\engine_off.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\ext\engine_on.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\ext\engine_on_bad.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\ext\exhaust_idle.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\ext\lever_le_pied_ext.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\ext\turbo_ext.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\ext\turbo_idle.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\ext\turbo_idle2.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\interior.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\int\1000rpm-int-exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\int\1000rpm-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\int\1500rpm-int-exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\int\1500rpm.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\int\2000rpm-int-exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\int\2000rpm-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\int\2200rpm-int-exhaust.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\int\500rpm-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\int\engine_brake_int.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\int\engine_on_bad.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\int\exhaust_idle.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\int\lever_le_pied.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\int\start-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\int\stop-int-mono.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\int\turbo_idle.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\int\turbo_idle2.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\int\turbo_int.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="sounds\engine\N14\manifest.sii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <EmbeddedResource Include="Resources\Default.389.tspack" />
+    <EmbeddedResource Include="Resources\Default.tspack" />
+    <EmbeddedResource Include="Resources\Default.w900.tspack" />
     <None Include="sounds\noises\lift_axle.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -1256,6 +489,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="misc_piston.ico" />
+    <Content Include="sounds\common\Placeholder.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sounds\engine\Placeholder.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\youtube_icon.png" />
     <None Include="Resources\music.ico" />
     <None Include="Resources\sound.ico" />
     <None Include="Resources\folder2.ico" />
@@ -1295,6 +535,9 @@
       <Project>{db29e99b-4ebe-4ed9-8378-864ce601149f}</Project>
       <Name>Sii</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="data\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.103\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.103\build\net46\System.Data.SQLite.Core.targets')" />

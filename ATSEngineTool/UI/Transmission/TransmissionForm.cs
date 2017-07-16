@@ -119,8 +119,8 @@ namespace ATSEngineTool
                 if (!NewTransmission)
                 {
                     var gears = transmission.Gears.ToList();
-                    ForwardGears.AddRange(transmission.Gears.Where(x => !x.IsReverse));
-                    ReverseGears.AddRange(transmission.Gears.Where(x => x.IsReverse));
+                    ForwardGears.AddRange(gears.Where(x => !x.IsReverse));
+                    ReverseGears.AddRange(gears.Where(x => x.IsReverse));
                 }
                 else
                 {
@@ -411,7 +411,7 @@ namespace ATSEngineTool
             Transmission.Conflicts = conflictsTextBox.Lines;
             Transmission.SuitableFor = suitablesTextBox.Lines;
             Transmission.Retarder = (hasRetarder.Checked) ? (int)retardPositions.Value : 0;
-            Transmission.StallTorqueRatio = (hasTorqueConverter.Checked) ? (int)stallRatio.Value : 0.0m;
+            Transmission.StallTorqueRatio = (hasTorqueConverter.Checked) ? stallRatio.Value : 0.0m;
 
             // Figure out the filename
             if (!String.IsNullOrWhiteSpace(filenameTextBox.Text))
@@ -567,17 +567,21 @@ namespace ATSEngineTool
                 confirmButton.Enabled = true;
             }
 
-            var series = (TransmissionSeries)seriesModelBox.SelectedItem;
-            string path = Path.Combine(MatPath, series.Icon);
-            if (!path.EndsWith(".dds"))
-                path += ".dds";
-
             // Perform cleanup
             if (seriesIcon.Image != null)
             {
                 seriesIcon.Image.Dispose();
                 seriesIcon.Image = null;
             }
+
+            var series = seriesModelBox.SelectedItem as TransmissionSeries;
+            if (series == null)
+                return;
+
+            // Load image
+            string path = Path.Combine(MatPath, series.Icon);
+            if (!path.EndsWith(".dds"))
+                path += ".dds";
 
             // Ensure icon exists before proceeding
             if (!File.Exists(path)) return;
@@ -869,17 +873,17 @@ namespace ATSEngineTool
                         // === Set form values
                         unitNameBox.Text = Path.GetFileNameWithoutExtension(Dialog.FileName);
                         transNameBox.Text = transmission.Name;
-                        unlockBox.Value = transmission.UnlockLevel;
-                        priceBox.Value = transmission.Price;
-                        diffRatio.Value = transmission.DifferentialRatio;
+                        unlockBox.SetValueInRange(transmission.UnlockLevel);
+                        priceBox.SetValueInRange(transmission.Price);
+                        diffRatio.SetValueInRange(transmission.DifferentialRatio);
                         if (transmission.StallTorqueRatio > 0m)
                         {
-                            stallRatio.Value = transmission.StallTorqueRatio;
+                            stallRatio.SetValueInRange(transmission.StallTorqueRatio);
                             hasTorqueConverter.Checked = true;
                         }
                         if (transmission.Retarder > 0)
                         {
-                            retardPositions.Value = transmission.Retarder;
+                            retardPositions.SetValueInRange(transmission.Retarder);
                             hasRetarder.Checked = true;
                         }
                         fileDefaultsTextBox.Lines = transmission.Defaults;

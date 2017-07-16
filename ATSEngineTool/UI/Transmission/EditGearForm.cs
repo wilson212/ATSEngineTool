@@ -12,7 +12,7 @@ namespace ATSEngineTool
             if (gear != null)
             {
                 gearName.Text = gear.Name;
-                ratioBox.Value = gear.Ratio;
+                ratioBox.SetValueInRange(gear.Ratio);
             }
         }
 

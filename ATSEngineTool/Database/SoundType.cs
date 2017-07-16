@@ -1,8 +1,15 @@
-﻿namespace ATSEngineTool.Database
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ATSEngineTool.Database
 {
-    public enum SoundType : int
+    public enum SoundType
     {
-        Interior,
-        Exterior
+        Engine,
+        Truck,
+        Noise
     }
 }

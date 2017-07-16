@@ -42,6 +42,8 @@
             this.unitNameBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox19 = new System.Windows.Forms.GroupBox();
+            this.youtubeIcon = new System.Windows.Forms.PictureBox();
+            this.youtubeLinkLabel = new System.Windows.Forms.LinkLabel();
             this.labelVersion = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
             this.labelAuthor = new System.Windows.Forms.Label();
@@ -55,6 +57,7 @@
             this.contentPanel.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox19.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.youtubeIcon)).BeginInit();
             this.headerPanel.SuspendLayout();
             this.footerPanel.SuspendLayout();
             this.SuspendLayout();
@@ -185,16 +188,39 @@
             // 
             // groupBox19
             // 
+            this.groupBox19.Controls.Add(this.youtubeIcon);
+            this.groupBox19.Controls.Add(this.youtubeLinkLabel);
             this.groupBox19.Controls.Add(this.labelVersion);
             this.groupBox19.Controls.Add(this.label35);
             this.groupBox19.Controls.Add(this.labelAuthor);
             this.groupBox19.Controls.Add(this.label33);
             this.groupBox19.Location = new System.Drawing.Point(18, 15);
             this.groupBox19.Name = "groupBox19";
-            this.groupBox19.Size = new System.Drawing.Size(239, 110);
+            this.groupBox19.Size = new System.Drawing.Size(239, 132);
             this.groupBox19.TabIndex = 32;
             this.groupBox19.TabStop = false;
             this.groupBox19.Text = "Package Info";
+            // 
+            // youtubeIcon
+            // 
+            this.youtubeIcon.Image = global::ATSEngineTool.Properties.Resources.youtube_icon;
+            this.youtubeIcon.Location = new System.Drawing.Point(27, 99);
+            this.youtubeIcon.Name = "youtubeIcon";
+            this.youtubeIcon.Size = new System.Drawing.Size(24, 20);
+            this.youtubeIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.youtubeIcon.TabIndex = 38;
+            this.youtubeIcon.TabStop = false;
+            // 
+            // youtubeLinkLabel
+            // 
+            this.youtubeLinkLabel.AutoSize = true;
+            this.youtubeLinkLabel.Location = new System.Drawing.Point(53, 103);
+            this.youtubeLinkLabel.Name = "youtubeLinkLabel";
+            this.youtubeLinkLabel.Size = new System.Drawing.Size(160, 13);
+            this.youtubeLinkLabel.TabIndex = 37;
+            this.youtubeLinkLabel.TabStop = true;
+            this.youtubeLinkLabel.Text = "Listen to this sound on YouTube";
+            this.youtubeLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.YoutubeLinkLabel_LinkClicked);
             // 
             // labelVersion
             // 
@@ -252,7 +278,7 @@
             this.shadowLabel1.ShadowDirection = 90;
             this.shadowLabel1.ShadowOpacity = 225;
             this.shadowLabel1.ShadowSoftness = 3F;
-            this.shadowLabel1.Size = new System.Drawing.Size(297, 39);
+            this.shadowLabel1.Size = new System.Drawing.Size(609, 39);
             this.shadowLabel1.TabIndex = 0;
             this.shadowLabel1.Text = "Sound Package Editor";
             // 
@@ -319,6 +345,7 @@
             this.groupBox1.PerformLayout();
             this.groupBox19.ResumeLayout(false);
             this.groupBox19.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.youtubeIcon)).EndInit();
             this.headerPanel.ResumeLayout(false);
             this.footerPanel.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -351,5 +378,7 @@
         private System.Windows.Forms.TextBox folderNameBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.LinkLabel youtubeLinkLabel;
+        private System.Windows.Forms.PictureBox youtubeIcon;
     }
 }

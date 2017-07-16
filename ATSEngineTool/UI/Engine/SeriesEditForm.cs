@@ -45,10 +45,10 @@ namespace ATSEngineTool
             // Add each sound to the lists
             using (AppDatabase db = new AppDatabase())
             {
-                foreach (SoundPackage sound in db.SoundPackages)
+                foreach (EngineSoundPackage sound in db.EngineSoundPackages)
                 {
                     soundBox.Items.Add(sound);
-                    if (Series != null && sound.Id == series.SoundId)
+                    if (Series != null && sound.Id == series.SoundPackageId)
                         soundBox.SelectedIndex = soundBox.Items.Count - 1;
                 }
             }
@@ -109,7 +109,7 @@ namespace ATSEngineTool
                             Manufacturer = manuNameBox.Text.Trim(),
                             Displacement = displacementBox.Value,
                             EngineIcon = iconBox.SelectedItem.ToString(),
-                            SoundPackage = ((SoundPackage)soundBox.SelectedItem)
+                            SoundPackage = ((EngineSoundPackage)soundBox.SelectedItem)
                         };
                         db.EngineSeries.Add(Series);
                     }
@@ -119,7 +119,7 @@ namespace ATSEngineTool
                         Series.Manufacturer = manuNameBox.Text.Trim();
                         Series.Displacement = displacementBox.Value;
                         Series.EngineIcon = iconBox.SelectedItem.ToString();
-                        Series.SoundPackage = ((SoundPackage)soundBox.SelectedItem);
+                        Series.SoundPackage = ((EngineSoundPackage)soundBox.SelectedItem);
                         db.EngineSeries.Update(Series);
                     }
                 }
