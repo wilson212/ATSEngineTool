@@ -899,7 +899,7 @@ namespace ATSEngineTool
                         List<string> objects = new List<string>(document.Definitions.Keys);
                         if (objects.Count == 0)
                         {
-                            MessageBox.Show("Unable to find any engine date in this sii document!", 
+                            MessageBox.Show("Unable to find any engine data in this sii document!", 
                                 "Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning
                             );
                             return;

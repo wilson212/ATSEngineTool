@@ -866,7 +866,7 @@ namespace ATSEngineTool
                         List<string> objects = new List<string>(document.Definitions.Keys);
                         if (objects.Count == 0)
                         {
-                            MessageBox.Show("Unable to find any transmission date in this sii document!",
+                            MessageBox.Show("Unable to find any transmission data in this sii document!",
                                 "Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning
                             );
                             return;
