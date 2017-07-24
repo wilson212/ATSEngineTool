@@ -539,8 +539,8 @@ namespace ATSEngineTool.Database
             // Sound Data
             SoundPackage sound = series.SoundPackage;
             builder.WriteLine("# Sound Data");
-            builder.WriteAttribute("overrides[]", "/def/vehicle/truck/{{{NAME}}}/sound/" + sound.InteriorFileName);
-            builder.WriteAttribute("overrides[]", "/def/vehicle/truck/{{{NAME}}}/sound/" + sound.ExteriorFileName);
+            builder.WriteAttribute("overrides[]", $"/def/vehicle/truck/{truckName}/sound/{sound.InteriorFileName}");
+            builder.WriteAttribute("overrides[]", $"/def/vehicle/truck/{truckName}/sound/{sound.ExteriorFileName}");
 
             // Write the overrides[]...
             if (Overrides != null && Overrides.Length > 0)

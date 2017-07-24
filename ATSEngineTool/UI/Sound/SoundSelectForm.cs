@@ -10,12 +10,24 @@ namespace ATSEngineTool
 {
     public partial class SoundSelectForm : Form
     {
+        /// <summary>
+        /// Contains the sound package we are selecting a sound for
+        /// </summary>
         protected SoundPackage Package { get; set; }
 
+        /// <summary>
+        /// Defines, if any, the current selected sound for the attribute we are editing
+        /// </summary>
         protected Sound StartingSound { get; set; }
 
+        /// <summary>
+        /// Defines, if any, the current selected sound Node for the attribute we are editing
+        /// </summary>
         protected TreeNode StartingSoundNode { get; set; }
 
+        /// <summary>
+        /// Gets the selected sound path from the form
+        /// </summary>
         public string SoundPath { get; private set; }
 
         public SoundSelectForm(SoundPackage package, Sound currentSound = null)
@@ -37,6 +49,9 @@ namespace ATSEngineTool
             FillTree();
         }
 
+        /// <summary>
+        /// Redraws the file tree with all of the files found in the sound package's folder.
+        /// </summary>
         private void FillTree()
         {
             // Always Clear Nodes first!

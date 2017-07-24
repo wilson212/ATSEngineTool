@@ -12,7 +12,7 @@ using Sii;
 namespace ATSEngineTool
 {
     /// <summary>
-    /// A class used to read .espack (EngineSoundPACKages) files
+    /// A class used to read ".espack" (EngineSoundPACKage) and ".tspack" (TruckSoundPACKage) files
     /// </summary>
     public class SoundPackageReader : IDisposable
     {

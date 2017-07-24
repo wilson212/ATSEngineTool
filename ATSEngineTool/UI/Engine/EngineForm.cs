@@ -65,6 +65,11 @@ namespace ATSEngineTool
         /// </summary>
         protected static string MatPath = Path.Combine(Program.RootPath, "graphics");
 
+        /// <summary>
+        /// Provides sorting functionality to the truck list view
+        /// </summary>
+        protected ListViewColumnSorter Sorter { get; set; }
+
         public EngineForm(Engine engine = null)
         {
             // Create form controls
@@ -74,6 +79,7 @@ namespace ATSEngineTool
 
             NewEngine = engine == null;
             Engine = engine ?? new Engine();
+            Sorter = new ListViewColumnSorter(truckListView) { Order = SortOrder.Ascending };
 
             // Setup metrics
             if (Program.Config.UnitSystem == UnitSystem.Metric)
@@ -910,7 +916,7 @@ namespace ATSEngineTool
                         unlockBox.SetValueInRange(engine.UnlockLevel);
                         priceBox.SetValueInRange(engine.Price);
                         neutralRpmBox.SetValueInRange(engine?.RpmLimitNeutral ?? 2200);
-                        rpmLimitBox.SetValueInRange(engine.RpmLimit);
+                        rpmLimitBox.SetValueInRange((decimal)engine.RpmLimit);
                         idleRpmBox.SetValueInRange(engine?.IdleRpm ?? 650);
                         brakeStrengthBox.SetValueInRange((decimal)engine.BrakeStrength);
                         brakePositionsBox.SetValueInRange(engine.BrakePositions);
@@ -1040,6 +1046,24 @@ namespace ATSEngineTool
         private void truckListView_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             TrucksChanged = true;
+        }
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Check all items
+            foreach (var item in truckListView.Items.Cast<ListViewItem>())
+            {
+                item.Checked = true;
+            }
+        }
+
+        private void selectNoneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Un-Check all items
+            foreach (var item in truckListView.Items.Cast<ListViewItem>())
+            {
+                item.Checked = false;
+            }
         }
     }
 }

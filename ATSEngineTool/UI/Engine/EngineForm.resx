@@ -122,6 +122,9 @@
 the transmission will shift to a lower / higher gear. Set values to zero to exclude this 
 data from the engine sii file.</value>
   </data>
+  <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>114, 17</value>
+  </metadata>
   <data name="label27.Text" xml:space="preserve">
     <value>Transmission shifting range will get adjusted by these amounts based on throttle 
 input. The more throttle is given to the truck, the more the optimal shifting range 

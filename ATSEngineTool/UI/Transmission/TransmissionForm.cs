@@ -6,7 +6,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using ATSEngineTool.Database;
@@ -87,6 +86,11 @@ namespace ATSEngineTool
         /// </summary>
         protected static string MatPath = Path.Combine(Program.RootPath, "graphics");
 
+        /// <summary>
+        /// Provides sorting functionality to the truck list view
+        /// </summary>
+        protected ListViewColumnSorter Sorter { get; set; }
+
         public TransmissionForm(Transmission transmission = null)
         {
             // Create form controls
@@ -97,6 +101,7 @@ namespace ATSEngineTool
 
             NewTransmission = transmission == null;
             Transmission = transmission ?? new Transmission();
+            Sorter = new ListViewColumnSorter(truckListView) { Order = SortOrder.Ascending };
 
             // Setup metrics
             if (Program.Config.UnitSystem == UnitSystem.Metric)
@@ -1027,6 +1032,24 @@ namespace ATSEngineTool
         private void showPlaceholdersBox_CheckedChanged(object sender, EventArgs e)
         {
             PopulateGears();
+        }
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Check all items
+            foreach (var item in truckListView.Items.Cast<ListViewItem>())
+            {
+                item.Checked = true;
+            }
+        }
+
+        private void selectNoneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Un-Check all items
+            foreach (var item in truckListView.Items.Cast<ListViewItem>())
+            {
+                item.Checked = false;
+            }
         }
     }
 }

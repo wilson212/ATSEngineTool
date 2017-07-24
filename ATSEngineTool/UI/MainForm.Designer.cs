@@ -42,6 +42,10 @@
             this.syncButton = new System.Windows.Forms.Button();
             this.truckListView1 = new System.Windows.Forms.ListView();
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.selectNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.updatePicture = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
@@ -114,10 +118,6 @@
             this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.engineSoundListView = new BrightIdeasSoftware.TreeListView();
-            this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.toolStrip7 = new System.Windows.Forms.ToolStrip();
@@ -131,10 +131,6 @@
             this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
-            this.truckSoundListView = new BrightIdeasSoftware.TreeListView();
-            this.olvColumn4 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumn5 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumn6 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.toolStrip9 = new System.Windows.Forms.ToolStrip();
@@ -161,15 +157,20 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.headerPanel = new System.Windows.Forms.Panel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.selectNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.engineSoundListView = new BrightIdeasSoftware.TreeListView();
+            this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.truckSoundListView = new BrightIdeasSoftware.TreeListView();
+            this.olvColumn4 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn5 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn6 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.groupBox3.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.updatePicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -194,18 +195,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.engineSoundListView)).BeginInit();
             this.toolStrip7.SuspendLayout();
             this.toolStrip8.SuspendLayout();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.truckSoundListView)).BeginInit();
             this.toolStrip9.SuspendLayout();
             this.toolStrip10.SuspendLayout();
             this.panel1.SuspendLayout();
             this.headerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.engineSoundListView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.truckSoundListView)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -353,6 +353,34 @@
             // 
             this.columnHeader4.Text = "Trucks to Synchronize";
             this.columnHeader4.Width = 283;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.selectAllToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.selectNoneToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(138, 54);
+            // 
+            // selectAllToolStripMenuItem
+            // 
+            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.selectAllToolStripMenuItem.Text = "Select All";
+            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(134, 6);
+            // 
+            // selectNoneToolStripMenuItem
+            // 
+            this.selectNoneToolStripMenuItem.Name = "selectNoneToolStripMenuItem";
+            this.selectNoneToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.selectNoneToolStripMenuItem.Text = "Select None";
+            this.selectNoneToolStripMenuItem.Click += new System.EventHandler(this.selectNoneToolStripMenuItem_Click);
             // 
             // groupBox1
             // 
@@ -1128,51 +1156,6 @@
             this.pictureBox6.TabIndex = 33;
             this.pictureBox6.TabStop = false;
             // 
-            // engineSoundListView
-            // 
-            this.engineSoundListView.AllColumns.Add(this.olvColumn1);
-            this.engineSoundListView.AllColumns.Add(this.olvColumn2);
-            this.engineSoundListView.AllColumns.Add(this.olvColumn3);
-            this.engineSoundListView.CellEditUseWholeCell = false;
-            this.engineSoundListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.olvColumn1,
-            this.olvColumn2,
-            this.olvColumn3});
-            this.engineSoundListView.Cursor = System.Windows.Forms.Cursors.Default;
-            this.engineSoundListView.FullRowSelect = true;
-            this.engineSoundListView.HeaderMaximumHeight = 24;
-            this.engineSoundListView.HeaderMinimumHeight = 24;
-            this.engineSoundListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.engineSoundListView.Location = new System.Drawing.Point(391, 49);
-            this.engineSoundListView.MultiSelect = false;
-            this.engineSoundListView.Name = "engineSoundListView";
-            this.engineSoundListView.SelectAllOnControlA = false;
-            this.engineSoundListView.ShowGroups = false;
-            this.engineSoundListView.Size = new System.Drawing.Size(388, 309);
-            this.engineSoundListView.TabIndex = 32;
-            this.engineSoundListView.UseCompatibleStateImageBehavior = false;
-            this.engineSoundListView.View = System.Windows.Forms.View.Details;
-            this.engineSoundListView.VirtualMode = true;
-            this.engineSoundListView.SelectedIndexChanged += new System.EventHandler(this.engineSoundListView_SelectedIndexChanged);
-            this.engineSoundListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.engineSoundListView_MouseDoubleClick);
-            // 
-            // olvColumn1
-            // 
-            this.olvColumn1.AspectName = "SoundName";
-            this.olvColumn1.Text = "Sound Name";
-            this.olvColumn1.Width = 155;
-            // 
-            // olvColumn2
-            // 
-            this.olvColumn2.AspectName = "Filename";
-            this.olvColumn2.Text = "Filename";
-            this.olvColumn2.Width = 150;
-            // 
-            // olvColumn3
-            // 
-            this.olvColumn3.AspectName = "Volume";
-            this.olvColumn3.Text = "Volume";
-            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -1318,51 +1301,6 @@
             this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox8.TabIndex = 40;
             this.pictureBox8.TabStop = false;
-            // 
-            // truckSoundListView
-            // 
-            this.truckSoundListView.AllColumns.Add(this.olvColumn4);
-            this.truckSoundListView.AllColumns.Add(this.olvColumn5);
-            this.truckSoundListView.AllColumns.Add(this.olvColumn6);
-            this.truckSoundListView.CellEditUseWholeCell = false;
-            this.truckSoundListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.olvColumn4,
-            this.olvColumn5,
-            this.olvColumn6});
-            this.truckSoundListView.Cursor = System.Windows.Forms.Cursors.Default;
-            this.truckSoundListView.FullRowSelect = true;
-            this.truckSoundListView.HeaderMaximumHeight = 24;
-            this.truckSoundListView.HeaderMinimumHeight = 24;
-            this.truckSoundListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.truckSoundListView.Location = new System.Drawing.Point(391, 49);
-            this.truckSoundListView.MultiSelect = false;
-            this.truckSoundListView.Name = "truckSoundListView";
-            this.truckSoundListView.SelectAllOnControlA = false;
-            this.truckSoundListView.ShowGroups = false;
-            this.truckSoundListView.Size = new System.Drawing.Size(388, 309);
-            this.truckSoundListView.TabIndex = 39;
-            this.truckSoundListView.UseCompatibleStateImageBehavior = false;
-            this.truckSoundListView.View = System.Windows.Forms.View.Details;
-            this.truckSoundListView.VirtualMode = true;
-            this.truckSoundListView.SelectedIndexChanged += new System.EventHandler(this.truckSoundListView_SelectedIndexChanged);
-            this.truckSoundListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.truckSoundListView_MouseDoubleClick);
-            // 
-            // olvColumn4
-            // 
-            this.olvColumn4.AspectName = "SoundName";
-            this.olvColumn4.Text = "Sound Name";
-            this.olvColumn4.Width = 155;
-            // 
-            // olvColumn5
-            // 
-            this.olvColumn5.AspectName = "Filename";
-            this.olvColumn5.Text = "Filename";
-            this.olvColumn5.Width = 150;
-            // 
-            // olvColumn6
-            // 
-            this.olvColumn6.AspectName = "Volume";
-            this.olvColumn6.Text = "Volume";
             // 
             // label12
             // 
@@ -1561,7 +1499,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 80);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(809, 432);
+            this.panel1.Size = new System.Drawing.Size(809, 411);
             this.panel1.TabIndex = 2;
             // 
             // headerPanel
@@ -1586,39 +1524,101 @@
             this.pictureBox2.TabIndex = 8;
             this.pictureBox2.TabStop = false;
             // 
-            // contextMenuStrip1
+            // engineSoundListView
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.selectAllToolStripMenuItem,
-            this.toolStripSeparator2,
-            this.selectNoneToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(138, 54);
+            this.engineSoundListView.AllColumns.Add(this.olvColumn1);
+            this.engineSoundListView.AllColumns.Add(this.olvColumn2);
+            this.engineSoundListView.AllColumns.Add(this.olvColumn3);
+            this.engineSoundListView.CellEditUseWholeCell = false;
+            this.engineSoundListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvColumn1,
+            this.olvColumn2,
+            this.olvColumn3});
+            this.engineSoundListView.Cursor = System.Windows.Forms.Cursors.Default;
+            this.engineSoundListView.FullRowSelect = true;
+            this.engineSoundListView.HeaderMaximumHeight = 24;
+            this.engineSoundListView.HeaderMinimumHeight = 24;
+            this.engineSoundListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.engineSoundListView.Location = new System.Drawing.Point(391, 49);
+            this.engineSoundListView.MultiSelect = false;
+            this.engineSoundListView.Name = "engineSoundListView";
+            this.engineSoundListView.SelectAllOnControlA = false;
+            this.engineSoundListView.ShowGroups = false;
+            this.engineSoundListView.Size = new System.Drawing.Size(388, 309);
+            this.engineSoundListView.TabIndex = 32;
+            this.engineSoundListView.UseCompatibleStateImageBehavior = false;
+            this.engineSoundListView.View = System.Windows.Forms.View.Details;
+            this.engineSoundListView.VirtualMode = true;
+            this.engineSoundListView.SelectedIndexChanged += new System.EventHandler(this.engineSoundListView_SelectedIndexChanged);
+            this.engineSoundListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.engineSoundListView_MouseDoubleClick);
             // 
-            // selectAllToolStripMenuItem
+            // olvColumn1
             // 
-            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
-            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.selectAllToolStripMenuItem.Text = "Select All";
-            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
+            this.olvColumn1.AspectName = "SoundName";
+            this.olvColumn1.Text = "Sound Name";
+            this.olvColumn1.Width = 155;
             // 
-            // selectNoneToolStripMenuItem
+            // olvColumn2
             // 
-            this.selectNoneToolStripMenuItem.Name = "selectNoneToolStripMenuItem";
-            this.selectNoneToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.selectNoneToolStripMenuItem.Text = "Select None";
-            this.selectNoneToolStripMenuItem.Click += new System.EventHandler(this.selectNoneToolStripMenuItem_Click);
+            this.olvColumn2.AspectName = "Filename";
+            this.olvColumn2.Text = "Filename";
+            this.olvColumn2.Width = 150;
             // 
-            // toolStripSeparator2
+            // olvColumn3
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(134, 6);
+            this.olvColumn3.AspectName = "Volume";
+            this.olvColumn3.Text = "Volume";
+            // 
+            // truckSoundListView
+            // 
+            this.truckSoundListView.AllColumns.Add(this.olvColumn4);
+            this.truckSoundListView.AllColumns.Add(this.olvColumn5);
+            this.truckSoundListView.AllColumns.Add(this.olvColumn6);
+            this.truckSoundListView.CellEditUseWholeCell = false;
+            this.truckSoundListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvColumn4,
+            this.olvColumn5,
+            this.olvColumn6});
+            this.truckSoundListView.Cursor = System.Windows.Forms.Cursors.Default;
+            this.truckSoundListView.FullRowSelect = true;
+            this.truckSoundListView.HeaderMaximumHeight = 24;
+            this.truckSoundListView.HeaderMinimumHeight = 24;
+            this.truckSoundListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.truckSoundListView.Location = new System.Drawing.Point(391, 49);
+            this.truckSoundListView.MultiSelect = false;
+            this.truckSoundListView.Name = "truckSoundListView";
+            this.truckSoundListView.SelectAllOnControlA = false;
+            this.truckSoundListView.ShowGroups = false;
+            this.truckSoundListView.Size = new System.Drawing.Size(388, 309);
+            this.truckSoundListView.TabIndex = 39;
+            this.truckSoundListView.UseCompatibleStateImageBehavior = false;
+            this.truckSoundListView.View = System.Windows.Forms.View.Details;
+            this.truckSoundListView.VirtualMode = true;
+            this.truckSoundListView.SelectedIndexChanged += new System.EventHandler(this.truckSoundListView_SelectedIndexChanged);
+            this.truckSoundListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.truckSoundListView_MouseDoubleClick);
+            // 
+            // olvColumn4
+            // 
+            this.olvColumn4.AspectName = "SoundName";
+            this.olvColumn4.Text = "Sound Name";
+            this.olvColumn4.Width = 155;
+            // 
+            // olvColumn5
+            // 
+            this.olvColumn5.AspectName = "Filename";
+            this.olvColumn5.Text = "Filename";
+            this.olvColumn5.Width = 150;
+            // 
+            // olvColumn6
+            // 
+            this.olvColumn6.AspectName = "Volume";
+            this.olvColumn6.Text = "Volume";
             // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(809, 512);
+            this.ClientSize = new System.Drawing.Size(809, 491);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.headerPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -1634,6 +1634,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.updatePicture)).EndInit();
@@ -1670,7 +1671,6 @@
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.engineSoundListView)).EndInit();
             this.toolStrip7.ResumeLayout(false);
             this.toolStrip7.PerformLayout();
             this.toolStrip8.ResumeLayout(false);
@@ -1678,7 +1678,6 @@
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.truckSoundListView)).EndInit();
             this.toolStrip9.ResumeLayout(false);
             this.toolStrip9.PerformLayout();
             this.toolStrip10.ResumeLayout(false);
@@ -1686,7 +1685,8 @@
             this.panel1.ResumeLayout(false);
             this.headerPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.engineSoundListView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.truckSoundListView)).EndInit();
             this.ResumeLayout(false);
 
         }

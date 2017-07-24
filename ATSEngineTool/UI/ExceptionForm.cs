@@ -165,5 +165,28 @@ namespace ATSEngineTool
                 return cp;
             }
         }
+
+        private void ExceptionForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Q:
+                    e.Handled = true;
+                    buttonAbort.PerformClick();
+                    break;
+                case Keys.C:
+                    e.Handled = true;
+                    buttonContinue.PerformClick();
+                    break;
+                case Keys.D:
+                    e.Handled = true;
+                    buttonDetails.PerformClick();
+                    break;
+                case Keys.V:
+                    e.Handled = true;
+                    buttonViewLog.PerformClick();
+                    break;
+            }
+        }
     }
 }

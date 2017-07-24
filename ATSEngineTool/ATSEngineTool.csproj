@@ -130,6 +130,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SiiEntities\AccessoryData.cs" />
     <Compile Include="UI\Sound\NewPackageForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EngineForm));
             this.label1 = new System.Windows.Forms.Label();
             this.unitNameBox = new System.Windows.Forms.TextBox();
@@ -89,6 +89,11 @@
             this.brakeStrengthBox = new System.Windows.Forms.NumericUpDown();
             this.label11 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label50 = new System.Windows.Forms.Label();
+            this.consumptionBox = new System.Windows.Forms.NumericUpDown();
+            this.label49 = new System.Windows.Forms.Label();
+            this.resistanceBox = new System.Windows.Forms.NumericUpDown();
+            this.label48 = new System.Windows.Forms.Label();
             this.neutralRpmBox = new System.Windows.Forms.NumericUpDown();
             this.label17 = new System.Windows.Forms.Label();
             this.idleRpmBox = new System.Windows.Forms.NumericUpDown();
@@ -135,6 +140,8 @@
             this.label29 = new System.Windows.Forms.Label();
             this.fileDefaultsTextBox = new System.Windows.Forms.TextBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.fileOverridesTextBox = new System.Windows.Forms.TextBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.label41 = new System.Windows.Forms.Label();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
@@ -160,6 +167,10 @@
             this.truckListView = new System.Windows.Forms.ListView();
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label46 = new System.Windows.Forms.Label();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.groupBox17 = new System.Windows.Forms.GroupBox();
+            this.fileCommentTextBox = new System.Windows.Forms.TextBox();
+            this.label47 = new System.Windows.Forms.Label();
             this.contentPanel = new System.Windows.Forms.Panel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.footerPanel = new System.Windows.Forms.Panel();
@@ -168,17 +179,10 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.headerPanel = new System.Windows.Forms.Panel();
             this.shadowLabel1 = new System.Windows.Forms.ShadowLabel();
-            this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.groupBox17 = new System.Windows.Forms.GroupBox();
-            this.label47 = new System.Windows.Forms.Label();
-            this.fileCommentTextBox = new System.Windows.Forms.TextBox();
-            this.fileOverridesTextBox = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label48 = new System.Windows.Forms.Label();
-            this.resistanceBox = new System.Windows.Forms.NumericUpDown();
-            this.consumptionBox = new System.Windows.Forms.NumericUpDown();
-            this.label49 = new System.Windows.Forms.Label();
-            this.label50 = new System.Windows.Forms.Label();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.selectNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.engineIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceBox)).BeginInit();
@@ -198,6 +202,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.brakePositionsBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.brakeStrengthBox)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.consumptionBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.resistanceBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.neutralRpmBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.idleRpmBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.torqueBox)).BeginInit();
@@ -226,13 +232,12 @@
             this.groupBox15.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.groupBox16.SuspendLayout();
+            this.tabPage8.SuspendLayout();
+            this.groupBox17.SuspendLayout();
             this.contentPanel.SuspendLayout();
             this.footerPanel.SuspendLayout();
             this.headerPanel.SuspendLayout();
-            this.tabPage8.SuspendLayout();
-            this.groupBox17.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.resistanceBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.consumptionBox)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -524,47 +529,47 @@
             // 
             // chart1
             // 
-            chartArea1.AxisX.IsMarginVisible = false;
-            chartArea1.AxisX.Title = "Rpm";
-            chartArea1.AxisY.Title = "Torque";
-            chartArea1.AxisY2.Interval = 100D;
-            chartArea1.AxisY2.MajorGrid.Enabled = false;
-            chartArea1.AxisY2.Title = "Horsepower";
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.AutoFitMinFontSize = 8;
-            legend1.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row;
-            legend1.Name = "Legend1";
-            legend1.Position.Auto = false;
-            legend1.Position.Height = 6F;
-            legend1.Position.Width = 32F;
-            legend1.Position.X = 35F;
-            legend1.Position.Y = 75F;
-            this.chart1.Legends.Add(legend1);
+            chartArea4.AxisX.IsMarginVisible = false;
+            chartArea4.AxisX.Title = "Rpm";
+            chartArea4.AxisY.Title = "Torque";
+            chartArea4.AxisY2.Interval = 100D;
+            chartArea4.AxisY2.MajorGrid.Enabled = false;
+            chartArea4.AxisY2.Title = "Horsepower";
+            chartArea4.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea4);
+            legend4.AutoFitMinFontSize = 8;
+            legend4.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row;
+            legend4.Name = "Legend1";
+            legend4.Position.Auto = false;
+            legend4.Position.Height = 6F;
+            legend4.Position.Width = 32F;
+            legend4.Position.X = 35F;
+            legend4.Position.Y = 75F;
+            this.chart1.Legends.Add(legend4);
             this.chart1.Location = new System.Drawing.Point(1, 11);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Legend = "Legend1";
-            series1.MarkerBorderColor = System.Drawing.Color.Black;
-            series1.MarkerColor = System.Drawing.Color.DodgerBlue;
-            series1.MarkerSize = 7;
-            series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series1.Name = "Torque";
-            series1.SmartLabelStyle.AllowOutsidePlotArea = System.Windows.Forms.DataVisualization.Charting.LabelOutsidePlotAreaStyle.No;
-            series1.SmartLabelStyle.MinMovingDistance = 10D;
-            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series2.Legend = "Legend1";
-            series2.MarkerColor = System.Drawing.Color.Black;
-            series2.Name = "Horsepower";
-            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series2.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            this.chart1.Series.Add(series1);
-            this.chart1.Series.Add(series2);
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series7.Legend = "Legend1";
+            series7.MarkerBorderColor = System.Drawing.Color.Black;
+            series7.MarkerColor = System.Drawing.Color.DodgerBlue;
+            series7.MarkerSize = 7;
+            series7.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series7.Name = "Torque";
+            series7.SmartLabelStyle.AllowOutsidePlotArea = System.Windows.Forms.DataVisualization.Charting.LabelOutsidePlotAreaStyle.No;
+            series7.SmartLabelStyle.MinMovingDistance = 10D;
+            series7.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series7.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            series8.ChartArea = "ChartArea1";
+            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series8.Legend = "Legend1";
+            series8.MarkerColor = System.Drawing.Color.Black;
+            series8.Name = "Horsepower";
+            series8.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series8.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            series8.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            this.chart1.Series.Add(series7);
+            this.chart1.Series.Add(series8);
             this.chart1.Size = new System.Drawing.Size(623, 361);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -984,6 +989,84 @@
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Performance";
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Location = new System.Drawing.Point(548, 159);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(15, 13);
+            this.label50.TabIndex = 32;
+            this.label50.Text = "%";
+            // 
+            // consumptionBox
+            // 
+            this.consumptionBox.Enabled = false;
+            this.consumptionBox.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.consumptionBox.Location = new System.Drawing.Point(441, 155);
+            this.consumptionBox.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.consumptionBox.Name = "consumptionBox";
+            this.consumptionBox.Size = new System.Drawing.Size(103, 20);
+            this.consumptionBox.TabIndex = 30;
+            this.consumptionBox.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(326, 157);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(94, 13);
+            this.label49.TabIndex = 31;
+            this.label49.Text = "Fuel Consumption:";
+            // 
+            // resistanceBox
+            // 
+            this.resistanceBox.Enabled = false;
+            this.resistanceBox.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.resistanceBox.Location = new System.Drawing.Point(125, 160);
+            this.resistanceBox.Maximum = new decimal(new int[] {
+            3000,
+            0,
+            0,
+            0});
+            this.resistanceBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.resistanceBox.Name = "resistanceBox";
+            this.resistanceBox.Size = new System.Drawing.Size(103, 20);
+            this.resistanceBox.TabIndex = 29;
+            this.resistanceBox.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.Location = new System.Drawing.Point(10, 162);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(100, 13);
+            this.label48.TabIndex = 28;
+            this.label48.Text = "Resistance Torque:";
             // 
             // neutralRpmBox
             // 
@@ -1619,6 +1702,25 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Engine Overrides (overrides[])";
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(18, 22);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(324, 26);
+            this.label10.TabIndex = 3;
+            this.label10.Text = "Only put 1 item per line. The items listed here will be included in the \r\n\"overri" +
+    "des\" array. Use \"{{{NAME}}}\" to subsitute the truck name.";
+            // 
+            // fileOverridesTextBox
+            // 
+            this.fileOverridesTextBox.Location = new System.Drawing.Point(10, 56);
+            this.fileOverridesTextBox.Multiline = true;
+            this.fileOverridesTextBox.Name = "fileOverridesTextBox";
+            this.fileOverridesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.fileOverridesTextBox.Size = new System.Drawing.Size(387, 293);
+            this.fileOverridesTextBox.TabIndex = 2;
+            // 
             // tabPage5
             // 
             this.tabPage5.Controls.Add(this.label41);
@@ -1849,8 +1951,8 @@
             this.truckListView.CheckBoxes = true;
             this.truckListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader6});
+            this.truckListView.ContextMenuStrip = this.contextMenuStrip1;
             this.truckListView.FullRowSelect = true;
-            this.truckListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.truckListView.Location = new System.Drawing.Point(11, 56);
             this.truckListView.Name = "truckListView";
             this.truckListView.Size = new System.Drawing.Size(385, 293);
@@ -1872,6 +1974,46 @@
             this.label46.Size = new System.Drawing.Size(327, 13);
             this.label46.TabIndex = 20;
             this.label46.Text = "Select the trucks that will have this engine added to their engine list:";
+            // 
+            // tabPage8
+            // 
+            this.tabPage8.Controls.Add(this.groupBox17);
+            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage8.Size = new System.Drawing.Size(886, 426);
+            this.tabPage8.TabIndex = 7;
+            this.tabPage8.Text = "Comments";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // groupBox17
+            // 
+            this.groupBox17.Controls.Add(this.fileCommentTextBox);
+            this.groupBox17.Controls.Add(this.label47);
+            this.groupBox17.Location = new System.Drawing.Point(19, 31);
+            this.groupBox17.Name = "groupBox17";
+            this.groupBox17.Size = new System.Drawing.Size(845, 364);
+            this.groupBox17.TabIndex = 1;
+            this.groupBox17.TabStop = false;
+            this.groupBox17.Text = "File Comment";
+            // 
+            // fileCommentTextBox
+            // 
+            this.fileCommentTextBox.Location = new System.Drawing.Point(10, 52);
+            this.fileCommentTextBox.Multiline = true;
+            this.fileCommentTextBox.Name = "fileCommentTextBox";
+            this.fileCommentTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.fileCommentTextBox.Size = new System.Drawing.Size(826, 300);
+            this.fileCommentTextBox.TabIndex = 2;
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(22, 27);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(288, 13);
+            this.label47.TabIndex = 1;
+            this.label47.Text = "This text will be included as a comment in the engines sii file";
             // 
             // contentPanel
             // 
@@ -1952,142 +2094,33 @@
             this.shadowLabel1.TabIndex = 0;
             this.shadowLabel1.Text = "Engine Editor";
             // 
-            // tabPage8
+            // contextMenuStrip1
             // 
-            this.tabPage8.Controls.Add(this.groupBox17);
-            this.tabPage8.Location = new System.Drawing.Point(4, 22);
-            this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(886, 426);
-            this.tabPage8.TabIndex = 7;
-            this.tabPage8.Text = "Comments";
-            this.tabPage8.UseVisualStyleBackColor = true;
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.selectAllToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.selectNoneToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(138, 54);
             // 
-            // groupBox17
+            // selectAllToolStripMenuItem
             // 
-            this.groupBox17.Controls.Add(this.fileCommentTextBox);
-            this.groupBox17.Controls.Add(this.label47);
-            this.groupBox17.Location = new System.Drawing.Point(19, 31);
-            this.groupBox17.Name = "groupBox17";
-            this.groupBox17.Size = new System.Drawing.Size(845, 364);
-            this.groupBox17.TabIndex = 1;
-            this.groupBox17.TabStop = false;
-            this.groupBox17.Text = "File Comment";
+            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.selectAllToolStripMenuItem.Text = "Select All";
+            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
             // 
-            // label47
+            // toolStripSeparator1
             // 
-            this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(22, 27);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(288, 13);
-            this.label47.TabIndex = 1;
-            this.label47.Text = "This text will be included as a comment in the engines sii file";
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(134, 6);
             // 
-            // fileCommentTextBox
+            // selectNoneToolStripMenuItem
             // 
-            this.fileCommentTextBox.Location = new System.Drawing.Point(10, 52);
-            this.fileCommentTextBox.Multiline = true;
-            this.fileCommentTextBox.Name = "fileCommentTextBox";
-            this.fileCommentTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.fileCommentTextBox.Size = new System.Drawing.Size(826, 300);
-            this.fileCommentTextBox.TabIndex = 2;
-            // 
-            // fileOverridesTextBox
-            // 
-            this.fileOverridesTextBox.Location = new System.Drawing.Point(10, 56);
-            this.fileOverridesTextBox.Multiline = true;
-            this.fileOverridesTextBox.Name = "fileOverridesTextBox";
-            this.fileOverridesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.fileOverridesTextBox.Size = new System.Drawing.Size(387, 293);
-            this.fileOverridesTextBox.TabIndex = 2;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(18, 22);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(324, 26);
-            this.label10.TabIndex = 3;
-            this.label10.Text = "Only put 1 item per line. The items listed here will be included in the \r\n\"overri" +
-    "des\" array. Use \"{{{NAME}}}\" to subsitute the truck name.";
-            // 
-            // label48
-            // 
-            this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(10, 162);
-            this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(100, 13);
-            this.label48.TabIndex = 28;
-            this.label48.Text = "Resistance Torque:";
-            // 
-            // resistanceBox
-            // 
-            this.resistanceBox.Enabled = false;
-            this.resistanceBox.Increment = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.resistanceBox.Location = new System.Drawing.Point(125, 160);
-            this.resistanceBox.Maximum = new decimal(new int[] {
-            3000,
-            0,
-            0,
-            0});
-            this.resistanceBox.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.resistanceBox.Name = "resistanceBox";
-            this.resistanceBox.Size = new System.Drawing.Size(103, 20);
-            this.resistanceBox.TabIndex = 29;
-            this.resistanceBox.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            // 
-            // consumptionBox
-            // 
-            this.consumptionBox.Enabled = false;
-            this.consumptionBox.Increment = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.consumptionBox.Location = new System.Drawing.Point(441, 155);
-            this.consumptionBox.Maximum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-            this.consumptionBox.Name = "consumptionBox";
-            this.consumptionBox.Size = new System.Drawing.Size(103, 20);
-            this.consumptionBox.TabIndex = 30;
-            this.consumptionBox.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            // 
-            // label49
-            // 
-            this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(326, 157);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(94, 13);
-            this.label49.TabIndex = 31;
-            this.label49.Text = "Fuel Consumption:";
-            // 
-            // label50
-            // 
-            this.label50.AutoSize = true;
-            this.label50.Location = new System.Drawing.Point(548, 159);
-            this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(15, 13);
-            this.label50.TabIndex = 32;
-            this.label50.Text = "%";
+            this.selectNoneToolStripMenuItem.Name = "selectNoneToolStripMenuItem";
+            this.selectNoneToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.selectNoneToolStripMenuItem.Text = "Select None";
+            this.selectNoneToolStripMenuItem.Click += new System.EventHandler(this.selectNoneToolStripMenuItem_Click);
             // 
             // EngineForm
             // 
@@ -2130,6 +2163,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.brakeStrengthBox)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.consumptionBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.resistanceBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.neutralRpmBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.idleRpmBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.torqueBox)).EndInit();
@@ -2170,14 +2205,13 @@
             this.tabPage7.ResumeLayout(false);
             this.groupBox16.ResumeLayout(false);
             this.groupBox16.PerformLayout();
-            this.contentPanel.ResumeLayout(false);
-            this.footerPanel.ResumeLayout(false);
-            this.headerPanel.ResumeLayout(false);
             this.tabPage8.ResumeLayout(false);
             this.groupBox17.ResumeLayout(false);
             this.groupBox17.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.resistanceBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.consumptionBox)).EndInit();
+            this.contentPanel.ResumeLayout(false);
+            this.footerPanel.ResumeLayout(false);
+            this.headerPanel.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2329,5 +2363,9 @@
         private System.Windows.Forms.NumericUpDown consumptionBox;
         private System.Windows.Forms.Label label49;
         private System.Windows.Forms.Label label50;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem selectNoneToolStripMenuItem;
     }
 }

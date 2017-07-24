@@ -190,13 +190,14 @@ namespace ATSEngineTool
             // Connect to the database
             using (AppDatabase db = new AppDatabase())
             {
-                // Cache all sounds
+                // Cache all truck sound packages
                 ProgressUpdate(progress, "Loading sound data into cache");
                 foreach (var package in db.TruckSoundPackages)
                 {
                     truckSoundCache.Add(package.Id, new SoundPackageWrapper<TruckSoundPackage, TruckSound>(package));
                 }
 
+                // Cache all engine sound packages
                 foreach (var package in db.EngineSoundPackages)
                 {
                     engineSoundCache.Add(package.Id, new SoundPackageWrapper<EngineSoundPackage, EngineSound>(package));
@@ -204,7 +205,6 @@ namespace ATSEngineTool
 
                 // Update progress
                 ProgressUpdate(progress, "Generating engine def files");
-
                 foreach (Truck truck in trucks)
                 {
                     // Check for cancellation
@@ -396,10 +396,10 @@ namespace ATSEngineTool
         /// <summary>
         /// Sound File compiler
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="location"></param>
         /// <returns></returns>
         private static string CompileSoundFile(
-            SoundLocation type,
+            SoundLocation location,
             Truck truck,
             SoundPackageWrapper<EngineSoundPackage, EngineSound> enginePackage,
             SoundPackageWrapper<TruckSoundPackage, TruckSound> truckPackage,
@@ -408,13 +408,13 @@ namespace ATSEngineTool
             // Local variables
             var builder = new SiiFileBuilder();
             var objectMap = new Dictionary<string, Sound>();
-            var engineSounds = enginePackage.GetSoundsByLocation(type);
-            var truckSounds = truckPackage.GetSoundsByLocation(type);
+            var engineSounds = enginePackage.GetSoundsByLocation(location);
+            var truckSounds = truckPackage.GetSoundsByLocation(location);
 
             // Figure out the accessory name
             var name = new StringBuilder(unitName ?? enginePackage.Package.UnitName);
             name.Append($".{truck.UnitName}.");
-            name.AppendLineIf(type == SoundLocation.Exterior, "esound", "isound");
+            name.AppendLineIf(location == SoundLocation.Exterior, "esound", "isound");
 
             // Write file intro
             builder.IndentStructs = false;
@@ -424,7 +424,7 @@ namespace ATSEngineTool
             builder.WriteStructStart("accessory_sound_data", name.ToString().TrimEnd());
 
             // Mark exterior or interior attribute
-            builder.WriteAttribute("exterior_sound", type == SoundLocation.Exterior);
+            builder.WriteAttribute("exterior_sound", location == SoundLocation.Exterior);
             builder.WriteLine();
 
             // ===
@@ -452,7 +452,7 @@ namespace ATSEngineTool
             }
 
             // Include directive.. Directives have no tabs at all!
-            if (type == SoundLocation.Interior)
+            if (location == SoundLocation.Interior)
                 builder.WriteInclude("/def/vehicle/truck/common_sound_int.sui");
             else
                 builder.WriteInclude("/def/vehicle/truck/common_sound_ext.sui");
@@ -476,7 +476,7 @@ namespace ATSEngineTool
             }
 
             // Write the include directive
-            if (type == SoundLocation.Interior)
+            if (location == SoundLocation.Interior)
                 builder.WriteInclude("/def/vehicle/truck/common_sound_int_data.sui");
             else
                 builder.WriteInclude("/def/vehicle/truck/common_sound_ext_data.sui");
